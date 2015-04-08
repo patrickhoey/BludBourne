@@ -14,7 +14,7 @@ public class MainGameScreen implements Screen {
 	private static final String TAG = MainGameScreen.class.getSimpleName();
 
 	private final float unitScale  = 1/16f;
-	private String _overviewMap = "maps/tmx/Town.tmx";
+	private String _overviewMap = "maps/tmx/Dungeon.tmx";
 
 	private static class VIEWPORT {
 		static float viewportWidth;
