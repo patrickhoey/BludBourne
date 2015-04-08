@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.packtpub.libgdx.bludbourne.BludBourne;
+import com.packtpub.libgdx.bludbourne.PlayerController;
 import com.packtpub.libgdx.bludbourne.Utility;
 
 
@@ -19,6 +21,8 @@ public class MainGameScreen implements Screen {
 		static float physicalHeight;
 		static float aspectRatio;
 	}
+
+	private PlayerController _controller;
 
 	private static final String TAG = MainGameScreen.class.getSimpleName();
 
@@ -52,6 +56,9 @@ public class MainGameScreen implements Screen {
 
 		mapRenderer = new OrthogonalTiledMapRenderer(currentMap, unitScale);
 		mapRenderer.setView(camera);
+
+		_controller = new PlayerController();
+		Gdx.input.setInputProcessor(_controller);
 	}
 
 	@Override
@@ -62,6 +69,9 @@ public class MainGameScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		_controller.update(delta);
+		BludBourne._player.update(delta);
 
 		mapRenderer.setView(camera);
 
@@ -82,6 +92,8 @@ public class MainGameScreen implements Screen {
 
 	@Override
 	public void dispose() {
+		_controller.dispose();
+		Gdx.input.setInputProcessor(null);
 	}
 
 	private void setupViewport(int width, int height){

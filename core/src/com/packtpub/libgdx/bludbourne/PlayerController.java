@@ -5,19 +5,114 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector3;
 
 
-public class PlayerController {
+public class PlayerController implements InputProcessor {
 
 	private final static String TAG = PlayerController.class.getSimpleName();
-	
+
 	enum Keys {
 		LEFT, RIGHT, UP, DOWN, QUIT
 	}
-	
+
 	enum Mouse {
 		SELECT, DOACTION
+	}
+
+
+	@Override
+	public boolean keyDown(int keycode) {
+		if( keycode == Input.Keys.LEFT || keycode == Input.Keys.A){
+			this.leftPressed();
+		}
+		if( keycode == Input.Keys.RIGHT || keycode == Input.Keys.D){
+			this.rightPressed();
+		}
+		if( keycode == Input.Keys.UP || keycode == Input.Keys.W){
+			this.upPressed();
+		}
+		if( keycode == Input.Keys.DOWN || keycode == Input.Keys.S){
+			this.downPressed();
+		}
+		if( keycode == Input.Keys.Q){
+			this.quitPressed();
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		if( keycode == Input.Keys.LEFT || keycode == Input.Keys.A){
+			this.leftReleased();
+		}
+		if( keycode == Input.Keys.RIGHT || keycode == Input.Keys.D){
+			this.rightReleased();
+		}
+		if( keycode == Input.Keys.UP || keycode == Input.Keys.W ){
+			this.upReleased();
+		}
+		if( keycode == Input.Keys.DOWN || keycode == Input.Keys.S){
+			this.downReleased();
+		}
+		if( keycode == Input.Keys.Q){
+			this.quitReleased();
+		}
+		return true;
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		return false;
+	}
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		//Gdx.app.debug(TAG, "GameScreen: MOUSE DOWN........: (" + screenX + "," + screenY + ")" );
+
+		if( button == Input.Buttons.LEFT || button == Input.Buttons.RIGHT ){
+			this.setClickedMouseCoordinates(screenX, screenY);
+		}
+
+		//left is selection, right is context menu
+		if( button == Input.Buttons.LEFT){
+			this.selectMouseButtonPressed(screenX, screenY);
+		}
+		if( button == Input.Buttons.RIGHT){
+			this.doActionMouseButtonPressed(screenX, screenY);
+		}
+		return true;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		//left is selection, right is context menu
+		if( button == Input.Buttons.LEFT){
+			this.selectMouseButtonReleased(screenX, screenY);
+		}
+		if( button == Input.Buttons.RIGHT){
+			this.doActionMouseButtonReleased(screenX, screenY);
+		}
+		return true;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		return false;
 	}
 	
 	static Map<Keys, Boolean> keys = new HashMap<PlayerController.Keys, Boolean>();
@@ -137,18 +232,22 @@ public class PlayerController {
 		
 		//Keyboard input
 		if( keys.get(Keys.LEFT)){
+			Gdx.app.debug(TAG, "LEFT key");
 			BludBourne._player.calculateNextPosition(Entity.Direction.LEFT, delta);
 			BludBourne._player.setState(Entity.State.WALKING);
 			BludBourne._player.setDirection(Entity.Direction.LEFT);
 		}else if( keys.get(Keys.RIGHT)){
+			Gdx.app.debug(TAG, "RIGHT key");
 			BludBourne._player.calculateNextPosition(Entity.Direction.RIGHT, delta);
 			BludBourne._player.setState(Entity.State.WALKING);
 			BludBourne._player.setDirection(Entity.Direction.RIGHT);
 		}else if( keys.get(Keys.UP)){
+			Gdx.app.debug(TAG, "UP key");
 			BludBourne._player.calculateNextPosition(Entity.Direction.UP, delta);
 			BludBourne._player.setState(Entity.State.WALKING);
 			BludBourne._player.setDirection(Entity.Direction.UP);
 		}else if(keys.get(Keys.DOWN)){
+			Gdx.app.debug(TAG, "DOWN key");
 			BludBourne._player.calculateNextPosition(Entity.Direction.DOWN, delta);
 			BludBourne._player.setState(Entity.State.WALKING);
 			BludBourne._player.setDirection(Entity.Direction.DOWN);
