@@ -53,9 +53,7 @@ public class MainGameScreen implements Screen {
 
 		//get the current size
 		camera = new OrthographicCamera(VIEWPORT.viewportWidth, VIEWPORT.viewportHeight);
-		camera.setToOrtho(false,10*VIEWPORT.aspectRatio,10);
-		//camera.setToOrtho(false, 20 * VIEWPORT.aspectRatio, 20);
-		camera.update();
+		camera.setToOrtho(false, 10 * VIEWPORT.aspectRatio, 10);
 
 		mapRenderer = new OrthogonalTiledMapRenderer(currentMap, unitScale);
 		mapRenderer.setView(camera);
@@ -76,6 +74,10 @@ public class MainGameScreen implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		//Preferable to lock and center the camera to the player's position
+		camera.position.set(currentPlayerSprite.getX(), currentPlayerSprite.getY(), 0f);
+		camera.update();
+
 		_controller.update(delta);
 		BludBourne._player.update(delta);
 
@@ -83,12 +85,7 @@ public class MainGameScreen implements Screen {
 		mapRenderer.render();
 
 		mapRenderer.getBatch().begin();
-
 		mapRenderer.getBatch().draw(currentPlayerSprite, currentPlayerSprite.getX(), currentPlayerSprite.getY(), 1,1);
-		//mapRenderer.getBatch().draw(currentPlayerSprite, currentPlayerSprite.getX(), currentPlayerSprite.getY(), currentPlayerSprite.getOriginX(), currentPlayerSprite.getOriginY(),
-		//		currentPlayerSprite.getWidth(), currentPlayerSprite.getHeight(), currentPlayerSprite.getScaleX(), currentPlayerSprite.getScaleY(), currentPlayerSprite.getRotation(),
-		//		true);
-		Gdx.app.debug(TAG, "currentPlayerSprite size: " + String.valueOf(currentPlayerSprite.getWidth()) + "," + String.valueOf(currentPlayerSprite.getHeight()) );
 		mapRenderer.getBatch().end();
 	}
 
