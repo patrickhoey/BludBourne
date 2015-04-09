@@ -6,16 +6,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.packtpub.libgdx.bludbourne.BludBourne;
+import com.packtpub.libgdx.bludbourne.PlayerController;
 import com.packtpub.libgdx.bludbourne.Utility;
 
 
 public class MainGameScreen implements Screen {
-
-	private static final String TAG = MainGameScreen.class.getSimpleName();
-
-	private final float unitScale  = 1/16f;
-	private String _overviewMap = "maps/tmx/Dungeon.tmx";
-
 	private static class VIEWPORT {
 		static float viewportWidth;
 		static float viewportHeight;
@@ -25,6 +21,13 @@ public class MainGameScreen implements Screen {
 		static float physicalHeight;
 		static float aspectRatio;
 	}
+
+	private PlayerController _controller;
+
+	private static final String TAG = MainGameScreen.class.getSimpleName();
+
+	private final float unitScale  = 1/16f;
+	private String _overviewMap = "maps/tmx/Town.tmx";
 
 	//private final static String MAP_BACKGROUND_LAYER = "MAP_BACKGROUND_LAYER";
 	private OrthogonalTiledMapRenderer mapRenderer = null;
@@ -53,6 +56,9 @@ public class MainGameScreen implements Screen {
 
 		mapRenderer = new OrthogonalTiledMapRenderer(currentMap, unitScale);
 		mapRenderer.setView(camera);
+
+		_controller = new PlayerController();
+		Gdx.input.setInputProcessor(_controller);
 	}
 
 	@Override
@@ -63,6 +69,9 @@ public class MainGameScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		_controller.update(delta);
+		BludBourne._player.update(delta);
 
 		mapRenderer.setView(camera);
 
@@ -83,6 +92,8 @@ public class MainGameScreen implements Screen {
 
 	@Override
 	public void dispose() {
+		_controller.dispose();
+		Gdx.input.setInputProcessor(null);
 	}
 
 	private void setupViewport(int width, int height){
@@ -116,4 +127,36 @@ public class MainGameScreen implements Screen {
 		Gdx.app.debug(TAG, "WorldRenderer: viewport: (" + VIEWPORT.viewportWidth + "," + VIEWPORT.viewportHeight + ")" );
 		Gdx.app.debug(TAG, "WorldRenderer: physical: (" + VIEWPORT.physicalWidth + "," + VIEWPORT.physicalHeight + ")" );
 	}
+
+	/*
+	public boolean isCollisionWithMap(Rectangle boundingBox){
+
+		if( currentMap == null ) return false;
+
+		TiledMapTileLayer mapLayer =  (TiledMapTileLayer)currentMap.getLayers().get(currentMap.getMapCollisionLayer());
+
+		String mapCollisionObjectLayer = currentMap.getMapCollisionObjectLayer();
+
+		if( mapCollisionObjectLayer != null ){
+			MapLayer collisionLayer =  (MapLayer)currentMap.getLayers().get(mapCollisionObjectLayer);
+			boolean isCollision = isPixelCollisionWithMapLayer(boundingBox, mapLayer, collisionLayer);
+
+			if( isCollision ){
+				return true;
+			}
+		}
+
+		String mapCollisionLayer = currentMap.getMapWallCollisionLayer();
+
+		if( mapCollisionLayer != null ){
+			TiledMapTileLayer mapWallLayer =  (TiledMapTileLayer)currentMap.getLayers().get(mapCollisionLayer);
+			boolean isWallCollision = isCollisionWithMapLayer(boundingBox, mapWallLayer);
+
+			if( isWallCollision ){
+				return true;
+			}
+		}
+		return false;
+	}
+	*/
 }

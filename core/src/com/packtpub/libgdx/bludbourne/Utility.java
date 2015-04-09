@@ -1,7 +1,9 @@
 package com.packtpub.libgdx.bludbourne;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
@@ -66,4 +68,37 @@ public final class Utility {
 
 		return map;
 	}
+
+	public static void loadTextureAsset(String textureFilenamePath){
+		if( textureFilenamePath == null || textureFilenamePath.isEmpty() ){
+			return;
+		}
+		//load asset
+		InternalFileHandleResolver filePathResolver = new InternalFileHandleResolver();
+
+		if( filePathResolver.resolve(textureFilenamePath).exists() ){
+			BludBourne._AssetManager.setLoader(Texture.class, new TextureLoader(filePathResolver));
+			BludBourne._AssetManager.load(textureFilenamePath, Texture.class);
+			//Until we add loading screen, just block until we load the map
+			BludBourne._AssetManager.finishLoadingAsset(textureFilenamePath);
+		}
+		else{
+			Gdx.app.debug(TAG, "Texture doesn't exist!: " + textureFilenamePath );
+		}
+	}
+
+	public static Texture getTextureAsset(String textureFilenamePath){
+		Texture texture = null;
+
+		// once the asset manager is done loading
+		if( BludBourne._AssetManager.isLoaded(textureFilenamePath) ){
+			texture = BludBourne._AssetManager.get(textureFilenamePath,Texture.class);
+		} else {
+			//Gdx.app.debug(TAG, "Texture is not loaded: " + textureFilenamePath );
+		}
+
+		return texture;
+	}
+
+
 }
