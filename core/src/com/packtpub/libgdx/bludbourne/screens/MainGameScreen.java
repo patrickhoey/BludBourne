@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.packtpub.libgdx.bludbourne.BludBourne;
@@ -27,7 +28,8 @@ public class MainGameScreen implements Screen {
 	private static final String TAG = MainGameScreen.class.getSimpleName();
 
 	private final float unitScale  = 1/16f;
-	private String _overviewMap = "maps/tmx/Town.tmx";
+	private String _overviewMap = "maps/world.tmx";
+	private Sprite currentPlayerSprite;
 
 	//private final static String MAP_BACKGROUND_LAYER = "MAP_BACKGROUND_LAYER";
 	private OrthogonalTiledMapRenderer mapRenderer = null;
@@ -52,10 +54,14 @@ public class MainGameScreen implements Screen {
 		//get the current size
 		camera = new OrthographicCamera(VIEWPORT.viewportWidth, VIEWPORT.viewportHeight);
 		camera.setToOrtho(false,10*VIEWPORT.aspectRatio,10);
+		//camera.setToOrtho(false, 20 * VIEWPORT.aspectRatio, 20);
 		camera.update();
 
 		mapRenderer = new OrthogonalTiledMapRenderer(currentMap, unitScale);
 		mapRenderer.setView(camera);
+
+
+		currentPlayerSprite = BludBourne._player.getFrameSprite();
 
 		_controller = new PlayerController();
 		Gdx.input.setInputProcessor(_controller);
@@ -74,8 +80,16 @@ public class MainGameScreen implements Screen {
 		BludBourne._player.update(delta);
 
 		mapRenderer.setView(camera);
-
 		mapRenderer.render();
+
+		mapRenderer.getBatch().begin();
+
+		mapRenderer.getBatch().draw(currentPlayerSprite, currentPlayerSprite.getX(), currentPlayerSprite.getY(), 1,1);
+		//mapRenderer.getBatch().draw(currentPlayerSprite, currentPlayerSprite.getX(), currentPlayerSprite.getY(), currentPlayerSprite.getOriginX(), currentPlayerSprite.getOriginY(),
+		//		currentPlayerSprite.getWidth(), currentPlayerSprite.getHeight(), currentPlayerSprite.getScaleX(), currentPlayerSprite.getScaleY(), currentPlayerSprite.getRotation(),
+		//		true);
+		Gdx.app.debug(TAG, "currentPlayerSprite size: " + String.valueOf(currentPlayerSprite.getWidth()) + "," + String.valueOf(currentPlayerSprite.getHeight()) );
+		mapRenderer.getBatch().end();
 	}
 
 	@Override

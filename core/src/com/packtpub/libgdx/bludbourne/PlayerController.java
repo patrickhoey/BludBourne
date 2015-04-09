@@ -206,14 +206,14 @@ public class PlayerController implements InputProcessor {
 	
 	
 	public void update(float delta){
-		if( delta == 0 || BludBourne._player.getState() == Entity.State.PAUSE){
-			return;
-		}
-		
+		//if( delta == 0 || BludBourne._player.getState() == Entity.State.PAUSE){
+		//	return;
+		//}
+
 		processInput(delta);
 		
 		//if( !isCollisionWithNextPosition() ){
-		//	BludBourne._player.setNextPositionToCurrent();
+		BludBourne._player.setNextPositionToCurrent();
 		//}
 		
 		//Gdx.app.debug(TAG, "update:: Next Position: (" + player.getNextPosition().x + "," + player.getNextPosition().y + ")" + "DELTA: " + delta );

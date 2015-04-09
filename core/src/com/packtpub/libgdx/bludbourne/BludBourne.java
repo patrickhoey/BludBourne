@@ -9,10 +9,12 @@ public class BludBourne extends Game {
 
 	public static final MainGameScreen _mainGameScreen = new MainGameScreen();
 	public static final AssetManager _AssetManager = new AssetManager();
-	public static Entity _player = new Entity();
+	public static Entity _player;
 
 	@Override
 	public void create(){
+		_player = new Entity();
+		_player.init(0f,0f);
 		setScreen(_mainGameScreen);
 	}
 

@@ -14,33 +14,20 @@ import com.badlogic.gdx.math.MathUtils;
 public class Entity {
 	
 	private static final String TAG = Entity.class.getSimpleName();
-	
+	private static final String defaultSpritePath = "sprites/characters/Warrior.png";
+
 	private Vector2 velocity;
 
-	public float WIDTH = 16;
-	public float HEIGHT = 16;
-	
-	private int walkingAnimRows = 0;
-	private int walkingAnimCols = 0;
-	private int walkingAnimFrames = 0;
-	private int walkingAnimStartRowIndex = 0;
-	private int walkingAnimStartColIndex = 0;
-	private Texture walkingCycle = null;
+	public int FRAME_WIDTH = 16;
+	public int FRAME_HEIGHT = 16;
 	
 	private String entityID;
 	
-	private int idleKeyFrame = 0;
-	
 	protected Rectangle boundingBox;
 
-	private boolean updatedSelectionState = false;
-	private Sprite selectionSprite = null;
 
 	protected State state = State.IDLE;
-	protected float frameTime = 0f;	
-	protected Animation walkAnimation;
-	protected String imagePath;
-	private String loadedWalkAnimationImagePath;
+	protected float frameTime = 0f;
 
 	protected Sprite frameSprite;
 	private Direction currentDirection = Direction.LEFT;
@@ -49,12 +36,9 @@ public class Entity {
 	protected float rotationDegrees = 0;
 	protected Vector2 nextPlayerPosition;
 	protected Vector2 currentPlayerPosition;
-	
-	//script
-	//private Script entityScript = null;
 
 	public enum State {
-		IDLE, WALKING, ANIMATED, ANIMATE_ONCE,ANIMATE_ONCE_REVERSE, PAUSE
+		IDLE, WALKING
 	}
 	
 	public enum Direction {
@@ -103,22 +87,16 @@ public class Entity {
 		//Gdx.app.debug(TAG, "Construction" );
 		
 		this.entityID = UUID.randomUUID().toString();
-		
-		this.frameSprite = new Sprite();
 		this.nextPlayerPosition = new Vector2();
 		this.currentPlayerPosition = new Vector2();
 		this.boundingBox = new Rectangle();
-		this.velocity = new Vector2(100f,100f);
+		this.velocity = new Vector2(2f,2f);
+
+		Utility.loadTextureAsset(defaultSpritePath);
+		loadDefaultSprite();
+
 	}
 
-	public void reset() {
-		frameTime = 0f;
-		state = State.IDLE;
-		rotationDegrees = 0;
-		entityID = UUID.randomUUID().toString();
-		WIDTH = 64;
-		HEIGHT = 64;
-	}
 
 	public String getEntityID(){
 		return entityID;
@@ -133,9 +111,10 @@ public class Entity {
 
 	public void update(float delta){
 		frameTime += delta;
-		
-		loadTextures();
 
+		//loadTextures();
+
+		/*
 		TextureRegion currentFrame = getCurrentFrame(delta);
 
 		if( currentFrame == null || frameSprite == null){
@@ -148,9 +127,10 @@ public class Entity {
 		frameSprite.setRegion(currentFrame);
 
 		//Gdx.app.debug(TAG, "FrameSprite Region Width: " + frameSprite.getRegionWidth() + " and height: " + frameSprite.getRegionHeight()  );
-
+        */
 	}
 
+	/*
 	public TextureRegion getCurrentFrame(float delta){
 
 		if( walkAnimation == null ){
@@ -189,8 +169,9 @@ public class Entity {
 		}
 
 		return currentFrame;
-	}
+	}*/
 
+	/*
 	public int getCurrentFrameIndex(){
 		int keyFrameIndex = -1;
 
@@ -206,7 +187,7 @@ public class Entity {
 		}
 
 		return keyFrameIndex;
-	}
+	}*/
 
 	public void init(float startX, float startY){
 		this.currentPlayerPosition.x = startX;
@@ -240,19 +221,19 @@ public class Entity {
 		float reductionAmount = 1.0f - percentageReduced; //.8f for 20% (1 - .20)
 
 		if( reductionAmount > 0 && reductionAmount < 1){
-			width = WIDTH * reductionAmount; //reduce by 20%
-			height = HEIGHT * reductionAmount; //reduce by 20%
+			width = FRAME_WIDTH * reductionAmount; //reduce by 20%
+			height = FRAME_HEIGHT * reductionAmount; //reduce by 20%
 		}else{
-			width = WIDTH;
-			height = HEIGHT;
+			width = FRAME_WIDTH;
+			height = FRAME_HEIGHT;
 		}
 
 		if( width == 0 || height == 0){
 			Gdx.app.debug(TAG, "Width and Height are 0!! " + width + ":" + height);
 		}
 
-		xOffset = (WIDTH - width)/2;
-		yOffset =  (HEIGHT - height)/2;
+		xOffset = (FRAME_WIDTH - width)/2;
+		yOffset =  (FRAME_HEIGHT - height)/2;
 
 		//Gdx.app.debug(TAG, "Reduction amount: " + width + ":" + height);
 		//Gdx.app.debug(TAG, "Regular amount: " + WIDTH + ":" + HEIGHT);
@@ -264,9 +245,17 @@ public class Entity {
 		boundingBox.set( minX,minY,width,height);
 		//Gdx.app.debug(TAG, "SETTING Bounding Box: " + minX + "," + minY + "width " + width + " height " + height);
 	}
+
+	private void loadDefaultSprite()
+	{
+		Texture texture = Utility.getTextureAsset(defaultSpritePath);
+		TextureRegion[][] textureFrames = TextureRegion.split(texture, FRAME_WIDTH, FRAME_HEIGHT);
+		frameSprite = new Sprite(textureFrames[0][0].getTexture(), 0,0,FRAME_WIDTH, FRAME_HEIGHT);
+	}
 	
 	private void loadTextures(){
 		//Walking animation
+		/*
 		if(	walkingCycle == null && Utility.isAssetLoaded(imagePath)){
 			walkingCycle = Utility.getTextureAsset(imagePath);
 			loadedWalkAnimationImagePath = imagePath;
@@ -277,7 +266,8 @@ public class Entity {
 			}
 			
 			TextureRegion[] walkCycleFrames = getFramesfromImage(walkingCycle);
-			
+
+
 	        walkAnimation = new Animation(0.11f, walkCycleFrames);
 	        walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
 	        
@@ -299,9 +289,12 @@ public class Entity {
 
 	        //Now that the Height and Width are set, we need to set the boundingbox
 	        setBoundingBoxSize(0f);
+
 		}
+		*/
 	}
-	
+
+	/*
 	public void loadWalkingAnimation(int numRows, int numColumns, int totalFrames)
 	{
 		walkingAnimStartRowIndex = 0;
@@ -327,14 +320,10 @@ public class Entity {
 		walkingCycle = null;
 		
 		Utility.loadTextureAsset(imagePath);
-	}
-
-	public void setEntityImagePath(String imagePath){
-		this.imagePath = imagePath;		  
-	}
+	}*/
 	
 	public void dispose(){
-		Utility.unloadAsset(imagePath);
+		//Utility.unloadAsset(imagePath);
 	}
 	
 	public void setState(State state){
@@ -348,7 +337,8 @@ public class Entity {
 	public Sprite getFrameSprite(){
 		return frameSprite;
 	}
-	
+
+    /*
 	protected TextureRegion[] getFramesfromImage(Texture sourceImage){	
 		//Handle walking animation of main character
 		final int sourceCycleRow = walkingAnimRows;
@@ -376,6 +366,7 @@ public class Entity {
         
         return textureFrames;
 	}
+	*/
 	
 	public Vector2 getNextPosition(){
 		return nextPlayerPosition;
@@ -414,7 +405,7 @@ public class Entity {
 			break;
 		}
 		
-		frameSprite.setRotation(rotationDegrees);
+		//frameSprite.setRotation(rotationDegrees);
 	}
 
 	public Direction getCurrentDirection(){
@@ -427,22 +418,21 @@ public class Entity {
 
 	
 	public void setNextPositionToCurrent(){
-		if( state == State.PAUSE){
-			return;
-		}
+		//if( state == State.PAUSE){
+		//	return;
+		//}
 
 		frameSprite.setX(nextPlayerPosition.x);
 		frameSprite.setY(nextPlayerPosition.y);
 		setCurrentPosition(nextPlayerPosition.x, nextPlayerPosition.y);
-		//Gdx.app.debug(TAG, "NOT BLOCKED: Setting nextPosition as Current: (" + nextPlayerPosition.x + "," + nextPlayerPosition.y + ")"  );		
-
+		Gdx.app.debug(TAG, "Setting nextPosition as Current: (" + nextPlayerPosition.x + "," + nextPlayerPosition.y + ")"  );
 	}
 	
 	
 	public void calculateNextPosition(Direction currentDirection, float deltaTime){
-		if( state == State.PAUSE){
-			return;
-		}
+		//if( state == State.PAUSE){
+		//	return;
+		//}
 
 
 		float testX = currentPlayerPosition.x;
