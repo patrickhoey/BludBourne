@@ -235,22 +235,22 @@ public class PlayerController implements InputProcessor {
 			Gdx.app.debug(TAG, "LEFT key");
 			BludBourne._player.calculateNextPosition(Entity.Direction.LEFT, delta);
 			BludBourne._player.setState(Entity.State.WALKING);
-			BludBourne._player.setDirection(Entity.Direction.LEFT);
+			BludBourne._player.setDirection(Entity.Direction.LEFT, delta);
 		}else if( keys.get(Keys.RIGHT)){
 			Gdx.app.debug(TAG, "RIGHT key");
 			BludBourne._player.calculateNextPosition(Entity.Direction.RIGHT, delta);
 			BludBourne._player.setState(Entity.State.WALKING);
-			BludBourne._player.setDirection(Entity.Direction.RIGHT);
+			BludBourne._player.setDirection(Entity.Direction.RIGHT, delta);
 		}else if( keys.get(Keys.UP)){
 			Gdx.app.debug(TAG, "UP key");
 			BludBourne._player.calculateNextPosition(Entity.Direction.UP, delta);
 			BludBourne._player.setState(Entity.State.WALKING);
-			BludBourne._player.setDirection(Entity.Direction.UP);
+			BludBourne._player.setDirection(Entity.Direction.UP, delta);
 		}else if(keys.get(Keys.DOWN)){
 			Gdx.app.debug(TAG, "DOWN key");
 			BludBourne._player.calculateNextPosition(Entity.Direction.DOWN, delta);
 			BludBourne._player.setState(Entity.State.WALKING);
-			BludBourne._player.setDirection(Entity.Direction.DOWN);
+			BludBourne._player.setDirection(Entity.Direction.DOWN, delta);
 		}else if(keys.get(Keys.QUIT)){
 			Gdx.app.exit();
 		}else{

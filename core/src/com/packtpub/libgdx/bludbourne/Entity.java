@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Array;
 
 public class Entity {
 	
@@ -27,11 +28,22 @@ public class Entity {
 
 
 	protected State state = State.IDLE;
-	protected float frameTime = 0f;
 
-	protected Sprite frameSprite;
+	protected float frameTime = 0f;
+	protected Sprite frameSprite = null;
+	protected TextureRegion currentFrame = null;
 	private Direction currentDirection = Direction.LEFT;
 	private Direction previousDirection = Direction.UP;
+
+	private Animation walkLeftAnimation;
+	private Animation walkRightAnimation;
+	private Animation walkUpAnimation;
+	private Animation walkDownAnimation;
+
+	private Array<TextureRegion> walkLeftFrames;
+	private Array<TextureRegion> walkRightFrames;
+	private Array<TextureRegion> walkUpFrames;
+	private Array<TextureRegion> walkDownFrames;
 
 	protected float rotationDegrees = 0;
 	protected Vector2 nextPlayerPosition;
@@ -94,7 +106,7 @@ public class Entity {
 
 		Utility.loadTextureAsset(defaultSpritePath);
 		loadDefaultSprite();
-
+		loadAllAnimations();
 	}
 
 
@@ -111,83 +123,7 @@ public class Entity {
 
 	public void update(float delta){
 		frameTime += delta;
-
-		//loadTextures();
-
-		/*
-		TextureRegion currentFrame = getCurrentFrame(delta);
-
-		if( currentFrame == null || frameSprite == null){
-			Gdx.app.debug(TAG, "Sprite/currentFrame is null for nextPosition" );
-			return;
-		}
-
-		//Gdx.app.debug(TAG, "Current Region Width: " + currentFrame.getRegionWidth() + " and height: " + currentFrame.getRegionHeight()  );
-
-		frameSprite.setRegion(currentFrame);
-
-		//Gdx.app.debug(TAG, "FrameSprite Region Width: " + frameSprite.getRegionWidth() + " and height: " + frameSprite.getRegionHeight()  );
-        */
 	}
-
-	/*
-	public TextureRegion getCurrentFrame(float delta){
-
-		if( walkAnimation == null ){
-			Gdx.app.debug(TAG, "Current animation is NULL..." );
-			return null;
-		}
-
-		TextureRegion currentFrame = null;
-
-		if( state == State.WALKING ){
-			currentFrame = walkAnimation.getKeyFrame(frameTime, false);
-		}else if( state == State.ANIMATED){
-			if( (walkAnimation.getPlayMode() == Animation.PlayMode.NORMAL ||
-					walkAnimation.getPlayMode() == Animation.PlayMode.REVERSED) &&
-					walkAnimation.isAnimationFinished(frameTime))
-			{
-				//If we are playing once (normal or reversed) and we are done, set to idle
-				state = State.IDLE;
-				walkAnimation.setPlayMode(Animation.PlayMode.NORMAL);
-				currentFrame = walkAnimation.getKeyFrame(idleKeyFrame, false);
-			}else{
-				currentFrame = walkAnimation.getKeyFrame(frameTime, false);
-			}
-		}else if( state == State.ANIMATE_ONCE){
-			walkAnimation.setPlayMode(Animation.PlayMode.NORMAL);
-			frameTime = 0f;
-			state = State.ANIMATED;
-			currentFrame = walkAnimation.getKeyFrame(frameTime, false);
-		}else if( state == State.ANIMATE_ONCE_REVERSE ){
-			walkAnimation.setPlayMode(Animation.PlayMode.REVERSED);
-			frameTime = 0f;
-			state = State.ANIMATED;
-			currentFrame = walkAnimation.getKeyFrame(frameTime, false);
-		}else if( state == State.IDLE ){
-			currentFrame = walkAnimation.getKeyFrame(idleKeyFrame, false);
-		}
-
-		return currentFrame;
-	}*/
-
-	/*
-	public int getCurrentFrameIndex(){
-		int keyFrameIndex = -1;
-
-		if( walkAnimation == null ){
-			Gdx.app.debug(TAG, "Current animation is NULL..." );
-			return keyFrameIndex;
-		}
-
-		if( state == State.WALKING || state == State.ANIMATED){
-			keyFrameIndex = walkAnimation.getKeyFrameIndex(frameTime);
-		}else if( state == State.IDLE ){
-			keyFrameIndex = 0;
-		}
-
-		return keyFrameIndex;
-	}*/
 
 	public void init(float startX, float startY){
 		this.currentPlayerPosition.x = startX;
@@ -251,77 +187,51 @@ public class Entity {
 		Texture texture = Utility.getTextureAsset(defaultSpritePath);
 		TextureRegion[][] textureFrames = TextureRegion.split(texture, FRAME_WIDTH, FRAME_HEIGHT);
 		frameSprite = new Sprite(textureFrames[0][0].getTexture(), 0,0,FRAME_WIDTH, FRAME_HEIGHT);
+		currentFrame = textureFrames[0][0];
 	}
 	
-	private void loadTextures(){
+	private void loadAllAnimations(){
 		//Walking animation
-		/*
-		if(	walkingCycle == null && Utility.isAssetLoaded(imagePath)){
-			walkingCycle = Utility.getTextureAsset(imagePath);
-			loadedWalkAnimationImagePath = imagePath;
-			
-			if( walkingCycle == null ){
-				Gdx.app.debug(TAG, "Walking Texture is null" );
-				return;
+		Texture texture = Utility.getTextureAsset(defaultSpritePath);
+		TextureRegion[][] textureFrames = TextureRegion.split(texture, FRAME_WIDTH, FRAME_HEIGHT);
+
+		walkDownFrames = new Array<TextureRegion>(4);
+		walkLeftFrames = new Array<TextureRegion>(4);
+		walkRightFrames = new Array<TextureRegion>(4);
+		walkUpFrames = new Array<TextureRegion>(4);
+
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				//Gdx.app.debug(TAG, "Got frame " + i + "," + j + " from " + sourceImage);
+				TextureRegion region = textureFrames[i][j];
+				if( region == null ){
+					Gdx.app.debug(TAG, "Got null animation frame " + i + "," + j);
+				}
+				switch(i)
+				{
+					case 0:
+						walkDownFrames.insert(j,region);
+						break;
+					case 1:
+						walkLeftFrames.insert(j,region);
+						break;
+					case 2:
+						walkRightFrames.insert(j,region);
+						break;
+					case 3:
+						walkUpFrames.insert(j,region);
+						break;
+				}
 			}
-			
-			TextureRegion[] walkCycleFrames = getFramesfromImage(walkingCycle);
-
-
-	        walkAnimation = new Animation(0.11f, walkCycleFrames);
-	        walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
-	        
-	        //get the first frame so we can render something
-	        TextureRegion currentFrame = walkAnimation.getKeyFrame(idleKeyFrame, false);
-	        
-			if( currentFrame == null ){
-				Gdx.app.debug(TAG, "Current frame is null" );
-				return;
-			}
-			
-	        frameSprite.setRegion(currentFrame);
-	        frameSprite.setOrigin(currentFrame.getRegionWidth()/2, currentFrame.getRegionHeight()/2);
-	        frameSprite.setSize(currentFrame.getRegionWidth(), currentFrame.getRegionHeight());
-	        
-	        //We are doing a 1 pixel for every unit for the game
-	        WIDTH = 1f * currentFrame.getRegionWidth();
-	        HEIGHT = 1f * currentFrame.getRegionHeight();
-
-	        //Now that the Height and Width are set, we need to set the boundingbox
-	        setBoundingBoxSize(0f);
-
 		}
-		*/
+
+
+		walkDownAnimation = new Animation(0.25f, walkDownFrames, Animation.PlayMode.LOOP);
+		walkLeftAnimation = new Animation(0.25f, walkLeftFrames, Animation.PlayMode.LOOP);
+		walkRightAnimation = new Animation(0.25f, walkRightFrames, Animation.PlayMode.LOOP);
+		walkUpAnimation = new Animation(0.25f, walkUpFrames, Animation.PlayMode.LOOP);
 	}
 
-	/*
-	public void loadWalkingAnimation(int numRows, int numColumns, int totalFrames)
-	{
-		walkingAnimStartRowIndex = 0;
-		walkingAnimStartColIndex = 0;
-		
-		initWalkingAnim(numRows, numColumns, totalFrames);
-	}
-	
-	public void loadWalkingAnimation(int startRowIndex, int startColIndex, int numRows, int numColumns, int totalFrames)
-	{
-		walkingAnimStartRowIndex = startRowIndex;
-		walkingAnimStartColIndex = startColIndex;
-		
-		initWalkingAnim(numRows, numColumns, totalFrames);
-	}
-	
-	private void initWalkingAnim(int numRows, int numColumns, int totalFrames){
-		walkingAnimRows = numRows;
-		walkingAnimCols = numColumns;
-		walkingAnimFrames = totalFrames;
-		
-		Utility.unloadAsset(loadedWalkAnimationImagePath);
-		walkingCycle = null;
-		
-		Utility.loadTextureAsset(imagePath);
-	}*/
-	
 	public void dispose(){
 		//Utility.unloadAsset(imagePath);
 	}
@@ -338,35 +248,9 @@ public class Entity {
 		return frameSprite;
 	}
 
-    /*
-	protected TextureRegion[] getFramesfromImage(Texture sourceImage){	
-		//Handle walking animation of main character
-		final int sourceCycleRow = walkingAnimRows;
-		final int sourceCycleCol = walkingAnimCols;
-
-		int frameWidth = sourceImage.getWidth()  / sourceCycleCol;
-		int frameHeight = sourceImage.getHeight() / sourceCycleRow;
-		
-		TextureRegion[][] temp = TextureRegion.split(sourceImage, frameWidth, frameHeight);  
-		
-		TextureRegion[] textureFrames = new TextureRegion[walkingAnimFrames];
-
-		int index = 0;
-        for (int i = walkingAnimStartRowIndex; i < sourceCycleRow && index < walkingAnimFrames; i++) {
-                for (int j = walkingAnimStartColIndex; j < sourceCycleCol && index < walkingAnimFrames; j++) {
-                	//Gdx.app.debug(TAG, "Got frame " + i + "," + j + " from " + sourceImage);
-                	TextureRegion region = temp[i][j];
-                	if( region == null ){
-                		Gdx.app.debug(TAG, "Got null animation frame " + i + "," + j + " from " + sourceImage);
-                	}
-                	textureFrames[index] = region;
-                	index++;
-                }
-        }
-        
-        return textureFrames;
+	public TextureRegion getFrame(){
+		return currentFrame;
 	}
-	*/
 	
 	public Vector2 getNextPosition(){
 		return nextPlayerPosition;
@@ -386,26 +270,28 @@ public class Entity {
 		this.currentPlayerPosition.y = currentPositionY;
 	}
 	
-	public void setDirection(Direction direction){
+	public void setDirection(Direction direction,  float deltaTime){
 		this.previousDirection = this.currentDirection;
 		this.currentDirection = direction;
 		
 		//Look into the appropriate variable when changing position
 
 		switch (currentDirection) {
-		case DOWN : rotationDegrees = 0;
-		break;
-		case LEFT : rotationDegrees = 270;
-		break;
-		case UP : rotationDegrees = 180;
-		break;
-		case RIGHT : rotationDegrees = 90;
-		break;
+		case DOWN :
+			currentFrame = walkDownAnimation.getKeyFrame(frameTime);
+			break;
+		case LEFT :
+			currentFrame = walkLeftAnimation.getKeyFrame(frameTime);
+			break;
+		case UP :
+			currentFrame = walkUpAnimation.getKeyFrame(frameTime);
+			break;
+		case RIGHT :
+			currentFrame = walkRightAnimation.getKeyFrame(frameTime);
+			break;
 		default:
 			break;
 		}
-		
-		//frameSprite.setRotation(rotationDegrees);
 	}
 
 	public Direction getCurrentDirection(){
@@ -425,7 +311,7 @@ public class Entity {
 		frameSprite.setX(nextPlayerPosition.x);
 		frameSprite.setY(nextPlayerPosition.y);
 		setCurrentPosition(nextPlayerPosition.x, nextPlayerPosition.y);
-		Gdx.app.debug(TAG, "Setting nextPosition as Current: (" + nextPlayerPosition.x + "," + nextPlayerPosition.y + ")"  );
+		Gdx.app.debug(TAG, "Setting nextPosition as Current: (" + nextPlayerPosition.x + "," + nextPlayerPosition.y + ")");
 	}
 	
 	

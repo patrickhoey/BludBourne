@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.packtpub.libgdx.bludbourne.BludBourne;
@@ -29,6 +30,7 @@ public class MainGameScreen implements Screen {
 
 	private final float unitScale  = 1/16f;
 	private String _overviewMap = "maps/world.tmx";
+	private TextureRegion currentPlayerFrame;
 	private Sprite currentPlayerSprite;
 
 	//private final static String MAP_BACKGROUND_LAYER = "MAP_BACKGROUND_LAYER";
@@ -58,7 +60,6 @@ public class MainGameScreen implements Screen {
 		mapRenderer = new OrthogonalTiledMapRenderer(currentMap, unitScale);
 		mapRenderer.setView(camera);
 
-
 		currentPlayerSprite = BludBourne._player.getFrameSprite();
 
 		_controller = new PlayerController();
@@ -74,6 +75,8 @@ public class MainGameScreen implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		currentPlayerFrame = BludBourne._player.getFrame();
+
 		//Preferable to lock and center the camera to the player's position
 		camera.position.set(currentPlayerSprite.getX(), currentPlayerSprite.getY(), 0f);
 		camera.update();
@@ -85,7 +88,7 @@ public class MainGameScreen implements Screen {
 		mapRenderer.render();
 
 		mapRenderer.getBatch().begin();
-		mapRenderer.getBatch().draw(currentPlayerSprite, currentPlayerSprite.getX(), currentPlayerSprite.getY(), 1,1);
+		mapRenderer.getBatch().draw(currentPlayerFrame, currentPlayerSprite.getX(), currentPlayerSprite.getY(), 1,1);
 		mapRenderer.getBatch().end();
 	}
 
