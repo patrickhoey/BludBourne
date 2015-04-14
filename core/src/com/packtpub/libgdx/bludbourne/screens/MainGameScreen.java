@@ -29,7 +29,12 @@ public class MainGameScreen implements Screen {
 	private static final String TAG = MainGameScreen.class.getSimpleName();
 
 	private final float unitScale  = 1/16f;
-	private String _overviewMap = "maps/world.tmx";
+
+	private String _overviewMap = "maps/topworld.tmx";
+	private String _townMap = "maps/town.tmx";
+	private String _castleDoom = "maps/castle_of_doom.tmx";
+
+	private String _defaultMap = _castleDoom;
 	private TextureRegion currentPlayerFrame;
 	private Sprite currentPlayerSprite;
 
@@ -46,9 +51,9 @@ public class MainGameScreen implements Screen {
 		//camera setup
 		setupViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-		Utility.loadMapAsset(_overviewMap);
-		if( Utility.isAssetLoaded(_overviewMap) ) {
-			currentMap = Utility.getMapAsset(_overviewMap);
+		Utility.loadMapAsset(_defaultMap);
+		if( Utility.isAssetLoaded(_defaultMap) ) {
+			currentMap = Utility.getMapAsset(_defaultMap);
 		}else{
 			Gdx.app.debug(TAG, "Map not loaded" );
 		}
@@ -75,6 +80,7 @@ public class MainGameScreen implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
 		currentPlayerFrame = BludBourne._player.getFrame();
 
 		//Preferable to lock and center the camera to the player's position
@@ -83,6 +89,9 @@ public class MainGameScreen implements Screen {
 
 		_controller.update(delta);
 		BludBourne._player.update(delta);
+
+		//mapRenderer.getBatch().enableBlending();
+		//mapRenderer.getBatch().setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
 		mapRenderer.setView(camera);
 		mapRenderer.render();
