@@ -206,18 +206,8 @@ public class PlayerController implements InputProcessor {
 	
 	
 	public void update(float delta){
-		//if( delta == 0 || BludBourne._player.getState() == Entity.State.PAUSE){
-		//	return;
-		//}
-
 		processInput(delta);
-		
-		//if( !isCollisionWithNextPosition() ){
-		BludBourne._player.setNextPositionToCurrent();
-		//}
-		
 		//Gdx.app.debug(TAG, "update:: Next Position: (" + player.getNextPosition().x + "," + player.getNextPosition().y + ")" + "DELTA: " + delta );
-
 	}
 	
 	public static void hide(){
@@ -232,22 +222,22 @@ public class PlayerController implements InputProcessor {
 		
 		//Keyboard input
 		if( keys.get(Keys.LEFT)){
-			Gdx.app.debug(TAG, "LEFT key");
+			//Gdx.app.debug(TAG, "LEFT key");
 			BludBourne._player.calculateNextPosition(Entity.Direction.LEFT, delta);
 			BludBourne._player.setState(Entity.State.WALKING);
 			BludBourne._player.setDirection(Entity.Direction.LEFT, delta);
 		}else if( keys.get(Keys.RIGHT)){
-			Gdx.app.debug(TAG, "RIGHT key");
+			//Gdx.app.debug(TAG, "RIGHT key");
 			BludBourne._player.calculateNextPosition(Entity.Direction.RIGHT, delta);
 			BludBourne._player.setState(Entity.State.WALKING);
 			BludBourne._player.setDirection(Entity.Direction.RIGHT, delta);
 		}else if( keys.get(Keys.UP)){
-			Gdx.app.debug(TAG, "UP key");
+			//Gdx.app.debug(TAG, "UP key");
 			BludBourne._player.calculateNextPosition(Entity.Direction.UP, delta);
 			BludBourne._player.setState(Entity.State.WALKING);
 			BludBourne._player.setDirection(Entity.Direction.UP, delta);
 		}else if(keys.get(Keys.DOWN)){
-			Gdx.app.debug(TAG, "DOWN key");
+			//Gdx.app.debug(TAG, "DOWN key");
 			BludBourne._player.calculateNextPosition(Entity.Direction.DOWN, delta);
 			BludBourne._player.setState(Entity.State.WALKING);
 			BludBourne._player.setDirection(Entity.Direction.DOWN, delta);
@@ -264,12 +254,5 @@ public class PlayerController implements InputProcessor {
 		}
 
 	}
-
-	/*
-	private boolean isCollisionWithNextPosition(){
-		boolean isMapCollision = BludBourne._mainGameScreen.isCollisionWithMap(BludBourne._player);
-		return isMapCollision;
-	}
-    */
 
 }

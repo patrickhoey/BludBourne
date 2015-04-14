@@ -24,7 +24,7 @@ public class Entity {
 	
 	private String entityID;
 	
-	protected Rectangle boundingBox;
+	public static Rectangle boundingBox;
 
 
 	protected State state = State.IDLE;
@@ -123,6 +123,9 @@ public class Entity {
 
 	public void update(float delta){
 		frameTime += delta;
+
+		//We want the hitbox to be at the feet for a better feel
+		setBoundingBoxSize(0f, 0.5f);
 	}
 
 	public void init(float startX, float startY){
@@ -135,51 +138,36 @@ public class Entity {
 		//Gdx.app.debug(TAG, "Calling INIT" );
 	}
 
-	public Rectangle getEntityBoundingBox(){
-		//Update the current bounding box
-		if( frameSprite == null ){
-			Gdx.app.debug(TAG, "Framesprite for getEntityBoundingBox() is NULL");
-			return boundingBox;
-		}
-
-		//Gdx.app.debug(TAG, "GETTING Bounding Box: " + boundingBox.getX() + "," + boundingBox.getY() + "width " + boundingBox.getWidth() + " height " + boundingBox.getHeight());
-
-		return boundingBox;
-	}
-
-	public void setBoundingBoxSize(float percentageReduced){
+	public void setBoundingBoxSize(float percentageWidthReduced, float percentageHeightReduced){
 		//Update the current bounding box
 		float width;
 		float height;
-		float xOffset;
-		float yOffset;
 
-		float reductionAmount = 1.0f - percentageReduced; //.8f for 20% (1 - .20)
+		float widthReductionAmount = 1.0f - percentageWidthReduced; //.8f for 20% (1 - .20)
+		float heightReductionAmount = 1.0f - percentageHeightReduced; //.8f for 20% (1 - .20)
 
-		if( reductionAmount > 0 && reductionAmount < 1){
-			width = FRAME_WIDTH * reductionAmount; //reduce by 20%
-			height = FRAME_HEIGHT * reductionAmount; //reduce by 20%
+		if( widthReductionAmount > 0 && widthReductionAmount < 1){
+			width = FRAME_WIDTH * widthReductionAmount;
 		}else{
 			width = FRAME_WIDTH;
+		}
+
+		if( heightReductionAmount > 0 && heightReductionAmount < 1){
+			height = FRAME_HEIGHT * heightReductionAmount;
+		}else{
 			height = FRAME_HEIGHT;
 		}
+
 
 		if( width == 0 || height == 0){
 			Gdx.app.debug(TAG, "Width and Height are 0!! " + width + ":" + height);
 		}
 
-		xOffset = (FRAME_WIDTH - width)/2;
-		yOffset =  (FRAME_HEIGHT - height)/2;
+		float minX = nextPlayerPosition.x;
+		float minY = nextPlayerPosition.y;
 
-		//Gdx.app.debug(TAG, "Reduction amount: " + width + ":" + height);
-		//Gdx.app.debug(TAG, "Regular amount: " + WIDTH + ":" + HEIGHT);
-		//Gdx.app.debug(TAG, "Offset amount: " + xOffset + "," + yOffset);
-
-		float minX = nextPlayerPosition.x + xOffset;
-		float minY = nextPlayerPosition.y + yOffset;
-
-		boundingBox.set( minX,minY,width,height);
-		//Gdx.app.debug(TAG, "SETTING Bounding Box: " + minX + "," + minY + "width " + width + " height " + height);
+		boundingBox.set(minX, minY, width, height);
+		//Gdx.app.debug(TAG, "SETTING Bounding Box: (" + minX + "," + minY + ")  width: " + width + " height: " + height);
 	}
 
 	private void loadDefaultSprite()
@@ -304,26 +292,16 @@ public class Entity {
 
 	
 	public void setNextPositionToCurrent(){
-		//if( state == State.PAUSE){
-		//	return;
-		//}
-
 		frameSprite.setX(nextPlayerPosition.x);
 		frameSprite.setY(nextPlayerPosition.y);
 		setCurrentPosition(nextPlayerPosition.x, nextPlayerPosition.y);
-		Gdx.app.debug(TAG, "Setting nextPosition as Current: (" + nextPlayerPosition.x + "," + nextPlayerPosition.y + ")");
+		//Gdx.app.debug(TAG, "Setting nextPosition as Current: (" + nextPlayerPosition.x + "," + nextPlayerPosition.y + ")");
 	}
 	
 	
 	public void calculateNextPosition(Direction currentDirection, float deltaTime){
-		//if( state == State.PAUSE){
-		//	return;
-		//}
-
-
 		float testX = currentPlayerPosition.x;
 		float testY = currentPlayerPosition.y;
-
 
 		//Gdx.app.debug(TAG, "calculateNextPosition:: Current Position: (" + currentPlayerPosition.x + "," + currentPlayerPosition.y + ")"  );
 		//Gdx.app.debug(TAG, "calculateNextPosition:: Current Direction: " + currentDirection  );

@@ -14,7 +14,7 @@ public class BludBourne extends Game {
 	@Override
 	public void create(){
 		_player = new Entity();
-		_player.init(0f,0f);
+		_player.init(20f,20f);
 		setScreen(_mainGameScreen);
 	}
 

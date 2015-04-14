@@ -6,8 +6,14 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import com.packtpub.libgdx.bludbourne.BludBourne;
 import com.packtpub.libgdx.bludbourne.PlayerController;
 import com.packtpub.libgdx.bludbourne.Utility;
@@ -39,6 +45,7 @@ public class MainGameScreen implements Screen {
 	private Sprite currentPlayerSprite;
 
 	//private final static String MAP_BACKGROUND_LAYER = "MAP_BACKGROUND_LAYER";
+	private final static String MAP_COLLISION_LAYER = "MAP_COLLISION_LAYER";
 	private OrthogonalTiledMapRenderer mapRenderer = null;
 	private OrthographicCamera camera = null;
 	private TiledMap currentMap = null;
@@ -64,6 +71,7 @@ public class MainGameScreen implements Screen {
 
 		mapRenderer = new OrthogonalTiledMapRenderer(currentMap, unitScale);
 		mapRenderer.setView(camera);
+		Gdx.app.debug(TAG, "UnitScale value is: " + mapRenderer.getUnitScale());
 
 		currentPlayerSprite = BludBourne._player.getFrameSprite();
 
@@ -80,15 +88,17 @@ public class MainGameScreen implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
-		currentPlayerFrame = BludBourne._player.getFrame();
-
 		//Preferable to lock and center the camera to the player's position
 		camera.position.set(currentPlayerSprite.getX(), currentPlayerSprite.getY(), 0f);
 		camera.update();
 
-		_controller.update(delta);
 		BludBourne._player.update(delta);
+		currentPlayerFrame = BludBourne._player.getFrame();
+
+		if( !isCollisionWithMap(BludBourne._player.boundingBox) ){
+			BludBourne._player.setNextPositionToCurrent();
+		}
+		_controller.update(delta);
 
 		//mapRenderer.getBatch().enableBlending();
 		//mapRenderer.getBatch().setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -151,35 +161,50 @@ public class MainGameScreen implements Screen {
 		Gdx.app.debug(TAG, "WorldRenderer: physical: (" + VIEWPORT.physicalWidth + "," + VIEWPORT.physicalHeight + ")" );
 	}
 
-	/*
+
 	public boolean isCollisionWithMap(Rectangle boundingBox){
 
 		if( currentMap == null ) return false;
 
-		TiledMapTileLayer mapLayer =  (TiledMapTileLayer)currentMap.getLayers().get(currentMap.getMapCollisionLayer());
+		MapLayer mapCollisionLayer =  currentMap.getLayers().get(MAP_COLLISION_LAYER);
 
-		String mapCollisionObjectLayer = currentMap.getMapCollisionObjectLayer();
-
-		if( mapCollisionObjectLayer != null ){
-			MapLayer collisionLayer =  (MapLayer)currentMap.getLayers().get(mapCollisionObjectLayer);
-			boolean isCollision = isPixelCollisionWithMapLayer(boundingBox, mapLayer, collisionLayer);
-
-			if( isCollision ){
+		if( mapCollisionLayer != null ) {
+			if (isCollisionWithMapLayer(boundingBox, mapCollisionLayer)) {
 				return true;
+			} else {
+				return false;
+			}
+		}
+		else{
+			return false;
+		}
+	}
+
+	private boolean isCollisionWithMapLayer(Rectangle boundingBox, MapLayer collisionLayer){
+		if( collisionLayer == null ){
+			return false;
+		}
+
+		//Gdx.app.debug(TAG, "Checking collision layer...");
+		//Need to account for the unitscale, since the map coordinates will be in pixels
+		if( unitScale > 0 )
+			boundingBox.setPosition(boundingBox.x/unitScale, boundingBox.y/unitScale);
+
+		Rectangle rectangle = null;
+
+		for( MapObject object: collisionLayer.getObjects()){
+			if(object instanceof RectangleMapObject) {
+				rectangle = ((RectangleMapObject)object).getRectangle();
+				//Gdx.app.debug(TAG, "Collision Rect (" + rectangle.x + "," + rectangle.y + ")");
+				//Gdx.app.debug(TAG, "Player Rect (" + boundingBox.x + "," + boundingBox.y + ")");
+				if( boundingBox.overlaps(rectangle) ){
+					return true;
+				}
 			}
 		}
 
-		String mapCollisionLayer = currentMap.getMapWallCollisionLayer();
-
-		if( mapCollisionLayer != null ){
-			TiledMapTileLayer mapWallLayer =  (TiledMapTileLayer)currentMap.getLayers().get(mapCollisionLayer);
-			boolean isWallCollision = isCollisionWithMapLayer(boundingBox, mapWallLayer);
-
-			if( isWallCollision ){
-				return true;
-			}
-		}
 		return false;
 	}
-	*/
+
+
 }
