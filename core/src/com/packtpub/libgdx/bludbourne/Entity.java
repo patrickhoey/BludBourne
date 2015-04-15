@@ -122,7 +122,9 @@ public class Entity {
 	}
 
 	public void update(float delta){
-		frameTime += delta;
+		frameTime = (frameTime + delta)%5; //Want to avoid overflow
+
+		//Gdx.app.debug(TAG, "frametime: " + frameTime );
 
 		//We want the hitbox to be at the feet for a better feel
 		setBoundingBoxSize(0f, 0.5f);
