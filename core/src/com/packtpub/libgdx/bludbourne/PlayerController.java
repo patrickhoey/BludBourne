@@ -207,7 +207,7 @@ public class PlayerController implements InputProcessor {
 	
 	public void update(float delta){
 		processInput(delta);
-		//Gdx.app.debug(TAG, "update:: Next Position: (" + player.getNextPosition().x + "," + player.getNextPosition().y + ")" + "DELTA: " + delta );
+		//Gdx.app.debug(TAG, "update:: Next Position: (" + BludBourne._player.getNextPosition().x + "," + BludBourne._player.getNextPosition().y + ")" + "DELTA: " + delta);
 	}
 	
 	public static void hide(){

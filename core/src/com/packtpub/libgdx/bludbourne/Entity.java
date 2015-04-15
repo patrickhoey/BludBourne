@@ -165,8 +165,16 @@ public class Entity {
 			Gdx.app.debug(TAG, "Width and Height are 0!! " + width + ":" + height);
 		}
 
-		float minX = nextPlayerPosition.x;
-		float minY = nextPlayerPosition.y;
+		//Need to account for the unitscale, since the map coordinates will be in pixels
+		float minX;
+		float minY;
+		if( MapManager.UNIT_SCALE > 0 ) {
+			minX = nextPlayerPosition.x / MapManager.UNIT_SCALE;
+			minY = nextPlayerPosition.y / MapManager.UNIT_SCALE;
+		}else{
+			minX = nextPlayerPosition.x;
+			minY = nextPlayerPosition.y;
+		}
 
 		boundingBox.set(minX, minY, width, height);
 		//Gdx.app.debug(TAG, "SETTING Bounding Box: (" + minX + "," + minY + ")  width: " + width + " height: " + height);
@@ -250,14 +258,28 @@ public class Entity {
 		this.nextPlayerPosition.x = nextPositionX;
 		this.nextPlayerPosition.y = nextPositionY;
 	}
+
+	public void setNextPosition(Vector2 nextPosition){
+		this.nextPlayerPosition.x = nextPosition.x;
+		this.nextPlayerPosition.y = nextPosition.y;
+	}
 	
 	public Vector2 getCurrentPosition(){
 		return currentPlayerPosition;
 	}
 	
 	public void setCurrentPosition(float currentPositionX, float currentPositionY){
+		frameSprite.setX(currentPositionX);
+		frameSprite.setY(currentPositionY);
 		this.currentPlayerPosition.x = currentPositionX;
 		this.currentPlayerPosition.y = currentPositionY;
+	}
+
+	public void setCurrentPosition(Vector2 currentPosition){
+		frameSprite.setX(currentPosition.x);
+		frameSprite.setY(currentPosition.y);
+		this.currentPlayerPosition.x = currentPosition.x;
+		this.currentPlayerPosition.y = currentPosition.y;
 	}
 	
 	public void setDirection(Direction direction,  float deltaTime){
@@ -294,8 +316,6 @@ public class Entity {
 
 	
 	public void setNextPositionToCurrent(){
-		frameSprite.setX(nextPlayerPosition.x);
-		frameSprite.setY(nextPlayerPosition.y);
 		setCurrentPosition(nextPlayerPosition.x, nextPlayerPosition.y);
 		//Gdx.app.debug(TAG, "Setting nextPosition as Current: (" + nextPlayerPosition.x + "," + nextPlayerPosition.y + ")");
 	}

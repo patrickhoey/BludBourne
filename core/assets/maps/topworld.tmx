@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="75" height="75" tilewidth="16" tileheight="16" nextobjectid="395">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="75" height="75" tilewidth="16" tileheight="16" nextobjectid="400">
  <tileset firstgid="1" name="Wall" tilewidth="16" tileheight="16">
   <image source="../sprites/Objects/Wall.png" width="320" height="816"/>
  </tileset>
@@ -370,8 +370,14 @@
   <object id="392" x="802" y="880" width="76" height="12"/>
   <object id="393" x="802" y="866" width="12" height="12"/>
   <object id="394" x="866" y="866" width="12" height="12"/>
+  <object id="399" x="404" y="276" width="120" height="40"/>
  </objectgroup>
- <objectgroup name="MAP_SPAWNS">
-  <object id="391" name="PLAYER_START_TOPWORLD" x="256" y="848" width="16" height="16"/>
+ <objectgroup name="MAP_SPAWNS_LAYER">
+  <object id="391" name="PLAYER_START" x="256" y="848" width="16" height="16"/>
+  <object id="398" name="PLAYER_START" x="832" y="144" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup name="MAP_PORTAL_LAYER">
+  <object id="396" name="CASTLE_OF_DOOM" x="880" y="144" width="16" height="16"/>
+  <object id="397" name="TOWN" x="208" y="848" width="16" height="16"/>
  </objectgroup>
 </map>
