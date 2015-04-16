@@ -17,4 +17,10 @@ public class BludBourne extends Game {
 		setScreen(_mainGameScreen);
 	}
 
+	@Override
+	public void dispose(){
+		_player.dispose();
+		_mainGameScreen.dispose();
+	}
+
 }

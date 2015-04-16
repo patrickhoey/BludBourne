@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 
 public class Entity {
@@ -45,7 +44,6 @@ public class Entity {
 	private Array<TextureRegion> walkUpFrames;
 	private Array<TextureRegion> walkDownFrames;
 
-	protected float rotationDegrees = 0;
 	protected Vector2 nextPlayerPosition;
 	protected Vector2 currentPlayerPosition;
 
@@ -55,44 +53,10 @@ public class Entity {
 	
 	public enum Direction {
 		UP,RIGHT,DOWN,LEFT;
-		
-		public Direction getNext() {
-			//Gdx.app.debug(TAG, "Current Direction: " + Direction.values()[(ordinal()) % Direction.values().length] );
-			//Gdx.app.debug(TAG, "Current Direction: " + ordinal() );
-			//Gdx.app.debug(TAG, "Next Direction: " + Direction.values()[(ordinal()+1) % Direction.values().length] );
-			return Direction.values()[(ordinal()+1) % Direction.values().length];
-		}
-		
-		public Direction getRandomNext() {
-			return Direction.values()[MathUtils.random(Direction.values().length-1)];
-		}
-		
-		public Direction getOpposite() {
-			if( this == LEFT){
-				return RIGHT;
-			}else if( this == RIGHT){
-				return LEFT;
-			}else if( this == UP){
-				return DOWN;
-			}else{
-				return UP;
-			}
-		}
-		
 	}
 	
 	public Entity(){
 		initEntity();
-	}
-	
-	public Entity(String entityType){
-		initEntity();
-		/*
-		entityScript = ScriptManager.getInstance().scriptFactory(entityType);
-		if( entityScript != null ){
-			entityScript.create(this);
-		}
-		*/
 	}
 	
 	public void initEntity(){
@@ -107,18 +71,6 @@ public class Entity {
 		Utility.loadTextureAsset(defaultSpritePath);
 		loadDefaultSprite();
 		loadAllAnimations();
-	}
-
-
-	public String getEntityID(){
-		return entityID;
-	}
-
-	public Vector2 getVelocity(){
-		return new Vector2(velocity);
-	}
-	public void setVelocity(Vector2 velocity){
-		this.velocity = velocity;
 	}
 
 	public void update(float delta){
@@ -231,15 +183,11 @@ public class Entity {
 	}
 
 	public void dispose(){
-		//Utility.unloadAsset(imagePath);
+		Utility.unloadAsset(defaultSpritePath);
 	}
 	
 	public void setState(State state){
 		this.state = state;
-	}
-	
-	public State getState(){
-		return state;
 	}
 	
 	public Sprite getFrameSprite(){
@@ -248,20 +196,6 @@ public class Entity {
 
 	public TextureRegion getFrame(){
 		return currentFrame;
-	}
-	
-	public Vector2 getNextPosition(){
-		return nextPlayerPosition;
-	}
-	
-	public void setNextPosition(float nextPositionX, float nextPositionY){
-		this.nextPlayerPosition.x = nextPositionX;
-		this.nextPlayerPosition.y = nextPositionY;
-	}
-
-	public void setNextPosition(Vector2 nextPosition){
-		this.nextPlayerPosition.x = nextPosition.x;
-		this.nextPlayerPosition.y = nextPosition.y;
 	}
 	
 	public Vector2 getCurrentPosition(){
@@ -273,13 +207,6 @@ public class Entity {
 		frameSprite.setY(currentPositionY);
 		this.currentPlayerPosition.x = currentPositionX;
 		this.currentPlayerPosition.y = currentPositionY;
-	}
-
-	public void setCurrentPosition(Vector2 currentPosition){
-		frameSprite.setX(currentPosition.x);
-		frameSprite.setY(currentPosition.y);
-		this.currentPlayerPosition.x = currentPosition.x;
-		this.currentPlayerPosition.y = currentPosition.y;
 	}
 	
 	public void setDirection(Direction direction,  float deltaTime){
@@ -305,15 +232,6 @@ public class Entity {
 			break;
 		}
 	}
-
-	public Direction getCurrentDirection(){
-		return currentDirection;
-	}
-
-	public Direction getPreviousDirection(){
-		return previousDirection;
-	}
-
 	
 	public void setNextPositionToCurrent(){
 		setCurrentPosition(nextPlayerPosition.x, nextPlayerPosition.y);

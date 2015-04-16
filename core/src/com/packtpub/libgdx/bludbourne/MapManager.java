@@ -6,9 +6,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.*;
-import com.badlogic.gdx.math.Rectangle;
 
-import java.awt.*;
 import java.util.Hashtable;
 
 public class MapManager {
