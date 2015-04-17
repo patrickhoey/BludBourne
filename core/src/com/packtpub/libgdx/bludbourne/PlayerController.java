@@ -22,6 +22,24 @@ public class PlayerController implements InputProcessor {
 		SELECT, DOACTION
 	}
 
+	private static Map<Keys, Boolean> keys = new HashMap<PlayerController.Keys, Boolean>();
+	private static Map<Mouse, Boolean> mouseButtons = new HashMap<PlayerController.Mouse, Boolean>();
+	private Vector3 lastMouseCoordinates;
+
+	//initialize the hashmap for inputs
+	static {
+		keys.put(Keys.LEFT, false);
+		keys.put(Keys.RIGHT, false);
+		keys.put(Keys.UP, false);
+		keys.put(Keys.DOWN, false);
+		keys.put(Keys.QUIT, false);
+	};
+
+	static {
+		mouseButtons.put(Mouse.SELECT, false);
+		mouseButtons.put(Mouse.DOACTION, false);
+	};
+
 
 	@Override
 	public boolean keyDown(int keycode) {
@@ -114,24 +132,6 @@ public class PlayerController implements InputProcessor {
 	public boolean scrolled(int amount) {
 		return false;
 	}
-	
-	static Map<Keys, Boolean> keys = new HashMap<PlayerController.Keys, Boolean>();
-	static Map<Mouse, Boolean> mouseButtons = new HashMap<PlayerController.Mouse, Boolean>();
-	private Vector3 lastMouseCoordinates;
-	
-	//initialize the hashmap for inputs
-	static {
-		keys.put(Keys.LEFT, false);
-		keys.put(Keys.RIGHT, false);
-		keys.put(Keys.UP, false);
-		keys.put(Keys.DOWN, false);
-		keys.put(Keys.QUIT, false);
-	};
-	
-	static {
-		mouseButtons.put(Mouse.SELECT, false);
-		mouseButtons.put(Mouse.DOACTION, false);
-	};
 	
 	public PlayerController(){
 		//Gdx.app.debug(TAG, "Construction" );		

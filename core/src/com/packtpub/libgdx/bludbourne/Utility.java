@@ -10,12 +10,14 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 public final class Utility {
 	private static final String TAG = Utility.class.getSimpleName();
 
+	private static InternalFileHandleResolver _filePathResolver =  new InternalFileHandleResolver();
+
 	public static void unloadAsset(String assetFilenamePath){
 	// once the asset manager is done loading
 	if( BludBourne._AssetManager.isLoaded(assetFilenamePath) ){
 		BludBourne._AssetManager.unload(assetFilenamePath);
 		} else {
-			//Gdx.app.debug(TAG, "Asset is not loaded; Nothing to unload: " + assetFilenamePath );
+			Gdx.app.debug(TAG, "Asset is not loaded; Nothing to unload: " + assetFilenamePath );
 		}
 	}
 
@@ -42,9 +44,8 @@ public final class Utility {
 	   }
 
 	   //load asset
-		InternalFileHandleResolver filePathResolver = new InternalFileHandleResolver();
-		if( filePathResolver.resolve(mapFilenamePath).exists() ){
-			BludBourne._AssetManager.setLoader(TiledMap.class, new TmxMapLoader(filePathResolver));
+		if( _filePathResolver.resolve(mapFilenamePath).exists() ){
+			BludBourne._AssetManager.setLoader(TiledMap.class, new TmxMapLoader(_filePathResolver));
 			BludBourne._AssetManager.load(mapFilenamePath, TiledMap.class);
 			//Until we add loading screen, just block until we load the map
 			BludBourne._AssetManager.finishLoadingAsset(mapFilenamePath);
@@ -74,10 +75,8 @@ public final class Utility {
 			return;
 		}
 		//load asset
-		InternalFileHandleResolver filePathResolver = new InternalFileHandleResolver();
-
-		if( filePathResolver.resolve(textureFilenamePath).exists() ){
-			BludBourne._AssetManager.setLoader(Texture.class, new TextureLoader(filePathResolver));
+		if( _filePathResolver.resolve(textureFilenamePath).exists() ){
+			BludBourne._AssetManager.setLoader(Texture.class, new TextureLoader(_filePathResolver));
 			BludBourne._AssetManager.load(textureFilenamePath, Texture.class);
 			//Until we add loading screen, just block until we load the map
 			BludBourne._AssetManager.finishLoadingAsset(textureFilenamePath);
@@ -94,7 +93,7 @@ public final class Utility {
 		if( BludBourne._AssetManager.isLoaded(textureFilenamePath) ){
 			texture = BludBourne._AssetManager.get(textureFilenamePath,Texture.class);
 		} else {
-			//Gdx.app.debug(TAG, "Texture is not loaded: " + textureFilenamePath );
+			Gdx.app.debug(TAG, "Texture is not loaded: " + textureFilenamePath );
 		}
 
 		return texture;

@@ -32,16 +32,16 @@ public class Entity {
 	private Array<TextureRegion> _walkUpFrames;
 	private Array<TextureRegion> _walkDownFrames;
 
-	public int FRAME_WIDTH = 16;
-	public int FRAME_HEIGHT = 16;
-	public static Rectangle boundingBox;
-
 	protected Vector2 _nextPlayerPosition;
 	protected Vector2 _currentPlayerPosition;
 	protected State _state = State.IDLE;
 	protected float _frameTime = 0f;
 	protected Sprite _frameSprite = null;
 	protected TextureRegion _currentFrame = null;
+
+	public final int FRAME_WIDTH = 16;
+	public final int FRAME_HEIGHT = 16;
+	public static Rectangle boundingBox;
 
 	public enum State {
 		IDLE, WALKING
