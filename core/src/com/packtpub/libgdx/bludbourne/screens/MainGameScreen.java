@@ -43,11 +43,11 @@ public class MainGameScreen implements Screen {
 	@Override
 	public void show() {
 		//_camera setup
-		setupViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		setupViewport(10, 10);
 
 		//get the current size
 		_camera = new OrthographicCamera();
-		_camera.setToOrtho(false, 10 * VIEWPORT.aspectRatio, 10);
+		_camera.setToOrtho(false, VIEWPORT.viewportWidth, VIEWPORT.viewportHeight);
 
 		_mapRenderer = new OrthogonalTiledMapRenderer(_mapMgr.getCurrentMap(), MapManager.UNIT_SCALE);
 		_mapRenderer.setView(_camera);
