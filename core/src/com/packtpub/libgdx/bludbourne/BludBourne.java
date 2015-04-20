@@ -1,6 +1,5 @@
 package com.packtpub.libgdx.bludbourne;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.packtpub.libgdx.bludbourne.screens.MainGameScreen;
 import com.badlogic.gdx.Game;
 
