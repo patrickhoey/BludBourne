@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.packtpub.libgdx.bludbourne.BludBourne;
+import com.packtpub.libgdx.bludbourne.Entity;
 import com.packtpub.libgdx.bludbourne.MapManager;
 import com.packtpub.libgdx.bludbourne.PlayerController;
 
@@ -40,6 +41,8 @@ public class MainGameScreen implements Screen {
 		_mapMgr = new MapManager();
 	}
 
+	private static Entity _player;
+
 	@Override
 	public void show() {
 		//_camera setup
@@ -54,12 +57,13 @@ public class MainGameScreen implements Screen {
 
 		Gdx.app.debug(TAG, "UnitScale value is: " + _mapRenderer.getUnitScale());
 
-		_currentPlayerSprite = BludBourne._player.getFrameSprite();
+		_player = new Entity();
+		_player.init(_mapMgr.getPlayerStartUnitScaled().x, _mapMgr.getPlayerStartUnitScaled().y);
 
-		_controller = new PlayerController();
+		_currentPlayerSprite = _player.getFrameSprite();
+
+		_controller = new PlayerController(_player);
 		Gdx.input.setInputProcessor(_controller);
-
-		BludBourne._player.init(_mapMgr.getPlayerStartUnitScaled().x, _mapMgr.getPlayerStartUnitScaled().y);
 	}
 
 	@Override
@@ -75,13 +79,13 @@ public class MainGameScreen implements Screen {
 		_camera.position.set(_currentPlayerSprite.getX(), _currentPlayerSprite.getY(), 0f);
 		_camera.update();
 
-		BludBourne._player.update(delta);
-		_currentPlayerFrame = BludBourne._player.getFrame();
+		_player.update(delta);
+		_currentPlayerFrame = _player.getFrame();
 
-		updatePortalLayerActivation(BludBourne._player.boundingBox);
+		updatePortalLayerActivation(_player.boundingBox);
 
-		if( !isCollisionWithMapLayer(BludBourne._player.boundingBox) ){
-			BludBourne._player.setNextPositionToCurrent();
+		if( !isCollisionWithMapLayer(_player.boundingBox) ){
+			_player.setNextPositionToCurrent();
 		}
 		_controller.update(delta);
 
@@ -110,6 +114,7 @@ public class MainGameScreen implements Screen {
 
 	@Override
 	public void dispose() {
+		_player.dispose();
 		_controller.dispose();
 		Gdx.input.setInputProcessor(null);
 		_mapRenderer.dispose();
@@ -191,9 +196,9 @@ public class MainGameScreen implements Screen {
 						return false;
 					}
 
-					_mapMgr.setClosestStartPositionFromScaledUnits(BludBourne._player.getCurrentPosition());
+					_mapMgr.setClosestStartPositionFromScaledUnits(_player.getCurrentPosition());
 					_mapMgr.loadMap(mapName);
-					BludBourne._player.init(_mapMgr.getPlayerStartUnitScaled().x, _mapMgr.getPlayerStartUnitScaled().y);
+					_player.init(_mapMgr.getPlayerStartUnitScaled().x, _mapMgr.getPlayerStartUnitScaled().y);
 					_mapRenderer.setMap(_mapMgr.getCurrentMap());
 					Gdx.app.debug(TAG, "Portal Activated");
 					return true;

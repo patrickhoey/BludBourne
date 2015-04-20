@@ -40,6 +40,13 @@ public class PlayerController implements InputProcessor {
 		mouseButtons.put(Mouse.DOACTION, false);
 	};
 
+	private Entity _player;
+
+	public PlayerController(Entity player){
+		//Gdx.app.debug(TAG, "Construction" );
+		this.lastMouseCoordinates = new Vector3();
+		this._player = player;
+	}
 
 	@Override
 	public boolean keyDown(int keycode) {
@@ -132,12 +139,7 @@ public class PlayerController implements InputProcessor {
 	public boolean scrolled(int amount) {
 		return false;
 	}
-	
-	public PlayerController(){
-		//Gdx.app.debug(TAG, "Construction" );		
-		this.lastMouseCoordinates = new Vector3();
-	}
-	
+
 	public void dispose(){
 		
 	}
@@ -223,28 +225,28 @@ public class PlayerController implements InputProcessor {
 		//Keyboard input
 		if( keys.get(Keys.LEFT)){
 			//Gdx.app.debug(TAG, "LEFT key");
-			BludBourne._player.calculateNextPosition(Entity.Direction.LEFT, delta);
-			BludBourne._player.setState(Entity.State.WALKING);
-			BludBourne._player.setDirection(Entity.Direction.LEFT, delta);
+			_player.calculateNextPosition(Entity.Direction.LEFT, delta);
+			_player.setState(Entity.State.WALKING);
+			_player.setDirection(Entity.Direction.LEFT, delta);
 		}else if( keys.get(Keys.RIGHT)){
 			//Gdx.app.debug(TAG, "RIGHT key");
-			BludBourne._player.calculateNextPosition(Entity.Direction.RIGHT, delta);
-			BludBourne._player.setState(Entity.State.WALKING);
-			BludBourne._player.setDirection(Entity.Direction.RIGHT, delta);
+			_player.calculateNextPosition(Entity.Direction.RIGHT, delta);
+			_player.setState(Entity.State.WALKING);
+			_player.setDirection(Entity.Direction.RIGHT, delta);
 		}else if( keys.get(Keys.UP)){
 			//Gdx.app.debug(TAG, "UP key");
-			BludBourne._player.calculateNextPosition(Entity.Direction.UP, delta);
-			BludBourne._player.setState(Entity.State.WALKING);
-			BludBourne._player.setDirection(Entity.Direction.UP, delta);
+			_player.calculateNextPosition(Entity.Direction.UP, delta);
+			_player.setState(Entity.State.WALKING);
+			_player.setDirection(Entity.Direction.UP, delta);
 		}else if(keys.get(Keys.DOWN)){
 			//Gdx.app.debug(TAG, "DOWN key");
-			BludBourne._player.calculateNextPosition(Entity.Direction.DOWN, delta);
-			BludBourne._player.setState(Entity.State.WALKING);
-			BludBourne._player.setDirection(Entity.Direction.DOWN, delta);
+			_player.calculateNextPosition(Entity.Direction.DOWN, delta);
+			_player.setState(Entity.State.WALKING);
+			_player.setDirection(Entity.Direction.DOWN, delta);
 		}else if(keys.get(Keys.QUIT)){
 			Gdx.app.exit();
 		}else{
-			BludBourne._player.setState(Entity.State.IDLE);
+			_player.setState(Entity.State.IDLE);
 		}
 		
 		//Mouse input
