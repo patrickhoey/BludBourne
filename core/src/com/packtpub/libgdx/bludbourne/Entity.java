@@ -50,6 +50,8 @@ public class Entity {
 	public enum Direction {
 		UP,RIGHT,DOWN,LEFT;
 	}
+
+	InputComponent inputComponent;
 	
 	public Entity(){
 		initEntity();
@@ -67,9 +69,13 @@ public class Entity {
 		Utility.loadTextureAsset(_defaultSpritePath);
 		loadDefaultSprite();
 		loadAllAnimations();
+
+		inputComponent = new InputComponent();
 	}
 
 	public void update(float delta){
+		inputComponent.update(this, delta);
+
 		_frameTime = (_frameTime + delta)%5; //Want to avoid overflow
 
 		//Gdx.app.debug(TAG, "frametime: " + _frameTime );

@@ -10,9 +10,9 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector3;
 
 
-public class PlayerController implements InputProcessor {
+public class InputComponent implements InputProcessor {
 
-	private final static String TAG = PlayerController.class.getSimpleName();
+	private final static String TAG = InputComponent.class.getSimpleName();
 
 	enum Keys {
 		LEFT, RIGHT, UP, DOWN, QUIT
@@ -22,8 +22,8 @@ public class PlayerController implements InputProcessor {
 		SELECT, DOACTION
 	}
 
-	private static Map<Keys, Boolean> keys = new HashMap<PlayerController.Keys, Boolean>();
-	private static Map<Mouse, Boolean> mouseButtons = new HashMap<PlayerController.Mouse, Boolean>();
+	private static Map<Keys, Boolean> keys = new HashMap<Keys, Boolean>();
+	private static Map<Mouse, Boolean> mouseButtons = new HashMap<Mouse, Boolean>();
 	private Vector3 lastMouseCoordinates;
 
 	//initialize the hashmap for inputs
@@ -40,12 +40,46 @@ public class PlayerController implements InputProcessor {
 		mouseButtons.put(Mouse.DOACTION, false);
 	};
 
-	private Entity _player;
-
-	public PlayerController(Entity player){
+	public InputComponent(){
 		//Gdx.app.debug(TAG, "Construction" );
 		this.lastMouseCoordinates = new Vector3();
-		this._player = player;
+		Gdx.input.setInputProcessor(this);
+	}
+
+	public void update(Entity player, float delta){
+		//Keyboard input
+		if( keys.get(Keys.LEFT)){
+			//Gdx.app.debug(TAG, "LEFT key");
+			player.calculateNextPosition(Entity.Direction.LEFT, delta);
+			player.setState(Entity.State.WALKING);
+			player.setDirection(Entity.Direction.LEFT, delta);
+		}else if( keys.get(Keys.RIGHT)){
+			//Gdx.app.debug(TAG, "RIGHT key");
+			player.calculateNextPosition(Entity.Direction.RIGHT, delta);
+			player.setState(Entity.State.WALKING);
+			player.setDirection(Entity.Direction.RIGHT, delta);
+		}else if( keys.get(Keys.UP)){
+			//Gdx.app.debug(TAG, "UP key");
+			player.calculateNextPosition(Entity.Direction.UP, delta);
+			player.setState(Entity.State.WALKING);
+			player.setDirection(Entity.Direction.UP, delta);
+		}else if(keys.get(Keys.DOWN)){
+			//Gdx.app.debug(TAG, "DOWN key");
+			player.calculateNextPosition(Entity.Direction.DOWN, delta);
+			player.setState(Entity.State.WALKING);
+			player.setDirection(Entity.Direction.DOWN, delta);
+		}else if(keys.get(Keys.QUIT)){
+			Gdx.app.exit();
+		}else{
+			player.setState(Entity.State.IDLE);
+		}
+
+		//Mouse input
+		if( mouseButtons.get(Mouse.SELECT)) {
+			//Gdx.app.debug(TAG, "Mouse LEFT click at : (" + lastMouseCoordinates.x + "," + lastMouseCoordinates.y + ")" );
+			mouseButtons.put(Mouse.SELECT, false);
+		}
+		//Gdx.app.debug(TAG, "update:: Next Position: (" + BludBourne._player.getNextPosition().x + "," + BludBourne._player.getNextPosition().y + ")" + "DELTA: " + delta);
 	}
 
 	@Override
@@ -205,13 +239,7 @@ public class PlayerController implements InputProcessor {
 	public void doActionMouseButtonReleased(int x, int y){
 		mouseButtons.put(Mouse.DOACTION, false);
 	}
-	
-	
-	public void update(float delta){
-		processInput(delta);
-		//Gdx.app.debug(TAG, "update:: Next Position: (" + BludBourne._player.getNextPosition().x + "," + BludBourne._player.getNextPosition().y + ")" + "DELTA: " + delta);
-	}
-	
+
 	public static void hide(){
 		keys.put(Keys.LEFT, false);
 		keys.put(Keys.RIGHT, false);
@@ -219,42 +247,4 @@ public class PlayerController implements InputProcessor {
 		keys.put(Keys.DOWN, false);
 		keys.put(Keys.QUIT, false);
 	}
-	
-	private void processInput(float delta){
-		
-		//Keyboard input
-		if( keys.get(Keys.LEFT)){
-			//Gdx.app.debug(TAG, "LEFT key");
-			_player.calculateNextPosition(Entity.Direction.LEFT, delta);
-			_player.setState(Entity.State.WALKING);
-			_player.setDirection(Entity.Direction.LEFT, delta);
-		}else if( keys.get(Keys.RIGHT)){
-			//Gdx.app.debug(TAG, "RIGHT key");
-			_player.calculateNextPosition(Entity.Direction.RIGHT, delta);
-			_player.setState(Entity.State.WALKING);
-			_player.setDirection(Entity.Direction.RIGHT, delta);
-		}else if( keys.get(Keys.UP)){
-			//Gdx.app.debug(TAG, "UP key");
-			_player.calculateNextPosition(Entity.Direction.UP, delta);
-			_player.setState(Entity.State.WALKING);
-			_player.setDirection(Entity.Direction.UP, delta);
-		}else if(keys.get(Keys.DOWN)){
-			//Gdx.app.debug(TAG, "DOWN key");
-			_player.calculateNextPosition(Entity.Direction.DOWN, delta);
-			_player.setState(Entity.State.WALKING);
-			_player.setDirection(Entity.Direction.DOWN, delta);
-		}else if(keys.get(Keys.QUIT)){
-			Gdx.app.exit();
-		}else{
-			_player.setState(Entity.State.IDLE);
-		}
-		
-		//Mouse input
-		if( mouseButtons.get(Mouse.SELECT)) {
-			//Gdx.app.debug(TAG, "Mouse LEFT click at : (" + lastMouseCoordinates.x + "," + lastMouseCoordinates.y + ")" );
-			mouseButtons.put(Mouse.SELECT, false);
-		}
-
-	}
-
 }
