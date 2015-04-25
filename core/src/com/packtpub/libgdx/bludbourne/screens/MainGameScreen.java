@@ -27,9 +27,6 @@ public class MainGameScreen implements Screen {
 		static float aspectRatio;
 	}
 
-	private TextureRegion _currentPlayerFrame;
-	private Sprite _currentPlayerSprite;
-
 	private OrthogonalTiledMapRenderer _mapRenderer = null;
 	private OrthographicCamera _camera = null;
 	private static MapManager _mapMgr;
@@ -56,8 +53,6 @@ public class MainGameScreen implements Screen {
 
 		_player = new Entity();
 		_player.init(_mapMgr.getPlayerStartUnitScaled().x, _mapMgr.getPlayerStartUnitScaled().y);
-
-		_currentPlayerSprite = _player.getFrameSprite();
 	}
 
 	@Override
@@ -70,17 +65,8 @@ public class MainGameScreen implements Screen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		//Preferable to lock and center the _camera to the player's position
-		_camera.position.set(_currentPlayerSprite.getX(), _currentPlayerSprite.getY(), 0f);
+		_camera.position.set(_player._currentPlayerPosition.x, _player._currentPlayerPosition.y, 0f);
 		_camera.update();
-
-		_player.update(delta);
-		_currentPlayerFrame = _player.getFrame();
-
-		updatePortalLayerActivation(_player.boundingBox);
-
-		if( !isCollisionWithMapLayer(_player.boundingBox) ){
-			_player.setNextPositionToCurrent();
-		}
 
 		//_mapRenderer.getBatch().enableBlending();
 		//_mapRenderer.getBatch().setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -88,9 +74,13 @@ public class MainGameScreen implements Screen {
 		_mapRenderer.setView(_camera);
 		_mapRenderer.render();
 
-		_mapRenderer.getBatch().begin();
-		_mapRenderer.getBatch().draw(_currentPlayerFrame, _currentPlayerSprite.getX(), _currentPlayerSprite.getY(), 1,1);
-		_mapRenderer.getBatch().end();
+		_player.update(_mapRenderer.getBatch(), delta);
+
+		updatePortalLayerActivation(_player.boundingBox);
+
+		if (!isCollisionWithMapLayer(_player.boundingBox) ){
+			_player.setNextPositionToCurrent();
+		}
 	}
 
 	@Override
@@ -108,7 +98,6 @@ public class MainGameScreen implements Screen {
 	@Override
 	public void dispose() {
 		_player.dispose();
-		Gdx.input.setInputProcessor(null);
 		_mapRenderer.dispose();
 	}
 

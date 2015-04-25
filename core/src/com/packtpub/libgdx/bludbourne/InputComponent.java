@@ -52,26 +52,29 @@ public class InputComponent implements InputProcessor {
 			//Gdx.app.debug(TAG, "LEFT key");
 			player.calculateNextPosition(Entity.Direction.LEFT, delta);
 			player.setState(Entity.State.WALKING);
-			player.setDirection(Entity.Direction.LEFT, delta);
+			player._direction = Entity.Direction.LEFT;
 		}else if( keys.get(Keys.RIGHT)){
 			//Gdx.app.debug(TAG, "RIGHT key");
 			player.calculateNextPosition(Entity.Direction.RIGHT, delta);
 			player.setState(Entity.State.WALKING);
-			player.setDirection(Entity.Direction.RIGHT, delta);
+			player._direction = Entity.Direction.RIGHT;
 		}else if( keys.get(Keys.UP)){
 			//Gdx.app.debug(TAG, "UP key");
 			player.calculateNextPosition(Entity.Direction.UP, delta);
 			player.setState(Entity.State.WALKING);
-			player.setDirection(Entity.Direction.UP, delta);
+			player._direction = Entity.Direction.UP;
 		}else if(keys.get(Keys.DOWN)){
 			//Gdx.app.debug(TAG, "DOWN key");
 			player.calculateNextPosition(Entity.Direction.DOWN, delta);
 			player.setState(Entity.State.WALKING);
-			player.setDirection(Entity.Direction.DOWN, delta);
+			player._direction = Entity.Direction.DOWN;
 		}else if(keys.get(Keys.QUIT)){
 			Gdx.app.exit();
 		}else{
 			player.setState(Entity.State.IDLE);
+			if( player._direction == null ){
+				player._direction = Entity.Direction.DOWN;
+			}
 		}
 
 		//Mouse input
@@ -80,6 +83,10 @@ public class InputComponent implements InputProcessor {
 			mouseButtons.put(Mouse.SELECT, false);
 		}
 		//Gdx.app.debug(TAG, "update:: Next Position: (" + BludBourne._player.getNextPosition().x + "," + BludBourne._player.getNextPosition().y + ")" + "DELTA: " + delta);
+	}
+
+	public void dispose(){
+		Gdx.input.setInputProcessor(null);
 	}
 
 	@Override
@@ -172,10 +179,6 @@ public class InputComponent implements InputProcessor {
 	@Override
 	public boolean scrolled(int amount) {
 		return false;
-	}
-
-	public void dispose(){
-		
 	}
 	
 	//Key presses
