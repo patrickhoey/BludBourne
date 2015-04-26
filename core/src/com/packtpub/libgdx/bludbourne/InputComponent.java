@@ -50,22 +50,22 @@ public class InputComponent implements InputProcessor {
 		//Keyboard input
 		if( keys.get(Keys.LEFT)){
 			//Gdx.app.debug(TAG, "LEFT key");
-			player.calculateNextPosition(Entity.Direction.LEFT, delta);
+			//player.calculateNextPosition(Entity.Direction.LEFT, delta);
 			player.setState(Entity.State.WALKING);
 			player._direction = Entity.Direction.LEFT;
 		}else if( keys.get(Keys.RIGHT)){
 			//Gdx.app.debug(TAG, "RIGHT key");
-			player.calculateNextPosition(Entity.Direction.RIGHT, delta);
+			//player.calculateNextPosition(Entity.Direction.RIGHT, delta);
 			player.setState(Entity.State.WALKING);
 			player._direction = Entity.Direction.RIGHT;
 		}else if( keys.get(Keys.UP)){
 			//Gdx.app.debug(TAG, "UP key");
-			player.calculateNextPosition(Entity.Direction.UP, delta);
+			//player.calculateNextPosition(Entity.Direction.UP, delta);
 			player.setState(Entity.State.WALKING);
 			player._direction = Entity.Direction.UP;
 		}else if(keys.get(Keys.DOWN)){
 			//Gdx.app.debug(TAG, "DOWN key");
-			player.calculateNextPosition(Entity.Direction.DOWN, delta);
+			//player.calculateNextPosition(Entity.Direction.DOWN, delta);
 			player.setState(Entity.State.WALKING);
 			player._direction = Entity.Direction.DOWN;
 		}else if(keys.get(Keys.QUIT)){
@@ -82,7 +82,6 @@ public class InputComponent implements InputProcessor {
 			//Gdx.app.debug(TAG, "Mouse LEFT click at : (" + lastMouseCoordinates.x + "," + lastMouseCoordinates.y + ")" );
 			mouseButtons.put(Mouse.SELECT, false);
 		}
-		//Gdx.app.debug(TAG, "update:: Next Position: (" + BludBourne._player.getNextPosition().x + "," + BludBourne._player.getNextPosition().y + ")" + "DELTA: " + delta);
 	}
 
 	public void dispose(){
