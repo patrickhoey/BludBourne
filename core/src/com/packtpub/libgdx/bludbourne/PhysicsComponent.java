@@ -16,14 +16,16 @@ public class PhysicsComponent implements Component {
     private Vector2 _velocity;
 
     private Rectangle _boundingBox;
-    private Vector2 _nextPlayerPosition;
-    private Vector2 _currentPlayerPosition;
+    private Vector2 _nextEntityPosition;
+    private Vector2 _currentEntityPosition;
     private Json _json;
+    private Entity.State _state;
+    private Entity.Direction _currentDirection;
 
     public PhysicsComponent(){
         this._boundingBox = new Rectangle();
-        this._nextPlayerPosition = new Vector2(0,0);
-        this._currentPlayerPosition = new Vector2(0,0);
+        this._nextEntityPosition = new Vector2(0,0);
+        this._currentEntityPosition = new Vector2(0,0);
         this._velocity = new Vector2(2f,2f);
         _json = new Json();
     }
@@ -34,13 +36,22 @@ public class PhysicsComponent implements Component {
     }
 
     @Override
-    public void receive(String message) {
+    public void receiveMessage(String message) {
         //Gdx.app.debug(TAG, "Got message " + message);
-        String[] string = message.split(MESSAGE.MESSAGE_TOKEN);
+        String[] string = message.split(Component.MESSAGE_TOKEN);
 
-        if(string[0].equalsIgnoreCase(MESSAGE.INIT_START_POSITION)) {
-            _currentPlayerPosition = _json.fromJson(Vector2.class, string[1]);
-            _nextPlayerPosition.set(_currentPlayerPosition.x, _currentPlayerPosition.y);
+        if( string.length == 0 ) return;
+
+        //Specifically for messages with 1 object payload
+        if( string.length == 2 ) {
+            if (string[0].equalsIgnoreCase(MESSAGE.INIT_START_POSITION.toString())) {
+                _currentEntityPosition = _json.fromJson(Vector2.class, string[1]);
+                _nextEntityPosition.set(_currentEntityPosition.x, _currentEntityPosition.y);
+            } else if (string[0].equalsIgnoreCase(MESSAGE.CURRENT_STATE.toString())) {
+                _state = _json.fromJson(Entity.State.class, string[1]);
+            } else if (string[0].equalsIgnoreCase(MESSAGE.CURRENT_DIRECTION.toString())) {
+                _currentDirection = _json.fromJson(Entity.Direction.class, string[1]);
+            }
         }
     }
 
@@ -49,20 +60,17 @@ public class PhysicsComponent implements Component {
         setBoundingBoxSize(entity, 0f, 0.5f);
 
         if (!isCollisionWithMapLayer(mapMgr, _boundingBox) &&
-                entity._state == Entity.State.WALKING){
+                _state == Entity.State.WALKING){
             setNextPositionToCurrent(entity);
 
-            //Preferable to lock and center the _camera to the player's position
             Camera camera = mapMgr.getCamera();
-            camera.position.set(_currentPlayerPosition.x, _currentPlayerPosition.y, 0f);
+            camera.position.set(_currentEntityPosition.x, _currentEntityPosition.y, 0f);
             camera.update();
         }
 
         updatePortalLayerActivation(mapMgr, _boundingBox);
 
-        calculateNextPosition(entity._direction, delta);
-
-        //Gdx.app.debug(TAG, "update:: Next Position: (" + _nextPlayerPosition.x + "," + _nextPlayerPosition.y + ")" + "DELTA: " + delta);
+        calculateNextPosition(delta);
     }
 
     private boolean isCollisionWithMapLayer(MapManager mapMgr, Rectangle boundingBox){
@@ -77,8 +85,6 @@ public class PhysicsComponent implements Component {
         for( MapObject object: mapCollisionLayer.getObjects()){
             if(object instanceof RectangleMapObject) {
                 rectangle = ((RectangleMapObject)object).getRectangle();
-                //Gdx.app.debug(TAG, "Collision Rect (" + rectangle.x + "," + rectangle.y + ")");
-                //Gdx.app.debug(TAG, "Player Rect (" + boundingBox.x + "," + boundingBox.y + ")");
                 if( boundingBox.overlaps(rectangle) ){
                     //Gdx.app.debug(TAG, "Map Collision!");
                     return true;
@@ -101,21 +107,20 @@ public class PhysicsComponent implements Component {
         for( MapObject object: mapPortalLayer.getObjects()){
             if(object instanceof RectangleMapObject) {
                 rectangle = ((RectangleMapObject)object).getRectangle();
-                //Gdx.app.debug(TAG, "Collision Rect (" + rectangle.x + "," + rectangle.y + ")");
-                //Gdx.app.debug(TAG, "Player Rect (" + boundingBox.x + "," + boundingBox.y + ")");
+
                 if (boundingBox.overlaps(rectangle) ){
                     String mapName = object.getName();
                     if( mapName == null ) {
                         return false;
                     }
 
-                    mapMgr.setClosestStartPositionFromScaledUnits(_currentPlayerPosition);
+                    mapMgr.setClosestStartPositionFromScaledUnits(_currentEntityPosition);
                     mapMgr.loadMap(mapName);
 
-                    _currentPlayerPosition.x = mapMgr.getPlayerStartUnitScaled().x;
-                    _currentPlayerPosition.y = mapMgr.getPlayerStartUnitScaled().y;
-                    _nextPlayerPosition.x = mapMgr.getPlayerStartUnitScaled().x;
-                    _nextPlayerPosition.y = mapMgr.getPlayerStartUnitScaled().y;
+                    _currentEntityPosition.x = mapMgr.getPlayerStartUnitScaled().x;
+                    _currentEntityPosition.y = mapMgr.getPlayerStartUnitScaled().y;
+                    _nextEntityPosition.x = mapMgr.getPlayerStartUnitScaled().x;
+                    _nextEntityPosition.y = mapMgr.getPlayerStartUnitScaled().y;
 
                     Gdx.app.debug(TAG, "Portal Activated");
                     return true;
@@ -126,23 +131,21 @@ public class PhysicsComponent implements Component {
     }
 
     public void setNextPositionToCurrent(Entity entity){
-        this._currentPlayerPosition.x = _nextPlayerPosition.x;
-        this._currentPlayerPosition.y = _nextPlayerPosition.y;
+        this._currentEntityPosition.x = _nextEntityPosition.x;
+        this._currentEntityPosition.y = _nextEntityPosition.y;
 
-        String text = MESSAGE.CURRENT_POSITION + MESSAGE.MESSAGE_TOKEN +_json.toJson(_currentPlayerPosition);
-        entity.send(text);
+        entity.sendMessage(MESSAGE.CURRENT_POSITION,_json.toJson(_currentEntityPosition) );
     }
 
-    public void calculateNextPosition(Entity.Direction currentDirection, float deltaTime){
-        float testX = _currentPlayerPosition.x;
-        float testY = _currentPlayerPosition.y;
+    public void calculateNextPosition(float deltaTime){
+        if( _currentDirection == null ) return;
 
-        //Gdx.app.debug(TAG, "calculateNextPosition:: Current Position: (" + _currentPlayerPosition.x + "," + _currentPlayerPosition.y + ")"  );
-        //Gdx.app.debug(TAG, "calculateNextPosition:: Current Direction: " + _currentDirection  );
+        float testX = _currentEntityPosition.x;
+        float testY = _currentEntityPosition.y;
 
         _velocity.scl(deltaTime);
 
-        switch (currentDirection) {
+        switch (_currentDirection) {
             case LEFT :
                 testX -=  _velocity.x;
                 break;
@@ -159,8 +162,8 @@ public class PhysicsComponent implements Component {
                 break;
         }
 
-        _nextPlayerPosition.x = testX;
-        _nextPlayerPosition.y = testY;
+        _nextEntityPosition.x = testX;
+        _nextEntityPosition.y = testY;
 
         //velocity
         _velocity.scl(1 / deltaTime);
@@ -194,11 +197,11 @@ public class PhysicsComponent implements Component {
         float minX;
         float minY;
         if( MapManager.UNIT_SCALE > 0 ) {
-            minX = _nextPlayerPosition.x / MapManager.UNIT_SCALE;
-            minY = _nextPlayerPosition.y / MapManager.UNIT_SCALE;
+            minX = _nextEntityPosition.x / MapManager.UNIT_SCALE;
+            minY = _nextEntityPosition.y / MapManager.UNIT_SCALE;
         }else{
-            minX = _nextPlayerPosition.x;
-            minY = _nextPlayerPosition.y;
+            minX = _nextEntityPosition.x;
+            minY = _nextEntityPosition.y;
         }
 
         _boundingBox.set(minX, minY, width, height);

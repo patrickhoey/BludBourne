@@ -66,14 +66,14 @@ public class MainGameScreen implements Screen {
 		//_mapRenderer.getBatch().enableBlending();
 		//_mapRenderer.getBatch().setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
-		if( _mapMgr._mapChanged ){
+		if( _mapMgr.hasMapChanged() ){
 			_mapRenderer.setMap(_mapMgr.getCurrentMap());
-			_player.send(Component.MESSAGE.INIT_START_POSITION + Component.MESSAGE.MESSAGE_TOKEN + _json.toJson(_mapMgr.getPlayerStartUnitScaled()));
+			_player.sendMessage(Component.MESSAGE.INIT_START_POSITION, _json.toJson(_mapMgr.getPlayerStartUnitScaled()));
 
 			_camera.position.set(_mapMgr.getPlayerStartUnitScaled().x, _mapMgr.getPlayerStartUnitScaled().y, 0f);
 			_camera.update();
 
-			_mapMgr._mapChanged = false;
+			_mapMgr.setMapChanged(false);
 		}
 
 		_mapRenderer.render();

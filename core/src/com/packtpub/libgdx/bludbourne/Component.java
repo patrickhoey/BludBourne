@@ -3,12 +3,15 @@ package com.packtpub.libgdx.bludbourne;
 
 public interface Component {
 
-    public static class MESSAGE {
-        public static final String MESSAGE_TOKEN = ":::::";
-        public static final String CURRENT_POSITION = "currentPosition";
-        public static final String INIT_START_POSITION = "initStartPosition";
+    public static final String MESSAGE_TOKEN = ":::::";
+
+    public static enum MESSAGE{
+        CURRENT_POSITION,
+        INIT_START_POSITION,
+        CURRENT_DIRECTION,
+        CURRENT_STATE
     }
 
     void dispose();
-    void receive(String message);
+    void receiveMessage(String message);
 }

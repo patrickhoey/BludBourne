@@ -15,11 +15,11 @@ public class InputComponent implements InputProcessor,Component {
 
 	private final static String TAG = InputComponent.class.getSimpleName();
 
-	enum Keys {
+	private enum Keys {
 		LEFT, RIGHT, UP, DOWN, QUIT
 	}
 
-	enum Mouse {
+	private enum Mouse {
 		SELECT, DOACTION
 	}
 
@@ -27,6 +27,7 @@ public class InputComponent implements InputProcessor,Component {
 	private static Map<Mouse, Boolean> mouseButtons = new HashMap<Mouse, Boolean>();
 	private Vector3 lastMouseCoordinates;
 	private Json _json;
+	private Entity.Direction _currentDirection = null;
 
 	//initialize the hashmap for inputs
 	static {
@@ -50,8 +51,17 @@ public class InputComponent implements InputProcessor,Component {
 	}
 
 	@Override
-	public void receive(String message) {
-		//Gdx.app.debug(TAG, "Got message " + message);
+	public void receiveMessage(String message) {
+		String[] string = message.split(MESSAGE_TOKEN);
+
+		if( string.length == 0 ) return;
+
+		//Specifically for messages with 1 object payload
+		if( string.length == 2 ) {
+			if (string[0].equalsIgnoreCase(MESSAGE.CURRENT_DIRECTION.toString())) {
+				_currentDirection = _json.fromJson(Entity.Direction.class, string[1]);
+			}
+		}
 	}
 
 	@Override
@@ -59,26 +69,26 @@ public class InputComponent implements InputProcessor,Component {
 		Gdx.input.setInputProcessor(null);
 	}
 
-	public void update(Entity player, float delta){
+	public void update(Entity entity, float delta){
 		//Keyboard input
 		if( keys.get(Keys.LEFT)){
-			player.setState(Entity.State.WALKING);
-			player._direction = Entity.Direction.LEFT;
+			entity.sendMessage(MESSAGE.CURRENT_STATE, _json.toJson(Entity.State.WALKING));
+			entity.sendMessage(MESSAGE.CURRENT_DIRECTION, _json.toJson(Entity.Direction.LEFT));
 		}else if( keys.get(Keys.RIGHT)){
-			player.setState(Entity.State.WALKING);
-			player._direction = Entity.Direction.RIGHT;
+			entity.sendMessage(MESSAGE.CURRENT_STATE, _json.toJson(Entity.State.WALKING));
+			entity.sendMessage(MESSAGE.CURRENT_DIRECTION, _json.toJson(Entity.Direction.RIGHT));
 		}else if( keys.get(Keys.UP)){
-			player.setState(Entity.State.WALKING);
-			player._direction = Entity.Direction.UP;
+			entity.sendMessage(MESSAGE.CURRENT_STATE, _json.toJson(Entity.State.WALKING));
+			entity.sendMessage(MESSAGE.CURRENT_DIRECTION, _json.toJson(Entity.Direction.UP));
 		}else if(keys.get(Keys.DOWN)){
-			player.setState(Entity.State.WALKING);
-			player._direction = Entity.Direction.DOWN;
+			entity.sendMessage(MESSAGE.CURRENT_STATE, _json.toJson(Entity.State.WALKING));
+			entity.sendMessage(MESSAGE.CURRENT_DIRECTION, _json.toJson(Entity.Direction.DOWN));
 		}else if(keys.get(Keys.QUIT)){
 			Gdx.app.exit();
 		}else{
-			player.setState(Entity.State.IDLE);
-			if( player._direction == null ){
-				player._direction = Entity.Direction.DOWN;
+			entity.sendMessage(MESSAGE.CURRENT_STATE, _json.toJson(Entity.State.IDLE));
+			if( _currentDirection == null ){
+				entity.sendMessage(MESSAGE.CURRENT_DIRECTION, _json.toJson(Entity.Direction.DOWN));
 			}
 		}
 

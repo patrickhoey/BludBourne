@@ -42,7 +42,7 @@ public class MapManager {
 
     private Camera _camera;
 
-    public boolean _mapChanged = false;
+    private boolean _mapChanged = false;
 
     public final static float UNIT_SCALE  = 1/16f;
 
@@ -176,6 +176,14 @@ public class MapManager {
 
     public Camera getCamera(){
         return _camera;
+    }
+
+    public boolean hasMapChanged(){
+        return _mapChanged;
+    }
+
+    public void setMapChanged(boolean hasMapChanged){
+        this._mapChanged = hasMapChanged;
     }
 
 }

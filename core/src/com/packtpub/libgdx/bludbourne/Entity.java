@@ -6,23 +6,19 @@ import com.badlogic.gdx.utils.Array;
 public class Entity {
 	private static final String TAG = Entity.class.getSimpleName();
 
-	public enum Direction {
+	public static enum Direction {
 		UP,RIGHT,DOWN,LEFT;
 	}
 
-	static final int MAX_COMPONENTS = 5;
-	private Array<Component> _components;
-
-	public Direction _direction = null;
-
-	protected State _state = State.IDLE;
+	public static enum State {
+		IDLE, WALKING
+	}
 
 	public static final int FRAME_WIDTH = 16;
 	public static final int FRAME_HEIGHT = 16;
 
-	public enum State {
-		IDLE, WALKING
-	}
+	private static final int MAX_COMPONENTS = 5;
+	private Array<Component> _components;
 
 	private InputComponent _inputComponent;
 	private GraphicsComponent _graphicsComponent;
@@ -41,9 +37,15 @@ public class Entity {
 		_components.add(_physicsComponent);
 	}
 
-	public void send(String message){
+	public void sendMessage(Component.MESSAGE messageType, String ... args){
+		String fullMessage = messageType.toString();
+
+		for (String string : args) {
+			fullMessage += Component.MESSAGE_TOKEN + string;
+		}
+
 		for(Component component: _components){
-			component.receive(message);
+			component.receiveMessage(fullMessage);
 		}
 	}
 
@@ -57,9 +59,5 @@ public class Entity {
 		for(Component component: _components){
 			component.dispose();
 		}
-	}
-	
-	public void setState(State state){
-		this._state = state;
 	}
 }

@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -18,6 +17,8 @@ public class GraphicsComponent implements Component{
     private static final String _defaultSpritePath = "sprites/characters/Warrior.png";
 
     private Vector2 _currentPosition;
+    private Entity.State _currentState;
+    private Entity.Direction _currentDirection;
 
     private Array<TextureRegion> _walkLeftFrames;
     private Array<TextureRegion> _walkRightFrames;
@@ -31,26 +32,33 @@ public class GraphicsComponent implements Component{
 
     private Json _json;
 
-    protected float _frameTime = 0f;
-    protected Sprite _frameSprite = null;
-    protected TextureRegion _currentFrame = null;
+    private float _frameTime = 0f;
+    private TextureRegion _currentFrame = null;
 
     public GraphicsComponent(){
         Utility.loadTextureAsset(_defaultSpritePath);
-        loadDefaultSprite();
         loadAllAnimations();
         _json = new Json();
     }
 
     @Override
-    public void receive(String message) {
+    public void receiveMessage(String message) {
         //Gdx.app.debug(TAG, "Got message " + message);
-        String[] string = message.split(MESSAGE.MESSAGE_TOKEN);
+        String[] string = message.split(MESSAGE_TOKEN);
 
-        if( string[0].equalsIgnoreCase(MESSAGE.CURRENT_POSITION)){
-            _currentPosition = _json.fromJson(Vector2.class, string[1]);
-        }else if(string[0].equalsIgnoreCase(MESSAGE.INIT_START_POSITION)) {
-            _currentPosition = _json.fromJson(Vector2.class, string[1]);
+        if( string.length == 0 ) return;
+
+        //Specifically for messages with 1 object payload
+        if( string.length == 2 ) {
+            if (string[0].equalsIgnoreCase(MESSAGE.CURRENT_POSITION.toString())) {
+                _currentPosition = _json.fromJson(Vector2.class, string[1]);
+            } else if (string[0].equalsIgnoreCase(MESSAGE.INIT_START_POSITION.toString())) {
+                _currentPosition = _json.fromJson(Vector2.class, string[1]);
+            } else if (string[0].equalsIgnoreCase(MESSAGE.CURRENT_STATE.toString())) {
+                _currentState = _json.fromJson(Entity.State.class, string[1]);
+            } else if (string[0].equalsIgnoreCase(MESSAGE.CURRENT_DIRECTION.toString())) {
+                _currentDirection = _json.fromJson(Entity.Direction.class, string[1]);
+            }
         }
     }
 
@@ -58,30 +66,30 @@ public class GraphicsComponent implements Component{
         _frameTime = (_frameTime + delta)%5; //Want to avoid overflow
 
         //Look into the appropriate variable when changing position
-        switch (entity._direction) {
+        switch (_currentDirection) {
             case DOWN:
-                if (entity._state == Entity.State.WALKING) {
+                if (_currentState == Entity.State.WALKING) {
                     _currentFrame = _walkDownAnimation.getKeyFrame(_frameTime);
                 } else {
                     _currentFrame = _walkDownAnimation.getKeyFrames()[0];
                 }
                 break;
             case LEFT:
-                if (entity._state == Entity.State.WALKING) {
+                if (_currentState == Entity.State.WALKING) {
                     _currentFrame = _walkLeftAnimation.getKeyFrame(_frameTime);
                 }else{
                     _currentFrame = _walkLeftAnimation.getKeyFrames()[0];
                 }
                 break;
             case UP:
-                if (entity._state == Entity.State.WALKING) {
+                if (_currentState == Entity.State.WALKING) {
                     _currentFrame = _walkUpAnimation.getKeyFrame(_frameTime);
                 }else{
                     _currentFrame = _walkUpAnimation.getKeyFrames()[0];
                 }
                 break;
             case RIGHT:
-                if (entity._state == Entity.State.WALKING) {
+                if (_currentState == Entity.State.WALKING) {
                     _currentFrame = _walkRightAnimation.getKeyFrame(_frameTime);
                 }else{
                     _currentFrame = _walkRightAnimation.getKeyFrames()[0];
@@ -99,14 +107,6 @@ public class GraphicsComponent implements Component{
     @Override
     public void dispose(){
         Utility.unloadAsset(_defaultSpritePath);
-    }
-
-    private void loadDefaultSprite()
-    {
-        Texture texture = Utility.getTextureAsset(_defaultSpritePath);
-        TextureRegion[][] textureFrames = TextureRegion.split(texture, Entity.FRAME_WIDTH, Entity.FRAME_HEIGHT);
-        _frameSprite = new Sprite(textureFrames[0][0].getTexture(), 0,0,Entity.FRAME_WIDTH, Entity.FRAME_HEIGHT);
-        _currentFrame = textureFrames[0][0];
     }
 
     private void loadAllAnimations(){
