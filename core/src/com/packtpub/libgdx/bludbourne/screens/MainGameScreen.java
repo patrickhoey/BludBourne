@@ -4,11 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Json;
+import com.packtpub.libgdx.bludbourne.Component;
 import com.packtpub.libgdx.bludbourne.Entity;
 import com.packtpub.libgdx.bludbourne.MapManager;
 
@@ -28,9 +26,11 @@ public class MainGameScreen implements Screen {
 	private OrthogonalTiledMapRenderer _mapRenderer = null;
 	private OrthographicCamera _camera = null;
 	private static MapManager _mapMgr;
+	private Json _json;
 
 	public MainGameScreen(){
 		_mapMgr = new MapManager();
+		_json = new Json();
 	}
 
 	private static Entity _player;
@@ -47,10 +47,11 @@ public class MainGameScreen implements Screen {
 		_mapRenderer = new OrthogonalTiledMapRenderer(_mapMgr.getCurrentMap(), MapManager.UNIT_SCALE);
 		_mapRenderer.setView(_camera);
 
+		_mapMgr.setCamera(_camera);
+
 		Gdx.app.debug(TAG, "UnitScale value is: " + _mapRenderer.getUnitScale());
 
 		_player = new Entity();
-		//_player.init(_mapMgr.getPlayerStartUnitScaled().x, _mapMgr.getPlayerStartUnitScaled().y);
 	}
 
 	@Override
@@ -65,55 +66,23 @@ public class MainGameScreen implements Screen {
 		//_mapRenderer.getBatch().enableBlending();
 		//_mapRenderer.getBatch().setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
-		_mapRenderer.setView(_camera);
+		if( _mapMgr._mapChanged ){
+			_mapRenderer.setMap(_mapMgr.getCurrentMap());
+			_player.send(Component.MESSAGE.INIT_START_POSITION + Component.MESSAGE.MESSAGE_TOKEN + _json.toJson(_mapMgr.getPlayerStartUnitScaled()));
+
+			_camera.position.set(_mapMgr.getPlayerStartUnitScaled().x, _mapMgr.getPlayerStartUnitScaled().y, 0f);
+			_camera.update();
+
+			_mapMgr._mapChanged = false;
+		}
+
 		_mapRenderer.render();
 
 		_player.update(_mapMgr, _mapRenderer.getBatch(), delta);
-
-		updatePortalLayerActivation(_player._boundingBox);
-
-		//Preferable to lock and center the _camera to the player's position
-		_camera.position.set(_player._currentPlayerPosition.x, _player._currentPlayerPosition.y, 0f);
-		_camera.update();
+		_mapRenderer.setView(_camera);
 	}
 
-	private boolean updatePortalLayerActivation(Rectangle boundingBox){
-		MapLayer mapPortalLayer =  _mapMgr.getPortalLayer();
 
-		if( mapPortalLayer == null ){
-			return false;
-		}
-
-		Rectangle rectangle = null;
-
-		for( MapObject object: mapPortalLayer.getObjects()){
-			if(object instanceof RectangleMapObject) {
-				rectangle = ((RectangleMapObject)object).getRectangle();
-				//Gdx.app.debug(TAG, "Collision Rect (" + rectangle.x + "," + rectangle.y + ")");
-				//Gdx.app.debug(TAG, "Player Rect (" + boundingBox.x + "," + boundingBox.y + ")");
-				if (boundingBox.overlaps(rectangle) ){
-					String mapName = object.getName();
-					if( mapName == null ) {
-						return false;
-					}
-
-					_mapMgr.setClosestStartPositionFromScaledUnits(_player._currentPlayerPosition);
-					_mapMgr.loadMap(mapName);
-
-					//_player.init(_mapMgr.getPlayerStartUnitScaled().x, _mapMgr.getPlayerStartUnitScaled().y);
-					_player._currentPlayerPosition.x = _mapMgr.getPlayerStartUnitScaled().x;
-					_player._currentPlayerPosition.y = _mapMgr.getPlayerStartUnitScaled().y;
-					_player._nextPlayerPosition.x = _mapMgr.getPlayerStartUnitScaled().x;
-					_player._nextPlayerPosition.y = _mapMgr.getPlayerStartUnitScaled().y;
-
-					_mapRenderer.setMap(_mapMgr.getCurrentMap());
-					Gdx.app.debug(TAG, "Portal Activated");
-					return true;
-				}
-			}
-		}
-		return false;
-	}
 
 	@Override
 	public void resize(int width, int height) {

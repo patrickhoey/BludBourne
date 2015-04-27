@@ -8,9 +8,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Json;
 
 
-public class InputComponent implements InputProcessor {
+public class InputComponent implements InputProcessor,Component {
 
 	private final static String TAG = InputComponent.class.getSimpleName();
 
@@ -25,6 +26,7 @@ public class InputComponent implements InputProcessor {
 	private static Map<Keys, Boolean> keys = new HashMap<Keys, Boolean>();
 	private static Map<Mouse, Boolean> mouseButtons = new HashMap<Mouse, Boolean>();
 	private Vector3 lastMouseCoordinates;
+	private Json _json;
 
 	//initialize the hashmap for inputs
 	static {
@@ -44,28 +46,31 @@ public class InputComponent implements InputProcessor {
 		//Gdx.app.debug(TAG, "Construction" );
 		this.lastMouseCoordinates = new Vector3();
 		Gdx.input.setInputProcessor(this);
+		_json = new Json();
+	}
+
+	@Override
+	public void receive(String message) {
+		//Gdx.app.debug(TAG, "Got message " + message);
+	}
+
+	@Override
+	public void dispose(){
+		Gdx.input.setInputProcessor(null);
 	}
 
 	public void update(Entity player, float delta){
 		//Keyboard input
 		if( keys.get(Keys.LEFT)){
-			//Gdx.app.debug(TAG, "LEFT key");
-			//player.calculateNextPosition(Entity.Direction.LEFT, delta);
 			player.setState(Entity.State.WALKING);
 			player._direction = Entity.Direction.LEFT;
 		}else if( keys.get(Keys.RIGHT)){
-			//Gdx.app.debug(TAG, "RIGHT key");
-			//player.calculateNextPosition(Entity.Direction.RIGHT, delta);
 			player.setState(Entity.State.WALKING);
 			player._direction = Entity.Direction.RIGHT;
 		}else if( keys.get(Keys.UP)){
-			//Gdx.app.debug(TAG, "UP key");
-			//player.calculateNextPosition(Entity.Direction.UP, delta);
 			player.setState(Entity.State.WALKING);
 			player._direction = Entity.Direction.UP;
 		}else if(keys.get(Keys.DOWN)){
-			//Gdx.app.debug(TAG, "DOWN key");
-			//player.calculateNextPosition(Entity.Direction.DOWN, delta);
 			player.setState(Entity.State.WALKING);
 			player._direction = Entity.Direction.DOWN;
 		}else if(keys.get(Keys.QUIT)){
@@ -82,10 +87,6 @@ public class InputComponent implements InputProcessor {
 			//Gdx.app.debug(TAG, "Mouse LEFT click at : (" + lastMouseCoordinates.x + "," + lastMouseCoordinates.y + ")" );
 			mouseButtons.put(Mouse.SELECT, false);
 		}
-	}
-
-	public void dispose(){
-		Gdx.input.setInputProcessor(null);
 	}
 
 	@Override

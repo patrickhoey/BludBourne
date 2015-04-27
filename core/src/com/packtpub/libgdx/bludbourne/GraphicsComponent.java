@@ -7,16 +7,17 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
 
-public class GraphicsComponent {
+public class GraphicsComponent implements Component{
 
     private static final String TAG = GraphicsComponent.class.getSimpleName();
 
     private static final String _defaultSpritePath = "sprites/characters/Warrior.png";
 
-    //private Direction _currentDirection = Direction.LEFT;
-    //private Direction _previousDirection = Direction.UP;
+    private Vector2 _currentPosition;
 
     private Array<TextureRegion> _walkLeftFrames;
     private Array<TextureRegion> _walkRightFrames;
@@ -28,6 +29,8 @@ public class GraphicsComponent {
     private Animation _walkUpAnimation;
     private Animation _walkDownAnimation;
 
+    private Json _json;
+
     protected float _frameTime = 0f;
     protected Sprite _frameSprite = null;
     protected TextureRegion _currentFrame = null;
@@ -36,9 +39,22 @@ public class GraphicsComponent {
         Utility.loadTextureAsset(_defaultSpritePath);
         loadDefaultSprite();
         loadAllAnimations();
+        _json = new Json();
     }
 
-    public void update(Batch batch, Entity entity, float delta){
+    @Override
+    public void receive(String message) {
+        //Gdx.app.debug(TAG, "Got message " + message);
+        String[] string = message.split(MESSAGE.MESSAGE_TOKEN);
+
+        if( string[0].equalsIgnoreCase(MESSAGE.CURRENT_POSITION)){
+            _currentPosition = _json.fromJson(Vector2.class, string[1]);
+        }else if(string[0].equalsIgnoreCase(MESSAGE.INIT_START_POSITION)) {
+            _currentPosition = _json.fromJson(Vector2.class, string[1]);
+        }
+    }
+
+    public void update(Entity entity, Batch batch, float delta){
         _frameTime = (_frameTime + delta)%5; //Want to avoid overflow
 
         //Look into the appropriate variable when changing position
@@ -76,10 +92,11 @@ public class GraphicsComponent {
         }
 
         batch.begin();
-        batch.draw(_currentFrame, entity._currentPlayerPosition.x, entity._currentPlayerPosition.y, 1, 1);
+        batch.draw(_currentFrame, _currentPosition.x, _currentPosition.y, 1, 1);
         batch.end();
     }
 
+    @Override
     public void dispose(){
         Utility.unloadAsset(_defaultSpritePath);
     }
@@ -104,7 +121,6 @@ public class GraphicsComponent {
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                //Gdx.app.debug(TAG, "Got frame " + i + "," + j + " from " + sourceImage);
                 TextureRegion region = textureFrames[i][j];
                 if( region == null ){
                     Gdx.app.debug(TAG, "Got null animation frame " + i + "," + j);

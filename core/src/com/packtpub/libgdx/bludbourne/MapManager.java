@@ -1,6 +1,7 @@
 package com.packtpub.libgdx.bludbourne;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -38,6 +39,10 @@ public class MapManager {
     private MapLayer _collisionLayer = null;
     private MapLayer _portalLayer = null;
     private MapLayer _spawnsLayer = null;
+
+    private Camera _camera;
+
+    public boolean _mapChanged = false;
 
     public final static float UNIT_SCALE  = 1/16f;
 
@@ -104,6 +109,8 @@ public class MapManager {
             _playerStart.set(start.x, start.y);
         }
 
+        _mapChanged = true;
+
         Gdx.app.debug(TAG, "Player Start: (" + _playerStart.x + "," + _playerStart.y + ")");
     }
 
@@ -161,6 +168,14 @@ public class MapManager {
 
         _convertedUnits.set(position.x/UNIT_SCALE, position.y/UNIT_SCALE);
         setClosestStartPosition(_convertedUnits);
+    }
+
+    public void setCamera(Camera camera){
+        this._camera = camera;
+    }
+
+    public Camera getCamera(){
+        return _camera;
     }
 
 }

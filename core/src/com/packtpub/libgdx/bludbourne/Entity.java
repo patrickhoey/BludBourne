@@ -1,8 +1,7 @@
 package com.packtpub.libgdx.bludbourne;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 
 public class Entity {
 	private static final String TAG = Entity.class.getSimpleName();
@@ -11,13 +10,12 @@ public class Entity {
 		UP,RIGHT,DOWN,LEFT;
 	}
 
+	static final int MAX_COMPONENTS = 5;
+	private Array<Component> _components;
+
 	public Direction _direction = null;
 
 	protected State _state = State.IDLE;
-
-	public Vector2 _currentPlayerPosition;
-	public Vector2 _nextPlayerPosition;
-	public Rectangle _boundingBox;
 
 	public static final int FRAME_WIDTH = 16;
 	public static final int FRAME_HEIGHT = 16;
@@ -31,28 +29,34 @@ public class Entity {
 	private PhysicsComponent _physicsComponent;
 	
 	public Entity(){
+		_components = new Array<Component>(MAX_COMPONENTS);
+
 		_inputComponent = new InputComponent();
+		_components.add(_inputComponent);
+
 		_graphicsComponent = new GraphicsComponent();
+		_components.add(_graphicsComponent);
+
 		_physicsComponent = new PhysicsComponent();
+		_components.add(_physicsComponent);
+	}
+
+	public void send(String message){
+		for(Component component: _components){
+			component.receive(message);
+		}
 	}
 
 	public void update(MapManager mapMgr, Batch batch, float delta){
 		_inputComponent.update(this, delta);
-
-		_physicsComponent.update(mapMgr, this, delta);
-
-		_currentPlayerPosition = _physicsComponent._currentPlayerPosition;
-		_nextPlayerPosition = _physicsComponent._nextPlayerPosition;
-		_boundingBox = _physicsComponent._boundingBox;
-
-		_graphicsComponent.update(batch, this, delta);
-
+		_physicsComponent.update(this, mapMgr, delta);
+		_graphicsComponent.update(this, batch, delta);
 	}
 
 	public void dispose(){
-		_inputComponent.dispose();
-		_graphicsComponent.dispose();
-		_physicsComponent.dispose();
+		for(Component component: _components){
+			component.dispose();
+		}
 	}
 	
 	public void setState(State state){

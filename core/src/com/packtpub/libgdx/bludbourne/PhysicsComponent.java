@@ -2,40 +2,63 @@ package com.packtpub.libgdx.bludbourne;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Json;
 
-public class PhysicsComponent {
+public class PhysicsComponent implements Component {
     private static final String TAG = PhysicsComponent.class.getSimpleName();
 
     private Vector2 _velocity;
 
-    public Rectangle _boundingBox;
-    public Vector2 _nextPlayerPosition;
-    public Vector2 _currentPlayerPosition;
+    private Rectangle _boundingBox;
+    private Vector2 _nextPlayerPosition;
+    private Vector2 _currentPlayerPosition;
+    private Json _json;
 
     public PhysicsComponent(){
         this._boundingBox = new Rectangle();
         this._nextPlayerPosition = new Vector2(0,0);
         this._currentPlayerPosition = new Vector2(0,0);
         this._velocity = new Vector2(2f,2f);
+        _json = new Json();
     }
 
+    @Override
     public void dispose(){
 
     }
 
-    public void update(MapManager mapMgr, Entity entity, float delta) {
+    @Override
+    public void receive(String message) {
+        //Gdx.app.debug(TAG, "Got message " + message);
+        String[] string = message.split(MESSAGE.MESSAGE_TOKEN);
+
+        if(string[0].equalsIgnoreCase(MESSAGE.INIT_START_POSITION)) {
+            _currentPlayerPosition = _json.fromJson(Vector2.class, string[1]);
+            _nextPlayerPosition.set(_currentPlayerPosition.x, _currentPlayerPosition.y);
+        }
+    }
+
+    public void update(Entity entity, MapManager mapMgr, float delta) {
         //We want the hitbox to be at the feet for a better feel
         setBoundingBoxSize(entity, 0f, 0.5f);
 
         if (!isCollisionWithMapLayer(mapMgr, _boundingBox) &&
                 entity._state == Entity.State.WALKING){
-            setNextPositionToCurrent();
+            setNextPositionToCurrent(entity);
+
+            //Preferable to lock and center the _camera to the player's position
+            Camera camera = mapMgr.getCamera();
+            camera.position.set(_currentPlayerPosition.x, _currentPlayerPosition.y, 0f);
+            camera.update();
         }
+
+        updatePortalLayerActivation(mapMgr, _boundingBox);
 
         calculateNextPosition(entity._direction, delta);
 
@@ -66,28 +89,48 @@ public class PhysicsComponent {
         return false;
     }
 
-    public void init(float startX, float startY){
-        this._currentPlayerPosition.x = startX;
-        this._currentPlayerPosition.y = startY;
+    private boolean updatePortalLayerActivation(MapManager mapMgr, Rectangle boundingBox){
+        MapLayer mapPortalLayer =  mapMgr.getPortalLayer();
 
-        this._nextPlayerPosition.x = startX;
-        this._nextPlayerPosition.y = startY;
+        if( mapPortalLayer == null ){
+            return false;
+        }
 
-        //Gdx.app.debug(TAG, "Calling INIT" );
+        Rectangle rectangle = null;
+
+        for( MapObject object: mapPortalLayer.getObjects()){
+            if(object instanceof RectangleMapObject) {
+                rectangle = ((RectangleMapObject)object).getRectangle();
+                //Gdx.app.debug(TAG, "Collision Rect (" + rectangle.x + "," + rectangle.y + ")");
+                //Gdx.app.debug(TAG, "Player Rect (" + boundingBox.x + "," + boundingBox.y + ")");
+                if (boundingBox.overlaps(rectangle) ){
+                    String mapName = object.getName();
+                    if( mapName == null ) {
+                        return false;
+                    }
+
+                    mapMgr.setClosestStartPositionFromScaledUnits(_currentPlayerPosition);
+                    mapMgr.loadMap(mapName);
+
+                    _currentPlayerPosition.x = mapMgr.getPlayerStartUnitScaled().x;
+                    _currentPlayerPosition.y = mapMgr.getPlayerStartUnitScaled().y;
+                    _nextPlayerPosition.x = mapMgr.getPlayerStartUnitScaled().x;
+                    _nextPlayerPosition.y = mapMgr.getPlayerStartUnitScaled().y;
+
+                    Gdx.app.debug(TAG, "Portal Activated");
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
-    public Vector2 getCurrentPosition(){
-        return _currentPlayerPosition;
-    }
+    public void setNextPositionToCurrent(Entity entity){
+        this._currentPlayerPosition.x = _nextPlayerPosition.x;
+        this._currentPlayerPosition.y = _nextPlayerPosition.y;
 
-    public void setCurrentPosition(float currentPositionX, float currentPositionY){
-        this._currentPlayerPosition.x = currentPositionX;
-        this._currentPlayerPosition.y = currentPositionY;
-    }
-
-    public void setNextPositionToCurrent(){
-        setCurrentPosition(_nextPlayerPosition.x, _nextPlayerPosition.y);
-        //Gdx.app.debug(TAG, "Setting nextPosition as Current: (" + _nextPlayerPosition.x + "," + _nextPlayerPosition.y + ")");
+        String text = MESSAGE.CURRENT_POSITION + MESSAGE.MESSAGE_TOKEN +_json.toJson(_currentPlayerPosition);
+        entity.send(text);
     }
 
     public void calculateNextPosition(Entity.Direction currentDirection, float deltaTime){
