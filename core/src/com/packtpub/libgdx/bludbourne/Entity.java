@@ -24,17 +24,16 @@ public class Entity {
 	private GraphicsComponent _graphicsComponent;
 	private PhysicsComponent _physicsComponent;
 	
-	public Entity(){
+	public Entity(InputComponent inputComponent, PhysicsComponent physicsComponent, GraphicsComponent graphicsComponent){
 		_components = new Array<Component>(MAX_COMPONENTS);
 
-		_inputComponent = new InputComponent();
+		_inputComponent = inputComponent;
+		_physicsComponent = physicsComponent;
+		_graphicsComponent = graphicsComponent;
+
 		_components.add(_inputComponent);
-
-		_graphicsComponent = new GraphicsComponent();
-		_components.add(_graphicsComponent);
-
-		_physicsComponent = new PhysicsComponent();
 		_components.add(_physicsComponent);
+		_components.add(_graphicsComponent);
 	}
 
 	public void sendMessage(Component.MESSAGE messageType, String ... args){

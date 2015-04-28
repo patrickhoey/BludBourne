@@ -2,7 +2,6 @@ package com.packtpub.libgdx.bludbourne;
 
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -10,70 +9,27 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Json;
 
-public class PhysicsComponent implements Component {
+public abstract class PhysicsComponent implements Component{
     private static final String TAG = PhysicsComponent.class.getSimpleName();
 
-    private Vector2 _velocity;
+    public abstract void update(Entity entity, MapManager mapMgr, float delta);
 
-    private Rectangle _boundingBox;
-    private Vector2 _nextEntityPosition;
-    private Vector2 _currentEntityPosition;
-    private Json _json;
-    private Entity.State _state;
-    private Entity.Direction _currentDirection;
+    protected Vector2 _nextEntityPosition;
+    protected Vector2 _currentEntityPosition;
+    protected Entity.Direction _currentDirection;
+    protected Json _json;
+    protected Vector2 _velocity;
+    protected Rectangle _boundingBox;
 
-    public PhysicsComponent(){
-        this._boundingBox = new Rectangle();
+    PhysicsComponent(){
         this._nextEntityPosition = new Vector2(0,0);
         this._currentEntityPosition = new Vector2(0,0);
         this._velocity = new Vector2(2f,2f);
-        _json = new Json();
+        this._boundingBox = new Rectangle();
+        this._json = new Json();
     }
 
-    @Override
-    public void dispose(){
-
-    }
-
-    @Override
-    public void receiveMessage(String message) {
-        //Gdx.app.debug(TAG, "Got message " + message);
-        String[] string = message.split(Component.MESSAGE_TOKEN);
-
-        if( string.length == 0 ) return;
-
-        //Specifically for messages with 1 object payload
-        if( string.length == 2 ) {
-            if (string[0].equalsIgnoreCase(MESSAGE.INIT_START_POSITION.toString())) {
-                _currentEntityPosition = _json.fromJson(Vector2.class, string[1]);
-                _nextEntityPosition.set(_currentEntityPosition.x, _currentEntityPosition.y);
-            } else if (string[0].equalsIgnoreCase(MESSAGE.CURRENT_STATE.toString())) {
-                _state = _json.fromJson(Entity.State.class, string[1]);
-            } else if (string[0].equalsIgnoreCase(MESSAGE.CURRENT_DIRECTION.toString())) {
-                _currentDirection = _json.fromJson(Entity.Direction.class, string[1]);
-            }
-        }
-    }
-
-    public void update(Entity entity, MapManager mapMgr, float delta) {
-        //We want the hitbox to be at the feet for a better feel
-        setBoundingBoxSize(entity, 0f, 0.5f);
-
-        if (!isCollisionWithMapLayer(mapMgr, _boundingBox) &&
-                _state == Entity.State.WALKING){
-            setNextPositionToCurrent(entity);
-
-            Camera camera = mapMgr.getCamera();
-            camera.position.set(_currentEntityPosition.x, _currentEntityPosition.y, 0f);
-            camera.update();
-        }
-
-        updatePortalLayerActivation(mapMgr, _boundingBox);
-
-        calculateNextPosition(delta);
-    }
-
-    private boolean isCollisionWithMapLayer(MapManager mapMgr, Rectangle boundingBox){
+    protected boolean isCollisionWithMapLayer(MapManager mapMgr, Rectangle boundingBox){
         MapLayer mapCollisionLayer =  mapMgr.getCollisionLayer();
 
         if( mapCollisionLayer == null ){
@@ -95,49 +51,14 @@ public class PhysicsComponent implements Component {
         return false;
     }
 
-    private boolean updatePortalLayerActivation(MapManager mapMgr, Rectangle boundingBox){
-        MapLayer mapPortalLayer =  mapMgr.getPortalLayer();
-
-        if( mapPortalLayer == null ){
-            return false;
-        }
-
-        Rectangle rectangle = null;
-
-        for( MapObject object: mapPortalLayer.getObjects()){
-            if(object instanceof RectangleMapObject) {
-                rectangle = ((RectangleMapObject)object).getRectangle();
-
-                if (boundingBox.overlaps(rectangle) ){
-                    String mapName = object.getName();
-                    if( mapName == null ) {
-                        return false;
-                    }
-
-                    mapMgr.setClosestStartPositionFromScaledUnits(_currentEntityPosition);
-                    mapMgr.loadMap(mapName);
-
-                    _currentEntityPosition.x = mapMgr.getPlayerStartUnitScaled().x;
-                    _currentEntityPosition.y = mapMgr.getPlayerStartUnitScaled().y;
-                    _nextEntityPosition.x = mapMgr.getPlayerStartUnitScaled().x;
-                    _nextEntityPosition.y = mapMgr.getPlayerStartUnitScaled().y;
-
-                    Gdx.app.debug(TAG, "Portal Activated");
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public void setNextPositionToCurrent(Entity entity){
+    protected void setNextPositionToCurrent(Entity entity){
         this._currentEntityPosition.x = _nextEntityPosition.x;
         this._currentEntityPosition.y = _nextEntityPosition.y;
 
         entity.sendMessage(MESSAGE.CURRENT_POSITION,_json.toJson(_currentEntityPosition) );
     }
 
-    public void calculateNextPosition(float deltaTime){
+    protected void calculateNextPosition(float deltaTime){
         if( _currentDirection == null ) return;
 
         float testX = _currentEntityPosition.x;
@@ -169,7 +90,7 @@ public class PhysicsComponent implements Component {
         _velocity.scl(1 / deltaTime);
     }
 
-    public void setBoundingBoxSize(Entity entity, float percentageWidthReduced, float percentageHeightReduced){
+    protected void setBoundingBoxSize(Entity entity, float percentageWidthReduced, float percentageHeightReduced){
         //Update the current bounding box
         float width;
         float height;

@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Json;
 import com.packtpub.libgdx.bludbourne.Component;
 import com.packtpub.libgdx.bludbourne.Entity;
+import com.packtpub.libgdx.bludbourne.EntityFactory;
 import com.packtpub.libgdx.bludbourne.MapManager;
 
 public class MainGameScreen implements Screen {
@@ -51,7 +52,7 @@ public class MainGameScreen implements Screen {
 
 		Gdx.app.debug(TAG, "UnitScale value is: " + _mapRenderer.getUnitScale());
 
-		_player = new Entity();
+		_player = EntityFactory.getEntity(EntityFactory.EntityType.PLAYER);
 	}
 
 	@Override
@@ -62,6 +63,8 @@ public class MainGameScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		_mapRenderer.setView(_camera);
 
 		//_mapRenderer.getBatch().enableBlending();
 		//_mapRenderer.getBatch().setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -79,7 +82,6 @@ public class MainGameScreen implements Screen {
 		_mapRenderer.render();
 
 		_player.update(_mapMgr, _mapRenderer.getBatch(), delta);
-		_mapRenderer.setView(_camera);
 	}
 
 
