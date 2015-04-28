@@ -1,13 +1,21 @@
 package com.packtpub.libgdx.bludbourne;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 
 public class Entity {
 	private static final String TAG = Entity.class.getSimpleName();
 
 	public static enum Direction {
-		UP,RIGHT,DOWN,LEFT;
+		UP,
+		RIGHT,
+		DOWN,
+		LEFT;
+
+		static public Direction getRandomNext() {
+			return Direction.values()[MathUtils.random(Direction.values().length - 1)];
+		}
 	}
 
 	public static enum State {

@@ -46,7 +46,7 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
         //We want the hitbox to be at the feet for a better feel
         setBoundingBoxSize(entity, 0f, 0.5f);
 
-        if (!isCollisionWithMapLayer(mapMgr, _boundingBox) &&
+        if (!isCollisionWithMapLayer(entity, mapMgr, _boundingBox) &&
                 _state == Entity.State.WALKING){
             setNextPositionToCurrent(entity);
 

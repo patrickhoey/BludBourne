@@ -8,8 +8,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.Json;
-
 
 public class PlayerInputComponent extends InputComponent implements InputProcessor {
 
@@ -26,8 +24,6 @@ public class PlayerInputComponent extends InputComponent implements InputProcess
 	private static Map<Keys, Boolean> keys = new HashMap<Keys, Boolean>();
 	private static Map<Mouse, Boolean> mouseButtons = new HashMap<Mouse, Boolean>();
 	private Vector3 lastMouseCoordinates;
-	private Json _json;
-	private Entity.Direction _currentDirection = null;
 
 	//initialize the hashmap for inputs
 	static {
@@ -47,7 +43,6 @@ public class PlayerInputComponent extends InputComponent implements InputProcess
 		//Gdx.app.debug(TAG, "Construction" );
 		this.lastMouseCoordinates = new Vector3();
 		Gdx.input.setInputProcessor(this);
-		_json = new Json();
 	}
 
 	@Override

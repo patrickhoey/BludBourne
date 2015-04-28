@@ -29,7 +29,7 @@ public abstract class PhysicsComponent implements Component{
         this._json = new Json();
     }
 
-    protected boolean isCollisionWithMapLayer(MapManager mapMgr, Rectangle boundingBox){
+    protected boolean isCollisionWithMapLayer(Entity entity, MapManager mapMgr, Rectangle boundingBox){
         MapLayer mapCollisionLayer =  mapMgr.getCollisionLayer();
 
         if( mapCollisionLayer == null ){
@@ -42,7 +42,8 @@ public abstract class PhysicsComponent implements Component{
             if(object instanceof RectangleMapObject) {
                 rectangle = ((RectangleMapObject)object).getRectangle();
                 if( boundingBox.overlaps(rectangle) ){
-                    //Gdx.app.debug(TAG, "Map Collision!");
+                    //Collision
+                    entity.sendMessage(MESSAGE.COLLISION_WITH_MAP);
                     return true;
                 }
             }
