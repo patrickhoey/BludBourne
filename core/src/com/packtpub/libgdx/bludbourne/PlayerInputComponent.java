@@ -12,32 +12,7 @@ import com.badlogic.gdx.math.Vector3;
 public class PlayerInputComponent extends InputComponent implements InputProcessor {
 
 	private final static String TAG = PlayerInputComponent.class.getSimpleName();
-
-	private enum Keys {
-		LEFT, RIGHT, UP, DOWN, QUIT
-	}
-
-	private enum Mouse {
-		SELECT, DOACTION
-	}
-
-	private static Map<Keys, Boolean> keys = new HashMap<Keys, Boolean>();
-	private static Map<Mouse, Boolean> mouseButtons = new HashMap<Mouse, Boolean>();
 	private Vector3 lastMouseCoordinates;
-
-	//initialize the hashmap for inputs
-	static {
-		keys.put(Keys.LEFT, false);
-		keys.put(Keys.RIGHT, false);
-		keys.put(Keys.UP, false);
-		keys.put(Keys.DOWN, false);
-		keys.put(Keys.QUIT, false);
-	};
-
-	static {
-		mouseButtons.put(Mouse.SELECT, false);
-		mouseButtons.put(Mouse.DOACTION, false);
-	};
 
 	public PlayerInputComponent(){
 		//Gdx.app.debug(TAG, "Construction" );
@@ -134,7 +109,6 @@ public class PlayerInputComponent extends InputComponent implements InputProcess
 			this.quitReleased();
 		}
 		return true;
-		// TODO Auto-generated method stub
 	}
 
 	@Override

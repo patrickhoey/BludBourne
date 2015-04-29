@@ -14,7 +14,7 @@ public class EntityFactory {
             case PLAYER:
                 return new Entity(new PlayerInputComponent(), new PlayerPhysicsComponent(), new PlayerGraphicsComponent());
             case DEMO_PLAYER:
-                return new Entity(new DemoInputComponent(), new PlayerPhysicsComponent(), new PlayerGraphicsComponent());
+                return new Entity(new NPCInputComponent(), new PlayerPhysicsComponent(), new PlayerGraphicsComponent());
             default:
                 return null;
         }

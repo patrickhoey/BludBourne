@@ -1,7 +1,5 @@
 package com.packtpub.libgdx.bludbourne;
 
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -11,11 +9,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 
-public class PlayerGraphicsComponent extends GraphicsComponent {
+public class NPCGraphicsComponent extends GraphicsComponent {
 
-    private static final String TAG = PlayerGraphicsComponent.class.getSimpleName();
+    private static final String TAG = NPCGraphicsComponent.class.getSimpleName();
 
-    private static final String _defaultSpritePath = "sprites/characters/Warrior.png";
+    private static final String _walkingAnimationSpriteSheetPath = "sprites/characters/Engineer.png";
+    private static final String _immobileAnimation1 = "sprites/characters/Player0.png";
+    private static final String _immobileAnimation2 = "sprites/characters/Player1.png";
 
     private Vector2 _currentPosition;
     private Entity.State _currentState;
@@ -25,19 +25,25 @@ public class PlayerGraphicsComponent extends GraphicsComponent {
     private Animation _walkRightAnimation;
     private Animation _walkUpAnimation;
     private Animation _walkDownAnimation;
+    private Animation _immobileAnimation;
 
     private Json _json;
 
     private float _frameTime = 0f;
     private TextureRegion _currentFrame = null;
 
-    public PlayerGraphicsComponent(){
+    public NPCGraphicsComponent(){
         _currentPosition = new Vector2(0,0);
         _currentState = Entity.State.WALKING;
         _currentDirection = Entity.Direction.DOWN;
 
-        Utility.loadTextureAsset(_defaultSpritePath);
-        Texture _texture = Utility.getTextureAsset(_defaultSpritePath);
+        Utility.loadTextureAsset(_walkingAnimationSpriteSheetPath);
+        Utility.loadTextureAsset(_immobileAnimation1);
+        Utility.loadTextureAsset(_immobileAnimation2);
+
+        Texture texture = Utility.getTextureAsset(_walkingAnimationSpriteSheetPath);
+        Texture texture1 = Utility.getTextureAsset(_immobileAnimation1);
+        Texture texture2 = Utility.getTextureAsset(_immobileAnimation2);
 
         Array<GridPoint2> downGridPoints;
         Array<GridPoint2> leftGridPoints;
@@ -50,7 +56,7 @@ public class PlayerGraphicsComponent extends GraphicsComponent {
         downGridPoints.add(new GridPoint2(0,2));
         downGridPoints.add(new GridPoint2(0,3));
 
-        _walkDownAnimation = loadAnimation(_texture, downGridPoints );
+        _walkDownAnimation = loadAnimation(texture, downGridPoints );
 
         leftGridPoints = new Array<GridPoint2>();
         leftGridPoints.add(new GridPoint2(1,0));
@@ -58,7 +64,7 @@ public class PlayerGraphicsComponent extends GraphicsComponent {
         leftGridPoints.add(new GridPoint2(1,2));
         leftGridPoints.add(new GridPoint2(1,3));
 
-        _walkLeftAnimation = loadAnimation(_texture, leftGridPoints );
+        _walkLeftAnimation = loadAnimation(texture, leftGridPoints );
 
         rightGridPoints = new Array<GridPoint2>();
         rightGridPoints.add(new GridPoint2(2,0));
@@ -66,15 +72,18 @@ public class PlayerGraphicsComponent extends GraphicsComponent {
         rightGridPoints.add(new GridPoint2(2,2));
         rightGridPoints.add(new GridPoint2(2,3));
 
-        _walkRightAnimation = loadAnimation(_texture, rightGridPoints );
+        _walkRightAnimation = loadAnimation(texture, rightGridPoints );
 
         upGridPoints = new Array<GridPoint2>();
         upGridPoints.add(new GridPoint2(3,0));
         upGridPoints.add(new GridPoint2(3,1));
         upGridPoints.add(new GridPoint2(3,2));
-        upGridPoints.add(new GridPoint2(3,3));
+        upGridPoints.add(new GridPoint2(3, 3));
 
-        _walkUpAnimation = loadAnimation(_texture, upGridPoints );
+        _walkUpAnimation = loadAnimation(texture, upGridPoints );
+
+        GridPoint2 point = new GridPoint2(0,0);
+        _immobileAnimation = loadAnimation(texture1, texture2, point );
 
         _json = new Json();
     }
@@ -109,29 +118,37 @@ public class PlayerGraphicsComponent extends GraphicsComponent {
             case DOWN:
                 if (_currentState == Entity.State.WALKING) {
                     _currentFrame = _walkDownAnimation.getKeyFrame(_frameTime);
-                } else {
+                } else if(_currentState == Entity.State.IDLE) {
                     _currentFrame = _walkDownAnimation.getKeyFrames()[0];
+                } else if(_currentState == Entity.State.IMMOBILE) {
+                    _currentFrame = _immobileAnimation.getKeyFrame(_frameTime);
                 }
                 break;
             case LEFT:
                 if (_currentState == Entity.State.WALKING) {
                     _currentFrame = _walkLeftAnimation.getKeyFrame(_frameTime);
-                }else{
+                } else if(_currentState == Entity.State.IDLE) {
                     _currentFrame = _walkLeftAnimation.getKeyFrames()[0];
+                } else if(_currentState == Entity.State.IMMOBILE) {
+                    _currentFrame = _immobileAnimation.getKeyFrame(_frameTime);
                 }
                 break;
             case UP:
                 if (_currentState == Entity.State.WALKING) {
                     _currentFrame = _walkUpAnimation.getKeyFrame(_frameTime);
-                }else{
+                } else if(_currentState == Entity.State.IDLE) {
                     _currentFrame = _walkUpAnimation.getKeyFrames()[0];
+                } else if(_currentState == Entity.State.IMMOBILE) {
+                    _currentFrame = _immobileAnimation.getKeyFrame(_frameTime);
                 }
                 break;
             case RIGHT:
                 if (_currentState == Entity.State.WALKING) {
                     _currentFrame = _walkRightAnimation.getKeyFrame(_frameTime);
-                }else{
+                } else if(_currentState == Entity.State.IDLE) {
                     _currentFrame = _walkRightAnimation.getKeyFrames()[0];
+                } else if(_currentState == Entity.State.IMMOBILE) {
+                    _currentFrame = _immobileAnimation.getKeyFrame(_frameTime);
                 }
                 break;
             default:
@@ -145,7 +162,9 @@ public class PlayerGraphicsComponent extends GraphicsComponent {
 
     @Override
     public void dispose(){
-        Utility.unloadAsset(_defaultSpritePath);
+        Utility.unloadAsset(_walkingAnimationSpriteSheetPath);
+        Utility.unloadAsset(_immobileAnimation1);
+        Utility.unloadAsset(_immobileAnimation2);
     }
 
 }

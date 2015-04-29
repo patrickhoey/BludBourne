@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="80" tilewidth="16" tileheight="16" nextobjectid="151">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="80" tilewidth="16" tileheight="16" nextobjectid="152">
  <tileset firstgid="1" name="Decor0" tilewidth="16" tileheight="16">
   <image source="../sprites/Objects/Decor0.png" width="128" height="352"/>
  </tileset>
@@ -423,11 +423,12 @@
   <object id="145" x="-10" y="815" width="8" height="68"/>
   <object id="146" x="-24" y="980" width="20" height="300"/>
   <object id="147" x="514" y="977" width="20" height="300"/>
+  <object id="151" name="TOP_WORLD" x="-8" y="1280" width="540" height="32"/>
  </objectgroup>
  <objectgroup name="MAP_SPAWNS_LAYER">
   <object id="149" name="PLAYER_START" x="248" y="1240" width="16" height="16"/>
  </objectgroup>
  <objectgroup name="MAP_PORTAL_LAYER" opacity="0.9">
-  <object id="150" name="TOP_WORLD" x="-12" y="1281" width="540" height="32"/>
+  <object id="150" name="TOP_WORLD" x="-12" y="1283" width="540" height="32"/>
  </objectgroup>
 </map>
