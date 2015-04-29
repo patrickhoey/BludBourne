@@ -40,6 +40,12 @@ public class NPCInputComponent extends InputComponent implements InputProcessor 
             Gdx.app.exit();
         }
 
+        //If IMMOBILE, don't update anything
+        if( _currentState == Entity.State.IMMOBILE ) {
+            entity.sendMessage(MESSAGE.CURRENT_STATE, _json.toJson(Entity.State.IMMOBILE));
+            return;
+        }
+
         _frameTime += delta;
 
         //Change direction after so many seconds
@@ -49,10 +55,7 @@ public class NPCInputComponent extends InputComponent implements InputProcessor 
             _frameTime = 0.0f;
         }
 
-        if( _currentState == Entity.State.IMMOBILE ){
-            entity.sendMessage(MESSAGE.CURRENT_STATE, _json.toJson(Entity.State.IMMOBILE));
-            return;
-        }else if( _currentState == Entity.State.IDLE ){
+        if( _currentState == Entity.State.IDLE ){
             entity.sendMessage(MESSAGE.CURRENT_STATE, _json.toJson(Entity.State.IDLE));
             return;
         }

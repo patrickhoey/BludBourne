@@ -118,9 +118,9 @@ public abstract class PhysicsComponent implements Component{
         //Need to account for the unitscale, since the map coordinates will be in pixels
         float minX;
         float minY;
-        if( MapManager.UNIT_SCALE > 0 ) {
-            minX = _nextEntityPosition.x / MapManager.UNIT_SCALE;
-            minY = _nextEntityPosition.y / MapManager.UNIT_SCALE;
+        if( Map.UNIT_SCALE > 0 ) {
+            minX = _nextEntityPosition.x / Map.UNIT_SCALE;
+            minY = _nextEntityPosition.y / Map.UNIT_SCALE;
         }else{
             minX = _nextEntityPosition.x;
             minY = _nextEntityPosition.y;

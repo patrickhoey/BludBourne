@@ -6,10 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Json;
-import com.packtpub.libgdx.bludbourne.Component;
-import com.packtpub.libgdx.bludbourne.Entity;
-import com.packtpub.libgdx.bludbourne.EntityFactory;
-import com.packtpub.libgdx.bludbourne.MapManager;
+import com.packtpub.libgdx.bludbourne.*;
 
 public class MainGameScreen implements Screen {
 	private static final String TAG = MainGameScreen.class.getSimpleName();
@@ -45,7 +42,7 @@ public class MainGameScreen implements Screen {
 		_camera = new OrthographicCamera();
 		_camera.setToOrtho(false, VIEWPORT.viewportWidth, VIEWPORT.viewportHeight);
 
-		_mapRenderer = new OrthogonalTiledMapRenderer(_mapMgr.getCurrentMap(), MapManager.UNIT_SCALE);
+		_mapRenderer = new OrthogonalTiledMapRenderer(_mapMgr.getCurrentTiledMap(), Map.UNIT_SCALE);
 		_mapRenderer.setView(_camera);
 
 		_mapMgr.setCamera(_camera);
@@ -70,7 +67,7 @@ public class MainGameScreen implements Screen {
 		//_mapRenderer.getBatch().setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
 		if( _mapMgr.hasMapChanged() ){
-			_mapRenderer.setMap(_mapMgr.getCurrentMap());
+			_mapRenderer.setMap(_mapMgr.getCurrentTiledMap());
 			_player.sendMessage(Component.MESSAGE.INIT_START_POSITION, _json.toJson(_mapMgr.getPlayerStartUnitScaled()));
 
 			_camera.position.set(_mapMgr.getPlayerStartUnitScaled().x, _mapMgr.getPlayerStartUnitScaled().y, 0f);

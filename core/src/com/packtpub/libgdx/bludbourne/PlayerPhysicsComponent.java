@@ -46,16 +46,16 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
         //We want the hitbox to be at the feet for a better feel
         setBoundingBoxSize(entity, 0f, 0.5f);
 
+        updatePortalLayerActivation(mapMgr, _boundingBox);
+
         if (!isCollisionWithMapLayer(entity, mapMgr, _boundingBox) &&
-                _state == Entity.State.WALKING){
+            _state == Entity.State.WALKING){
             setNextPositionToCurrent(entity);
 
             Camera camera = mapMgr.getCamera();
             camera.position.set(_currentEntityPosition.x, _currentEntityPosition.y, 0f);
             camera.update();
         }
-
-        updatePortalLayerActivation(mapMgr, _boundingBox);
 
         calculateNextPosition(delta);
     }
@@ -64,6 +64,7 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
         MapLayer mapPortalLayer =  mapMgr.getPortalLayer();
 
         if( mapPortalLayer == null ){
+            Gdx.app.debug(TAG, "Portal Layer doesn't exist!");
             return false;
         }
 
@@ -80,7 +81,7 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
                     }
 
                     mapMgr.setClosestStartPositionFromScaledUnits(_currentEntityPosition);
-                    mapMgr.loadMap(mapName);
+                    mapMgr.loadMap(MapFactory.MapType.valueOf(mapName));
 
                     _currentEntityPosition.x = mapMgr.getPlayerStartUnitScaled().x;
                     _currentEntityPosition.y = mapMgr.getPlayerStartUnitScaled().y;
