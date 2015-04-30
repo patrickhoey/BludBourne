@@ -12,7 +12,6 @@ public class NPCInputComponent extends InputComponent implements InputProcessor 
     NPCInputComponent(){
         _currentDirection = Entity.Direction.getRandomNext();
         _currentState = Entity.State.WALKING;
-        Gdx.input.setInputProcessor(this);
     }
 
     @Override

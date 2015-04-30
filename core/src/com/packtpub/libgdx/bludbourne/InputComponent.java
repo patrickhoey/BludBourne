@@ -1,7 +1,5 @@
 package com.packtpub.libgdx.bludbourne;
 
-
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Json;
 
 import java.util.HashMap;

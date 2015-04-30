@@ -1,11 +1,15 @@
 package com.packtpub.libgdx.bludbourne;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Array;
 
 public class Entity {
 	private static final String TAG = Entity.class.getSimpleName();
+	private Json _json;
+	private EntityConfig _entityConfig;
 
 	public static enum Direction {
 		UP,
@@ -30,6 +34,15 @@ public class Entity {
 		}
 	}
 
+	public static enum AnimationType {
+		WALK_LEFT,
+		WALK_RIGHT,
+		WALK_UP,
+		WALK_DOWN,
+		IDLE,
+		IMMOBILE
+	}
+
 	public static final int FRAME_WIDTH = 16;
 	public static final int FRAME_HEIGHT = 16;
 
@@ -39,8 +52,11 @@ public class Entity {
 	private InputComponent _inputComponent;
 	private GraphicsComponent _graphicsComponent;
 	private PhysicsComponent _physicsComponent;
-	
+
 	public Entity(InputComponent inputComponent, PhysicsComponent physicsComponent, GraphicsComponent graphicsComponent){
+		_entityConfig = new EntityConfig();
+		_json = new Json();
+
 		_components = new Array<Component>(MAX_COMPONENTS);
 
 		_inputComponent = inputComponent;
@@ -50,6 +66,10 @@ public class Entity {
 		_components.add(_inputComponent);
 		_components.add(_physicsComponent);
 		_components.add(_graphicsComponent);
+	}
+
+	public EntityConfig getEntityConfig() {
+		return _entityConfig;
 	}
 
 	public void sendMessage(Component.MESSAGE messageType, String ... args){
@@ -75,4 +95,9 @@ public class Entity {
 			component.dispose();
 		}
 	}
+
+	public void loadConfig(String configFilePath){
+		_entityConfig = _json.fromJson(EntityConfig.class, Gdx.files.internal(configFilePath));
+	}
+
 }

@@ -1,8 +1,5 @@
 package com.packtpub.libgdx.bludbourne;
 
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -10,21 +7,17 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import java.util.Hashtable;
+
+import com.packtpub.libgdx.bludbourne.EntityConfig.AnimationConfig;
 
 public class PlayerGraphicsComponent extends GraphicsComponent {
 
     private static final String TAG = PlayerGraphicsComponent.class.getSimpleName();
 
-    private static final String _defaultSpritePath = "sprites/characters/Warrior.png";
-
     private Vector2 _currentPosition;
     private Entity.State _currentState;
     private Entity.Direction _currentDirection;
-
-    private Animation _walkLeftAnimation;
-    private Animation _walkRightAnimation;
-    private Animation _walkUpAnimation;
-    private Animation _walkDownAnimation;
 
     private Json _json;
 
@@ -35,47 +28,7 @@ public class PlayerGraphicsComponent extends GraphicsComponent {
         _currentPosition = new Vector2(0,0);
         _currentState = Entity.State.WALKING;
         _currentDirection = Entity.Direction.DOWN;
-
-        Utility.loadTextureAsset(_defaultSpritePath);
-        Texture _texture = Utility.getTextureAsset(_defaultSpritePath);
-
-        Array<GridPoint2> downGridPoints;
-        Array<GridPoint2> leftGridPoints;
-        Array<GridPoint2> rightGridPoints;
-        Array<GridPoint2> upGridPoints;
-
-        downGridPoints = new Array<GridPoint2>();
-        downGridPoints.add(new GridPoint2(0,0));
-        downGridPoints.add(new GridPoint2(0,1));
-        downGridPoints.add(new GridPoint2(0,2));
-        downGridPoints.add(new GridPoint2(0,3));
-
-        _walkDownAnimation = loadAnimation(_texture, downGridPoints );
-
-        leftGridPoints = new Array<GridPoint2>();
-        leftGridPoints.add(new GridPoint2(1,0));
-        leftGridPoints.add(new GridPoint2(1,1));
-        leftGridPoints.add(new GridPoint2(1,2));
-        leftGridPoints.add(new GridPoint2(1,3));
-
-        _walkLeftAnimation = loadAnimation(_texture, leftGridPoints );
-
-        rightGridPoints = new Array<GridPoint2>();
-        rightGridPoints.add(new GridPoint2(2,0));
-        rightGridPoints.add(new GridPoint2(2,1));
-        rightGridPoints.add(new GridPoint2(2,2));
-        rightGridPoints.add(new GridPoint2(2,3));
-
-        _walkRightAnimation = loadAnimation(_texture, rightGridPoints );
-
-        upGridPoints = new Array<GridPoint2>();
-        upGridPoints.add(new GridPoint2(3,0));
-        upGridPoints.add(new GridPoint2(3,1));
-        upGridPoints.add(new GridPoint2(3,2));
-        upGridPoints.add(new GridPoint2(3,3));
-
-        _walkUpAnimation = loadAnimation(_texture, upGridPoints );
-
+        _animations = new Hashtable<Entity.AnimationType, Animation>();
         _json = new Json();
     }
 
@@ -96,6 +49,24 @@ public class PlayerGraphicsComponent extends GraphicsComponent {
                 _currentState = _json.fromJson(Entity.State.class, string[1]);
             } else if (string[0].equalsIgnoreCase(MESSAGE.CURRENT_DIRECTION.toString())) {
                 _currentDirection = _json.fromJson(Entity.Direction.class, string[1]);
+            } else if (string[0].equalsIgnoreCase(MESSAGE.LOAD_ANIMATIONS.toString())) {
+                EntityConfig entityConfig = _json.fromJson(EntityConfig.class, string[1]);
+                Array<AnimationConfig> animationConfigs = entityConfig.getAnimationConfig();
+
+                for( AnimationConfig animationConfig : animationConfigs ){
+                    Array<String> textureNames = animationConfig.getTexturePaths();
+                    Array<GridPoint2> points = animationConfig.getGridPoints();
+                    Entity.AnimationType animationType = animationConfig.getAnimationType();
+                    Animation animation = null;
+
+                    if( textureNames.size == 1) {
+                        animation = loadAnimation(textureNames.get(0), points);
+                    }else if( textureNames.size == 2){
+                        animation = loadAnimation(textureNames.get(0), textureNames.get(1), points);
+                    }
+
+                    _animations.put(animationType, animation);
+                }
             }
         }
     }
@@ -108,30 +79,62 @@ public class PlayerGraphicsComponent extends GraphicsComponent {
         switch (_currentDirection) {
             case DOWN:
                 if (_currentState == Entity.State.WALKING) {
-                    _currentFrame = _walkDownAnimation.getKeyFrame(_frameTime);
-                } else {
-                    _currentFrame = _walkDownAnimation.getKeyFrames()[0];
+                    Animation animation = _animations.get(Entity.AnimationType.WALK_DOWN);
+                    if( animation == null ) return;
+                    _currentFrame = animation.getKeyFrame(_frameTime);
+                } else if(_currentState == Entity.State.IDLE) {
+                    Animation animation = _animations.get(Entity.AnimationType.WALK_DOWN);
+                    if( animation == null ) return;
+                    _currentFrame = animation.getKeyFrames()[0];
+                } else if(_currentState == Entity.State.IMMOBILE) {
+                    Animation animation = _animations.get(Entity.AnimationType.IMMOBILE);
+                    if( animation == null ) return;
+                    _currentFrame = animation.getKeyFrame(_frameTime);
                 }
                 break;
             case LEFT:
                 if (_currentState == Entity.State.WALKING) {
-                    _currentFrame = _walkLeftAnimation.getKeyFrame(_frameTime);
-                }else{
-                    _currentFrame = _walkLeftAnimation.getKeyFrames()[0];
+                    Animation animation = _animations.get(Entity.AnimationType.WALK_LEFT);
+                    if( animation == null ) return;
+                    _currentFrame = animation.getKeyFrame(_frameTime);
+                } else if(_currentState == Entity.State.IDLE) {
+                    Animation animation = _animations.get(Entity.AnimationType.WALK_LEFT);
+                    if( animation == null ) return;
+                    _currentFrame = animation.getKeyFrames()[0];
+                } else if(_currentState == Entity.State.IMMOBILE) {
+                    Animation animation = _animations.get(Entity.AnimationType.IMMOBILE);
+                    if( animation == null ) return;
+                    _currentFrame = animation.getKeyFrame(_frameTime);
                 }
                 break;
             case UP:
                 if (_currentState == Entity.State.WALKING) {
-                    _currentFrame = _walkUpAnimation.getKeyFrame(_frameTime);
-                }else{
-                    _currentFrame = _walkUpAnimation.getKeyFrames()[0];
+                    Animation animation = _animations.get(Entity.AnimationType.WALK_UP);
+                    if( animation == null ) return;
+                    _currentFrame = animation.getKeyFrame(_frameTime);
+                } else if(_currentState == Entity.State.IDLE) {
+                    Animation animation = _animations.get(Entity.AnimationType.WALK_UP);
+                    if( animation == null ) return;
+                    _currentFrame = animation.getKeyFrames()[0];
+                } else if(_currentState == Entity.State.IMMOBILE) {
+                    Animation animation = _animations.get(Entity.AnimationType.IMMOBILE);
+                    if( animation == null ) return;
+                    _currentFrame = animation.getKeyFrame(_frameTime);
                 }
                 break;
             case RIGHT:
                 if (_currentState == Entity.State.WALKING) {
-                    _currentFrame = _walkRightAnimation.getKeyFrame(_frameTime);
-                }else{
-                    _currentFrame = _walkRightAnimation.getKeyFrames()[0];
+                    Animation animation = _animations.get(Entity.AnimationType.WALK_RIGHT);
+                    if( animation == null ) return;
+                    _currentFrame = animation.getKeyFrame(_frameTime);
+                } else if(_currentState == Entity.State.IDLE) {
+                    Animation animation = _animations.get(Entity.AnimationType.WALK_RIGHT);
+                    if( animation == null ) return;
+                    _currentFrame = animation.getKeyFrames()[0];
+                } else if(_currentState == Entity.State.IMMOBILE) {
+                    Animation animation = _animations.get(Entity.AnimationType.IMMOBILE);
+                    if( animation == null ) return;
+                    _currentFrame = animation.getKeyFrame(_frameTime);
                 }
                 break;
             default:
@@ -145,7 +148,6 @@ public class PlayerGraphicsComponent extends GraphicsComponent {
 
     @Override
     public void dispose(){
-        Utility.unloadAsset(_defaultSpritePath);
     }
 
 }

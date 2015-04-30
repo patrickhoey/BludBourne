@@ -1,9 +1,5 @@
 package com.packtpub.libgdx.bludbourne;
 
-
-import java.util.HashMap;
-import java.util.Map;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
