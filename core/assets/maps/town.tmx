@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="16" tileheight="16" nextobjectid="104">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="16" tileheight="16" nextobjectid="121">
  <tileset firstgid="1" name="Decor0" tilewidth="16" tileheight="16">
   <image source="../sprites/Objects/Decor0.png" width="128" height="352"/>
  </tileset>
@@ -236,6 +236,23 @@
   <object id="101" name="NPC_START" x="440" y="264"/>
   <object id="102" name="NPC_START" x="264" y="296"/>
   <object id="103" name="NPC_START" x="392" y="136"/>
+  <object id="104" name="NPC_START" x="296" y="184"/>
+  <object id="105" name="NPC_START" x="440" y="40"/>
+  <object id="106" name="NPC_START" x="568" y="408"/>
+  <object id="107" name="NPC_START" x="584" y="248"/>
+  <object id="108" name="NPC_START" x="24" y="120"/>
+  <object id="109" name="NPC_START" x="136" y="40"/>
+  <object id="110" name="NPC_START" x="504" y="456"/>
+  <object id="111" name="NPC_START" x="600" y="312"/>
+  <object id="112" name="NPC_START" x="152" y="200"/>
+  <object id="113" name="NPC_START" x="376" y="200"/>
+  <object id="114" name="NPC_START" x="184" y="392"/>
+  <object id="115" name="NPC_START" x="360" y="440"/>
+  <object id="116" name="NPC_START" x="72" y="344"/>
+  <object id="117" name="NPC_START" x="408" y="376"/>
+  <object id="118" name="NPC_START" x="516" y="152"/>
+  <object id="119" name="NPC_START" x="216" y="232"/>
+  <object id="120" name="TOWN_BLACKSMITH" x="72" y="408"/>
  </objectgroup>
  <objectgroup name="MAP_PORTAL_LAYER">
   <object id="89" name="TOP_WORLD" x="0" y="478" width="640" height="12"/>

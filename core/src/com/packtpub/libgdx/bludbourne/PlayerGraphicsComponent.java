@@ -57,12 +57,13 @@ public class PlayerGraphicsComponent extends GraphicsComponent {
                     Array<String> textureNames = animationConfig.getTexturePaths();
                     Array<GridPoint2> points = animationConfig.getGridPoints();
                     Entity.AnimationType animationType = animationConfig.getAnimationType();
+                    float frameDuration = animationConfig.getFrameDuration();
                     Animation animation = null;
 
                     if( textureNames.size == 1) {
-                        animation = loadAnimation(textureNames.get(0), points);
+                        animation = loadAnimation(textureNames.get(0), points, frameDuration);
                     }else if( textureNames.size == 2){
-                        animation = loadAnimation(textureNames.get(0), textureNames.get(1), points);
+                        animation = loadAnimation(textureNames.get(0), textureNames.get(1), points, frameDuration);
                     }
 
                     _animations.put(animationType, animation);

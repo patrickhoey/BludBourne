@@ -26,6 +26,15 @@ public class NPCInputComponent extends InputComponent implements InputProcessor 
                 _currentDirection = Entity.Direction.getRandomNext();
             }
         }
+
+        if( string.length == 2 ) {
+            if (string[0].equalsIgnoreCase(MESSAGE.INIT_STATE.toString())) {
+                _currentState = _json.fromJson(Entity.State.class, string[1]);
+            }else if (string[0].equalsIgnoreCase(MESSAGE.INIT_DIRECTION.toString())) {
+                _currentDirection = _json.fromJson(Entity.Direction.class, string[1]);
+            }
+        }
+
     }
 
     @Override

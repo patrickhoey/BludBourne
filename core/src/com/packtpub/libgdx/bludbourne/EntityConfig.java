@@ -8,9 +8,27 @@ import com.packtpub.libgdx.bludbourne.Entity.AnimationType;
 
 public class EntityConfig {
     Array<AnimationConfig> animationConfig;
+    Entity.State state = Entity.State.IDLE;
+    Entity.Direction direction = Entity.Direction.DOWN;
 
     EntityConfig(){
         animationConfig = new Array<AnimationConfig>();
+    }
+
+    public Entity.Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Entity.Direction direction) {
+        this.direction = direction;
+    }
+
+    public Entity.State getState() {
+        return state;
+    }
+
+    public void setState(Entity.State state) {
+        this.state = state;
     }
 
     public Array<AnimationConfig> getAnimationConfig() {
@@ -22,6 +40,7 @@ public class EntityConfig {
     }
 
     static public class AnimationConfig{
+        private float frameDuration = 1.0f;
         private AnimationType animationType;
         private Array<String> texturePaths;
         private Array<GridPoint2> gridPoints;
@@ -30,6 +49,14 @@ public class EntityConfig {
             animationType = AnimationType.IDLE;
             texturePaths = new Array<String>();
             gridPoints = new Array<GridPoint2>();
+        }
+
+        public float getFrameDuration() {
+            return frameDuration;
+        }
+
+        public void setFrameDuration(float frameDuration) {
+            this.frameDuration = frameDuration;
         }
 
         public Array<String> getTexturePaths() {

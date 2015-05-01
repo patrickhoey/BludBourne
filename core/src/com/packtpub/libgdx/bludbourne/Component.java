@@ -11,7 +11,9 @@ public interface Component {
         CURRENT_DIRECTION,
         CURRENT_STATE,
         COLLISION_WITH_MAP,
-        LOAD_ANIMATIONS
+        LOAD_ANIMATIONS,
+        INIT_DIRECTION,
+        INIT_STATE
     }
 
     void dispose();

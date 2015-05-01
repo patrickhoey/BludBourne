@@ -10,6 +10,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 
+import java.util.Hashtable;
+
 public abstract class Map {
     private static final String TAG = Map.class.getSimpleName();
 
@@ -32,6 +34,7 @@ public abstract class Map {
     protected TiledMap _currentMap = null;
     protected Vector2 _playerStart;
     protected Array<Vector2> _npcStartPositions;
+    protected Hashtable<String, Vector2> _specialNPCStartPositions;
 
     protected MapLayer _collisionLayer = null;
     protected MapLayer _portalLayer = null;
@@ -78,6 +81,7 @@ public abstract class Map {
         }
 
         _npcStartPositions = getNPCStartPositions();
+        _specialNPCStartPositions = getSpecialNPCStartPositions();
     }
 
     public Vector2 getPlayerStart() {
@@ -104,7 +108,7 @@ public abstract class Map {
         return playerStart;
     }
 
-    public Array<Vector2> getNPCStartPositions(){
+    private Array<Vector2> getNPCStartPositions(){
         Array<Vector2> npcStartPositions = new Array<Vector2>();
 
         for( MapObject object: _spawnsLayer.getObjects()){
@@ -127,6 +131,35 @@ public abstract class Map {
             }
         }
         return npcStartPositions;
+    }
+
+    private Hashtable<String, Vector2> getSpecialNPCStartPositions(){
+        Hashtable<String, Vector2> specialNPCStartPositions = new Hashtable<String, Vector2>();
+
+        for( MapObject object: _spawnsLayer.getObjects()){
+            String objectName = object.getName();
+
+            if( objectName == null || objectName.isEmpty() ){
+                continue;
+            }
+
+            //This is meant for all the special spawn locations, a catch all, so ignore known ones
+            if(     objectName.equalsIgnoreCase(NPC_START) ||
+                    objectName.equalsIgnoreCase(PLAYER_START) ){
+                continue;
+            }
+
+            //Get center of rectangle
+            float x = ((RectangleMapObject)object).getRectangle().getX() + (((RectangleMapObject)object).getRectangle().getWidth()/2);
+            float y = ((RectangleMapObject)object).getRectangle().getY() + (((RectangleMapObject)object).getRectangle().getHeight()/2);
+
+            //scale by the unit to convert from map coordinates
+            x *= UNIT_SCALE;
+            y *= UNIT_SCALE;
+
+            specialNPCStartPositions.put(objectName, new Vector2(x,y));
+        }
+        return specialNPCStartPositions;
     }
 
     private void setClosestStartPosition(final Vector2 position){
