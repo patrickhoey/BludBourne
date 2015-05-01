@@ -1,0 +1,392 @@
+[
+{
+entityID : TOWN_FOLK1
+state : IMMOBILE
+direction : DOWN
+animationConfig: [
+	{
+	    frameDuration: 1.0
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Player0.png
+				sprites/characters/Player1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 0
+			}
+			
+			{
+				x: 0
+				y: 0
+			}
+		]
+	}
+]
+},
+{
+entityID : TOWN_FOLK2
+state : IMMOBILE
+direction : DOWN
+animationConfig: [
+	{
+	    frameDuration: 1.0
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Player0.png
+				sprites/characters/Player1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 1
+			}
+			
+			{
+				x: 0
+				y: 1
+			}
+		]
+	}
+]
+},
+{
+entityID : TOWN_FOLK3
+state : IMMOBILE
+direction : DOWN
+animationConfig: [
+	{
+	    frameDuration: 1.0
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Player0.png
+				sprites/characters/Player1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 2
+			}
+			
+			{
+				x: 0
+				y: 2
+			}
+		]
+	}
+]
+},
+{
+entityID : TOWN_FOLK4
+state : IMMOBILE
+direction : DOWN
+animationConfig: [
+	{
+	    frameDuration: 1.0
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Player0.png
+				sprites/characters/Player1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 3
+			}
+			
+			{
+				x: 0
+				y: 3
+			}
+		]
+	}
+]
+},
+{
+entityID : TOWN_FOLK5
+state : IMMOBILE
+direction : DOWN
+animationConfig: [
+	{
+	    frameDuration: 1.0
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Player0.png
+				sprites/characters/Player1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 4
+			}
+			
+			{
+				x: 0
+				y: 4
+			}
+		]
+	}
+]
+},
+{
+entityID : TOWN_FOLK6
+state : IMMOBILE
+direction : DOWN
+animationConfig: [
+	{
+	    frameDuration: 1.0
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Player0.png
+				sprites/characters/Player1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 5
+			}
+			
+			{
+				x: 0
+				y: 5
+			}
+		]
+	}
+]
+},
+{
+entityID : TOWN_FOLK7
+state : IMMOBILE
+direction : DOWN
+animationConfig: [
+	{
+	    frameDuration: 1.0
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Player0.png
+				sprites/characters/Player1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 6
+			}
+			
+			{
+				x: 0
+				y: 6
+			}
+		]
+	}
+]
+},
+{
+entityID : TOWN_FOLK8
+state : IMMOBILE
+direction : DOWN
+animationConfig: [
+	{
+	    frameDuration: 1.0
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Player0.png
+				sprites/characters/Player1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 7
+			}
+			
+			{
+				x: 0
+				y: 7
+			}
+		]
+	}
+]
+},
+{
+entityID : TOWN_FOLK9
+state : IMMOBILE
+direction : DOWN
+animationConfig: [
+	{
+	    frameDuration: 1.0
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Player0.png
+				sprites/characters/Player1.png
+		]
+		gridPoints: [
+			{
+				x: 1
+				y: 0
+			}
+			
+			{
+				x: 1
+				y: 0
+			}
+		]
+	}
+]
+},
+{
+entityID : TOWN_FOLK10
+state : IMMOBILE
+direction : DOWN
+animationConfig: [
+	{
+	    frameDuration: 1.0
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Player0.png
+				sprites/characters/Player1.png
+		]
+		gridPoints: [
+			{
+				x: 1
+				y: 1
+			}
+			
+			{
+				x: 1
+				y: 1
+			}
+		]
+	}
+]
+},
+{
+entityID : TOWN_FOLK11
+state : IMMOBILE
+direction : DOWN
+animationConfig: [
+	{
+	    frameDuration: 1.0
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Player0.png
+				sprites/characters/Player1.png
+		]
+		gridPoints: [
+			{
+				x: 1
+				y: 2
+			}
+			
+			{
+				x: 1
+				y: 2
+			}
+		]
+	}
+]
+},
+{
+entityID : TOWN_FOLK12
+state : IMMOBILE
+direction : DOWN
+animationConfig: [
+	{
+	    frameDuration: 1.0
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Player0.png
+				sprites/characters/Player1.png
+		]
+		gridPoints: [
+			{
+				x: 1
+				y: 3
+			}
+			
+			{
+				x: 1
+				y: 3
+			}
+		]
+	}
+]
+},
+{
+entityID : TOWN_FOLK13
+state : IMMOBILE
+direction : DOWN
+animationConfig: [
+	{
+	    frameDuration: 1.0
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Player0.png
+				sprites/characters/Player1.png
+		]
+		gridPoints: [
+			{
+				x: 1
+				y: 4
+			}
+			
+			{
+				x: 1
+				y: 4
+			}
+		]
+	}
+]
+},
+{
+entityID : TOWN_FOLK14
+state : IMMOBILE
+direction : DOWN
+animationConfig: [
+	{
+	    frameDuration: 1.0
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Player0.png
+				sprites/characters/Player1.png
+		]
+		gridPoints: [
+			{
+				x: 1
+				y: 5
+			}
+			
+			{
+				x: 1
+				y: 5
+			}
+		]
+	}
+]
+},
+{
+entityID : TOWN_FOLK15
+state : IMMOBILE
+direction : DOWN
+animationConfig: [
+	{
+	    frameDuration: 1.0
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Player0.png
+				sprites/characters/Player1.png
+		]
+		gridPoints: [
+			{
+				x: 1
+				y: 6
+			}
+			
+			{
+				x: 1
+				y: 6
+			}
+		]
+	}
+]
+}
+]	

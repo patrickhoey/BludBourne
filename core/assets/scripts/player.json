@@ -1,4 +1,5 @@
 {
+entityID : PLAYER
 state : IDLE
 direction : DOWN
 animationConfig: [

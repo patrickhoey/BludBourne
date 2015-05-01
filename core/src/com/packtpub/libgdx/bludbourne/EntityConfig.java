@@ -10,9 +10,18 @@ public class EntityConfig {
     Array<AnimationConfig> animationConfig;
     Entity.State state = Entity.State.IDLE;
     Entity.Direction direction = Entity.Direction.DOWN;
+    String entityID;
 
     EntityConfig(){
         animationConfig = new Array<AnimationConfig>();
+    }
+
+    public String getEntityID() {
+        return entityID;
+    }
+
+    public void setEntityID(String entityID) {
+        this.entityID = entityID;
     }
 
     public Entity.Direction getDirection() {

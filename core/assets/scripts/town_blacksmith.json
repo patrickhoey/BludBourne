@@ -1,4 +1,5 @@
 {
+entityID : TOWN_BLACKSMITH
 state : IMMOBILE
 direction : DOWN
 animationConfig: [

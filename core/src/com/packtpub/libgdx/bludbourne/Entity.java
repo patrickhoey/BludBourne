@@ -5,6 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.JsonValue;
+
+import java.util.ArrayList;
 
 public class Entity {
 	private static final String TAG = Entity.class.getSimpleName();
@@ -96,8 +99,26 @@ public class Entity {
 		}
 	}
 
-	public void loadConfig(String configFilePath){
-		_entityConfig = _json.fromJson(EntityConfig.class, Gdx.files.internal(configFilePath));
+	public void setEntityConfig(EntityConfig entityConfig){
+		this._entityConfig = entityConfig;
+	}
+
+	static public EntityConfig getEntityConfig(String configFilePath){
+		Json json = new Json();
+		return json.fromJson(EntityConfig.class, Gdx.files.internal(configFilePath));
+	}
+
+	static public Array<EntityConfig> getEntityConfigs(String configFilePath){
+		Json json = new Json();
+		Array<EntityConfig> configs = new Array<EntityConfig>();
+
+    	ArrayList<JsonValue> list = json.fromJson(ArrayList.class, Gdx.files.internal(configFilePath));
+
+		for (JsonValue jsonVal : list) {
+			configs.add(json.readValue(EntityConfig.class, jsonVal));
+		}
+
+		return configs;
 	}
 
 }
