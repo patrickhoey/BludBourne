@@ -120,8 +120,8 @@ public abstract class Map {
 
             if( objectName.equalsIgnoreCase(NPC_START) ){
                 //Get center of rectangle
-                float x = ((RectangleMapObject)object).getRectangle().getX() + (((RectangleMapObject)object).getRectangle().getWidth()/2);
-                float y = ((RectangleMapObject)object).getRectangle().getY() + (((RectangleMapObject)object).getRectangle().getHeight()/2);
+                float x = ((RectangleMapObject)object).getRectangle().getX();
+                float y = ((RectangleMapObject)object).getRectangle().getY();
 
                 //scale by the unit to convert from map coordinates
                 x *= UNIT_SCALE;
@@ -150,8 +150,8 @@ public abstract class Map {
             }
 
             //Get center of rectangle
-            float x = ((RectangleMapObject)object).getRectangle().getX() + (((RectangleMapObject)object).getRectangle().getWidth()/2);
-            float y = ((RectangleMapObject)object).getRectangle().getY() + (((RectangleMapObject)object).getRectangle().getHeight()/2);
+            float x = ((RectangleMapObject)object).getRectangle().getX();
+            float y = ((RectangleMapObject)object).getRectangle().getY();
 
             //scale by the unit to convert from map coordinates
             x *= UNIT_SCALE;

@@ -1,0 +1,25 @@
+{
+state : IMMOBILE
+direction : DOWN
+animationConfig: [
+	{
+	    frameDuration: 1.0
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Player0.png
+				sprites/characters/Player1.png
+		]
+		gridPoints: [
+			{
+				x: 3
+				y: 6
+			}
+			
+			{
+				x: 3
+				y: 6
+			}
+		]
+	}
+]
+}	
