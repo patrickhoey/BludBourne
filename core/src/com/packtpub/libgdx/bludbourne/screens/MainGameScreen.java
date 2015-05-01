@@ -83,6 +83,8 @@ public class MainGameScreen implements Screen {
 
 		_mapRenderer.render();
 
+		_mapMgr.updateCurrentMapEntities(_mapMgr, _mapRenderer.getBatch(), delta );
+
 		_player.update(_mapMgr, _mapRenderer.getBatch(), delta);
 	}
 

@@ -2,6 +2,7 @@ package com.packtpub.libgdx.bludbourne;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
@@ -49,6 +50,10 @@ public class MapManager {
             loadMap(MapFactory.MapType.TOWN);
         }
         return _currentMap.getCurrentTiledMap();
+    }
+
+    public void updateCurrentMapEntities(MapManager mapMgr, Batch batch, float delta){
+        _currentMap.updateMapEntities(mapMgr, batch, delta);
     }
 
     public void setCamera(Camera camera){

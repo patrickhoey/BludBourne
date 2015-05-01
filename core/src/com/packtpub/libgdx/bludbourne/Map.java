@@ -1,11 +1,14 @@
 package com.packtpub.libgdx.bludbourne;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
 
 public abstract class Map {
     private static final String TAG = Map.class.getSimpleName();
@@ -19,12 +22,16 @@ public abstract class Map {
 
     //Starting locations
     protected final static String PLAYER_START = "PLAYER_START";
+    protected final static String NPC_START = "NPC_START";
+
+    protected Json _json;
 
     protected Vector2 _playerStartPositionRect;
     protected Vector2 _closestPlayerStartPosition;
     protected Vector2 _convertedUnits;
     protected TiledMap _currentMap = null;
     protected Vector2 _playerStart;
+    protected Array<Vector2> _npcStartPositions;
 
     protected MapLayer _collisionLayer = null;
     protected MapLayer _portalLayer = null;
@@ -33,6 +40,7 @@ public abstract class Map {
     protected MapFactory.MapType _currentMapType;
 
     Map( MapFactory.MapType mapType, String fullMapPath){
+        _json = new Json();
         _currentMapType = mapType;
         _playerStart = new Vector2(0,0);
         _playerStartPositionRect = new Vector2(0,0);
@@ -68,11 +76,15 @@ public abstract class Map {
         }else{
             setClosestStartPosition(_playerStart);
         }
+
+        _npcStartPositions = getNPCStartPositions();
     }
 
     public Vector2 getPlayerStart() {
         return _playerStart;
     }
+
+    public abstract void updateMapEntities(MapManager mapMgr, Batch batch, float delta);
 
     public MapLayer getCollisionLayer(){
         return _collisionLayer;
@@ -92,6 +104,31 @@ public abstract class Map {
         return playerStart;
     }
 
+    public Array<Vector2> getNPCStartPositions(){
+        Array<Vector2> npcStartPositions = new Array<Vector2>();
+
+        for( MapObject object: _spawnsLayer.getObjects()){
+            String objectName = object.getName();
+
+            if( objectName == null || objectName.isEmpty() ){
+                continue;
+            }
+
+            if( objectName.equalsIgnoreCase(NPC_START) ){
+                //Get center of rectangle
+                float x = ((RectangleMapObject)object).getRectangle().getX() + (((RectangleMapObject)object).getRectangle().getWidth()/2);
+                float y = ((RectangleMapObject)object).getRectangle().getY() + (((RectangleMapObject)object).getRectangle().getHeight()/2);
+
+                //scale by the unit to convert from map coordinates
+                x *= UNIT_SCALE;
+                y *= UNIT_SCALE;
+
+                npcStartPositions.add(new Vector2(x,y));
+            }
+        }
+        return npcStartPositions;
+    }
+
     private void setClosestStartPosition(final Vector2 position){
          Gdx.app.debug(TAG, "setClosestStartPosition INPUT: (" + position.x + "," + position.y + ") " + _currentMapType.toString());
 
@@ -102,7 +139,13 @@ public abstract class Map {
 
         //Go through all player start positions and choose closest to last known position
         for( MapObject object: _spawnsLayer.getObjects()){
-            if( object.getName().equalsIgnoreCase(PLAYER_START) ){
+            String objectName = object.getName();
+
+            if( objectName == null || objectName.isEmpty() ){
+                continue;
+            }
+
+            if( objectName.equalsIgnoreCase(PLAYER_START) ){
                 ((RectangleMapObject)object).getRectangle().getPosition(_playerStartPositionRect);
                 float distance = position.dst2(_playerStartPositionRect);
 

@@ -1,20 +1,22 @@
 package com.packtpub.libgdx.bludbourne;
 
-
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Array;
 
 public class TopWorldMap extends Map{
     private static String _mapPath = "maps/topworld.tmx";
 
-    Array<Entity> mapEntities;
+    private Array<Entity> _mapEntities;
 
     TopWorldMap(){
         super(MapFactory.MapType.TOP_WORLD, _mapPath);
+        _mapEntities = new Array<Entity>(1);
+    }
 
-        mapEntities = new Array<Entity>(1);
-
-        mapEntities.add(EntityFactory.getEntity(EntityFactory.EntityType.NPC));
-
-
+    @Override
+    public void updateMapEntities(MapManager mapMgr, Batch batch, float delta){
+        for( Entity entity : _mapEntities ){
+            entity.update(mapMgr, batch, delta);
+        }
     }
 }
