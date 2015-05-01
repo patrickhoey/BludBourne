@@ -42,9 +42,13 @@ public final class Utility {
 	}
 
 	public static void loadMapAsset(String mapFilenamePath){
-	   if( mapFilenamePath == null || mapFilenamePath.isEmpty() ){
+		if( mapFilenamePath == null || mapFilenamePath.isEmpty() ){
 		   return;
-	   }
+		}
+
+		if( _assetManager.isLoaded(mapFilenamePath) ){
+			return;
+		}
 
 	   //load asset
 		if( _filePathResolver.resolve(mapFilenamePath).exists() ){
@@ -77,6 +81,11 @@ public final class Utility {
 		if( textureFilenamePath == null || textureFilenamePath.isEmpty() ){
 			return;
 		}
+
+		if( _assetManager.isLoaded(textureFilenamePath) ){
+			return;
+		}
+
 		//load asset
 		if( _filePathResolver.resolve(textureFilenamePath).exists() ){
 			_assetManager.setLoader(Texture.class, new TextureLoader(_filePathResolver));
