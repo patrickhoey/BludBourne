@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
@@ -91,7 +92,7 @@ public class Entity {
 	public void update(MapManager mapMgr, Batch batch, float delta){
 		_inputComponent.update(this, delta);
 		_physicsComponent.update(this, mapMgr, delta);
-		_graphicsComponent.update(this, batch, delta);
+		_graphicsComponent.update(this, mapMgr, batch, delta);
 	}
 
 	public void dispose(){

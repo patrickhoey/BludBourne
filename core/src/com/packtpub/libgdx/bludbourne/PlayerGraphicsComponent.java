@@ -1,9 +1,13 @@
 package com.packtpub.libgdx.bludbourne;
 
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
@@ -23,12 +27,14 @@ public class PlayerGraphicsComponent extends GraphicsComponent {
 
     private float _frameTime = 0f;
     private TextureRegion _currentFrame = null;
+    private ShapeRenderer _shapeRenderer;
 
     public PlayerGraphicsComponent(){
         _currentPosition = new Vector2(0,0);
         _currentState = Entity.State.WALKING;
         _currentDirection = Entity.Direction.DOWN;
         _animations = new Hashtable<Entity.AnimationType, Animation>();
+        _shapeRenderer = new ShapeRenderer();
         _json = new Json();
     }
 
@@ -73,7 +79,7 @@ public class PlayerGraphicsComponent extends GraphicsComponent {
     }
 
     @Override
-    public void update(Entity entity, Batch batch, float delta){
+    public void update(Entity entity, MapManager mapMgr, Batch batch, float delta){
         _frameTime = (_frameTime + delta)%5; //Want to avoid overflow
 
         //Look into the appropriate variable when changing position
@@ -142,9 +148,20 @@ public class PlayerGraphicsComponent extends GraphicsComponent {
                 break;
         }
 
+        Camera camera = mapMgr.getCamera();
+        camera.position.set(_currentPosition.x, _currentPosition.y, 0f);
+        camera.update();
+
         batch.begin();
         batch.draw(_currentFrame, _currentPosition.x, _currentPosition.y, 1, 1);
         batch.end();
+
+        Rectangle rect = entity.getCurrentBoundingBox();
+        _shapeRenderer.setProjectionMatrix(camera.combined);
+        _shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        _shapeRenderer.setColor(Color.RED);
+        _shapeRenderer.rect(rect.getX() * Map.UNIT_SCALE , rect.getY() * Map.UNIT_SCALE, rect.getWidth() * Map.UNIT_SCALE, rect.getHeight()*Map.UNIT_SCALE);
+        _shapeRenderer.end();
     }
 
     @Override

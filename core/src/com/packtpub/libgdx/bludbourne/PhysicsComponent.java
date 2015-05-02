@@ -93,6 +93,7 @@ public abstract class PhysicsComponent implements Component{
         this._currentEntityPosition.x = _nextEntityPosition.x;
         this._currentEntityPosition.y = _nextEntityPosition.y;
 
+        //Gdx.app.debug(TAG, "SETTING Current Position " + entity.getEntityConfig().getEntityID() + ": (" + _currentEntityPosition.x + "," + _currentEntityPosition.y + ")");
         entity.sendMessage(MESSAGE.CURRENT_POSITION,_json.toJson(_currentEntityPosition) );
     }
 
@@ -155,6 +156,7 @@ public abstract class PhysicsComponent implements Component{
         //Need to account for the unitscale, since the map coordinates will be in pixels
         float minX;
         float minY;
+
         if( Map.UNIT_SCALE > 0 ) {
             minX = _nextEntityPosition.x / Map.UNIT_SCALE;
             minY = _nextEntityPosition.y / Map.UNIT_SCALE;
@@ -163,7 +165,11 @@ public abstract class PhysicsComponent implements Component{
             minY = _nextEntityPosition.y;
         }
 
+        //_boundingBox.setCenter(minX + width/2, minY + height/2);
+        //_boundingBox.setWidth(width);
+        //_boundingBox.setHeight(height);
         _boundingBox.set(minX, minY, width, height);
+
         //Gdx.app.debug(TAG, "SETTING Bounding Box for " + entity.getEntityConfig().getEntityID() + ": (" + minX + "," + minY + ")  width: " + width + " height: " + height);
     }
 }

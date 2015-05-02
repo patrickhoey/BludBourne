@@ -12,7 +12,7 @@ import java.util.Hashtable;
 
 public abstract class GraphicsComponent implements Component {
 
-    public abstract void update(Entity entity, Batch batch, float delta);
+    public abstract void update(Entity entity, MapManager mapManager, Batch batch, float delta);
 
     protected Hashtable<Entity.AnimationType, Animation> _animations;
 
