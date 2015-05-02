@@ -25,7 +25,7 @@ public class NPCInputComponent extends InputComponent implements InputProcessor 
             if (string[0].equalsIgnoreCase(MESSAGE.COLLISION_WITH_MAP.toString())) {
                 _currentDirection = Entity.Direction.getRandomNext();
             }else if (string[0].equalsIgnoreCase(MESSAGE.COLLISION_WITH_ENTITY.toString())) {
-                _currentDirection = Entity.Direction.getRandomNext();
+                _currentState = Entity.State.IDLE;
             }
         }
 
@@ -59,7 +59,7 @@ public class NPCInputComponent extends InputComponent implements InputProcessor 
         _frameTime += delta;
 
         //Change direction after so many seconds
-        if( _frameTime > 3 ){
+        if( _frameTime > 2 ){
             _currentState = Entity.State.getRandomNext();
             _currentDirection = Entity.Direction.getRandomNext();
             _frameTime = 0.0f;

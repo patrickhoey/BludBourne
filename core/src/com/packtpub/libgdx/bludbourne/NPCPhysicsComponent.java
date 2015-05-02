@@ -36,7 +36,7 @@ public class NPCPhysicsComponent extends PhysicsComponent {
 
     @Override
     public void update(Entity entity, MapManager mapMgr, float delta) {
-        setBoundingBoxSize(entity, 0f, 0f);
+        setBoundingBoxSize(entity, 0.0f, 0.0f);
 
         if( _state == Entity.State.IMMOBILE ) return;
 
