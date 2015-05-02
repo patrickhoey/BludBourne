@@ -24,6 +24,8 @@ public class NPCInputComponent extends InputComponent implements InputProcessor 
         if( string.length == 1 ) {
             if (string[0].equalsIgnoreCase(MESSAGE.COLLISION_WITH_MAP.toString())) {
                 _currentDirection = Entity.Direction.getRandomNext();
+            }else if (string[0].equalsIgnoreCase(MESSAGE.COLLISION_WITH_ENTITY.toString())) {
+                _currentDirection = Entity.Direction.getRandomNext();
             }
         }
 

@@ -55,6 +55,7 @@ public class MainGameScreen implements Screen {
 		Gdx.app.debug(TAG, "UnitScale value is: " + _mapRenderer.getUnitScale());
 
 		_player = EntityFactory.getEntity(EntityFactory.EntityType.PLAYER);
+		_mapMgr.setPlayer(_player);
 	}
 
 	@Override

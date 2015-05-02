@@ -3,6 +3,7 @@ package com.packtpub.libgdx.bludbourne;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
@@ -97,6 +98,10 @@ public class Entity {
 		for(Component component: _components){
 			component.dispose();
 		}
+	}
+
+	public Rectangle getCurrentBoundingBox(){
+		return _physicsComponent._boundingBox;
 	}
 
 	public void setEntityConfig(EntityConfig entityConfig){

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 
 public class MapManager {
     private static final String TAG = MapManager.class.getSimpleName();
@@ -13,6 +14,7 @@ public class MapManager {
     private Camera _camera;
     private boolean _mapChanged = false;
     private Map _currentMap;
+    private Entity _player;
 
     public MapManager(){
     }
@@ -54,6 +56,18 @@ public class MapManager {
 
     public void updateCurrentMapEntities(MapManager mapMgr, Batch batch, float delta){
         _currentMap.updateMapEntities(mapMgr, batch, delta);
+    }
+
+    public final Array<Entity> getCurrentMapEntities(){
+        return _currentMap.getMapEntities();
+    }
+
+    public void setPlayer(Entity entity){
+        this._player = entity;
+    }
+
+    public Entity getPlayer(){
+        return this._player;
     }
 
     public void setCamera(Camera camera){

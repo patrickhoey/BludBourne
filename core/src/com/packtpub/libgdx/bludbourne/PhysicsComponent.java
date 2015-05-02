@@ -1,12 +1,12 @@
 package com.packtpub.libgdx.bludbourne;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 
 public abstract class PhysicsComponent implements Component{
@@ -19,7 +19,8 @@ public abstract class PhysicsComponent implements Component{
     protected Entity.Direction _currentDirection;
     protected Json _json;
     protected Vector2 _velocity;
-    protected Rectangle _boundingBox;
+
+    public Rectangle _boundingBox;
 
     PhysicsComponent(){
         this._nextEntityPosition = new Vector2(0,0);
@@ -29,7 +30,43 @@ public abstract class PhysicsComponent implements Component{
         this._json = new Json();
     }
 
-    protected boolean isCollisionWithMapLayer(Entity entity, MapManager mapMgr, Rectangle boundingBox){
+    protected boolean isCollisionWithMapEntities(Entity entity, MapManager mapMgr){
+        Array<Entity> entities = mapMgr.getCurrentMapEntities();
+        boolean isCollisionWithMapEntities = false;
+
+        for(Entity mapEntity: entities){
+            //Check for testing against self
+            if( mapEntity.equals(entity) ){
+                continue;
+            }
+
+            if (_boundingBox.overlaps(mapEntity.getCurrentBoundingBox()) ){
+                //Collision
+                entity.sendMessage(MESSAGE.COLLISION_WITH_ENTITY);
+                isCollisionWithMapEntities = true;
+                break;
+            }
+        }
+        return isCollisionWithMapEntities;
+    }
+
+    protected boolean isCollision(Entity entitySource, Entity entityTarget){
+        boolean isCollisionWithMapEntities = false;
+
+        if( entitySource.equals(entityTarget) ){
+            return false;
+        }
+
+        if (entitySource.getCurrentBoundingBox().overlaps(entityTarget.getCurrentBoundingBox()) ){
+            //Collision
+            entitySource.sendMessage(MESSAGE.COLLISION_WITH_ENTITY);
+            isCollisionWithMapEntities = true;
+        }
+
+        return isCollisionWithMapEntities;
+    }
+
+    protected boolean isCollisionWithMapLayer(Entity entity, MapManager mapMgr){
         MapLayer mapCollisionLayer =  mapMgr.getCollisionLayer();
 
         if( mapCollisionLayer == null ){
@@ -41,7 +78,7 @@ public abstract class PhysicsComponent implements Component{
         for( MapObject object: mapCollisionLayer.getObjects()){
             if(object instanceof RectangleMapObject) {
                 rectangle = ((RectangleMapObject)object).getRectangle();
-                if( boundingBox.overlaps(rectangle) ){
+                if( _boundingBox.overlaps(rectangle) ){
                     //Collision
                     entity.sendMessage(MESSAGE.COLLISION_WITH_MAP);
                     return true;
@@ -127,6 +164,6 @@ public abstract class PhysicsComponent implements Component{
         }
 
         _boundingBox.set(minX, minY, width, height);
-        //Gdx.app.debug(TAG, "SETTING Bounding Box: (" + minX + "," + minY + ")  width: " + width + " height: " + height);
+        //Gdx.app.debug(TAG, "SETTING Bounding Box for " + entity.getEntityConfig().getEntityID() + ": (" + minX + "," + minY + ")  width: " + width + " height: " + height);
     }
 }

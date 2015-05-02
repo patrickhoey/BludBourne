@@ -1,7 +1,5 @@
 package com.packtpub.libgdx.bludbourne;
 
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -16,11 +14,8 @@ public class TownMap extends Map{
     private static String _townInnKeeper = "scripts/town_innkeeper.json";
     private static String _townFolk = "scripts/town_folk.json";
 
-    private Array<Entity> _mapEntities;
-
     TownMap(){
         super(MapFactory.MapType.TOWN, _mapPath);
-        _mapEntities = new Array<Entity>(4);
 
         for( Vector2 position: _npcStartPositions){
             _mapEntities.add(initEntity(Entity.getEntityConfig(_townGuardWalking), position));
@@ -40,8 +35,8 @@ public class TownMap extends Map{
 
     @Override
     public void updateMapEntities(MapManager mapMgr, Batch batch, float delta){
-        for( Entity entity : _mapEntities ){
-            entity.update(mapMgr, batch, delta);
+        for( int i=0; i < _mapEntities.size; i++){
+            _mapEntities.get(i).update(mapMgr, batch, delta);
         }
     }
 

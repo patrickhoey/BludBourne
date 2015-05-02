@@ -36,16 +36,28 @@ public class NPCPhysicsComponent extends PhysicsComponent {
 
     @Override
     public void update(Entity entity, MapManager mapMgr, float delta) {
-        //We want the hitbox to be at the feet for a better feel
         setBoundingBoxSize(entity, 0f, 0f);
 
         if( _state == Entity.State.IMMOBILE ) return;
 
-        if (!isCollisionWithMapLayer(entity, mapMgr, _boundingBox) &&
+        if (    !isCollisionWithMapLayer(entity, mapMgr) &&
+                !isCollisionWithMapEntities(entity, mapMgr) &&
                 _state == Entity.State.WALKING){
             setNextPositionToCurrent(entity);
         }
 
         calculateNextPosition(delta);
+    }
+
+    @Override
+    protected boolean isCollisionWithMapEntities(Entity entity, MapManager mapMgr){
+        if( super.isCollisionWithMapEntities(entity, mapMgr) ){
+            return true;
+        }
+        //Test against player
+        if( isCollision(entity, mapMgr.getPlayer()) ) {
+            return true;
+        }
+        return false;
     }
 }

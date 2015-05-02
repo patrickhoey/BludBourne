@@ -41,9 +41,11 @@ public abstract class Map {
     protected MapLayer _spawnsLayer = null;
 
     protected MapFactory.MapType _currentMapType;
+    protected Array<Entity> _mapEntities;
 
     Map( MapFactory.MapType mapType, String fullMapPath){
         _json = new Json();
+        _mapEntities = new Array<Entity>(10);
         _currentMapType = mapType;
         _playerStart = new Vector2(0,0);
         _playerStartPositionRect = new Vector2(0,0);
@@ -82,6 +84,10 @@ public abstract class Map {
 
         _npcStartPositions = getNPCStartPositions();
         _specialNPCStartPositions = getSpecialNPCStartPositions();
+    }
+
+    public Array<Entity> getMapEntities(){
+        return _mapEntities;
     }
 
     public Vector2 getPlayerStart() {
