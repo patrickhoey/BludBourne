@@ -22,6 +22,12 @@ public abstract class PhysicsComponent implements Component{
 
     public Rectangle _boundingBox;
 
+    public static enum BoundingBoxLocation{
+        BOTTOM_LEFT,
+        BOTTOM_CENTER,
+        CENTER,
+    }
+
     PhysicsComponent(){
         this._nextEntityPosition = new Vector2(0,0);
         this._currentEntityPosition = new Vector2(0,0);
@@ -94,7 +100,7 @@ public abstract class PhysicsComponent implements Component{
         this._currentEntityPosition.y = _nextEntityPosition.y;
 
         //Gdx.app.debug(TAG, "SETTING Current Position " + entity.getEntityConfig().getEntityID() + ": (" + _currentEntityPosition.x + "," + _currentEntityPosition.y + ")");
-        entity.sendMessage(MESSAGE.CURRENT_POSITION,_json.toJson(_currentEntityPosition) );
+        entity.sendMessage(MESSAGE.CURRENT_POSITION, _json.toJson(_currentEntityPosition));
     }
 
     protected void calculateNextPosition(float deltaTime){
@@ -129,10 +135,13 @@ public abstract class PhysicsComponent implements Component{
         _velocity.scl(1 / deltaTime);
     }
 
-    protected void setBoundingBoxSize(Entity entity, float percentageWidthReduced, float percentageHeightReduced){
+    protected void setBoundingBoxSize(Entity entity, float percentageWidthReduced, float percentageHeightReduced, BoundingBoxLocation boundingBoxLocation){
         //Update the current bounding box
         float width;
         float height;
+
+        float origWidth =  entity.FRAME_WIDTH;
+        float origHeight = entity.FRAME_HEIGHT;
 
         float widthReductionAmount = 1.0f - percentageWidthReduced; //.8f for 20% (1 - .20)
         float heightReductionAmount = 1.0f - percentageHeightReduced; //.8f for 20% (1 - .20)
@@ -165,10 +174,21 @@ public abstract class PhysicsComponent implements Component{
             minY = _nextEntityPosition.y;
         }
 
-        //_boundingBox.setCenter(minX + width/2, minY + height/2);
-        //_boundingBox.setWidth(width);
-        //_boundingBox.setHeight(height);
-        _boundingBox.set(minX, minY, width, height);
+
+        _boundingBox.setWidth(width);
+        _boundingBox.setHeight(height);
+
+        switch(boundingBoxLocation){
+            case BOTTOM_LEFT:
+                _boundingBox.set(minX, minY, width, height);
+                break;
+            case BOTTOM_CENTER:
+                _boundingBox.setCenter(minX + origWidth/2, minY + origHeight/4);
+                break;
+            case CENTER:
+                _boundingBox.setCenter(minX + origWidth/2, minY + origHeight/2);
+                break;
+        }
 
         //Gdx.app.debug(TAG, "SETTING Bounding Box for " + entity.getEntityConfig().getEntityID() + ": (" + minX + "," + minY + ")  width: " + width + " height: " + height);
     }

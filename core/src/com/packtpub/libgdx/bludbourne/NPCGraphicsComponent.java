@@ -147,11 +147,12 @@ public class NPCGraphicsComponent extends GraphicsComponent {
                 break;
         }
 
-
         batch.begin();
         batch.draw(_currentFrame, _currentPosition.x, _currentPosition.y, 1, 1);
         batch.end();
 
+        //Used to graphically debug boundingboxes
+        /*
         Rectangle rect = entity.getCurrentBoundingBox();
         Camera camera = mapMgr.getCamera();
         _shapeRenderer.setProjectionMatrix(camera.combined);
@@ -159,6 +160,7 @@ public class NPCGraphicsComponent extends GraphicsComponent {
         _shapeRenderer.setColor(Color.BLACK);
         _shapeRenderer.rect(rect.getX() * Map.UNIT_SCALE, rect.getY() * Map.UNIT_SCALE, rect.getWidth() * Map.UNIT_SCALE, rect.getHeight() * Map.UNIT_SCALE);
         _shapeRenderer.end();
+        */
     }
 
     @Override

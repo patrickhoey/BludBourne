@@ -36,7 +36,7 @@ public class NPCPhysicsComponent extends PhysicsComponent {
 
     @Override
     public void update(Entity entity, MapManager mapMgr, float delta) {
-        setBoundingBoxSize(entity, 0.0f, 0.0f);
+        setBoundingBoxSize(entity, 0.3f, 0.05f, BoundingBoxLocation.CENTER);
 
         if( _state == Entity.State.IMMOBILE ) return;
 
@@ -51,13 +51,15 @@ public class NPCPhysicsComponent extends PhysicsComponent {
 
     @Override
     protected boolean isCollisionWithMapEntities(Entity entity, MapManager mapMgr){
-        if( super.isCollisionWithMapEntities(entity, mapMgr) ){
-            return true;
-        }
         //Test against player
         if( isCollision(entity, mapMgr.getPlayer()) ) {
             return true;
         }
+
+        if( super.isCollisionWithMapEntities(entity, mapMgr) ){
+            return true;
+        }
+
         return false;
     }
 }

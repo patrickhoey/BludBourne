@@ -26,6 +26,7 @@ public class NPCInputComponent extends InputComponent implements InputProcessor 
                 _currentDirection = Entity.Direction.getRandomNext();
             }else if (string[0].equalsIgnoreCase(MESSAGE.COLLISION_WITH_ENTITY.toString())) {
                 _currentState = Entity.State.IDLE;
+                _currentDirection = _currentDirection.getOpposite();
             }
         }
 

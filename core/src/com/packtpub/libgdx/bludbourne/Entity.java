@@ -25,6 +25,18 @@ public class Entity {
 		static public Direction getRandomNext() {
 			return Direction.values()[MathUtils.random(Direction.values().length - 1)];
 		}
+
+		public Direction getOpposite() {
+			if( this == LEFT){
+				return RIGHT;
+			}else if( this == RIGHT){
+				return LEFT;
+			}else if( this == UP){
+				return DOWN;
+			}else{
+				return UP;
+			}
+		}
 	}
 
 	public static enum State {
