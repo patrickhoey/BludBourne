@@ -3,6 +3,7 @@ package com.packtpub.libgdx.bludbourne;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.MathUtils;
 
 public class NPCInputComponent extends InputComponent implements InputProcessor {
     private static final String TAG = NPCInputComponent.class.getSimpleName();
@@ -26,7 +27,7 @@ public class NPCInputComponent extends InputComponent implements InputProcessor 
                 _currentDirection = Entity.Direction.getRandomNext();
             }else if (string[0].equalsIgnoreCase(MESSAGE.COLLISION_WITH_ENTITY.toString())) {
                 _currentState = Entity.State.IDLE;
-                _currentDirection = _currentDirection.getOpposite();
+                //_currentDirection = _currentDirection.getOpposite();
             }
         }
 
@@ -60,7 +61,7 @@ public class NPCInputComponent extends InputComponent implements InputProcessor 
         _frameTime += delta;
 
         //Change direction after so many seconds
-        if( _frameTime > 2 ){
+        if( _frameTime > MathUtils.random(1,5) ){
             _currentState = Entity.State.getRandomNext();
             _currentDirection = Entity.Direction.getRandomNext();
             _frameTime = 0.0f;

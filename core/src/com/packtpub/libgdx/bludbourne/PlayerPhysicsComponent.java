@@ -15,6 +15,8 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
     private Entity.State _state;
 
     public PlayerPhysicsComponent(){
+        _boundingBoxLocation = BoundingBoxLocation.BOTTOM_CENTER;
+        initBoundingBox(0.3f, 0.5f);
     }
 
     @Override
@@ -44,7 +46,7 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
     @Override
     public void update(Entity entity, MapManager mapMgr, float delta) {
         //We want the hitbox to be at the feet for a better feel
-        setBoundingBoxSize(entity, 0.2f, 0.5f, BoundingBoxLocation.BOTTOM_CENTER);
+        updateBoundingBoxPosition(_nextEntityPosition);
 
         updatePortalLayerActivation(mapMgr, _boundingBox);
 
@@ -56,6 +58,8 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
             Camera camera = mapMgr.getCamera();
             camera.position.set(_currentEntityPosition.x, _currentEntityPosition.y, 0f);
             camera.update();
+        }else{
+            updateBoundingBoxPosition(_currentEntityPosition);
         }
 
         calculateNextPosition(delta);

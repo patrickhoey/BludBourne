@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -21,6 +22,7 @@ public abstract class PhysicsComponent implements Component{
     protected Vector2 _velocity;
 
     public Rectangle _boundingBox;
+    protected BoundingBoxLocation _boundingBoxLocation;
 
     public static enum BoundingBoxLocation{
         BOTTOM_LEFT,
@@ -34,6 +36,7 @@ public abstract class PhysicsComponent implements Component{
         this._velocity = new Vector2(2f,2f);
         this._boundingBox = new Rectangle();
         this._json = new Json();
+        _boundingBoxLocation = BoundingBoxLocation.BOTTOM_LEFT;
     }
 
     protected boolean isCollisionWithMapEntities(Entity entity, MapManager mapMgr){
@@ -46,7 +49,8 @@ public abstract class PhysicsComponent implements Component{
                 continue;
             }
 
-            if (_boundingBox.overlaps(mapEntity.getCurrentBoundingBox()) ){
+            Rectangle targetRect = mapEntity.getCurrentBoundingBox();
+            if (_boundingBox.overlaps(targetRect) ){
                 //Collision
                 entity.sendMessage(MESSAGE.COLLISION_WITH_ENTITY);
                 isCollisionWithMapEntities = true;
@@ -135,27 +139,27 @@ public abstract class PhysicsComponent implements Component{
         _velocity.scl(1 / deltaTime);
     }
 
-    protected void setBoundingBoxSize(Entity entity, float percentageWidthReduced, float percentageHeightReduced, BoundingBoxLocation boundingBoxLocation){
+    protected void initBoundingBox(float percentageWidthReduced, float percentageHeightReduced){
         //Update the current bounding box
         float width;
         float height;
 
-        float origWidth =  entity.FRAME_WIDTH;
-        float origHeight = entity.FRAME_HEIGHT;
+        float origWidth =  Entity.FRAME_WIDTH;
+        float origHeight = Entity.FRAME_HEIGHT;
 
         float widthReductionAmount = 1.0f - percentageWidthReduced; //.8f for 20% (1 - .20)
         float heightReductionAmount = 1.0f - percentageHeightReduced; //.8f for 20% (1 - .20)
 
         if( widthReductionAmount > 0 && widthReductionAmount < 1){
-            width = entity.FRAME_WIDTH * widthReductionAmount;
+            width = Entity.FRAME_WIDTH * widthReductionAmount;
         }else{
-            width = entity.FRAME_WIDTH;
+            width = Entity.FRAME_WIDTH;
         }
 
         if( heightReductionAmount > 0 && heightReductionAmount < 1){
-            height = entity.FRAME_HEIGHT * heightReductionAmount;
+            height = Entity.FRAME_HEIGHT * heightReductionAmount;
         }else{
-            height = entity.FRAME_HEIGHT;
+            height = Entity.FRAME_HEIGHT;
         }
 
         if( width == 0 || height == 0){
@@ -174,11 +178,10 @@ public abstract class PhysicsComponent implements Component{
             minY = _nextEntityPosition.y;
         }
 
-
         _boundingBox.setWidth(width);
         _boundingBox.setHeight(height);
 
-        switch(boundingBoxLocation){
+        switch(_boundingBoxLocation){
             case BOTTOM_LEFT:
                 _boundingBox.set(minX, minY, width, height);
                 break;
@@ -187,6 +190,34 @@ public abstract class PhysicsComponent implements Component{
                 break;
             case CENTER:
                 _boundingBox.setCenter(minX + origWidth/2, minY + origHeight/2);
+                break;
+        }
+
+        //Gdx.app.debug(TAG, "SETTING Bounding Box for " + entity.getEntityConfig().getEntityID() + ": (" + minX + "," + minY + ")  width: " + width + " height: " + height);
+    }
+
+    protected void updateBoundingBoxPosition(Vector2 position){
+        //Need to account for the unitscale, since the map coordinates will be in pixels
+        float minX;
+        float minY;
+
+        if( Map.UNIT_SCALE > 0 ) {
+            minX = position.x / Map.UNIT_SCALE;
+            minY = position.y / Map.UNIT_SCALE;
+        }else{
+            minX = position.x;
+            minY = position.y;
+        }
+
+        switch(_boundingBoxLocation){
+            case BOTTOM_LEFT:
+                _boundingBox.set(minX, minY, _boundingBox.getWidth(), _boundingBox.getHeight());
+                break;
+            case BOTTOM_CENTER:
+                _boundingBox.setCenter(minX + Entity.FRAME_WIDTH/2, minY + Entity.FRAME_HEIGHT/4);
+                break;
+            case CENTER:
+                _boundingBox.setCenter(minX + Entity.FRAME_WIDTH/2, minY + Entity.FRAME_HEIGHT/2);
                 break;
         }
 

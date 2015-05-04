@@ -8,6 +8,8 @@ public class NPCPhysicsComponent extends PhysicsComponent {
     private Entity.State _state;
 
     public NPCPhysicsComponent(){
+        _boundingBoxLocation = BoundingBoxLocation.CENTER;
+        initBoundingBox(0.4f, 0.15f);
     }
 
     @Override
@@ -36,7 +38,7 @@ public class NPCPhysicsComponent extends PhysicsComponent {
 
     @Override
     public void update(Entity entity, MapManager mapMgr, float delta) {
-        setBoundingBoxSize(entity, 0.3f, 0.05f, BoundingBoxLocation.CENTER);
+        updateBoundingBoxPosition(_nextEntityPosition);
 
         if( _state == Entity.State.IMMOBILE ) return;
 
@@ -44,8 +46,9 @@ public class NPCPhysicsComponent extends PhysicsComponent {
                 !isCollisionWithMapEntities(entity, mapMgr) &&
                 _state == Entity.State.WALKING){
             setNextPositionToCurrent(entity);
+        } else {
+            updateBoundingBoxPosition(_currentEntityPosition);
         }
-
         calculateNextPosition(delta);
     }
 
