@@ -8,11 +8,11 @@ import com.badlogic.gdx.math.Vector3;
 public class PlayerInputComponent extends InputComponent implements InputProcessor {
 
 	private final static String TAG = PlayerInputComponent.class.getSimpleName();
-	private Vector3 lastMouseCoordinates;
+	private Vector3 _lastMouseCoordinates;
 
 	public PlayerInputComponent(){
 		//Gdx.app.debug(TAG, "Construction" );
-		this.lastMouseCoordinates = new Vector3();
+		this._lastMouseCoordinates = new Vector3();
 		Gdx.input.setInputProcessor(this);
 	}
 
@@ -61,7 +61,8 @@ public class PlayerInputComponent extends InputComponent implements InputProcess
 
 		//Mouse input
 		if( mouseButtons.get(Mouse.SELECT)) {
-			//Gdx.app.debug(TAG, "Mouse LEFT click at : (" + lastMouseCoordinates.x + "," + lastMouseCoordinates.y + ")" );
+			//Gdx.app.debug(TAG, "Mouse LEFT click at : (" + _lastMouseCoordinates.x + "," + _lastMouseCoordinates.y + ")" );
+			entity.sendMessage(MESSAGE.INIT_SELECT_ENTITY, _json.toJson(_lastMouseCoordinates));
 			mouseButtons.put(Mouse.SELECT, false);
 		}
 	}
@@ -178,7 +179,7 @@ public class PlayerInputComponent extends InputComponent implements InputProcess
 	}
 	
 	public void setClickedMouseCoordinates(int x,int y){
-		lastMouseCoordinates.set(x, y, 0);
+		_lastMouseCoordinates.set(x, y, 0);
 	}
 	
 	public void selectMouseButtonPressed(int x, int y){

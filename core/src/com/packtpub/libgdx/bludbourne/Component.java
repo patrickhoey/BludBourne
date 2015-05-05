@@ -14,7 +14,10 @@ public interface Component {
         COLLISION_WITH_ENTITY,
         LOAD_ANIMATIONS,
         INIT_DIRECTION,
-        INIT_STATE
+        INIT_STATE,
+        INIT_SELECT_ENTITY,
+        ENTITY_SELECTED,
+        ENTITY_DESELECTED
     }
 
     void dispose();

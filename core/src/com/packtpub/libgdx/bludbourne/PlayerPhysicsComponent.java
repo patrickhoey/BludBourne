@@ -1,6 +1,5 @@
 package com.packtpub.libgdx.bludbourne;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.maps.MapLayer;
@@ -8,15 +7,25 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
+import com.badlogic.gdx.utils.Array;
 
 public class PlayerPhysicsComponent extends PhysicsComponent {
     private static final String TAG = PlayerPhysicsComponent.class.getSimpleName();
 
     private Entity.State _state;
+    private Vector3 _mouseSelectCoordinates;
+    private boolean _isMouseSelectEnabled = false;
+    private Ray _selectionRay;
+    private float _selectRayMaximumDistance = 32.0f;
 
     public PlayerPhysicsComponent(){
         _boundingBoxLocation = BoundingBoxLocation.BOTTOM_CENTER;
         initBoundingBox(0.3f, 0.5f);
+
+        _mouseSelectCoordinates = new Vector3(0,0,0);
+        _selectionRay = new Ray(new Vector3(), new Vector3());
     }
 
     @Override
@@ -39,6 +48,9 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
                 _state = _json.fromJson(Entity.State.class, string[1]);
             } else if (string[0].equalsIgnoreCase(MESSAGE.CURRENT_DIRECTION.toString())) {
                 _currentDirection = _json.fromJson(Entity.Direction.class, string[1]);
+            } else if (string[0].equalsIgnoreCase(MESSAGE.INIT_SELECT_ENTITY.toString())) {
+                _mouseSelectCoordinates = _json.fromJson(Vector3.class, string[1]);
+                _isMouseSelectEnabled = true;
             }
         }
     }
@@ -47,8 +59,12 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
     public void update(Entity entity, MapManager mapMgr, float delta) {
         //We want the hitbox to be at the feet for a better feel
         updateBoundingBoxPosition(_nextEntityPosition);
+        updatePortalLayerActivation(mapMgr);
 
-        updatePortalLayerActivation(mapMgr, _boundingBox);
+        if( _isMouseSelectEnabled ){
+            selectMapEntityCandidate(mapMgr);
+            _isMouseSelectEnabled = false;
+        }
 
         if (    !isCollisionWithMapLayer(entity, mapMgr) &&
                 !isCollisionWithMapEntities(entity, mapMgr) &&
@@ -65,7 +81,37 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
         calculateNextPosition(delta);
     }
 
-    private boolean updatePortalLayerActivation(MapManager mapMgr, Rectangle boundingBox){
+    private void selectMapEntityCandidate(MapManager mapMgr){
+        Array<Entity> currentEntities = mapMgr.getCurrentMapEntities();
+
+        //Convert screen coordinates to world coordinates, then to unit scale coordinates
+        mapMgr.getCamera().unproject(_mouseSelectCoordinates);
+        _mouseSelectCoordinates.x /= Map.UNIT_SCALE;
+        _mouseSelectCoordinates.y /= Map.UNIT_SCALE;
+
+        //Gdx.app.debug(TAG, "Mouse Coordinates " + "(" + _mouseSelectCoordinates.x + "," + _mouseSelectCoordinates.y + ")");
+
+        for( Entity mapEntity : currentEntities ) {
+            //Don't break, reset all entities
+            mapEntity.sendMessage(MESSAGE.ENTITY_DESELECTED);
+            Rectangle mapEntityBoundingBox = mapEntity.getCurrentBoundingBox();
+            //Gdx.app.debug(TAG, "Entity Candidate Location " + "(" + mapEntityBoundingBox.x + "," + mapEntityBoundingBox.y + ")");
+            if (mapEntity.getCurrentBoundingBox().contains(_mouseSelectCoordinates.x, _mouseSelectCoordinates.y)) {
+                //Check distance
+                _selectionRay.set(_boundingBox.x, _boundingBox.y, 0.0f, mapEntityBoundingBox.x, mapEntityBoundingBox.y, 0.0f);
+                float distance =  _selectionRay.origin.dst(_selectionRay.direction);
+
+                if( distance <= _selectRayMaximumDistance ){
+                    //We have a valid entity selection
+                    //Picked/Selected
+                    Gdx.app.debug(TAG, "Selected Entity! " + mapEntity.getEntityConfig().getEntityID());
+                    mapEntity.sendMessage(MESSAGE.ENTITY_SELECTED);
+                }
+            }
+        }
+    }
+
+    private boolean updatePortalLayerActivation(MapManager mapMgr){
         MapLayer mapPortalLayer =  mapMgr.getPortalLayer();
 
         if( mapPortalLayer == null ){
@@ -79,7 +125,7 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
             if(object instanceof RectangleMapObject) {
                 rectangle = ((RectangleMapObject)object).getRectangle();
 
-                if (boundingBox.overlaps(rectangle) ){
+                if (_boundingBox.overlaps(rectangle) ){
                     String mapName = object.getName();
                     if( mapName == null ) {
                         return false;
