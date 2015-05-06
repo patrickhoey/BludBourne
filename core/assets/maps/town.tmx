@@ -227,7 +227,7 @@
   <object id="94" name="TOP_WORLD" x="-16" y="-10" width="12" height="500"/>
   <object id="95" name="TOP_WORLD" x="0" y="480" width="640" height="12"/>
   <object id="96" name="TOP_WORLD" x="640" y="-11" width="12" height="500"/>
-  <object id="97" name="TOP_WORLD" x="0" y="-12" width="640" height="12"/>
+  <object id="97" x="0" y="-17" width="640" height="12"/>
  </objectgroup>
  <objectgroup name="MAP_SPAWNS_LAYER">
   <object id="88" name="PLAYER_START" x="208" y="448" width="16" height="16"/>

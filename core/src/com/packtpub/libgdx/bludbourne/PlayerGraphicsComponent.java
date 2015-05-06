@@ -1,17 +1,11 @@
 package com.packtpub.libgdx.bludbourne;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Json;
-import java.util.Hashtable;
 
 import com.packtpub.libgdx.bludbourne.EntityConfig.AnimationConfig;
 
@@ -19,23 +13,7 @@ public class PlayerGraphicsComponent extends GraphicsComponent {
 
     private static final String TAG = PlayerGraphicsComponent.class.getSimpleName();
 
-    private Vector2 _currentPosition;
-    private Entity.State _currentState;
-    private Entity.Direction _currentDirection;
-
-    private Json _json;
-
-    private float _frameTime = 0f;
-    private TextureRegion _currentFrame = null;
-    private ShapeRenderer _shapeRenderer;
-
     public PlayerGraphicsComponent(){
-        _currentPosition = new Vector2(0,0);
-        _currentState = Entity.State.WALKING;
-        _currentDirection = Entity.Direction.DOWN;
-        _animations = new Hashtable<Entity.AnimationType, Animation>();
-        _shapeRenderer = new ShapeRenderer();
-        _json = new Json();
     }
 
     @Override
@@ -80,73 +58,7 @@ public class PlayerGraphicsComponent extends GraphicsComponent {
 
     @Override
     public void update(Entity entity, MapManager mapMgr, Batch batch, float delta){
-        _frameTime = (_frameTime + delta)%5; //Want to avoid overflow
-
-        //Look into the appropriate variable when changing position
-        switch (_currentDirection) {
-            case DOWN:
-                if (_currentState == Entity.State.WALKING) {
-                    Animation animation = _animations.get(Entity.AnimationType.WALK_DOWN);
-                    if( animation == null ) return;
-                    _currentFrame = animation.getKeyFrame(_frameTime);
-                } else if(_currentState == Entity.State.IDLE) {
-                    Animation animation = _animations.get(Entity.AnimationType.WALK_DOWN);
-                    if( animation == null ) return;
-                    _currentFrame = animation.getKeyFrames()[0];
-                } else if(_currentState == Entity.State.IMMOBILE) {
-                    Animation animation = _animations.get(Entity.AnimationType.IMMOBILE);
-                    if( animation == null ) return;
-                    _currentFrame = animation.getKeyFrame(_frameTime);
-                }
-                break;
-            case LEFT:
-                if (_currentState == Entity.State.WALKING) {
-                    Animation animation = _animations.get(Entity.AnimationType.WALK_LEFT);
-                    if( animation == null ) return;
-                    _currentFrame = animation.getKeyFrame(_frameTime);
-                } else if(_currentState == Entity.State.IDLE) {
-                    Animation animation = _animations.get(Entity.AnimationType.WALK_LEFT);
-                    if( animation == null ) return;
-                    _currentFrame = animation.getKeyFrames()[0];
-                } else if(_currentState == Entity.State.IMMOBILE) {
-                    Animation animation = _animations.get(Entity.AnimationType.IMMOBILE);
-                    if( animation == null ) return;
-                    _currentFrame = animation.getKeyFrame(_frameTime);
-                }
-                break;
-            case UP:
-                if (_currentState == Entity.State.WALKING) {
-                    Animation animation = _animations.get(Entity.AnimationType.WALK_UP);
-                    if( animation == null ) return;
-                    _currentFrame = animation.getKeyFrame(_frameTime);
-                } else if(_currentState == Entity.State.IDLE) {
-                    Animation animation = _animations.get(Entity.AnimationType.WALK_UP);
-                    if( animation == null ) return;
-                    _currentFrame = animation.getKeyFrames()[0];
-                } else if(_currentState == Entity.State.IMMOBILE) {
-                    Animation animation = _animations.get(Entity.AnimationType.IMMOBILE);
-                    if( animation == null ) return;
-                    _currentFrame = animation.getKeyFrame(_frameTime);
-                }
-                break;
-            case RIGHT:
-                if (_currentState == Entity.State.WALKING) {
-                    Animation animation = _animations.get(Entity.AnimationType.WALK_RIGHT);
-                    if( animation == null ) return;
-                    _currentFrame = animation.getKeyFrame(_frameTime);
-                } else if(_currentState == Entity.State.IDLE) {
-                    Animation animation = _animations.get(Entity.AnimationType.WALK_RIGHT);
-                    if( animation == null ) return;
-                    _currentFrame = animation.getKeyFrames()[0];
-                } else if(_currentState == Entity.State.IMMOBILE) {
-                    Animation animation = _animations.get(Entity.AnimationType.IMMOBILE);
-                    if( animation == null ) return;
-                    _currentFrame = animation.getKeyFrame(_frameTime);
-                }
-                break;
-            default:
-                break;
-        }
+        updateAnimations(delta);
 
         Camera camera = mapMgr.getCamera();
         camera.position.set(_currentPosition.x, _currentPosition.y, 0f);
