@@ -1,0 +1,8 @@
+{
+    "com.badlogic.gdx.graphics.g2d.BitmapFont": {
+        "default-font": { "file": "fonts/SDS_6x6.fnt" },
+    },
+	"com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
+        "default": { font: default-font },
+    },
+}

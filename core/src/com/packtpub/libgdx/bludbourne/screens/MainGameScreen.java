@@ -12,6 +12,7 @@ import com.packtpub.libgdx.bludbourne.Entity;
 import com.packtpub.libgdx.bludbourne.EntityFactory;
 import com.packtpub.libgdx.bludbourne.Component;
 import com.packtpub.libgdx.bludbourne.Map;
+import com.packtpub.libgdx.bludbourne.UI.PlayerHUD;
 
 public class MainGameScreen implements Screen {
 	private static final String TAG = MainGameScreen.class.getSimpleName();
@@ -28,6 +29,7 @@ public class MainGameScreen implements Screen {
 
 	private OrthogonalTiledMapRenderer _mapRenderer = null;
 	private OrthographicCamera _camera = null;
+	private OrthographicCamera _hudCamera = null;
 	private static MapManager _mapMgr;
 	private Json _json;
 
@@ -37,6 +39,7 @@ public class MainGameScreen implements Screen {
 	}
 
 	private static Entity _player;
+	private static PlayerHUD _playerHUD;
 
 	@Override
 	public void show() {
@@ -56,6 +59,11 @@ public class MainGameScreen implements Screen {
 
 		_player = EntityFactory.getEntity(EntityFactory.EntityType.PLAYER);
 		_mapMgr.setPlayer(_player);
+
+
+		_hudCamera = new OrthographicCamera();
+		_hudCamera.setToOrtho(false, VIEWPORT.physicalWidth, VIEWPORT.physicalHeight);
+		_playerHUD = new PlayerHUD(_hudCamera);
 	}
 
 	@Override
@@ -84,9 +92,10 @@ public class MainGameScreen implements Screen {
 
 		_mapRenderer.render();
 
-		_mapMgr.updateCurrentMapEntities(_mapMgr, _mapRenderer.getBatch(), delta );
+		_mapMgr.updateCurrentMapEntities(_mapMgr, _mapRenderer.getBatch(), delta);
 
 		_player.update(_mapMgr, _mapRenderer.getBatch(), delta);
+		_playerHUD.render(delta);
 	}
 
 

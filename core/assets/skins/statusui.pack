@@ -1,0 +1,40 @@
+
+statusui.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+HUD_Background
+  rotate: false
+  xy: 1, 1
+  size: 275, 134
+  orig: 275, 134
+  offset: 0, 0
+  index: -1
+Bar
+  rotate: false
+  xy: 278, 104
+  size: 99, 31
+  orig: 99, 31
+  offset: 0, 0
+  index: -1
+XP_Bar
+  rotate: false
+  xy: 278, 85
+  size: 94, 17
+  orig: 94, 17
+  offset: 0, 0
+  index: -1
+MP_Bar
+  rotate: false
+  xy: 278, 66
+  size: 93, 17
+  orig: 93, 17
+  offset: 0, 0
+  index: -1
+HP_Bar
+  rotate: false
+  xy: 278, 48
+  size: 93, 16
+  orig: 93, 16
+  offset: 0, 0
+  index: -1
