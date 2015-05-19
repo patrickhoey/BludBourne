@@ -1,14 +1,22 @@
 package com.packtpub.libgdx.bludbourne.UI;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 public class StatusUI extends Group {
     private final static String _textureAtlasPath = "skins/statusui.pack";
     private TextureAtlas _textureAtlas;
+    private NinePatch _hudBackground;
     private Image _hudBackgroundImage;
     private Image _hpBar;
     private Image _mpBar;
@@ -24,7 +32,9 @@ public class StatusUI extends Group {
 
     public StatusUI(){
         _textureAtlas = new TextureAtlas(_textureAtlasPath);
-        _hudBackgroundImage = new Image(_textureAtlas.findRegion("HUD_Background"));
+        _hudBackground = new NinePatch(_textureAtlas.findRegion("dialog"));
+        _hudBackgroundImage = new Image(_hudBackground);
+        _hudBackgroundImage.setSize(265,135);
 
         _skin = new Skin();
         _skin.load(Gdx.files.internal("skins/uiskin.json"));
@@ -99,7 +109,7 @@ public class StatusUI extends Group {
         table.add(goldVal);
 
         //table.debug();
-        table.setPosition(135, 68);
+        table.padLeft(265).padBottom(130);
         table.setFillParent(true);
 
         this.addActor(_hudBackgroundImage);
@@ -110,7 +120,7 @@ public class StatusUI extends Group {
     @Override
     public void draw (Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.draw(_hudBackground, 0, 0, 4, 3);
+        _hudBackground.draw(batch,0,0,400, 200);
     }
 */
 

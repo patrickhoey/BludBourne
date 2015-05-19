@@ -3,8 +3,9 @@ package com.packtpub.libgdx.bludbourne.UI;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.*;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+
 
 public class PlayerHUD implements Screen {
 
@@ -19,6 +20,7 @@ public class PlayerHUD implements Screen {
         //Gdx.input.setInputProcessor(_stage);
 
         _statusUI = new StatusUI();
+        _statusUI.setPosition(0,0);
 
         _stage.addActor(_statusUI);
     }
