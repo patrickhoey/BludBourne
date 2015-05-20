@@ -2,10 +2,9 @@ package com.packtpub.libgdx.bludbourne;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.MathUtils;
 
-public class NPCInputComponent extends InputComponent implements InputProcessor {
+public class NPCInputComponent extends InputComponent {
     private static final String TAG = NPCInputComponent.class.getSimpleName();
 
     private float _frameTime = 0.0f;

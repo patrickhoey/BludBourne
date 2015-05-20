@@ -1,6 +1,7 @@
 package com.packtpub.libgdx.bludbourne.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -17,14 +18,14 @@ import com.packtpub.libgdx.bludbourne.UI.PlayerHUD;
 public class MainGameScreen implements Screen {
 	private static final String TAG = MainGameScreen.class.getSimpleName();
 
-	private static class VIEWPORT {
-		static float viewportWidth;
-		static float viewportHeight;
-		static float virtualWidth;
-		static float virtualHeight;
-		static float physicalWidth;
-		static float physicalHeight;
-		static float aspectRatio;
+	public static class VIEWPORT {
+		public static float viewportWidth;
+		public static float viewportHeight;
+		public static float virtualWidth;
+		public static float virtualHeight;
+		public static float physicalWidth;
+		public static float physicalHeight;
+		public static float aspectRatio;
 	}
 
 	private OrthogonalTiledMapRenderer _mapRenderer = null;
@@ -64,6 +65,11 @@ public class MainGameScreen implements Screen {
 		_hudCamera = new OrthographicCamera();
 		_hudCamera.setToOrtho(false, VIEWPORT.physicalWidth, VIEWPORT.physicalHeight);
 		_playerHUD = new PlayerHUD(_hudCamera);
+
+		InputMultiplexer multiplexer = new InputMultiplexer();
+		multiplexer.addProcessor(_playerHUD.getStage());
+		multiplexer.addProcessor(_player.getInputProcessor());
+		Gdx.input.setInputProcessor(multiplexer);
 	}
 
 	@Override

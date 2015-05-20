@@ -5,28 +5,28 @@ filter: Nearest,Nearest
 repeat: none
 Bar
   rotate: false
-  xy: 1, 93
+  xy: 1, 95
   size: 99, 31
   orig: 99, 31
   offset: 0, 0
   index: -1
 XP_Bar
   rotate: false
-  xy: 1, 74
+  xy: 1, 76
   size: 94, 17
   orig: 94, 17
   offset: 0, 0
   index: -1
 MP_Bar
   rotate: false
-  xy: 1, 55
+  xy: 1, 57
   size: 93, 17
   orig: 93, 17
   offset: 0, 0
   index: -1
 HP_Bar
   rotate: false
-  xy: 1, 37
+  xy: 1, 39
   size: 93, 16
   orig: 93, 16
   offset: 0, 0
@@ -34,8 +34,16 @@ HP_Bar
 dialog
   rotate: false
   xy: 1, 1
-  size: 34, 34
-  split: 22, 10, 12, 20
-  orig: 34, 34
+  size: 36, 36
+  split: 18, 17, 18, 17
+  orig: 36, 36
+  offset: 0, 0
+  index: -1
+generic_background
+  rotate: false
+  xy: 39, 8
+  size: 30, 29
+  split: 14, 15, 12, 16
+  orig: 30, 29
   offset: 0, 0
   index: -1

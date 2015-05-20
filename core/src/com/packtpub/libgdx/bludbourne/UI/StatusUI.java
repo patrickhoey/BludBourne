@@ -1,7 +1,6 @@
 package com.packtpub.libgdx.bludbourne.UI;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -14,14 +13,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 public class StatusUI extends Group {
-    private final static String _textureAtlasPath = "skins/statusui.pack";
     private TextureAtlas _textureAtlas;
     private NinePatch _hudBackground;
     private Image _hudBackgroundImage;
+    private Skin _skin;
+
     private Image _hpBar;
     private Image _mpBar;
     private Image _xpBar;
-    private Skin _skin;
 
     //Attributes
     private int _level = 1;
@@ -31,13 +30,12 @@ public class StatusUI extends Group {
     private int _xp = 0;
 
     public StatusUI(){
-        _textureAtlas = new TextureAtlas(_textureAtlasPath);
+        _textureAtlas = new TextureAtlas(PlayerHUD.STATUSUI_TEXTURE_ATLAS_PATH);
         _hudBackground = new NinePatch(_textureAtlas.findRegion("dialog"));
         _hudBackgroundImage = new Image(_hudBackground);
-        _hudBackgroundImage.setSize(265,135);
+        _hudBackgroundImage.setSize(270, 135);
 
-        _skin = new Skin();
-        _skin.load(Gdx.files.internal("skins/uiskin.json"));
+        _skin = new Skin(Gdx.files.internal("skins/statusui.json"), _textureAtlas);
 
         Table table = new Table();
 

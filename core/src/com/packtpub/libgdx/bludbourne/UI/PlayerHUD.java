@@ -9,6 +9,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class PlayerHUD implements Screen {
 
+    public final static String STATUSUI_TEXTURE_ATLAS_PATH = "skins/statusui.atlas";
+
     private Stage _stage;
     private Viewport _viewport;
     private StatusUI _statusUI;
@@ -17,12 +19,15 @@ public class PlayerHUD implements Screen {
         _viewport = new ScreenViewport(camera);
 
         _stage = new Stage(_viewport);
-        //Gdx.input.setInputProcessor(_stage);
 
         _statusUI = new StatusUI();
-        _statusUI.setPosition(0,0);
+        _statusUI.setPosition(0, 0);
 
         _stage.addActor(_statusUI);
+    }
+
+    public Stage getStage() {
+        return _stage;
     }
 
     @Override

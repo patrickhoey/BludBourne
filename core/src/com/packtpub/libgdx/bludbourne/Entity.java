@@ -1,6 +1,7 @@
 package com.packtpub.libgdx.bludbourne;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -115,6 +116,10 @@ public class Entity {
 
 	public Rectangle getCurrentBoundingBox(){
 		return _physicsComponent._boundingBox;
+	}
+
+	public InputProcessor getInputProcessor(){
+		return _inputComponent;
 	}
 
 	public void setEntityConfig(EntityConfig entityConfig){
