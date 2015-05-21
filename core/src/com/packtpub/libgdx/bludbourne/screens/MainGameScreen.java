@@ -53,7 +53,6 @@ public class MainGameScreen implements Screen {
 
 		_mapRenderer = new OrthogonalTiledMapRenderer(_mapMgr.getCurrentTiledMap(), Map.UNIT_SCALE);
 		_mapRenderer.setView(_camera);
-
 		_mapMgr.setCamera(_camera);
 
 		Gdx.app.debug(TAG, "UnitScale value is: " + _mapRenderer.getUnitScale());
@@ -108,6 +107,9 @@ public class MainGameScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
+		setupViewport(10, 10);
+		_camera.setToOrtho(false, VIEWPORT.viewportWidth, VIEWPORT.viewportHeight);
+		_playerHUD.resize((int)VIEWPORT.physicalWidth, (int)VIEWPORT.physicalHeight);
 	}
 
 	@Override

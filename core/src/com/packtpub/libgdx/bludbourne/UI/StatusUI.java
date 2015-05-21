@@ -1,125 +1,94 @@
 package com.packtpub.libgdx.bludbourne.UI;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
-public class StatusUI extends Group {
-    private TextureAtlas _textureAtlas;
-    private NinePatch _hudBackground;
-    private Image _hudBackgroundImage;
-    private Skin _skin;
-
+public class StatusUI extends Window {
     private Image _hpBar;
     private Image _mpBar;
     private Image _xpBar;
 
     //Attributes
-    private int _level = 1;
-    private int _gold = 0;
-    private int _hp = 50;
-    private int _mp = 50;
-    private int _xp = 0;
+    private int _levelVal = 1;
+    private int _goldVal = 0;
+    private int _hpVal = 50;
+    private int _mpVal = 50;
+    private int _xpVal = 0;
 
-    public StatusUI(){
-        _textureAtlas = new TextureAtlas(PlayerHUD.STATUSUI_TEXTURE_ATLAS_PATH);
-        _hudBackground = new NinePatch(_textureAtlas.findRegion("dialog"));
-        _hudBackgroundImage = new Image(_hudBackground);
-        _hudBackgroundImage.setSize(270, 135);
+    public StatusUI(Skin skin, TextureAtlas textureAtlas){
+        super("stats", skin);
 
-        _skin = new Skin(Gdx.files.internal("skins/statusui.json"), _textureAtlas);
-
-        Table table = new Table();
-
+        //groups
         WidgetGroup group = new WidgetGroup();
-        _hpBar = new Image(_textureAtlas.findRegion("HP_Bar"));
-        _hpBar.setPosition(3, 6);
-
-        Image bar = new Image(_textureAtlas.findRegion("Bar"));
-
-        group.addActor(bar);
-        group.addActor(_hpBar);
-
-        Cell cell = table.add(group);
-        cell.width(bar.getWidth());
-        cell.height(bar.getHeight());
-
-        Label hpLabel = new Label(" hp:", _skin);
-        table.add(hpLabel);
-        Label hp = new Label(String.valueOf(_hp), _skin);
-        table.add(hp);
-        table.row();
-
         WidgetGroup group2 = new WidgetGroup();
-        _mpBar = new Image(_textureAtlas.findRegion("MP_Bar"));
-        _mpBar.setPosition(3, 6);
-
-        Image bar2 = new Image(_textureAtlas.findRegion("Bar"));
-
-        group2.addActor(bar2);
-        group2.addActor(_mpBar);
-
-        Cell cell2 = table.add(group2);
-        cell2.width(bar2.getWidth());
-        cell2.height(bar2.getHeight());
-
-        Label mpLabel = new Label(" mp:", _skin);
-        table.add(mpLabel);
-        Label mp = new Label(String.valueOf(_mp), _skin);
-        table.add(mp);
-        table.row();
-
         WidgetGroup group3 = new WidgetGroup();
-        _xpBar = new Image(_textureAtlas.findRegion("XP_Bar"));
+
+        //images
+        _hpBar = new Image(textureAtlas.findRegion("HP_Bar"));
+        Image bar = new Image(textureAtlas.findRegion("Bar"));
+        _mpBar = new Image(textureAtlas.findRegion("MP_Bar"));
+        Image bar2 = new Image(textureAtlas.findRegion("Bar"));
+        _xpBar = new Image(textureAtlas.findRegion("XP_Bar"));
+        Image bar3 = new Image(textureAtlas.findRegion("Bar"));
+
+        //labels
+        Label hpLabel = new Label(" hp:", skin);
+        Label hp = new Label(String.valueOf(_hpVal), skin);
+        Label mpLabel = new Label(" mp:", skin);
+        Label mp = new Label(String.valueOf(_mpVal), skin);
+        Label xpLabel = new Label(" xp:", skin);
+        Label xp = new Label(String.valueOf(_xpVal), skin);
+        Label levelLabel = new Label(" lv:", skin);
+        Label levelVal = new Label(String.valueOf(_levelVal), skin);
+        Label goldLabel = new Label(" gp:", skin);
+        Label goldVal = new Label(String.valueOf(_goldVal), skin);
+
+        //Align images
+        _hpBar.setPosition(3, 6);
+        _mpBar.setPosition(3, 6);
         _xpBar.setPosition(3, 6);
 
-        Image bar3 = new Image(_textureAtlas.findRegion("Bar"));
-
+        //add to widget groups
+        group.addActor(bar);
+        group.addActor(_hpBar);
+        group2.addActor(bar2);
+        group2.addActor(_mpBar);
         group3.addActor(bar3);
         group3.addActor(_xpBar);
 
-        Cell cell3 = table.add(group3);
-        cell3.width(bar3.getWidth());
-        cell3.height(bar3.getHeight());
+        //Add to layout
+        defaults().expand().fill();
 
-        Label xpLabel = new Label(" xp:", _skin);
-        table.add(xpLabel);
-        Label xp = new Label(String.valueOf(_xp), _skin);
-        table.add(xp);
-        table.row();
+        //account for the title padding
+        this.pad(this.getPadTop()+10,10,10,10);
 
-        Label levelLabel = new Label("lv:", _skin);
-        table.add(levelLabel);
-        Label levelVal = new Label(String.valueOf(_level), _skin);
-        table.add(levelVal).align(Align.left);
+        this.add(group).size(bar.getWidth(), bar.getHeight());
+        this.add(hpLabel);
+        this.add(hp).align(Align.left);
+        this.row();
 
-        Label goldLabel = new Label("gp: ", _skin);
-        table.add(goldLabel);
-        Label goldVal = new Label(String.valueOf(_gold), _skin);
-        table.add(goldVal);
+        this.add(group2).size(bar2.getWidth(), bar2.getHeight());
+        this.add(mpLabel);
+        this.add(mp).align(Align.left);
+        this.row();
 
-        //table.debug();
-        table.padLeft(265).padBottom(130);
-        table.setFillParent(true);
+        this.add(group3).size(bar3.getWidth(), bar3.getHeight());
+        this.add(xpLabel);
+        this.add(xp).align(Align.left);
+        this.row();
 
-        this.addActor(_hudBackgroundImage);
-        this.addActor(table);
+        this.add(levelLabel);
+        this.add(levelVal).align(Align.left);
+        this.add(goldLabel);
+        this.add(goldVal).align(Align.left);
+
+        //this.debug();
+        this.pack();
     }
-
-/*
-    @Override
-    public void draw (Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
-        _hudBackground.draw(batch,0,0,400, 200);
-    }
-*/
 
 }
