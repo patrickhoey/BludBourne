@@ -1,11 +1,14 @@
 {
     "com.badlogic.gdx.graphics.g2d.BitmapFont": {
         "default-font": { "file": "fonts/SDS_6x6.fnt" },
+		"small-font" : { "file" : "fonts/SDS_6x6_small.fnt" },
     },
 	"com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
         "default": { "font": "default-font" },
+		"inventory-item-count": { "font": "small-font" },
     },
 	"com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
 		"default": { "titleFont": "default-font", "background": "dialogDim" },
+		"solidbackground": { "titleFont": "default-font", "background": "dialog" },
 	},	
 }

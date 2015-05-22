@@ -13,15 +13,19 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class PlayerHUD implements Screen {
 
     private final static String STATUSUI_TEXTURE_ATLAS_PATH = "skins/statusui.atlas";
+    private final static String STATUSUI_SKIN_PATH = "skins/statusui.json";
+    private final static String ITEMS_TEXTURE_ATLAS_PATH = "skins/items.atlas";
+    private final static String ITEMS_SKIN_PATH = "skins/items.json";
 
     private Stage _stage;
     private Viewport _viewport;
     private StatusUI _statusUI;
-
-    private Skin _statusUISkin;
-    private TextureAtlas _statusUITextureAtlas;
-
+    private InventoryUI _inventoryUI;
     private Camera _camera;
+
+    public static TextureAtlas statusUITextureAtlas = new TextureAtlas(STATUSUI_TEXTURE_ATLAS_PATH);
+    public static TextureAtlas itemsTextureAtlas = new TextureAtlas(ITEMS_TEXTURE_ATLAS_PATH);
+    public static Skin statusUISkin = new Skin(Gdx.files.internal(STATUSUI_SKIN_PATH), statusUITextureAtlas);
 
     public PlayerHUD(Camera camera) {
         _camera = camera;
@@ -29,13 +33,14 @@ public class PlayerHUD implements Screen {
         _stage = new Stage(_viewport);
         //_stage.setDebugAll(true);
 
-        _statusUITextureAtlas = new TextureAtlas(STATUSUI_TEXTURE_ATLAS_PATH);
-        _statusUISkin = new Skin(Gdx.files.internal("skins/statusui.json"), _statusUITextureAtlas);
-
-        _statusUI = new StatusUI(_statusUISkin, _statusUITextureAtlas);
+        _statusUI = new StatusUI(statusUISkin, statusUITextureAtlas);
         _statusUI.setPosition(0, 0);
 
-        _stage.addActor(_statusUI);
+        _inventoryUI = new InventoryUI(statusUISkin, statusUITextureAtlas);
+        _inventoryUI.setPosition(0, 0);
+
+        //_stage.addActor(_statusUI);
+        _stage.addActor(_inventoryUI);
     }
 
     public Stage getStage() {

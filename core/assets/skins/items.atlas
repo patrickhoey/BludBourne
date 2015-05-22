@@ -1,0 +1,12 @@
+
+items.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+armor01
+  rotate: false
+  xy: 1, 1
+  size: 52, 52
+  orig: 52, 52
+  offset: 0, 0
+  index: -1
