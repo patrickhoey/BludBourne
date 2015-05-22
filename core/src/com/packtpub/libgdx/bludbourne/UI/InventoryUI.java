@@ -30,7 +30,7 @@ public class InventoryUI extends Window {
             InventorySlot inventorySlot = new InventorySlot();
             _dragAndDrop.addTarget(new InventorySlotTarget(inventorySlot));
 
-            if( i==5 || i == 10 ) {
+            if( i==5 || i == 10 || i == 15 || i == 20) {
                 //TEMP TODO
                 final Image image = new Image(PlayerHUD.itemsTextureAtlas.findRegion("armor01"));
                 image.setScaling(Scaling.none);
@@ -47,7 +47,7 @@ public class InventoryUI extends Window {
             }
         }
 
-        playerSlotsTable.add(new Image(new NinePatch(textureAtlas.createPatch("dialog")))).size(200, 200);
+        playerSlotsTable.add(new Image(new NinePatch(textureAtlas.createPatch("dialog")))).size(200, 250);
 
         this.add(playerSlotsTable).padBottom(20).row();
         this.add(inventorySlotTable).row();
