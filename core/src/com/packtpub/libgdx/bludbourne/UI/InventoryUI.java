@@ -22,7 +22,7 @@ public class InventoryUI extends Window {
         _dragAndDrop = new DragAndDrop();
 
         //create
-        final Table inventorySlotTable = new Table();
+        Table inventorySlotTable = new Table();
         Table playerSlotsTable = new Table();
 
         //layout
@@ -32,9 +32,16 @@ public class InventoryUI extends Window {
 
             if( i==5 || i == 10 || i == 15 || i == 20) {
                 //TEMP TODO
-                final Image image = new Image(PlayerHUD.itemsTextureAtlas.findRegion("armor01"));
-                image.setScaling(Scaling.none);
-                inventorySlot.add(image);
+                final InventorySlotItem inventorySlotItem = new InventorySlotItem(PlayerHUD.itemsTextureAtlas.findRegion("armor01"), InventorySlotItem.WEARABLE, "armor01");
+                inventorySlotItem.setScaling(Scaling.none);
+                inventorySlot.add(inventorySlotItem);
+
+                _dragAndDrop.addSource(new InventorySlotSource(inventorySlot, _dragAndDrop));
+            } else if( i==1 || i == 13 || i == 25 || i == 30) {
+                //TEMP TODO
+                final InventorySlotItem inventorySlotItem = new InventorySlotItem(PlayerHUD.itemsTextureAtlas.findRegion("potions02"), InventorySlotItem.CONSUMABLE | InventorySlotItem.STACKABLE, "potions02");
+                inventorySlotItem.setScaling(Scaling.none);
+                inventorySlot.add(inventorySlotItem);
 
                 _dragAndDrop.addSource(new InventorySlotSource(inventorySlot, _dragAndDrop));
             }

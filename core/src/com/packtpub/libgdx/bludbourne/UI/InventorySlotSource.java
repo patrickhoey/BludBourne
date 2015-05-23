@@ -36,4 +36,8 @@ public class InventorySlotSource extends Source {
             _sourceSlot.add(payload.getDragActor());
         }
     }
+
+    public InventorySlot getSourceSlot() {
+        return _sourceSlot;
+    }
 }

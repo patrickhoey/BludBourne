@@ -25,11 +25,24 @@ public class InventorySlotTarget extends Target {
 
     @Override
     public void drop(Source source, Payload payload, float x, float y, int pointer) {
-        Actor actor = payload.getDragActor();
+        InventorySlotItem sourceActor = (InventorySlotItem) payload.getDragActor();
+        InventorySlotItem targetActor = _targetSlot.getTopInventoryItem();
 
-        if( actor == null ) {
+        if( sourceActor == null ) {
             return;
         }
-        _targetSlot.add(actor);
+
+        if( !_targetSlot.hasItem() ){
+            _targetSlot.add(sourceActor);
+        }else{
+            //If the same item and stackable, add
+            if( sourceActor.getItemID().equals(targetActor.getItemID()) &&
+                (sourceActor.getItemAttributes() & InventorySlotItem.STACKABLE) == InventorySlotItem.STACKABLE){
+                _targetSlot.add(sourceActor);
+            }else{
+                ((InventorySlotSource)source)._sourceSlot.add(sourceActor);
+            }
+        }
+
     }
 }

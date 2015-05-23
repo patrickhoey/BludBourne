@@ -57,12 +57,22 @@ public class InventorySlot extends Stack {
         }
     }
 
-    public Actor getTopInventoryItem(){
-        Actor actor = null;
+    public boolean hasItem(){
         if( hasChildren() ){
             SnapshotArray<Actor> items = this.getChildren();
-            if( items.size > 1 ){
-                actor = items.peek();
+            if( items.size > 2 ){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public InventorySlotItem getTopInventoryItem(){
+        InventorySlotItem actor = null;
+        if( hasChildren() ){
+            SnapshotArray<Actor> items = this.getChildren();
+            if( items.size > 2 ){
+                actor = (InventorySlotItem) items.peek();
             }
         }
         return actor;
