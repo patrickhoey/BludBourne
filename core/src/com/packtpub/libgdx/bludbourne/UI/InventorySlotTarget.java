@@ -31,6 +31,13 @@ public class InventorySlotTarget extends Target {
             return;
         }
 
+        //First, does the slot accept the source item type?
+        if( !_targetSlot.doesAcceptItemType(sourceActor.getItemType()) ){
+            //Put item back where it came from, slot doesn't accept item
+            ((InventorySlotSource)source)._sourceSlot.add(sourceActor);
+            return;
+        }
+
         if( !_targetSlot.hasItem() ){
             _targetSlot.add(sourceActor);
         }else{

@@ -15,15 +15,45 @@ public class InventoryUI extends Window {
     private int _lengthSlotRow = 10;
     private DragAndDrop _dragAndDrop;
 
+    private final int _slotWidth = 52;
+    private final int _slotHeight = 52;
+
     public InventoryUI(final Skin skin, TextureAtlas textureAtlas){
         super("Inventory", skin, "solidbackground");
-        this.setFillParent(true);
 
         _dragAndDrop = new DragAndDrop();
 
         //create
         Table inventorySlotTable = new Table();
         Table playerSlotsTable = new Table();
+        Table equipSlots = new Table();
+        equipSlots.defaults().space(10);
+
+        InventorySlot headSlot = new InventorySlot(InventoryItem.ItemType.ARMOR_HELMET.getValue());
+        InventorySlot leftArmSlot = new InventorySlot(
+                InventoryItem.ItemType.WEAPON_ONEHAND.getValue() |
+                InventoryItem.ItemType.WEAPON_TWOHAND.getValue() |
+                InventoryItem.ItemType.ARMOR_SHIELD.getValue() |
+                InventoryItem.ItemType.WAND_ONEHAND.getValue() |
+                InventoryItem.ItemType.WAND_TWOHAND.getValue()
+        );
+        InventorySlot rightArmSlot = new InventorySlot(
+                InventoryItem.ItemType.WEAPON_ONEHAND.getValue() |
+                InventoryItem.ItemType.WEAPON_TWOHAND.getValue() |
+                InventoryItem.ItemType.ARMOR_SHIELD.getValue() |
+                InventoryItem.ItemType.WAND_ONEHAND.getValue() |
+                InventoryItem.ItemType.WAND_TWOHAND.getValue()
+        );
+        InventorySlot chestSlot = new InventorySlot(InventoryItem.ItemType.ARMOR_CHEST.getValue());
+        InventorySlot legsSlot = new InventorySlot(InventoryItem.ItemType.ARMOR_FEET.getValue());
+
+        _dragAndDrop.addTarget(new InventorySlotTarget(headSlot));
+        _dragAndDrop.addTarget(new InventorySlotTarget(leftArmSlot));
+        _dragAndDrop.addTarget(new InventorySlotTarget(chestSlot));
+        _dragAndDrop.addTarget(new InventorySlotTarget(rightArmSlot));
+        _dragAndDrop.addTarget(new InventorySlotTarget(legsSlot));
+
+        playerSlotsTable.setBackground(new Image(new NinePatch(textureAtlas.createPatch("dialog"))).getDrawable());
 
         //layout
         for(int i = 1; i <= _numSlots; i++){
@@ -32,21 +62,30 @@ public class InventoryUI extends Window {
 
             if( i==5 || i == 10 || i == 15 || i == 20) {
                 //TEMP TODO
-                final InventoryItem inventorySlotItem = new InventoryItem(PlayerHUD.itemsTextureAtlas.findRegion("armor01"), InventoryItem.WEARABLE, "armor01");
+                final InventoryItem inventorySlotItem = new InventoryItem(
+                        PlayerHUD.itemsTextureAtlas.findRegion("armor01"),
+                        InventoryItem.ItemAttribute.WEARABLE.getValue(),
+                        "armor01",
+                        InventoryItem.ItemType.ARMOR_CHEST.getValue());
+
                 inventorySlotItem.setScaling(Scaling.none);
                 inventorySlot.add(inventorySlotItem);
 
                 _dragAndDrop.addSource(new InventorySlotSource(inventorySlot, _dragAndDrop));
             } else if( i==1 || i == 13 || i == 25 || i == 30) {
                 //TEMP TODO
-                final InventoryItem inventorySlotItem = new InventoryItem(PlayerHUD.itemsTextureAtlas.findRegion("potions02"), InventoryItem.CONSUMABLE | InventoryItem.STACKABLE, "potions02");
+                final InventoryItem inventorySlotItem = new InventoryItem(
+                        PlayerHUD.itemsTextureAtlas.findRegion("potions02"),
+                        InventoryItem.ItemAttribute.CONSUMABLE.getValue() | InventoryItem.ItemAttribute.STACKABLE.getValue(),
+                        "potions02",
+                        InventoryItem.ItemType.RESTORE_MP.getValue());
                 inventorySlotItem.setScaling(Scaling.none);
                 inventorySlot.add(inventorySlotItem);
 
                 _dragAndDrop.addSource(new InventorySlotSource(inventorySlot, _dragAndDrop));
             }
 
-            inventorySlotTable.add(inventorySlot).size(52, 52);
+            inventorySlotTable.add(inventorySlot).size(_slotWidth, _slotHeight);
 
             //inventorySlotTable.add(image);
             if(i % _lengthSlotRow == 0){
@@ -54,7 +93,19 @@ public class InventoryUI extends Window {
             }
         }
 
-        playerSlotsTable.add(new Image(new NinePatch(textureAtlas.createPatch("dialog")))).size(200, 250);
+        equipSlots.add();
+        equipSlots.add(headSlot).size(_slotWidth, _slotHeight);
+        equipSlots.row();
+
+        equipSlots.add(leftArmSlot).size(_slotWidth, _slotHeight);
+        equipSlots.add(chestSlot).size(_slotWidth, _slotHeight);
+        equipSlots.add(rightArmSlot).size(_slotWidth, _slotHeight);
+        equipSlots.row();
+
+        equipSlots.add();
+        equipSlots.right().add(legsSlot).size(_slotWidth, _slotHeight);
+
+        playerSlotsTable.add(equipSlots);
 
         this.add(playerSlotsTable).padBottom(20).row();
         this.add(inventorySlotTable).row();

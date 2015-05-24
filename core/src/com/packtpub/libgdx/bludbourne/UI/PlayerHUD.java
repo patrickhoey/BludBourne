@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -37,7 +38,11 @@ public class PlayerHUD implements Screen {
         _statusUI.setPosition(0, 0);
 
         _inventoryUI = new InventoryUI(statusUISkin, statusUITextureAtlas);
-        _inventoryUI.setPosition(0, 0);
+        _inventoryUI.setMovable(false);
+
+        float centerX = (_stage.getWidth() - _inventoryUI.getWidth())/2;
+        float centerY = (_stage.getHeight() - _inventoryUI.getHeight()) / 2;
+        _inventoryUI.setPosition(centerX, centerY);
 
         //_stage.addActor(_statusUI);
         _stage.addActor(_inventoryUI);

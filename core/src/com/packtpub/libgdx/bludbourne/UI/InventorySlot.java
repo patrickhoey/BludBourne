@@ -15,6 +15,7 @@ public class InventorySlot extends Stack {
     private Image _imageBackground;
     private Label _numItemsLabel;
     private int _numItemsVal = 0;
+    private int _filterItemType;
 
     public InventorySlot(){
         _imageBackground = new Image(new NinePatch(PlayerHUD.statusUITextureAtlas.createPatch("dialog")));
@@ -23,6 +24,12 @@ public class InventorySlot extends Stack {
         _numItemsLabel.setAlignment(Align.bottomRight);
         _numItemsLabel.setVisible(false);
         this.add(_numItemsLabel);
+        _filterItemType = 0; //filter nothing
+    }
+
+    public InventorySlot(int filterItemType){
+        this();
+        _filterItemType = filterItemType;
     }
 
     public void decrementItemCount() {
@@ -93,6 +100,14 @@ public class InventorySlot extends Stack {
             }
         }
         return false;
+    }
+
+    public boolean doesAcceptItemType(int itemType){
+        if( _filterItemType == 0 ){
+            return true;
+        }else {
+            return ((_filterItemType & itemType) == itemType);
+        }
     }
 
     public InventoryItem getTopInventoryItem(){
