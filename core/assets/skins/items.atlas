@@ -5,252 +5,287 @@ filter: Nearest,Nearest
 repeat: none
 armor01
   rotate: false
-  xy: 1, 163
+  xy: 1, 217
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 armor02
   rotate: false
-  xy: 1, 109
+  xy: 1, 163
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 armor03
   rotate: false
-  xy: 55, 163
+  xy: 55, 217
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 armor04
   rotate: false
-  xy: 1, 55
+  xy: 1, 109
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 armor05
   rotate: false
-  xy: 55, 109
+  xy: 55, 163
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 boots01
   rotate: false
-  xy: 109, 163
+  xy: 109, 217
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 boots02
   rotate: false
-  xy: 1, 1
+  xy: 1, 55
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 boots03
   rotate: false
-  xy: 55, 55
+  xy: 55, 109
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 boots04
   rotate: false
-  xy: 109, 109
+  xy: 109, 163
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 boots05
   rotate: false
-  xy: 163, 163
+  xy: 163, 217
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 helmet01
   rotate: false
-  xy: 55, 1
+  xy: 1, 1
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 helmet02
   rotate: false
-  xy: 109, 55
+  xy: 55, 55
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 helmet03
   rotate: false
-  xy: 163, 109
+  xy: 109, 109
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 helmet04
   rotate: false
-  xy: 217, 163
+  xy: 163, 163
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 helmet05
   rotate: false
-  xy: 109, 1
+  xy: 217, 217
+  size: 52, 52
+  orig: 52, 52
+  offset: 0, 0
+  index: -1
+inv_boot
+  rotate: false
+  xy: 55, 1
+  size: 52, 52
+  orig: 52, 52
+  offset: 0, 0
+  index: -1
+inv_chest
+  rotate: false
+  xy: 109, 55
+  size: 52, 52
+  orig: 52, 52
+  offset: 0, 0
+  index: -1
+inv_helmet
+  rotate: false
+  xy: 163, 109
+  size: 52, 52
+  orig: 52, 52
+  offset: 0, 0
+  index: -1
+inv_shield
+  rotate: false
+  xy: 217, 163
+  size: 52, 52
+  orig: 52, 52
+  offset: 0, 0
+  index: -1
+inv_weapon
+  rotate: false
+  xy: 271, 217
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 potions01
   rotate: false
-  xy: 163, 55
+  xy: 109, 1
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 potions02
   rotate: false
-  xy: 217, 109
+  xy: 163, 55
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 potions03
   rotate: false
-  xy: 271, 163
+  xy: 217, 109
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 scroll01
   rotate: false
-  xy: 163, 1
+  xy: 271, 163
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 scroll02
   rotate: false
-  xy: 217, 55
+  xy: 325, 217
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 scroll03
   rotate: false
-  xy: 271, 109
+  xy: 163, 1
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 shield01
   rotate: false
-  xy: 325, 163
+  xy: 217, 55
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 shield02
   rotate: false
-  xy: 217, 1
+  xy: 271, 109
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 shield03
   rotate: false
-  xy: 271, 55
+  xy: 325, 163
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 shield04
   rotate: false
-  xy: 325, 109
+  xy: 379, 217
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 shield05
   rotate: false
-  xy: 379, 163
+  xy: 217, 1
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 wands01
   rotate: false
-  xy: 271, 1
+  xy: 271, 55
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 wands02
   rotate: false
-  xy: 325, 55
+  xy: 325, 109
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 wands03
   rotate: false
-  xy: 379, 109
+  xy: 379, 163
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 wands04
   rotate: false
-  xy: 433, 163
+  xy: 433, 217
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 wands05
   rotate: false
-  xy: 325, 1
+  xy: 271, 1
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 weapon01
   rotate: false
-  xy: 379, 55
+  xy: 325, 55
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 weapon02
   rotate: false
-  xy: 433, 109
+  xy: 379, 109
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 weapon03
   rotate: false
-  xy: 379, 1
+  xy: 433, 163
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 weapon04
   rotate: false
-  xy: 433, 55
+  xy: 325, 1
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 weapon05
   rotate: false
-  xy: 433, 1
+  xy: 379, 55
   size: 52, 52
   orig: 52, 52
   offset: 0, 0

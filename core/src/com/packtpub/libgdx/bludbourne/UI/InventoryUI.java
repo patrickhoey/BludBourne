@@ -29,23 +29,31 @@ public class InventoryUI extends Window {
         Table equipSlots = new Table();
         equipSlots.defaults().space(10);
 
-        InventorySlot headSlot = new InventorySlot(InventoryItem.ItemType.ARMOR_HELMET.getValue());
+        InventorySlot headSlot = new InventorySlot(
+                InventoryItem.ItemType.ARMOR_HELMET.getValue(),
+                new Image(PlayerHUD.itemsTextureAtlas.findRegion("inv_helmet")));
         InventorySlot leftArmSlot = new InventorySlot(
                 InventoryItem.ItemType.WEAPON_ONEHAND.getValue() |
                 InventoryItem.ItemType.WEAPON_TWOHAND.getValue() |
                 InventoryItem.ItemType.ARMOR_SHIELD.getValue() |
                 InventoryItem.ItemType.WAND_ONEHAND.getValue() |
-                InventoryItem.ItemType.WAND_TWOHAND.getValue()
+                InventoryItem.ItemType.WAND_TWOHAND.getValue(),
+                new Image(PlayerHUD.itemsTextureAtlas.findRegion("inv_weapon"))
         );
         InventorySlot rightArmSlot = new InventorySlot(
                 InventoryItem.ItemType.WEAPON_ONEHAND.getValue() |
                 InventoryItem.ItemType.WEAPON_TWOHAND.getValue() |
                 InventoryItem.ItemType.ARMOR_SHIELD.getValue() |
                 InventoryItem.ItemType.WAND_ONEHAND.getValue() |
-                InventoryItem.ItemType.WAND_TWOHAND.getValue()
+                InventoryItem.ItemType.WAND_TWOHAND.getValue(),
+                new Image(PlayerHUD.itemsTextureAtlas.findRegion("inv_shield"))
         );
-        InventorySlot chestSlot = new InventorySlot(InventoryItem.ItemType.ARMOR_CHEST.getValue());
-        InventorySlot legsSlot = new InventorySlot(InventoryItem.ItemType.ARMOR_FEET.getValue());
+        InventorySlot chestSlot = new InventorySlot(
+                InventoryItem.ItemType.ARMOR_CHEST.getValue(),
+                new Image(PlayerHUD.itemsTextureAtlas.findRegion("inv_chest")));
+        InventorySlot legsSlot = new InventorySlot(
+                InventoryItem.ItemType.ARMOR_FEET.getValue(),
+                new Image(PlayerHUD.itemsTextureAtlas.findRegion("inv_boot")));
 
         _dragAndDrop.addTarget(new InventorySlotTarget(headSlot));
         _dragAndDrop.addTarget(new InventorySlotTarget(leftArmSlot));

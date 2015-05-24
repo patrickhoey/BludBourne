@@ -12,35 +12,50 @@ import com.badlogic.gdx.utils.SnapshotArray;
 public class InventorySlot extends Stack {
 
     //All slots have this default image
-    private Image _imageBackground;
+    private Stack _defaultBackground;
+    private Image _customBackgroundDecal;
     private Label _numItemsLabel;
     private int _numItemsVal = 0;
     private int _filterItemType;
 
     public InventorySlot(){
-        _imageBackground = new Image(new NinePatch(PlayerHUD.statusUITextureAtlas.createPatch("dialog")));
-        this.add(_imageBackground);
+        _filterItemType = 0; //filter nothing
+        _defaultBackground = new Stack();
+        _customBackgroundDecal = new Image();
+        Image image = new Image(new NinePatch(PlayerHUD.statusUITextureAtlas.createPatch("dialog")));
+
         _numItemsLabel = new Label(String.valueOf(_numItemsVal), PlayerHUD.statusUISkin, "inventory-item-count");
         _numItemsLabel.setAlignment(Align.bottomRight);
         _numItemsLabel.setVisible(false);
+
+        _defaultBackground.add(image);
+
+        this.add(_defaultBackground);
         this.add(_numItemsLabel);
-        _filterItemType = 0; //filter nothing
     }
 
-    public InventorySlot(int filterItemType){
+    public InventorySlot(int filterItemType, Image customBackgroundDecal){
         this();
         _filterItemType = filterItemType;
+        _customBackgroundDecal = customBackgroundDecal;
+        _defaultBackground.add(_customBackgroundDecal);
     }
 
     public void decrementItemCount() {
         _numItemsVal--;
         _numItemsLabel.setText(String.valueOf(_numItemsVal));
+        if( _defaultBackground.getChildren().size == 1 ){
+            _defaultBackground.add(_customBackgroundDecal);
+        }
         checkVisibilityOfItemCount();
     }
 
     public void incrementItemCount() {
         _numItemsVal++;
         _numItemsLabel.setText(String.valueOf(_numItemsVal));
+        if( _defaultBackground.getChildren().size > 1 ){
+            _defaultBackground.getChildren().pop();
+        }
         checkVisibilityOfItemCount();
     }
 
@@ -52,7 +67,7 @@ public class InventorySlot extends Stack {
             return;
         }
 
-        if( !actor.equals(_imageBackground) && !actor.equals(_numItemsLabel) ) {
+        if( !actor.equals(_defaultBackground) && !actor.equals(_numItemsLabel) ) {
             incrementItemCount();
         }
     }
@@ -65,7 +80,7 @@ public class InventorySlot extends Stack {
                 return;
             }
 
-            if( !actor.equals(_imageBackground) && !actor.equals(_numItemsLabel) ) {
+            if( !actor.equals(_defaultBackground) && !actor.equals(_numItemsLabel) ) {
                 incrementItemCount();
             }
         }
