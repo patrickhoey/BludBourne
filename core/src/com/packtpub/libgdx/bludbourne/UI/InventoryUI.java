@@ -32,14 +32,14 @@ public class InventoryUI extends Window {
 
             if( i==5 || i == 10 || i == 15 || i == 20) {
                 //TEMP TODO
-                final InventorySlotItem inventorySlotItem = new InventorySlotItem(PlayerHUD.itemsTextureAtlas.findRegion("armor01"), InventorySlotItem.WEARABLE, "armor01");
+                final InventoryItem inventorySlotItem = new InventoryItem(PlayerHUD.itemsTextureAtlas.findRegion("armor01"), InventoryItem.WEARABLE, "armor01");
                 inventorySlotItem.setScaling(Scaling.none);
                 inventorySlot.add(inventorySlotItem);
 
                 _dragAndDrop.addSource(new InventorySlotSource(inventorySlot, _dragAndDrop));
             } else if( i==1 || i == 13 || i == 25 || i == 30) {
                 //TEMP TODO
-                final InventorySlotItem inventorySlotItem = new InventorySlotItem(PlayerHUD.itemsTextureAtlas.findRegion("potions02"), InventorySlotItem.CONSUMABLE | InventorySlotItem.STACKABLE, "potions02");
+                final InventoryItem inventorySlotItem = new InventoryItem(PlayerHUD.itemsTextureAtlas.findRegion("potions02"), InventoryItem.CONSUMABLE | InventoryItem.STACKABLE, "potions02");
                 inventorySlotItem.setScaling(Scaling.none);
                 inventorySlot.add(inventorySlotItem);
 

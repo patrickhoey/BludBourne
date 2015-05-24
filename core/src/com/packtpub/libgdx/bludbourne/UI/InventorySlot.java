@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
 
 public class InventorySlot extends Stack {
@@ -49,6 +50,33 @@ public class InventorySlot extends Stack {
         }
     }
 
+    public void add(Array<Actor> array) {
+        for( Actor actor : array){
+            super.add(actor);
+
+            if( _numItemsLabel == null ){
+                return;
+            }
+
+            if( !actor.equals(_imageBackground) && !actor.equals(_numItemsLabel) ) {
+                incrementItemCount();
+            }
+        }
+    }
+
+    public Array<Actor> getAllInventoryItems() {
+        Array<Actor> items = new Array<Actor>();
+        if( hasItem() ){
+            SnapshotArray<Actor> arrayChildren = this.getChildren();
+            int numInventoryItems =  arrayChildren.size - 2;
+            for(int i = 0; i < numInventoryItems; i++) {
+                items.add(arrayChildren.pop());
+                decrementItemCount();
+            }
+        }
+        return items;
+    }
+
     private void checkVisibilityOfItemCount(){
         if( _numItemsVal < 2){
             _numItemsLabel.setVisible(false);
@@ -67,14 +95,22 @@ public class InventorySlot extends Stack {
         return false;
     }
 
-    public InventorySlotItem getTopInventoryItem(){
-        InventorySlotItem actor = null;
+    public InventoryItem getTopInventoryItem(){
+        InventoryItem actor = null;
         if( hasChildren() ){
             SnapshotArray<Actor> items = this.getChildren();
             if( items.size > 2 ){
-                actor = (InventorySlotItem) items.peek();
+                actor = (InventoryItem) items.peek();
             }
         }
         return actor;
+    }
+
+    static public void swapSlots(InventorySlot inventorySlotSource, InventorySlot inventorySlotTarget, Actor dragActor){
+        //swap
+        Array<Actor> tempArray = inventorySlotSource.getAllInventoryItems();
+        tempArray.add(dragActor);
+        inventorySlotSource.add(inventorySlotTarget.getAllInventoryItems());
+        inventorySlotTarget.add(tempArray);
     }
 }
