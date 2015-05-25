@@ -4,16 +4,18 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.Array;
 
 import com.packtpub.libgdx.bludbourne.Entity.AnimationType;
-
+import com.packtpub.libgdx.bludbourne.InventoryItem.ItemTypeID;
 
 public class EntityConfig {
     Array<AnimationConfig> animationConfig;
+    Array<ItemTypeID> inventory;
     Entity.State state = Entity.State.IDLE;
     Entity.Direction direction = Entity.Direction.DOWN;
     String entityID;
 
     EntityConfig(){
         animationConfig = new Array<AnimationConfig>();
+        inventory = new Array<ItemTypeID>();
     }
 
     public String getEntityID() {
@@ -46,6 +48,14 @@ public class EntityConfig {
 
     public void addAnimationConfig(AnimationConfig animationConfig) {
         this.animationConfig.add(animationConfig);
+    }
+
+    public Array<ItemTypeID> getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Array<ItemTypeID> inventory) {
+        this.inventory = inventory;
     }
 
     static public class AnimationConfig{

@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
+import com.packtpub.libgdx.bludbourne.InventoryItem;
 
 public class InventorySlot extends Stack {
 
@@ -117,11 +118,11 @@ public class InventorySlot extends Stack {
         return false;
     }
 
-    public boolean doesAcceptItemType(int itemType){
+    public boolean doesAcceptItemUseType(int itemUseType){
         if( _filterItemType == 0 ){
             return true;
         }else {
-            return ((_filterItemType & itemType) == itemType);
+            return ((_filterItemType & itemUseType) == itemUseType);
         }
     }
 

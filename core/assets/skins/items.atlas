@@ -3,105 +3,105 @@ items.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-armor01
+ARMOR01
   rotate: false
   xy: 1, 217
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-armor02
+ARMOR02
   rotate: false
   xy: 1, 163
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-armor03
+ARMOR03
   rotate: false
   xy: 55, 217
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-armor04
+ARMOR04
   rotate: false
   xy: 1, 109
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-armor05
+ARMOR05
   rotate: false
   xy: 55, 163
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-boots01
+BOOTS01
   rotate: false
   xy: 109, 217
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-boots02
+BOOTS02
   rotate: false
   xy: 1, 55
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-boots03
+BOOTS03
   rotate: false
   xy: 55, 109
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-boots04
+BOOTS04
   rotate: false
   xy: 109, 163
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-boots05
+BOOTS05
   rotate: false
   xy: 163, 217
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-helmet01
+HELMET01
   rotate: false
   xy: 1, 1
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-helmet02
+HELMET02
   rotate: false
   xy: 55, 55
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-helmet03
+HELMET03
   rotate: false
   xy: 109, 109
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-helmet04
+HELMET04
   rotate: false
   xy: 163, 163
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-helmet05
+HELMET05
   rotate: false
   xy: 217, 217
   size: 52, 52
@@ -143,147 +143,147 @@ inv_weapon
   orig: 52, 52
   offset: 0, 0
   index: -1
-potions01
+POTIONS01
   rotate: false
   xy: 109, 1
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-potions02
+POTIONS02
   rotate: false
   xy: 163, 55
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-potions03
+POTIONS03
   rotate: false
   xy: 217, 109
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-scroll01
+SCROLL01
   rotate: false
   xy: 271, 163
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-scroll02
+SCROLL02
   rotate: false
   xy: 325, 217
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-scroll03
+SCROLL03
   rotate: false
   xy: 163, 1
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-shield01
+SHIELD01
   rotate: false
   xy: 217, 55
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-shield02
+SHIELD02
   rotate: false
   xy: 271, 109
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-shield03
+SHIELD03
   rotate: false
   xy: 325, 163
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-shield04
+SHIELD04
   rotate: false
   xy: 379, 217
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-shield05
+SHIELD05
   rotate: false
   xy: 217, 1
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-wands01
+WANDS01
   rotate: false
   xy: 271, 55
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-wands02
+WANDS02
   rotate: false
   xy: 325, 109
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-wands03
+WANDS03
   rotate: false
   xy: 379, 163
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-wands04
+WANDS04
   rotate: false
   xy: 433, 217
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-wands05
+WANDS05
   rotate: false
   xy: 271, 1
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-weapon01
+WEAPON01
   rotate: false
   xy: 325, 55
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-weapon02
+WEAPON02
   rotate: false
   xy: 379, 109
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-weapon03
+WEAPON03
   rotate: false
   xy: 433, 163
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-weapon04
+WEAPON04
   rotate: false
   xy: 325, 1
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
-weapon05
+WEAPON05
   rotate: false
   xy: 379, 55
   size: 52, 52

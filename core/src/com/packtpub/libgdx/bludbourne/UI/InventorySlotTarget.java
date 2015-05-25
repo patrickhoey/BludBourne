@@ -3,6 +3,7 @@ package com.packtpub.libgdx.bludbourne.UI;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
+import com.packtpub.libgdx.bludbourne.InventoryItem;
 
 public class InventorySlotTarget extends Target {
 
@@ -32,7 +33,7 @@ public class InventorySlotTarget extends Target {
         }
 
         //First, does the slot accept the source item type?
-        if( !_targetSlot.doesAcceptItemType(sourceActor.getItemType()) ){
+        if( !_targetSlot.doesAcceptItemUseType(sourceActor.getItemUseType()) ){
             //Put item back where it came from, slot doesn't accept item
             ((InventorySlotSource)source)._sourceSlot.add(sourceActor);
             return;

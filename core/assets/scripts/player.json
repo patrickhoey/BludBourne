@@ -2,6 +2,47 @@
 entityID : PLAYER
 state : IDLE
 direction : DOWN
+inventory : [
+	{
+		value: ARMOR04
+	},
+	{
+		value: BOOTS03
+	},
+	{
+		value: HELMET05
+	},
+	{
+		value: POTIONS01
+	},
+	{
+		value: POTIONS01
+	},
+	{
+		value: POTIONS01
+	},
+	{
+		value: POTIONS01
+	},
+	{
+		value: SCROLL01
+	},
+	{
+		value: SCROLL01
+	},
+	{
+		value: SCROLL01
+	},
+	{
+		value: SHIELD02
+	},
+	{
+		value: WANDS02
+	},
+	{
+		value: WEAPON01
+	},
+]
 animationConfig: [
 	{
 		frameDuration: 0.25

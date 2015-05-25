@@ -6,9 +6,10 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.packtpub.libgdx.bludbourne.InventoryItem.ItemTypeID;
 
 
 public class PlayerHUD implements Screen {
@@ -46,6 +47,10 @@ public class PlayerHUD implements Screen {
 
         //_stage.addActor(_statusUI);
         _stage.addActor(_inventoryUI);
+    }
+
+    public void populateInventory(Array<ItemTypeID> itemTypeIDs){
+        _inventoryUI.populateInventory(itemTypeIDs);
     }
 
     public Stage getStage() {

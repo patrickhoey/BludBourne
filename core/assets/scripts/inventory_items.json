@@ -1,0 +1,183 @@
+[
+{
+	itemAttributes: 2
+	itemUseType: 128
+	itemTypeID: SHIELD01
+},
+{
+	itemAttributes: 2
+	itemUseType: 128
+	itemTypeID: SHIELD02
+},
+{
+	itemAttributes: 2
+	itemUseType: 128
+	itemTypeID: SHIELD03
+},
+{
+	itemAttributes: 2
+	itemUseType: 128
+	itemTypeID: SHIELD04
+},
+{
+	itemAttributes: 2
+	itemUseType: 128
+	itemTypeID: SHIELD05
+},
+{
+	itemAttributes: 2
+	itemUseType: 512
+	itemTypeID: ARMOR01
+},
+{
+	itemAttributes: 2
+	itemUseType: 512
+	itemTypeID: ARMOR02
+},
+{
+	itemAttributes: 2
+	itemUseType: 512
+	itemTypeID: ARMOR03
+},
+{
+	itemAttributes: 2
+	itemUseType: 512
+	itemTypeID: ARMOR04
+},
+{
+	itemAttributes: 2
+	itemUseType: 512
+	itemTypeID: ARMOR05
+},
+{
+	itemAttributes: 2
+	itemUseType: 1024
+	itemTypeID: BOOTS01
+},
+{
+	itemAttributes: 2
+	itemUseType: 1024
+	itemTypeID: BOOTS02
+},
+{
+	itemAttributes: 2
+	itemUseType: 1024
+	itemTypeID: BOOTS03
+},
+{
+	itemAttributes: 2
+	itemUseType: 1024
+	itemTypeID: BOOTS04
+},
+{
+	itemAttributes: 2
+	itemUseType: 1024
+	itemTypeID: BOOTS05
+},
+{
+	itemAttributes: 2
+	itemUseType: 256
+	itemTypeID: HELMET01
+},
+{
+	itemAttributes: 2
+	itemUseType: 256
+	itemTypeID: HELMET02
+},
+{
+	itemAttributes: 2
+	itemUseType: 256
+	itemTypeID: HELMET03
+},
+{
+	itemAttributes: 2
+	itemUseType: 256
+	itemTypeID: HELMET04
+},
+{
+	itemAttributes: 2
+	itemUseType: 256
+	itemTypeID: HELMET05
+},
+{
+	itemAttributes: 2
+	itemUseType: 32
+	itemTypeID: WANDS01
+},
+{
+	itemAttributes: 2
+	itemUseType: 32
+	itemTypeID: WANDS02
+},
+{
+	itemAttributes: 2
+	itemUseType: 32
+	itemTypeID: WANDS03
+},
+{
+	itemAttributes: 2
+	itemUseType: 64
+	itemTypeID: WANDS04
+},
+{
+	itemAttributes: 2
+	itemUseType: 64
+	itemTypeID: WANDS05
+},
+{
+	itemAttributes: 2
+	itemUseType: 8
+	itemTypeID: WEAPON01
+},
+{
+	itemAttributes: 2
+	itemUseType: 8
+	itemTypeID: WEAPON02
+},
+{
+	itemAttributes: 2
+	itemUseType: 16
+	itemTypeID: WEAPON03
+},
+{
+	itemAttributes: 2
+	itemUseType: 16
+	itemTypeID: WEAPON04
+},
+{
+	itemAttributes: 2
+	itemUseType: 16
+	itemTypeID: WEAPON05
+},
+{
+	itemAttributes: 5
+	itemUseType: 2
+	itemTypeID: POTIONS01
+},
+{
+	itemAttributes: 5
+	itemUseType: 2
+	itemTypeID: POTIONS02
+},
+{
+	itemAttributes: 5
+	itemUseType: 2
+	itemTypeID: POTIONS03
+},
+{
+	itemAttributes: 5
+	itemUseType: 1
+	itemTypeID: SCROLL01
+},
+{
+	itemAttributes: 5
+	itemUseType: 1
+	itemTypeID: SCROLL02
+},
+{
+	itemAttributes: 5
+	itemUseType: 1
+	itemTypeID: SCROLL03
+},
+
+]

@@ -6,13 +6,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 
-import com.packtpub.libgdx.bludbourne.MapManager;
-import com.packtpub.libgdx.bludbourne.Entity;
-import com.packtpub.libgdx.bludbourne.EntityFactory;
-import com.packtpub.libgdx.bludbourne.Component;
-import com.packtpub.libgdx.bludbourne.Map;
+import com.packtpub.libgdx.bludbourne.*;
 import com.packtpub.libgdx.bludbourne.UI.PlayerHUD;
 
 public class MainGameScreen implements Screen {
@@ -60,10 +57,11 @@ public class MainGameScreen implements Screen {
 		_player = EntityFactory.getEntity(EntityFactory.EntityType.PLAYER);
 		_mapMgr.setPlayer(_player);
 
-
 		_hudCamera = new OrthographicCamera();
 		_hudCamera.setToOrtho(false, VIEWPORT.physicalWidth, VIEWPORT.physicalHeight);
+
 		_playerHUD = new PlayerHUD(_hudCamera);
+		_playerHUD.populateInventory(_player.getEntityConfig().getInventory());
 
 		InputMultiplexer multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(_playerHUD.getStage());
