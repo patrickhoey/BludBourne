@@ -3,181 +3,217 @@
 	itemAttributes: 2
 	itemUseType: 128
 	itemTypeID: SHIELD01
+	itemShortDescription: Medium tier shield forged from copper
 },
 {
 	itemAttributes: 2
 	itemUseType: 128
 	itemTypeID: SHIELD02
+	itemShortDescription: A wooden shield fit for a peasant
 },
 {
 	itemAttributes: 2
 	itemUseType: 128
 	itemTypeID: SHIELD03
+	itemShortDescription: Medium tier shield carved from dragon bone
 },
 {
 	itemAttributes: 2
 	itemUseType: 128
 	itemTypeID: SHIELD04
+	itemShortDescription: Top tier shield forged from iron
 },
 {
 	itemAttributes: 2
 	itemUseType: 128
 	itemTypeID: SHIELD05
+	itemShortDescription: Top tier shield forged by a rare metal Adamantium
 },
 {
 	itemAttributes: 2
 	itemUseType: 512
 	itemTypeID: ARMOR01
+	itemShortDescription: Top tier armor built from the scales of a dragon
 },
 {
 	itemAttributes: 2
 	itemUseType: 512
 	itemTypeID: ARMOR02
+	itemShortDescription: Top tier armor blessed by fairies
 },
 {
 	itemAttributes: 2
 	itemUseType: 512
 	itemTypeID: ARMOR03
+	itemShortDescription: Top tier armor forged from the hide of a hellspawn demon
 },
 {
 	itemAttributes: 2
 	itemUseType: 512
 	itemTypeID: ARMOR04
+	itemShortDescription: Broken mail armor fit for a peasant
 },
 {
 	itemAttributes: 2
 	itemUseType: 512
 	itemTypeID: ARMOR05
+	itemShortDescription: Medium tier armor with iron plates
 },
 {
 	itemAttributes: 2
 	itemUseType: 1024
 	itemTypeID: BOOTS01
+	itemShortDescription: Top tier boots worthy of a knight
 },
 {
 	itemAttributes: 2
 	itemUseType: 1024
 	itemTypeID: BOOTS02
+	itemShortDescription: Medium tier boots with iron buckles
 },
 {
 	itemAttributes: 2
 	itemUseType: 1024
 	itemTypeID: BOOTS03
+	itemShortDescription: Leather boots fit for a peasant
 },
 {
 	itemAttributes: 2
 	itemUseType: 1024
 	itemTypeID: BOOTS04
+	itemShortDescription: Medium tier boots made of imp hide
 },
 {
 	itemAttributes: 2
 	itemUseType: 1024
 	itemTypeID: BOOTS05
+	itemShortDescription: Top tier boots made from dragon's tongue
 },
 {
 	itemAttributes: 2
 	itemUseType: 256
 	itemTypeID: HELMET01
+	itemShortDescription: Top tier helmet built for a king's guard
 },
 {
 	itemAttributes: 2
 	itemUseType: 256
 	itemTypeID: HELMET02
+	itemShortDescription: A medium tier helmet made of copper
 },
 {
 	itemAttributes: 2
 	itemUseType: 256
 	itemTypeID: HELMET03
+	itemShortDescription: A medium tier helmet built for prolonged battles
 },
 {
 	itemAttributes: 2
 	itemUseType: 256
 	itemTypeID: HELMET04
+	itemShortDescription: A medium tier helmet forged from iron
 },
 {
 	itemAttributes: 2
 	itemUseType: 256
 	itemTypeID: HELMET05
+	itemShortDescription: A leather helmet fit for a peasant
 },
 {
 	itemAttributes: 2
 	itemUseType: 32
 	itemTypeID: WANDS01
+	itemShortDescription: Top tier wand used by fairies
 },
 {
 	itemAttributes: 2
 	itemUseType: 32
 	itemTypeID: WANDS02
+	itemShortDescription: Small wand used by mage apprentices
 },
 {
 	itemAttributes: 2
 	itemUseType: 32
 	itemTypeID: WANDS03
+	itemShortDescription: Medium tier wand used to smite fire demons
 },
 {
 	itemAttributes: 2
 	itemUseType: 64
 	itemTypeID: WANDS04
+	itemShortDescription: Medium tier wand used for spell damage bonuses 
 },
 {
 	itemAttributes: 2
 	itemUseType: 64
 	itemTypeID: WANDS05
+	itemShortDescription: Medium tier wand used to increase luck in loot drops
 },
 {
 	itemAttributes: 2
 	itemUseType: 8
 	itemTypeID: WEAPON01
+	itemShortDescription: A copper sword of a peasant
 },
 {
 	itemAttributes: 2
 	itemUseType: 8
 	itemTypeID: WEAPON02
+	itemShortDescription: Top tier sword forged from the hate of the demon king
 },
 {
 	itemAttributes: 2
 	itemUseType: 16
 	itemTypeID: WEAPON03
+	itemShortDescription: Medium tier axe forged from iron
 },
 {
 	itemAttributes: 2
 	itemUseType: 16
 	itemTypeID: WEAPON04
+	itemShortDescription: Top tier pike used by the king's guard
 },
 {
 	itemAttributes: 2
 	itemUseType: 16
 	itemTypeID: WEAPON05
+	itemShortDescription: Medium tier hammer forged from iron
 },
 {
 	itemAttributes: 5
 	itemUseType: 2
 	itemTypeID: POTIONS01
+	itemShortDescription: Potion that restores 10MP
 },
 {
 	itemAttributes: 5
 	itemUseType: 2
 	itemTypeID: POTIONS02
+	itemShortDescription: Potion that restores 50MP
 },
 {
 	itemAttributes: 5
 	itemUseType: 2
 	itemTypeID: POTIONS03
+	itemShortDescription: Potion that restores 100MP
 },
 {
 	itemAttributes: 5
 	itemUseType: 1
 	itemTypeID: SCROLL01
+	itemShortDescription: Potion that restores 10HP
 },
 {
 	itemAttributes: 5
 	itemUseType: 1
 	itemTypeID: SCROLL02
+	itemShortDescription: Potion that restores 50HP
 },
 {
 	itemAttributes: 5
 	itemUseType: 1
 	itemTypeID: SCROLL03
+	itemShortDescription: Potion that restores 100HP
 },
 
 ]

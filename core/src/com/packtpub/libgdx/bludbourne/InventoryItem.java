@@ -61,6 +61,7 @@ public class InventoryItem extends Image {
     private int itemAttributes;
     private int itemUseType;
     private ItemTypeID itemTypeID;
+    private String itemShortDescription;
 
     public InventoryItem(TextureRegion textureRegion, int itemAttributes, ItemTypeID itemTypeID, int itemUseType){
         super(textureRegion);
@@ -79,6 +80,7 @@ public class InventoryItem extends Image {
         this.itemTypeID = inventoryItem.getItemTypeID();
         this.itemAttributes = inventoryItem.getItemAttributes();
         this.itemUseType = inventoryItem.getItemUseType();
+        this.itemShortDescription = inventoryItem.getItemShortDescription();
     }
 
     public ItemTypeID getItemTypeID() {
@@ -103,6 +105,14 @@ public class InventoryItem extends Image {
 
     public void setItemUseType(int itemUseType) {
         this.itemUseType = itemUseType;
+    }
+
+    public String getItemShortDescription() {
+        return itemShortDescription;
+    }
+
+    public void setItemShortDescription(String itemShortDescription) {
+        this.itemShortDescription = itemShortDescription;
     }
 
     public boolean isStackable(){

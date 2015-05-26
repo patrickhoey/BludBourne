@@ -2,7 +2,12 @@ package com.packtpub.libgdx.bludbourne.UI;
 
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Array;
 import com.packtpub.libgdx.bludbourne.InventoryItemFactory;
@@ -17,6 +22,7 @@ public class InventoryUI extends Window {
     private Table _playerSlotsTable;
     private Table _equipSlots;
     private DragAndDrop _dragAndDrop;
+    private Array<Actor> _inventoryActors;
 
     private final int _slotWidth = 52;
     private final int _slotHeight = 52;
@@ -25,6 +31,7 @@ public class InventoryUI extends Window {
         super("Inventory", skin, "solidbackground");
 
         _dragAndDrop = new DragAndDrop();
+        _inventoryActors = new Array<Actor>();
 
         //create
         _inventorySlotTable = new Table();
@@ -35,6 +42,8 @@ public class InventoryUI extends Window {
         InventorySlot headSlot = new InventorySlot(
                 ItemUseType.ARMOR_HELMET.getValue(),
                 new Image(PlayerHUD.itemsTextureAtlas.findRegion("inv_helmet")));
+        _inventoryActors.add(headSlot.getInventorySlotTooltip());
+
         InventorySlot leftArmSlot = new InventorySlot(
                 ItemUseType.WEAPON_ONEHAND.getValue() |
                 ItemUseType.WEAPON_TWOHAND.getValue() |
@@ -43,6 +52,8 @@ public class InventoryUI extends Window {
                 ItemUseType.WAND_TWOHAND.getValue(),
                 new Image(PlayerHUD.itemsTextureAtlas.findRegion("inv_weapon"))
         );
+        _inventoryActors.add(leftArmSlot.getInventorySlotTooltip());
+
         InventorySlot rightArmSlot = new InventorySlot(
                 ItemUseType.WEAPON_ONEHAND.getValue() |
                 ItemUseType.WEAPON_TWOHAND.getValue() |
@@ -51,12 +62,17 @@ public class InventoryUI extends Window {
                 ItemUseType.WAND_TWOHAND.getValue(),
                 new Image(PlayerHUD.itemsTextureAtlas.findRegion("inv_shield"))
         );
+        _inventoryActors.add(rightArmSlot.getInventorySlotTooltip());
+
         InventorySlot chestSlot = new InventorySlot(
                 ItemUseType.ARMOR_CHEST.getValue(),
                 new Image(PlayerHUD.itemsTextureAtlas.findRegion("inv_chest")));
+        _inventoryActors.add(chestSlot.getInventorySlotTooltip());
+
         InventorySlot legsSlot = new InventorySlot(
                 ItemUseType.ARMOR_FEET.getValue(),
                 new Image(PlayerHUD.itemsTextureAtlas.findRegion("inv_boot")));
+        _inventoryActors.add(legsSlot.getInventorySlotTooltip());
 
         _dragAndDrop.addTarget(new InventorySlotTarget(headSlot));
         _dragAndDrop.addTarget(new InventorySlotTarget(leftArmSlot));
@@ -69,6 +85,7 @@ public class InventoryUI extends Window {
         //layout
         for(int i = 1; i <= _numSlots; i++){
             InventorySlot inventorySlot = new InventorySlot();
+            _inventoryActors.add(inventorySlot.getInventorySlotTooltip());
             _dragAndDrop.addTarget(new InventorySlotTarget(inventorySlot));
 
             _inventorySlotTable.add(inventorySlot).size(_slotWidth, _slotHeight);
@@ -104,5 +121,9 @@ public class InventoryUI extends Window {
             inventorySlot.add(InventoryItemFactory.getInstance().getInventoryItem(itemTypeIDs.get(i)));
             _dragAndDrop.addSource(new InventorySlotSource(inventorySlot, _dragAndDrop));
         }
+    }
+
+    public Array<Actor> getInventoryActors(){
+        return _inventoryActors;
     }
 }

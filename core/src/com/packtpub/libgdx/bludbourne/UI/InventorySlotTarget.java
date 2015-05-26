@@ -27,15 +27,16 @@ public class InventorySlotTarget extends Target {
     public void drop(Source source, Payload payload, float x, float y, int pointer) {
         InventoryItem sourceActor = (InventoryItem) payload.getDragActor();
         InventoryItem targetActor = _targetSlot.getTopInventoryItem();
+        InventorySlot sourceSlot = ((InventorySlotSource)source).getSourceSlot();
 
         if( sourceActor == null ) {
             return;
         }
 
         //First, does the slot accept the source item type?
-        if( !_targetSlot.doesAcceptItemUseType(sourceActor.getItemUseType()) ){
+        if( !_targetSlot.doesAcceptItemUseType(sourceActor.getItemUseType()))  {
             //Put item back where it came from, slot doesn't accept item
-            ((InventorySlotSource)source)._sourceSlot.add(sourceActor);
+            sourceSlot.add(sourceActor);
             return;
         }
 
@@ -47,7 +48,7 @@ public class InventorySlotTarget extends Target {
                 _targetSlot.add(sourceActor);
             }else{
                 //If they aren't the same items or the items aren't stackable, then swap
-                InventorySlot.swapSlots(((InventorySlotSource)source)._sourceSlot, _targetSlot, sourceActor);
+                InventorySlot.swapSlots(sourceSlot, _targetSlot, sourceActor);
             }
         }
 

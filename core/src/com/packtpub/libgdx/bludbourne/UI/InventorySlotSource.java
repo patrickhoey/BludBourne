@@ -8,8 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 
 public class InventorySlotSource extends Source {
 
-    DragAndDrop _dragAndDrop;
-    InventorySlot _sourceSlot;
+    private DragAndDrop _dragAndDrop;
+    private InventorySlot _sourceSlot;
 
     public InventorySlotSource(InventorySlot sourceSlot, DragAndDrop dragAndDrop) {
         super(sourceSlot.getTopInventoryItem());
