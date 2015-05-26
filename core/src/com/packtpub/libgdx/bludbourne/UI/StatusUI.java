@@ -1,6 +1,7 @@
 package com.packtpub.libgdx.bludbourne.UI;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -12,6 +13,8 @@ public class StatusUI extends Window {
     private Image _hpBar;
     private Image _mpBar;
     private Image _xpBar;
+
+    private ImageButton _inventoryButton;
 
     //Attributes
     private int _levelVal = 1;
@@ -48,6 +51,10 @@ public class StatusUI extends Window {
         Label goldLabel = new Label(" gp:", skin);
         Label goldVal = new Label(String.valueOf(_goldVal), skin);
 
+        //buttons
+        _inventoryButton= new ImageButton(skin, "inventory-button");
+        _inventoryButton.getImageCell().size(32, 32);
+
         //Align images
         _hpBar.setPosition(3, 6);
         _mpBar.setPosition(3, 6);
@@ -65,7 +72,12 @@ public class StatusUI extends Window {
         defaults().expand().fill();
 
         //account for the title padding
-        this.pad(this.getPadTop()+10,10,10,10);
+        this.pad(this.getPadTop() + 10, 10, 10, 10);
+
+        this.add();
+        this.add();
+        this.add(_inventoryButton).align(Align.right);
+        this.row();
 
         this.add(group).size(bar.getWidth(), bar.getHeight());
         this.add(hpLabel);
@@ -82,8 +94,9 @@ public class StatusUI extends Window {
         this.add(xp).align(Align.left);
         this.row();
 
-        this.add(levelLabel);
+        this.add(levelLabel).align(Align.left);
         this.add(levelVal).align(Align.left);
+        this.row();
         this.add(goldLabel);
         this.add(goldVal).align(Align.left);
 
@@ -91,4 +104,7 @@ public class StatusUI extends Window {
         this.pack();
     }
 
+    public ImageButton getInventoryButton() {
+        return _inventoryButton;
+    }
 }

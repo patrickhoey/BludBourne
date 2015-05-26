@@ -4,10 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -38,11 +41,12 @@ public class PlayerHUD implements Screen {
         //_stage.setDebugAll(true);
 
         _statusUI = new StatusUI(statusUISkin, statusUITextureAtlas);
+        _statusUI.setVisible(true);
         _statusUI.setPosition(0, 0);
 
         _inventoryUI = new InventoryUI(statusUISkin, statusUITextureAtlas);
         _inventoryUI.setMovable(false);
-
+        _inventoryUI.setVisible(false);
         _inventoryUI.setPosition(_stage.getWidth()/2, 0);
 
         _stage.addActor(_statusUI);
@@ -53,6 +57,15 @@ public class PlayerHUD implements Screen {
         for(Actor actor : actors){
             _stage.addActor(actor);
         }
+
+        ImageButton inventoryButton = _statusUI.getInventoryButton();
+        inventoryButton.addListener(new ClickListener() {
+            public void clicked (InputEvent event, float x, float y) {
+                _inventoryUI.setVisible(_inventoryUI.isVisible()?false:true);
+            }
+        });
+
+
     }
 
     public void populateInventory(Array<ItemTypeID> itemTypeIDs){

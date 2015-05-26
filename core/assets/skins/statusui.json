@@ -10,5 +10,8 @@
 	"com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
 		"default": { "titleFont": "default-font", "background": "dialogDim" },
 		"solidbackground": { "titleFont": "default-font", "background": "dialog" },
-	},	
+	},
+	"com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle": {
+		"inventory-button": { "imageUp": "inventory_button_closed", "imageChecked": "inventory_button_open" }
+	},
 }

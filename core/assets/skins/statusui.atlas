@@ -5,35 +5,35 @@ filter: Nearest,Nearest
 repeat: none
 Bar
   rotate: false
-  xy: 1, 105
+  xy: 1, 43
   size: 99, 31
   orig: 99, 31
   offset: 0, 0
   index: -1
 XP_Bar
   rotate: false
-  xy: 1, 86
+  xy: 1, 24
   size: 94, 17
   orig: 94, 17
   offset: 0, 0
   index: -1
 MP_Bar
   rotate: false
-  xy: 1, 67
+  xy: 102, 57
   size: 93, 17
   orig: 93, 17
   offset: 0, 0
   index: -1
 HP_Bar
   rotate: false
-  xy: 1, 49
+  xy: 1, 6
   size: 93, 16
   orig: 93, 16
   offset: 0, 0
   index: -1
 dialog
   rotate: false
-  xy: 1, 11
+  xy: 102, 19
   size: 36, 36
   split: 20, 15, 18, 17
   orig: 36, 36
@@ -41,7 +41,7 @@ dialog
   index: -1
 dialogDim
   rotate: false
-  xy: 39, 11
+  xy: 140, 19
   size: 36, 36
   split: 25, 10, 15, 20
   orig: 36, 36
@@ -49,15 +49,29 @@ dialogDim
   index: -1
 generic_background
   rotate: false
-  xy: 77, 18
+  xy: 178, 26
   size: 30, 29
   split: 14, 15, 12, 16
   orig: 30, 29
   offset: 0, 0
   index: -1
+inventory_button_closed
+  rotate: false
+  xy: 197, 58
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+inventory_button_open
+  rotate: false
+  xy: 96, 1
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 white
   rotate: false
-  xy: 1, 1
+  xy: 114, 9
   size: 8, 8
   orig: 8, 8
   offset: 0, 0
