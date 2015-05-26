@@ -18,7 +18,6 @@ public class InventorySlot extends Stack {
     private Label _numItemsLabel;
     private int _numItemsVal = 0;
     private int _filterItemType;
-    private InventorySlotTooltip _inventorySlotTooltip;
 
     public InventorySlot(){
         _filterItemType = 0; //filter nothing
@@ -34,9 +33,6 @@ public class InventorySlot extends Stack {
 
         this.add(_defaultBackground);
         this.add(_numItemsLabel);
-
-        _inventorySlotTooltip = new InventorySlotTooltip(this, PlayerHUD.statusUISkin);
-        addListener(new InventorySlotTooltipListener(_inventorySlotTooltip));
     }
 
     public InventorySlot(int filterItemType, Image customBackgroundDecal){
@@ -44,10 +40,6 @@ public class InventorySlot extends Stack {
         _filterItemType = filterItemType;
         _customBackgroundDecal = customBackgroundDecal;
         _defaultBackground.add(_customBackgroundDecal);
-    }
-
-    public InventorySlotTooltip getInventorySlotTooltip() {
-        return _inventorySlotTooltip;
     }
 
     public void decrementItemCount() {

@@ -14,26 +14,27 @@ public class InventorySlotTooltipListener extends InputListener {
 
     public InventorySlotTooltipListener(InventorySlotTooltip toolTip){
         this._toolTip = toolTip;
-
-        _currentCoords = new Vector2(0,0);
-        _offset = new Vector2(20, 10);
+        this._currentCoords = new Vector2(0,0);
+        this._offset = new Vector2(20, 10);
     }
 
     @Override
     public boolean mouseMoved(InputEvent event, float x, float y){
+        InventorySlot inventorySlot = (InventorySlot)event.getListenerActor();
         if( _isInside ){
-            _currentCoords.set(x,y);
-            event.getListenerActor().localToStageCoordinates(_currentCoords);
+            _currentCoords.set(x, y);
+            inventorySlot.localToStageCoordinates(_currentCoords);
+
             _toolTip.setPosition(_currentCoords.x+_offset.x, _currentCoords.y+_offset.y);
-        }else{
-            _toolTip.setVisible(false);
         }
         return false;
     }
 
+
     @Override
     public void touchDragged (InputEvent event, float x, float y, int pointer) {
-        _toolTip.setVisible(false);
+        InventorySlot inventorySlot = (InventorySlot)event.getListenerActor();
+        _toolTip.setVisible(inventorySlot, false);
     }
 
     @Override
@@ -43,23 +44,27 @@ public class InventorySlotTooltipListener extends InputListener {
 
     @Override
     public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
-        _toolTip.updateDescription();
+        InventorySlot inventorySlot = (InventorySlot)event.getListenerActor();
+
         _isInside = true;
+
         _currentCoords.set(x, y);
+        inventorySlot.localToStageCoordinates(_currentCoords);
 
-        event.getListenerActor().localToStageCoordinates(_currentCoords);
-
-        _toolTip.setPosition(_currentCoords.x + _offset.x, _currentCoords.y+_offset.y);
+        _toolTip.updateDescription(inventorySlot);
+        _toolTip.setPosition(_currentCoords.x + _offset.x, _currentCoords.y + _offset.y);
         _toolTip.toFront();
-        _toolTip.setVisible(true);
+        _toolTip.setVisible(inventorySlot, true);
     }
 
     @Override
     public void exit(InputEvent event, float x, float y, int pointer, Actor toActor){
-        _toolTip.setVisible(false);
+        InventorySlot inventorySlot = (InventorySlot)event.getListenerActor();
+        _toolTip.setVisible(inventorySlot, false);
         _isInside = false;
+
         _currentCoords.set(x, y);
-        event.getListenerActor().localToStageCoordinates(_currentCoords);
+        inventorySlot.localToStageCoordinates(_currentCoords);
     }
 
 }

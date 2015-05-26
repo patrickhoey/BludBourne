@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -42,11 +43,9 @@ public class PlayerHUD implements Screen {
         _inventoryUI = new InventoryUI(statusUISkin, statusUITextureAtlas);
         _inventoryUI.setMovable(false);
 
-        float centerX = (_stage.getWidth() - _inventoryUI.getWidth())/2;
-        float centerY = (_stage.getHeight() - _inventoryUI.getHeight()) / 2;
-        _inventoryUI.setPosition(centerX, centerY);
+        _inventoryUI.setPosition(_stage.getWidth()/2, 0);
 
-        //_stage.addActor(_statusUI);
+        _stage.addActor(_statusUI);
         _stage.addActor(_inventoryUI);
 
         //add tooltips to the stage

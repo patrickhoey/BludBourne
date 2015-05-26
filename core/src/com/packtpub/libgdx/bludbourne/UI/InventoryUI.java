@@ -27,6 +27,8 @@ public class InventoryUI extends Window {
     private final int _slotWidth = 52;
     private final int _slotHeight = 52;
 
+    private InventorySlotTooltip _inventorySlotTooltip;
+
     public InventoryUI(final Skin skin, TextureAtlas textureAtlas){
         super("Inventory", skin, "solidbackground");
 
@@ -38,11 +40,11 @@ public class InventoryUI extends Window {
         _playerSlotsTable = new Table();
         _equipSlots = new Table();
         _equipSlots.defaults().space(10);
+        _inventorySlotTooltip = new InventorySlotTooltip(PlayerHUD.statusUISkin);
 
         InventorySlot headSlot = new InventorySlot(
                 ItemUseType.ARMOR_HELMET.getValue(),
                 new Image(PlayerHUD.itemsTextureAtlas.findRegion("inv_helmet")));
-        _inventoryActors.add(headSlot.getInventorySlotTooltip());
 
         InventorySlot leftArmSlot = new InventorySlot(
                 ItemUseType.WEAPON_ONEHAND.getValue() |
@@ -52,7 +54,6 @@ public class InventoryUI extends Window {
                 ItemUseType.WAND_TWOHAND.getValue(),
                 new Image(PlayerHUD.itemsTextureAtlas.findRegion("inv_weapon"))
         );
-        _inventoryActors.add(leftArmSlot.getInventorySlotTooltip());
 
         InventorySlot rightArmSlot = new InventorySlot(
                 ItemUseType.WEAPON_ONEHAND.getValue() |
@@ -62,17 +63,20 @@ public class InventoryUI extends Window {
                 ItemUseType.WAND_TWOHAND.getValue(),
                 new Image(PlayerHUD.itemsTextureAtlas.findRegion("inv_shield"))
         );
-        _inventoryActors.add(rightArmSlot.getInventorySlotTooltip());
 
         InventorySlot chestSlot = new InventorySlot(
                 ItemUseType.ARMOR_CHEST.getValue(),
                 new Image(PlayerHUD.itemsTextureAtlas.findRegion("inv_chest")));
-        _inventoryActors.add(chestSlot.getInventorySlotTooltip());
 
         InventorySlot legsSlot = new InventorySlot(
                 ItemUseType.ARMOR_FEET.getValue(),
                 new Image(PlayerHUD.itemsTextureAtlas.findRegion("inv_boot")));
-        _inventoryActors.add(legsSlot.getInventorySlotTooltip());
+
+        headSlot.addListener(new InventorySlotTooltipListener(_inventorySlotTooltip));
+        leftArmSlot.addListener(new InventorySlotTooltipListener(_inventorySlotTooltip));
+        rightArmSlot.addListener(new InventorySlotTooltipListener(_inventorySlotTooltip));
+        chestSlot.addListener(new InventorySlotTooltipListener(_inventorySlotTooltip));
+        legsSlot.addListener(new InventorySlotTooltipListener(_inventorySlotTooltip));
 
         _dragAndDrop.addTarget(new InventorySlotTarget(headSlot));
         _dragAndDrop.addTarget(new InventorySlotTarget(leftArmSlot));
@@ -85,7 +89,7 @@ public class InventoryUI extends Window {
         //layout
         for(int i = 1; i <= _numSlots; i++){
             InventorySlot inventorySlot = new InventorySlot();
-            _inventoryActors.add(inventorySlot.getInventorySlotTooltip());
+            inventorySlot.addListener(new InventorySlotTooltipListener(_inventorySlotTooltip));
             _dragAndDrop.addTarget(new InventorySlotTarget(inventorySlot));
 
             _inventorySlotTable.add(inventorySlot).size(_slotWidth, _slotHeight);
@@ -108,6 +112,8 @@ public class InventoryUI extends Window {
         _equipSlots.right().add(legsSlot).size(_slotWidth, _slotHeight);
 
         _playerSlotsTable.add(_equipSlots);
+
+        _inventoryActors.add(_inventorySlotTooltip);
 
         this.add(_playerSlotsTable).padBottom(20).row();
         this.add(_inventorySlotTable).row();
