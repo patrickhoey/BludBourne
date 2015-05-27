@@ -18,9 +18,6 @@ public class DesktopLauncher {
 		Application app = new LwjglApplication(new BludBourne(), config);
 
 		Gdx.app = app;
-		//Gdx.app.setLogLevel(Application.LOG_INFO);
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
-		//Gdx.app.setLogLevel(Application.LOG_ERROR);
-		//Gdx.app.setLogLevel(Application.LOG_NONE);
 	}
 }
