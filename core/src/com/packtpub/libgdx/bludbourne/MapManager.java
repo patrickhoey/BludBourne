@@ -10,6 +10,8 @@ import com.badlogic.gdx.utils.Array;
 import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 import com.packtpub.libgdx.bludbourne.profile.ProfileObserver;
 
+import java.util.Vector;
+
 public class MapManager implements ProfileObserver {
     private static final String TAG = MapManager.class.getSimpleName();
 
@@ -33,9 +35,28 @@ public class MapManager implements ProfileObserver {
                     mapType = MapFactory.MapType.valueOf(currentMap);
                 }
                 loadMap(mapType);
+
+                Vector2 topWorldMapStartPosition = profileManager.getProperty("topWorldMapStartPosition", Vector2.class);
+                if( topWorldMapStartPosition != null ){
+                    MapFactory.getMap(MapFactory.MapType.TOP_WORLD).setPlayerStart(topWorldMapStartPosition);
+                }
+
+                Vector2 castleOfDoomMapStartPosition = profileManager.getProperty("castleOfDoomMapStartPosition", Vector2.class);
+                if( castleOfDoomMapStartPosition != null ){
+                    MapFactory.getMap(MapFactory.MapType.CASTLE_OF_DOOM).setPlayerStart(castleOfDoomMapStartPosition);
+                }
+
+                Vector2 townMapStartPosition = profileManager.getProperty("townMapStartPosition", Vector2.class);
+                if( townMapStartPosition != null ){
+                    MapFactory.getMap(MapFactory.MapType.TOWN).setPlayerStart(townMapStartPosition);
+                }
+
                 break;
             case SAVING_PROFILE:
                 profileManager.setProperty("currentMapType", _currentMap._currentMapType.toString());
+                profileManager.setProperty("topWorldMapStartPosition", MapFactory.getMap(MapFactory.MapType.TOP_WORLD).getPlayerStart() );
+                profileManager.setProperty("castleOfDoomMapStartPosition", MapFactory.getMap(MapFactory.MapType.CASTLE_OF_DOOM).getPlayerStart() );
+                profileManager.setProperty("townMapStartPosition", MapFactory.getMap(MapFactory.MapType.TOWN).getPlayerStart() );
                 break;
             default:
                 break;
