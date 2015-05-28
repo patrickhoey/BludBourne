@@ -3,6 +3,7 @@ package com.packtpub.libgdx.bludbourne;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector3;
+import com.packtpub.libgdx.bludbourne.screens.MainGameScreen;
 
 public class PlayerInputComponent extends InputComponent {
 
@@ -10,7 +11,6 @@ public class PlayerInputComponent extends InputComponent {
 	private Vector3 _lastMouseCoordinates;
 
 	public PlayerInputComponent(){
-		//Gdx.app.debug(TAG, "Construction" );
 		this._lastMouseCoordinates = new Vector3();
 	}
 
@@ -36,7 +36,11 @@ public class PlayerInputComponent extends InputComponent {
 	@Override
 	public void update(Entity entity, float delta){
 		//Keyboard input
-		if( keys.get(Keys.LEFT)){
+		if(keys.get(Keys.PAUSE)) {
+			System.out.println("INPUT PAUSED");
+			MainGameScreen.setGameState(MainGameScreen.GameState.PAUSED);
+			pauseReleased();
+		}else if( keys.get(Keys.LEFT)){
 			entity.sendMessage(MESSAGE.CURRENT_STATE, _json.toJson(Entity.State.WALKING));
 			entity.sendMessage(MESSAGE.CURRENT_DIRECTION, _json.toJson(Entity.Direction.LEFT));
 		}else if( keys.get(Keys.RIGHT)){
@@ -48,7 +52,8 @@ public class PlayerInputComponent extends InputComponent {
 		}else if(keys.get(Keys.DOWN)){
 			entity.sendMessage(MESSAGE.CURRENT_STATE, _json.toJson(Entity.State.WALKING));
 			entity.sendMessage(MESSAGE.CURRENT_DIRECTION, _json.toJson(Entity.Direction.DOWN));
-		}else if(keys.get(Keys.QUIT)){
+		}else if(keys.get(Keys.QUIT)) {
+			quitReleased();
 			Gdx.app.exit();
 		}else{
 			entity.sendMessage(MESSAGE.CURRENT_STATE, _json.toJson(Entity.State.IDLE));
@@ -82,6 +87,9 @@ public class PlayerInputComponent extends InputComponent {
 		if( keycode == Input.Keys.Q){
 			this.quitPressed();
 		}
+		if( keycode == Input.Keys.P ){
+			this.pausePressed();
+		}
 
 		return true;
 	}
@@ -102,6 +110,9 @@ public class PlayerInputComponent extends InputComponent {
 		}
 		if( keycode == Input.Keys.Q){
 			this.quitReleased();
+		}
+		if( keycode == Input.Keys.P ){
+			this.pauseReleased();
 		}
 		return true;
 	}
@@ -175,6 +186,10 @@ public class PlayerInputComponent extends InputComponent {
 	public void quitPressed(){
 		keys.put(Keys.QUIT, true);
 	}
+
+	public void pausePressed() {
+		keys.put(Keys.PAUSE, true);
+	}
 	
 	public void setClickedMouseCoordinates(int x,int y){
 		_lastMouseCoordinates.set(x, y, 0);
@@ -209,6 +224,8 @@ public class PlayerInputComponent extends InputComponent {
 	public void quitReleased(){
 		keys.put(Keys.QUIT, false);
 	}
+
+	public void pauseReleased() { keys.put(Keys.PAUSE, false);}
 	
 	public void selectMouseButtonReleased(int x, int y){
 		mouseButtons.put(Mouse.SELECT, false);
@@ -218,7 +235,7 @@ public class PlayerInputComponent extends InputComponent {
 		mouseButtons.put(Mouse.DOACTION, false);
 	}
 
-	public static void hide(){
+	public static void clear(){
 		keys.put(Keys.LEFT, false);
 		keys.put(Keys.RIGHT, false);
 		keys.put(Keys.UP, false);

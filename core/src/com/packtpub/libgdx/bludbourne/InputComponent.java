@@ -13,7 +13,7 @@ public abstract class InputComponent implements Component, InputProcessor {
     protected Json _json;
 
     protected enum Keys {
-        LEFT, RIGHT, UP, DOWN, QUIT
+        LEFT, RIGHT, UP, DOWN, QUIT, PAUSE
     }
 
     protected enum Mouse {
@@ -30,6 +30,7 @@ public abstract class InputComponent implements Component, InputProcessor {
         keys.put(Keys.UP, false);
         keys.put(Keys.DOWN, false);
         keys.put(Keys.QUIT, false);
+        keys.put(Keys.PAUSE, false);
     };
 
     static {
