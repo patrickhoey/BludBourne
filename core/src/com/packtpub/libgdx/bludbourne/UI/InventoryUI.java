@@ -38,8 +38,12 @@ public class InventoryUI extends Window {
 
         //create
         _inventorySlotTable = new Table();
+        _inventorySlotTable.setName("Inventory_Slot_Table");
+
         _playerSlotsTable = new Table();
         _equipSlots = new Table();
+        _equipSlots.setName("Equipment_Slot_Table");
+
         _equipSlots.defaults().space(10);
         _inventorySlotTooltip = new InventorySlotTooltip(PlayerHUD.statusUISkin);
 
@@ -134,14 +138,13 @@ public class InventoryUI extends Window {
         for(int i = 0; i < inventoryItems.size; i++){
             InventoryItemLocation itemLocation = inventoryItems.get(i);
             ItemTypeID itemTypeID = ItemTypeID.valueOf(itemLocation.getItemTypeAtLocation());
-            InventoryItem item = InventoryItemFactory.getInstance().getInventoryItem(itemTypeID);
-
             InventorySlot inventorySlot =  ((InventorySlot)cells.get(itemLocation.getLocationIndex()).getActor());
-            for( int index = 0; index < itemLocation.getNumberItemsAtLocation(); index++ ){
-                inventorySlot.add(item);
-            }
+            inventorySlot.clearAllInventoryItems();
 
-            _dragAndDrop.addSource(new InventorySlotSource(inventorySlot, _dragAndDrop));
+            for( int index = 0; index < itemLocation.getNumberItemsAtLocation(); index++ ){
+                inventorySlot.add(InventoryItemFactory.getInstance().getInventoryItem(itemTypeID));
+                _dragAndDrop.addSource(new InventorySlotSource(inventorySlot, _dragAndDrop));
+            }
         }
     }
 

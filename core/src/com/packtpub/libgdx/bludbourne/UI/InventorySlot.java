@@ -100,6 +100,17 @@ public class InventorySlot extends Stack {
         return items;
     }
 
+    public void clearAllInventoryItems() {
+        if( hasItem() ){
+            SnapshotArray<Actor> arrayChildren = this.getChildren();
+            int numInventoryItems =  getNumItems();
+            for(int i = 0; i < numInventoryItems; i++) {
+                arrayChildren.pop();
+                decrementItemCount();
+            }
+        }
+    }
+
     private void checkVisibilityOfItemCount(){
         if( _numItemsVal < 2){
             _numItemsLabel.setVisible(false);

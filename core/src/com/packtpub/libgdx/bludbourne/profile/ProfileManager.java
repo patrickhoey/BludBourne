@@ -82,7 +82,6 @@ public class ProfileManager extends ProfileSubject {
         notify(this, ProfileObserver.ProfileEvent.SAVING_PROFILE);
         String text = _json.prettyPrint(_json.toJson(_profileProperties));
         writeProfileToStorage(_profileName, text, true);
-        System.out.println(text);
     }
 
     public void loadProfile(String profileName){
