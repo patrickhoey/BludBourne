@@ -69,8 +69,7 @@ public class MainGameScreen implements Screen {
 		_hudCamera = new OrthographicCamera();
 		_hudCamera.setToOrtho(false, VIEWPORT.physicalWidth, VIEWPORT.physicalHeight);
 
-		_playerHUD = new PlayerHUD(_hudCamera);
-		_playerHUD.populateInventory(_player.getEntityConfig().getInventory());
+		_playerHUD = new PlayerHUD(_hudCamera, _player);
 
 		InputMultiplexer multiplexer = new InputMultiplexer();
 		multiplexer.addProcessor(_playerHUD.getStage());
@@ -78,6 +77,7 @@ public class MainGameScreen implements Screen {
 		Gdx.input.setInputProcessor(multiplexer);
 
 		//TEMP TODO
+		ProfileManager.getInstance().addObserver(_playerHUD);
 		ProfileManager.getInstance().addObserver(_mapMgr);
 		ProfileManager.getInstance().loadProfile(ProfileManager.DEFAULT_PROFILE);
 	}

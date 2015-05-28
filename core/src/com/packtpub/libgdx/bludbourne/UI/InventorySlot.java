@@ -118,6 +118,14 @@ public class InventorySlot extends Stack {
         return false;
     }
 
+    public int getNumItems(){
+        if( hasChildren() ){
+            SnapshotArray<Actor> items = this.getChildren();
+            return items.size - 2;
+        }
+        return 0;
+    }
+
     public boolean doesAcceptItemUseType(int itemUseType){
         if( _filterItemType == 0 ){
             return true;

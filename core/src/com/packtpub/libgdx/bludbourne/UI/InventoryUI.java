@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Array;
+import com.packtpub.libgdx.bludbourne.InventoryItem;
 import com.packtpub.libgdx.bludbourne.InventoryItemFactory;
 import com.packtpub.libgdx.bludbourne.InventoryItem.ItemUseType;
 import com.packtpub.libgdx.bludbourne.InventoryItem.ItemTypeID;
@@ -120,13 +121,45 @@ public class InventoryUI extends Window {
         this.pack();
     }
 
-    public void populateInventory(Array<ItemTypeID> itemTypeIDs){
-        Array<Cell> cells = _inventorySlotTable.getCells();
-        for(int i = 0; i < itemTypeIDs.size; i++){
-            InventorySlot inventorySlot =  ((InventorySlot)cells.get(i).getActor());
-            inventorySlot.add(InventoryItemFactory.getInstance().getInventoryItem(itemTypeIDs.get(i)));
+    public Table getInventorySlotTable() {
+        return _inventorySlotTable;
+    }
+
+    public Table getEquipSlotTable() {
+        return _equipSlots;
+    }
+
+    public void populateInventory(Table targetTable, Array<InventoryItemLocation> inventoryItems){
+        Array<Cell> cells = targetTable.getCells();
+        for(int i = 0; i < inventoryItems.size; i++){
+            InventoryItemLocation itemLocation = inventoryItems.get(i);
+            ItemTypeID itemTypeID = ItemTypeID.valueOf(itemLocation.getItemTypeAtLocation());
+            InventoryItem item = InventoryItemFactory.getInstance().getInventoryItem(itemTypeID);
+
+            InventorySlot inventorySlot =  ((InventorySlot)cells.get(itemLocation.getLocationIndex()).getActor());
+            for( int index = 0; index < itemLocation.getNumberItemsAtLocation(); index++ ){
+                inventorySlot.add(item);
+            }
+
             _dragAndDrop.addSource(new InventorySlotSource(inventorySlot, _dragAndDrop));
         }
+    }
+
+    public Array<InventoryItemLocation> getInventory(Table targetTable){
+        Array<Cell> cells = targetTable.getCells();
+        Array<InventoryItemLocation> items = new Array<InventoryItemLocation>();
+        for(int i = 0; i < cells.size; i++){
+            InventorySlot inventorySlot =  ((InventorySlot)cells.get(i).getActor());
+            if( inventorySlot == null ) continue;
+            int numItems = inventorySlot.getNumItems();
+            if( numItems > 0 ){
+                items.add(new InventoryItemLocation(
+                        i,
+                        inventorySlot.getTopInventoryItem().getItemTypeID().toString(),
+                        numItems));
+            }
+        }
+        return items;
     }
 
     public Array<Actor> getInventoryActors(){
