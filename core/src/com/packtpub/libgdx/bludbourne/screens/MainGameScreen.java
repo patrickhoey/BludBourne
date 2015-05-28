@@ -6,11 +6,16 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 
-import com.packtpub.libgdx.bludbourne.*;
+import com.packtpub.libgdx.bludbourne.MapFactory;
+import com.packtpub.libgdx.bludbourne.MapManager;
+import com.packtpub.libgdx.bludbourne.Entity;
+import com.packtpub.libgdx.bludbourne.EntityFactory;
+import com.packtpub.libgdx.bludbourne.Map;
 import com.packtpub.libgdx.bludbourne.UI.PlayerHUD;
+import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
+import com.packtpub.libgdx.bludbourne.Component;
 
 public class MainGameScreen implements Screen {
 	private static final String TAG = MainGameScreen.class.getSimpleName();
@@ -25,22 +30,26 @@ public class MainGameScreen implements Screen {
 		public static float aspectRatio;
 	}
 
+	public static enum GameState {
+		RUNNING,
+		PAUSED
+	}
+	private static GameState _gameState;
+
 	private OrthogonalTiledMapRenderer _mapRenderer = null;
 	private OrthographicCamera _camera = null;
 	private OrthographicCamera _hudCamera = null;
 	private static MapManager _mapMgr;
 	private Json _json;
 
-	public MainGameScreen(){
-		_mapMgr = new MapManager();
-		_json = new Json();
-	}
-
 	private static Entity _player;
 	private static PlayerHUD _playerHUD;
 
-	@Override
-	public void show() {
+	public MainGameScreen(){
+		_mapMgr = new MapManager();
+		_json = new Json();
+
+		_gameState = GameState.RUNNING;
 		//_camera setup
 		setupViewport(10, 10);
 
@@ -67,6 +76,15 @@ public class MainGameScreen implements Screen {
 		multiplexer.addProcessor(_playerHUD.getStage());
 		multiplexer.addProcessor(_player.getInputProcessor());
 		Gdx.input.setInputProcessor(multiplexer);
+
+		//TEMP TODO
+		ProfileManager.getInstance().addObserver(_mapMgr);
+		ProfileManager.getInstance().loadProfile(ProfileManager.DEFAULT_PROFILE);
+	}
+
+	@Override
+	public void show() {
+
 	}
 
 	@Override
@@ -75,6 +93,10 @@ public class MainGameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
+		if( _gameState == GameState.PAUSED ){
+			_player.updateInput(delta);
+			return;
+		}
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -101,27 +123,50 @@ public class MainGameScreen implements Screen {
 		_playerHUD.render(delta);
 	}
 
-
-
 	@Override
 	public void resize(int width, int height) {
 		setupViewport(10, 10);
 		_camera.setToOrtho(false, VIEWPORT.viewportWidth, VIEWPORT.viewportHeight);
-		_playerHUD.resize((int)VIEWPORT.physicalWidth, (int)VIEWPORT.physicalHeight);
+		_playerHUD.resize((int) VIEWPORT.physicalWidth, (int) VIEWPORT.physicalHeight);
 	}
 
 	@Override
 	public void pause() {
+		_gameState = GameState.PAUSED;
+		ProfileManager.getInstance().saveProfile();
 	}
 
 	@Override
 	public void resume() {
+		_gameState = GameState.RUNNING;
+		ProfileManager.getInstance().loadProfile(ProfileManager.DEFAULT_PROFILE);
 	}
 
 	@Override
 	public void dispose() {
 		_player.dispose();
 		_mapRenderer.dispose();
+	}
+
+	public static void setGameState(GameState gameState){
+		switch(gameState){
+			case RUNNING:
+				_gameState = GameState.RUNNING;
+				break;
+			case PAUSED:
+				if( _gameState == GameState.PAUSED ){
+					_gameState = GameState.RUNNING;
+					ProfileManager.getInstance().loadProfile(ProfileManager.DEFAULT_PROFILE);
+				}else if( _gameState == GameState.RUNNING ){
+					_gameState = GameState.PAUSED;
+					ProfileManager.getInstance().saveProfile();
+				}
+				break;
+			default:
+				_gameState = GameState.RUNNING;
+				break;
+		}
+
 	}
 
 	private void setupViewport(int width, int height){
