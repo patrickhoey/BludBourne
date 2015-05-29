@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.Scaling;
-import com.packtpub.libgdx.bludbourne.UI.PlayerHUD;
 import com.packtpub.libgdx.bludbourne.InventoryItem.ItemTypeID;
 
 
@@ -40,7 +39,7 @@ public class InventoryItemFactory {
 
     public InventoryItem getInventoryItem(ItemTypeID inventoryItemType){
         InventoryItem item = new InventoryItem(_inventoryItemList.get(inventoryItemType));
-        item.setDrawable(new TextureRegionDrawable(PlayerHUD.itemsTextureAtlas.findRegion(item.getItemTypeID().toString())));
+        item.setDrawable(new TextureRegionDrawable(Utility.ITEMS_TEXTUREATLAS.findRegion(item.getItemTypeID().toString())));
         item.setScaling(Scaling.none);
         return item;
     }

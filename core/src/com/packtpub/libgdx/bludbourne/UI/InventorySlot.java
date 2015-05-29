@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.packtpub.libgdx.bludbourne.InventoryItem;
+import com.packtpub.libgdx.bludbourne.Utility;
 
 public class InventorySlot extends Stack {
 
@@ -23,9 +24,9 @@ public class InventorySlot extends Stack {
         _filterItemType = 0; //filter nothing
         _defaultBackground = new Stack();
         _customBackgroundDecal = new Image();
-        Image image = new Image(new NinePatch(PlayerHUD.statusUITextureAtlas.createPatch("dialog")));
+        Image image = new Image(new NinePatch(Utility.STATUSUI_TEXTUREATLAS.createPatch("dialog")));
 
-        _numItemsLabel = new Label(String.valueOf(_numItemsVal), PlayerHUD.statusUISkin, "inventory-item-count");
+        _numItemsLabel = new Label(String.valueOf(_numItemsVal), Utility.STATUSUI_SKIN, "inventory-item-count");
         _numItemsLabel.setAlignment(Align.bottomRight);
         _numItemsLabel.setVisible(false);
 

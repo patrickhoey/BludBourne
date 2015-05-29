@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Json;
 
-import com.packtpub.libgdx.bludbourne.MapFactory;
+import com.packtpub.libgdx.bludbourne.BludBourne;
 import com.packtpub.libgdx.bludbourne.MapManager;
 import com.packtpub.libgdx.bludbourne.Entity;
 import com.packtpub.libgdx.bludbourne.EntityFactory;
@@ -41,11 +41,14 @@ public class MainGameScreen implements Screen {
 	private OrthographicCamera _hudCamera = null;
 	private static MapManager _mapMgr;
 	private Json _json;
+	private BludBourne _game;
+	private InputMultiplexer _multiplexer;
 
 	private static Entity _player;
 	private static PlayerHUD _playerHUD;
 
-	public MainGameScreen(){
+	public MainGameScreen(BludBourne game){
+		_game = game;
 		_mapMgr = new MapManager();
 		_json = new Json();
 
@@ -71,24 +74,25 @@ public class MainGameScreen implements Screen {
 
 		_playerHUD = new PlayerHUD(_hudCamera, _player);
 
-		InputMultiplexer multiplexer = new InputMultiplexer();
-		multiplexer.addProcessor(_playerHUD.getStage());
-		multiplexer.addProcessor(_player.getInputProcessor());
-		Gdx.input.setInputProcessor(multiplexer);
+		_multiplexer = new InputMultiplexer();
+		_multiplexer.addProcessor(_playerHUD.getStage());
+		_multiplexer.addProcessor(_player.getInputProcessor());
+		Gdx.input.setInputProcessor(_multiplexer);
 
-		//TEMP TODO
 		ProfileManager.getInstance().addObserver(_playerHUD);
 		ProfileManager.getInstance().addObserver(_mapMgr);
-		ProfileManager.getInstance().loadProfile(ProfileManager.DEFAULT_PROFILE);
 	}
 
 	@Override
 	public void show() {
-
+		_gameState = GameState.RUNNING;
+		Gdx.input.setInputProcessor(_multiplexer);
 	}
 
 	@Override
 	public void hide() {
+		_gameState = GameState.PAUSED;
+		Gdx.input.setInputProcessor(null);
 	}
 
 	@Override
@@ -139,7 +143,7 @@ public class MainGameScreen implements Screen {
 	@Override
 	public void resume() {
 		_gameState = GameState.RUNNING;
-		ProfileManager.getInstance().loadProfile(ProfileManager.DEFAULT_PROFILE);
+		ProfileManager.getInstance().loadProfile();
 	}
 
 	@Override
@@ -156,7 +160,7 @@ public class MainGameScreen implements Screen {
 			case PAUSED:
 				if( _gameState == GameState.PAUSED ){
 					_gameState = GameState.RUNNING;
-					ProfileManager.getInstance().loadProfile(ProfileManager.DEFAULT_PROFILE);
+					ProfileManager.getInstance().loadProfile();
 				}else if( _gameState == GameState.RUNNING ){
 					_gameState = GameState.PAUSED;
 					ProfileManager.getInstance().saveProfile();

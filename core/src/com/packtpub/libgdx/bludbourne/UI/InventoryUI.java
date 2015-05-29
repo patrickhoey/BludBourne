@@ -1,19 +1,17 @@
 package com.packtpub.libgdx.bludbourne.UI;
 
 import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Array;
-import com.packtpub.libgdx.bludbourne.InventoryItem;
 import com.packtpub.libgdx.bludbourne.InventoryItemFactory;
 import com.packtpub.libgdx.bludbourne.InventoryItem.ItemUseType;
 import com.packtpub.libgdx.bludbourne.InventoryItem.ItemTypeID;
+import com.packtpub.libgdx.bludbourne.Utility;
 
 public class InventoryUI extends Window {
 
@@ -30,8 +28,8 @@ public class InventoryUI extends Window {
 
     private InventorySlotTooltip _inventorySlotTooltip;
 
-    public InventoryUI(final Skin skin, TextureAtlas textureAtlas){
-        super("Inventory", skin, "solidbackground");
+    public InventoryUI(){
+        super("Inventory", Utility.STATUSUI_SKIN, "solidbackground");
 
         _dragAndDrop = new DragAndDrop();
         _inventoryActors = new Array<Actor>();
@@ -45,11 +43,11 @@ public class InventoryUI extends Window {
         _equipSlots.setName("Equipment_Slot_Table");
 
         _equipSlots.defaults().space(10);
-        _inventorySlotTooltip = new InventorySlotTooltip(PlayerHUD.statusUISkin);
+        _inventorySlotTooltip = new InventorySlotTooltip(Utility.STATUSUI_SKIN);
 
         InventorySlot headSlot = new InventorySlot(
                 ItemUseType.ARMOR_HELMET.getValue(),
-                new Image(PlayerHUD.itemsTextureAtlas.findRegion("inv_helmet")));
+                new Image(Utility.ITEMS_TEXTUREATLAS.findRegion("inv_helmet")));
 
         InventorySlot leftArmSlot = new InventorySlot(
                 ItemUseType.WEAPON_ONEHAND.getValue() |
@@ -57,7 +55,7 @@ public class InventoryUI extends Window {
                 ItemUseType.ARMOR_SHIELD.getValue() |
                 ItemUseType.WAND_ONEHAND.getValue() |
                 ItemUseType.WAND_TWOHAND.getValue(),
-                new Image(PlayerHUD.itemsTextureAtlas.findRegion("inv_weapon"))
+                new Image(Utility.ITEMS_TEXTUREATLAS.findRegion("inv_weapon"))
         );
 
         InventorySlot rightArmSlot = new InventorySlot(
@@ -66,16 +64,16 @@ public class InventoryUI extends Window {
                 ItemUseType.ARMOR_SHIELD.getValue() |
                 ItemUseType.WAND_ONEHAND.getValue() |
                 ItemUseType.WAND_TWOHAND.getValue(),
-                new Image(PlayerHUD.itemsTextureAtlas.findRegion("inv_shield"))
+                new Image(Utility.ITEMS_TEXTUREATLAS.findRegion("inv_shield"))
         );
 
         InventorySlot chestSlot = new InventorySlot(
                 ItemUseType.ARMOR_CHEST.getValue(),
-                new Image(PlayerHUD.itemsTextureAtlas.findRegion("inv_chest")));
+                new Image(Utility.ITEMS_TEXTUREATLAS.findRegion("inv_chest")));
 
         InventorySlot legsSlot = new InventorySlot(
                 ItemUseType.ARMOR_FEET.getValue(),
-                new Image(PlayerHUD.itemsTextureAtlas.findRegion("inv_boot")));
+                new Image(Utility.ITEMS_TEXTUREATLAS.findRegion("inv_boot")));
 
         headSlot.addListener(new InventorySlotTooltipListener(_inventorySlotTooltip));
         leftArmSlot.addListener(new InventorySlotTooltipListener(_inventorySlotTooltip));
@@ -89,7 +87,7 @@ public class InventoryUI extends Window {
         _dragAndDrop.addTarget(new InventorySlotTarget(rightArmSlot));
         _dragAndDrop.addTarget(new InventorySlotTarget(legsSlot));
 
-        _playerSlotsTable.setBackground(new Image(new NinePatch(textureAtlas.createPatch("dialog"))).getDrawable());
+        _playerSlotsTable.setBackground(new Image(new NinePatch(Utility.STATUSUI_TEXTUREATLAS.createPatch("dialog"))).getDrawable());
 
         //layout
         for(int i = 1; i <= _numSlots; i++){

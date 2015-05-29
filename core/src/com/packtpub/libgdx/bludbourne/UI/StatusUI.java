@@ -1,13 +1,12 @@
 package com.packtpub.libgdx.bludbourne.UI;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.packtpub.libgdx.bludbourne.Utility;
 
 public class StatusUI extends Window {
     private Image _hpBar;
@@ -23,8 +22,8 @@ public class StatusUI extends Window {
     private int _mpVal = 50;
     private int _xpVal = 0;
 
-    public StatusUI(Skin skin, TextureAtlas textureAtlas){
-        super("stats", skin);
+    public StatusUI(){
+        super("stats", Utility.STATUSUI_SKIN);
 
         //groups
         WidgetGroup group = new WidgetGroup();
@@ -32,27 +31,27 @@ public class StatusUI extends Window {
         WidgetGroup group3 = new WidgetGroup();
 
         //images
-        _hpBar = new Image(textureAtlas.findRegion("HP_Bar"));
-        Image bar = new Image(textureAtlas.findRegion("Bar"));
-        _mpBar = new Image(textureAtlas.findRegion("MP_Bar"));
-        Image bar2 = new Image(textureAtlas.findRegion("Bar"));
-        _xpBar = new Image(textureAtlas.findRegion("XP_Bar"));
-        Image bar3 = new Image(textureAtlas.findRegion("Bar"));
+        _hpBar = new Image(Utility.STATUSUI_TEXTUREATLAS.findRegion("HP_Bar"));
+        Image bar = new Image(Utility.STATUSUI_TEXTUREATLAS.findRegion("Bar"));
+        _mpBar = new Image(Utility.STATUSUI_TEXTUREATLAS.findRegion("MP_Bar"));
+        Image bar2 = new Image(Utility.STATUSUI_TEXTUREATLAS.findRegion("Bar"));
+        _xpBar = new Image(Utility.STATUSUI_TEXTUREATLAS.findRegion("XP_Bar"));
+        Image bar3 = new Image(Utility.STATUSUI_TEXTUREATLAS.findRegion("Bar"));
 
         //labels
-        Label hpLabel = new Label(" hp:", skin);
-        Label hp = new Label(String.valueOf(_hpVal), skin);
-        Label mpLabel = new Label(" mp:", skin);
-        Label mp = new Label(String.valueOf(_mpVal), skin);
-        Label xpLabel = new Label(" xp:", skin);
-        Label xp = new Label(String.valueOf(_xpVal), skin);
-        Label levelLabel = new Label(" lv:", skin);
-        Label levelVal = new Label(String.valueOf(_levelVal), skin);
-        Label goldLabel = new Label(" gp:", skin);
-        Label goldVal = new Label(String.valueOf(_goldVal), skin);
+        Label hpLabel = new Label(" hp:", Utility.STATUSUI_SKIN);
+        Label hp = new Label(String.valueOf(_hpVal), Utility.STATUSUI_SKIN);
+        Label mpLabel = new Label(" mp:", Utility.STATUSUI_SKIN);
+        Label mp = new Label(String.valueOf(_mpVal), Utility.STATUSUI_SKIN);
+        Label xpLabel = new Label(" xp:", Utility.STATUSUI_SKIN);
+        Label xp = new Label(String.valueOf(_xpVal), Utility.STATUSUI_SKIN);
+        Label levelLabel = new Label(" lv:", Utility.STATUSUI_SKIN);
+        Label levelVal = new Label(String.valueOf(_levelVal), Utility.STATUSUI_SKIN);
+        Label goldLabel = new Label(" gp:", Utility.STATUSUI_SKIN);
+        Label goldVal = new Label(String.valueOf(_goldVal), Utility.STATUSUI_SKIN);
 
         //buttons
-        _inventoryButton= new ImageButton(skin, "inventory-button");
+        _inventoryButton= new ImageButton(Utility.STATUSUI_SKIN, "inventory-button");
         _inventoryButton.getImageCell().size(32, 32);
 
         //Align images

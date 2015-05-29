@@ -2,9 +2,11 @@ package com.packtpub.libgdx.bludbourne.profile;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.ObjectMap;
 
+import java.util.Enumeration;
 import java.util.Hashtable;
 
 public class ProfileManager extends ProfileSubject {
@@ -32,6 +34,21 @@ public class ProfileManager extends ProfileSubject {
         return _profileManager;
     }
 
+    public Array<String> getProfileList(){
+        Array<String> profiles = new Array<String>();
+        for (Enumeration<String> e = _profiles.keys(); e.hasMoreElements();){
+            profiles.add(e.nextElement());
+        }
+        return profiles;
+    }
+
+    public FileHandle getProfileFile(String profile){
+        if( !doesProfileExist(profile) ){
+            return null;
+        }
+        return _profiles.get(profile);
+    }
+
     public void storeAllProfiles(){
         if( Gdx.files.isLocalStorageAvailable() ){
             FileHandle[] files = Gdx.files.local(".").list(SAVEGAME_SUFFIX);
@@ -43,6 +60,10 @@ public class ProfileManager extends ProfileSubject {
             //TODO: try external directory here
             return;
         }
+    }
+
+    public boolean doesProfileExist(String profileName){
+        return _profiles.containsKey(profileName);
     }
 
     public void writeProfileToStorage(String profileName, String fileData, boolean overwrite){
@@ -84,8 +105,8 @@ public class ProfileManager extends ProfileSubject {
         writeProfileToStorage(_profileName, text, true);
     }
 
-    public void loadProfile(String profileName){
-        String fullProfileFileName = profileName+SAVEGAME_SUFFIX;
+    public void loadProfile(){
+        String fullProfileFileName = _profileName+SAVEGAME_SUFFIX;
         boolean doesProfileFileExist = Gdx.files.internal(fullProfileFileName).exists();
 
         if( !doesProfileFileExist ){
@@ -93,10 +114,16 @@ public class ProfileManager extends ProfileSubject {
             return;
         }
 
-        _profileName = profileName;
-        _profiles.put(profileName, Gdx.files.internal(fullProfileFileName));
-        _profileProperties = _json.fromJson(ObjectMap.class, _profiles.get(profileName));
+        _profileProperties = _json.fromJson(ObjectMap.class, _profiles.get(_profileName));
         notify(this, ProfileObserver.ProfileEvent.PROFILE_LOADED);
+    }
+
+    public void setCurrentProfile(String profileName){
+        if( doesProfileExist(profileName) ){
+            _profileName = profileName;
+        }else{
+            _profileName = DEFAULT_PROFILE;
+        }
     }
 
 }

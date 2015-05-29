@@ -1,4 +1,12 @@
 {
+	"com.badlogic.gdx.graphics.Color": {
+		green: { a: 1, b: 0, g: 1, r: 0 },
+		white: { a: 1, b: 1, g: 1, r: 1 },
+		red: { a: 1, b: 0, g: 0, r: 1 },
+		black: { a: 1, b: 0, g: 0, r: 0 },
+		grey: { a: 1, b: 0.5, g: 0.5, r: 0.5 },
+		cyan: {  a: 1, b: 1, g: 0.9, r: 0.72 }
+	},
     "com.badlogic.gdx.graphics.g2d.BitmapFont": {
         "default-font": { "file": "fonts/SDS_6x6.fnt" },
 		"small-font" : { "file" : "fonts/SDS_6x6_small.fnt" },
@@ -13,5 +21,18 @@
 	},
 	"com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle": {
 		"inventory-button": { "imageUp": "inventory_button_closed", "imageChecked": "inventory_button_open" }
+	},
+	"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
+		default: { down: default-round-down, up: default-round, font: default-font, fontColor: white },
+		toggle: { down: default-round-down, up: default-round, checked: default-round-down, font: default-font, fontColor: white, downFontColor: red },
+		inventory: { down: default-round-down, up: default-round, font: default-font, fontColor: white, disabledFontColor: grey }
+	},
+	"com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle": {
+		default: { fontColorUnselected: white, selection: default-rect-pad, fontColorSelected: white, font: default-font },
+		inventory: { fontColorUnselected: white, selection: default-rect-pad, fontColorSelected: white, font: default-font },
+	},
+	"com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle": {
+		default: { selection: selection, background: textfield, font: default-font, fontColor: white, cursor: cursor },
+		inventory: { selection: selection, background: textfield, font: default-font, fontColor: white, cursor: cursor }
 	},
 }
