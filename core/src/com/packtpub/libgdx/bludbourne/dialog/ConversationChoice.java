@@ -7,7 +7,7 @@ public class ConversationChoice {
     private String choicePhrase = "";
 
     public ConversationChoice(){
-        
+
     }
 
     public int getSourceId() {

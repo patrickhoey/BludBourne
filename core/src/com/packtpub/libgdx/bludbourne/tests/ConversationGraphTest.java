@@ -67,6 +67,7 @@ public class ConversationGraphTest {
 
         System.out.println(_graph.toString());
         System.out.println(_graph.displayCurrentConversation());
+        System.out.println(_graph.toJson());
 
         while( !_input.equalsIgnoreCase(quit) ){
             Conversation conversation = getNextChoice();

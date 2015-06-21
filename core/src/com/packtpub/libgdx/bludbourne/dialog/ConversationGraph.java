@@ -1,57 +1,57 @@
 package com.packtpub.libgdx.bludbourne.dialog;
 
+import com.badlogic.gdx.utils.Json;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Set;
 
 public class ConversationGraph {
-    private int _numChoices = 0;
-    private Hashtable<Integer, Conversation> _conversations;
-    private Hashtable<Integer, ArrayList<ConversationChoice>> _associatedChoices;
-    private Conversation _currentConversation = null;
+    private Hashtable<Integer, Conversation> conversations;
+    private Hashtable<Integer, ArrayList<ConversationChoice>> associatedChoices;
+    private int currentConversationID = 0;
 
     public ConversationGraph(Hashtable<Integer, Conversation> conversations, int rootID){
         if( conversations.size() < 0 ){
             throw new IllegalArgumentException("Can't have a negative amount of conversations");
         }
 
-        this._conversations = conversations;
-        this._currentConversation = getConversationByID(rootID);
-        this._numChoices = 0;
-        this._associatedChoices = new Hashtable(_conversations.size());
+        this.conversations = conversations;
+        this.currentConversationID = rootID;
+        this.associatedChoices = new Hashtable(conversations.size());
 
-        for( Conversation conversation: _conversations.values() ){
-            _associatedChoices.put(conversation.getId(), new ArrayList<ConversationChoice>());
+        for( Conversation conversation: conversations.values() ){
+            associatedChoices.put(conversation.getId(), new ArrayList<ConversationChoice>());
        }
     }
 
     public ArrayList<ConversationChoice> getCurrentChoices(){
-        return _associatedChoices.get(_currentConversation.getId());
+        return associatedChoices.get(currentConversationID);
     }
 
     public void setCurrentConversation(int id){
         Conversation conversation = getConversationByID(id);
         if( conversation == null ) return;
         //Can we reach the new conversation from the current one?
-        if( isReachable(_currentConversation.getId(), id) ){
-            _currentConversation = conversation;
+        if( isReachable(currentConversationID, id) ){
+            currentConversationID = id;
         }else{
             System.out.println("New conversation node is not reachable from current node!");
         }
     }
 
     public boolean isValid(int conversationID){
-        Conversation conversation = _conversations.get(conversationID);
+        Conversation conversation = conversations.get(conversationID);
         if( conversation == null ) return false;
         return true;
     }
 
     public boolean isReachable(int sourceID, int sinkID){
         if( !isValid(sourceID) || !isValid(sinkID) ) return false;
-        if( _conversations.get(sourceID) == null ) return false;
+        if( conversations.get(sourceID) == null ) return false;
 
         //First get edges/choices from the source
-        ArrayList<ConversationChoice> list = _associatedChoices.get(sourceID);
+        ArrayList<ConversationChoice> list = associatedChoices.get(sourceID);
         for(ConversationChoice choice: list){
             if(     choice.getSourceId() == sourceID &&
                     choice.getDestinationId() == sinkID ){
@@ -66,60 +66,47 @@ public class ConversationGraph {
             System.out.println("Id " + id + " is not valid!");
             return null;
         }
-        return _conversations.get(id);
-    }
-
-    public String getDestinationChoicePhraseByID(int id){
-        if( isReachable(_currentConversation.getId(), id) ){
-            ArrayList<ConversationChoice> list = _associatedChoices.get(_currentConversation.getId());
-            for(ConversationChoice choice: list){
-                if( choice.getDestinationId() == id ){
-                    return choice.getChoicePhrase();
-                }
-            }
-        }
-        return "";
+        return conversations.get(id);
     }
 
     public String displayCurrentConversation(){
-        return _currentConversation.getDialog();
-    }
-
-    public int getNumConversations() {
-        return _conversations.size();
-    }
-
-    public int getNumChoices() {
-        return _numChoices;
+        return conversations.get(currentConversationID).getDialog();
     }
 
     public void addChoice(ConversationChoice conversationChoice){
 
-        ArrayList<ConversationChoice> list = _associatedChoices.get(conversationChoice.getSourceId());
+        ArrayList<ConversationChoice> list = associatedChoices.get(conversationChoice.getSourceId());
         if( list == null) return;
 
         list.add(conversationChoice);
-        _numChoices++;
     }
 
 
     public String toString(){
         StringBuilder outputString = new StringBuilder();
-        outputString.append("Number conversations: " + _conversations.size() + ", Number of choices:" + _numChoices);
-        outputString.append(System.getProperty("line.separator"));
+        int numberTotalChoices = 0;
 
-        Set<Integer> keys = _associatedChoices.keySet();
+        Set<Integer> keys = associatedChoices.keySet();
         for( Integer id: keys){
             outputString.append(String.format("[%d]: ", id));
 
-            for( ConversationChoice choice: _associatedChoices.get(id)){
+            for( ConversationChoice choice: associatedChoices.get(id)){
+                numberTotalChoices++;
                 outputString.append(String.format("%d ", choice.getDestinationId()));
             }
 
             outputString.append(System.getProperty("line.separator"));
         }
 
+        outputString.append("Number conversations: " + conversations.size() + ", Number of choices:" + numberTotalChoices);
+        outputString.append(System.getProperty("line.separator"));
+
         return outputString.toString();
+    }
+
+    public String toJson(){
+        Json json = new Json();
+        return json.prettyPrint(this);
     }
 
 
