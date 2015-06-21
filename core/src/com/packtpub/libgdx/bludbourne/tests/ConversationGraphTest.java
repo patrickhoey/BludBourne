@@ -41,12 +41,12 @@ public class ConversationGraphTest {
         _conversations.put(yesAnswer.getId(), yesAnswer);
         _conversations.put(unconnectedTest.getId(), unconnectedTest);
 
-        _graph = new ConversationGraph(_conversations, start);
+        _graph = new ConversationGraph(_conversations, start.getId());
 
-        _graph.addChoice(start, yesAnswer);
-        _graph.addChoice(start, noAnswer);
-        _graph.addChoice(noAnswer, start);
-        _graph.addChoice(yesAnswer, start);
+        _graph.addChoice(start.getId(), yesAnswer.getId());
+        _graph.addChoice(start.getId(), noAnswer.getId());
+        _graph.addChoice(noAnswer.getId(), start.getId());
+        _graph.addChoice(yesAnswer.getId(), start.getId());
 
         System.out.println(_graph.toString());
         System.out.println(_graph.displayCurrentConversation());
@@ -54,15 +54,17 @@ public class ConversationGraphTest {
         while( !_input.equalsIgnoreCase(quit) ){
             Conversation conversation = getNextChoice();
             if( conversation == null ) continue;
-            _graph.setCurrentConversation(conversation);
+            _graph.setCurrentConversation(conversation.getId());
             System.out.println(_graph.displayCurrentConversation());
         }
     }
 
     public static Conversation getNextChoice(){
-        ArrayList<Conversation> choices = _graph.getCurrentChoices();
-        for(Conversation conversation: choices){
-            System.out.println(conversation.getId() + " " + conversation.getChoicePhrase());
+        ArrayList<Integer> choices = _graph.getCurrentChoices();
+        for(Integer id: choices){
+            Conversation conversation = _graph.getConversationByID(id);
+            if( conversation == null ) continue;
+            System.out.println(id + " " + conversation.getChoicePhrase());
         }
         _input = System.console().readLine();
 

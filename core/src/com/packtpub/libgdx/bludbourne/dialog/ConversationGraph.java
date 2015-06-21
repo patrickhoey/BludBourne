@@ -7,50 +7,53 @@ import java.util.Set;
 public class ConversationGraph {
     private int _numChoices = 0;
     private Hashtable<Integer, Conversation> _conversations;
-    private Hashtable<Conversation, ArrayList<Conversation>> _associatedChoices;
+    private Hashtable<Integer, ArrayList<Integer>> _associatedChoices;
     private Conversation _currentConversation = null;
 
-    public ConversationGraph(Hashtable<Integer, Conversation> conversations, Conversation root){
+    public ConversationGraph(Hashtable<Integer, Conversation> conversations, int rootID){
         if( conversations.size() < 0 ){
             throw new IllegalArgumentException("Can't have a negative amount of conversations");
         }
 
         this._conversations = conversations;
-        this._currentConversation = root;
+        this._currentConversation = getConversationByID(rootID);
         this._numChoices = 0;
         this._associatedChoices = new Hashtable(_conversations.size());
 
         for( Conversation conversation: _conversations.values() ){
-            _associatedChoices.put(conversation, new ArrayList<Conversation>());
+            _associatedChoices.put(conversation.getId(), new ArrayList<Integer>());
        }
     }
 
-    public ArrayList<Conversation> getCurrentChoices(){
-        return _associatedChoices.get(_currentConversation);
+    public ArrayList<Integer> getCurrentChoices(){
+        return _associatedChoices.get(_currentConversation.getId());
     }
 
-    public void setCurrentConversation(Conversation conversation){
-        if( conversation == null || _associatedChoices.get(conversation) == null ) return;
+    public void setCurrentConversation(int id){
+        Conversation conversation = getConversationByID(id);
+        if( conversation == null ) return;
         //Can we reach the new conversation from the current one?
-        if( isReachable(_currentConversation, conversation) ){
+        if( isReachable(_currentConversation.getId(), id) ){
             _currentConversation = conversation;
         }else{
             System.out.println("New conversation node is not reachable from current node!");
         }
     }
 
-    public boolean isValid(Conversation conversation){
-        if( conversation == null || _conversations.get(conversation.getId()) == null ) return false;
+    public boolean isValid(int conversationID){
+        Conversation conversation = _conversations.get(conversationID);
+        if( conversation == null ) return false;
         return true;
     }
 
-    public boolean isReachable(Conversation source, Conversation sink){
-        if( !isValid(source) || !isValid(sink) ) return false;
+    public boolean isReachable(int sourceID, int sinkID){
+        if( !isValid(sourceID) || !isValid(sinkID) ) return false;
+        if( _conversations.get(sourceID) == null ) return false;
 
         //First get edges/choices from the source
-        ArrayList<Conversation> list = _associatedChoices.get(source);
-        for(Conversation conversation: list){
-            if( conversation.getId() == sink.getId() ){
+        ArrayList<Integer> list = _associatedChoices.get(sourceID);
+        for(Integer id: list){
+            if( id == sinkID ){
                 return true;
             }
         }
@@ -58,6 +61,10 @@ public class ConversationGraph {
     }
 
     public Conversation getConversationByID(int id){
+        if( !isValid(id) ){
+            System.out.println("Id " + id + " is not valid!");
+            return null;
+        }
         return _conversations.get(id);
     }
 
@@ -73,11 +80,12 @@ public class ConversationGraph {
         return _numChoices;
     }
 
-    public void addChoice(Conversation sourceConversation, Conversation targetConversation){
-        ArrayList<Conversation> list = _associatedChoices.get(sourceConversation);
+    public void addChoice(int sourceConversationID, int targetConversationID){
+
+        ArrayList<Integer> list = _associatedChoices.get(sourceConversationID);
         if( list == null) return;
 
-        list.add(targetConversation);
+        list.add(targetConversationID);
         _numChoices++;
     }
 
@@ -87,12 +95,12 @@ public class ConversationGraph {
         outputString.append("Number conversations: " + _conversations.size() + ", Number of choices:" + _numChoices);
         outputString.append(System.getProperty("line.separator"));
 
-        Set<Conversation> keys = _associatedChoices.keySet();
-        for( Conversation conversation: keys){
-            outputString.append(String.format("[%d]: ", conversation.getId()));
+        Set<Integer> keys = _associatedChoices.keySet();
+        for( Integer id: keys){
+            outputString.append(String.format("[%d]: ", id));
 
-            for( Conversation choices: _associatedChoices.get(conversation)){
-                outputString.append(String.format("%d ", choices.getId()));
+            for( Integer choiceID: _associatedChoices.get(id)){
+                outputString.append(String.format("%d ", choiceID));
             }
 
             outputString.append(System.getProperty("line.separator"));
