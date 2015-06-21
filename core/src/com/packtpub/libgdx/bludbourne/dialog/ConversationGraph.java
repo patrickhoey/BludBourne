@@ -7,7 +7,7 @@ import java.util.Set;
 public class ConversationGraph {
     private int _numChoices = 0;
     private Hashtable<Integer, Conversation> _conversations;
-    private Hashtable<Integer, ArrayList<Integer>> _associatedChoices;
+    private Hashtable<Integer, ArrayList<ConversationChoice>> _associatedChoices;
     private Conversation _currentConversation = null;
 
     public ConversationGraph(Hashtable<Integer, Conversation> conversations, int rootID){
@@ -21,11 +21,11 @@ public class ConversationGraph {
         this._associatedChoices = new Hashtable(_conversations.size());
 
         for( Conversation conversation: _conversations.values() ){
-            _associatedChoices.put(conversation.getId(), new ArrayList<Integer>());
+            _associatedChoices.put(conversation.getId(), new ArrayList<ConversationChoice>());
        }
     }
 
-    public ArrayList<Integer> getCurrentChoices(){
+    public ArrayList<ConversationChoice> getCurrentChoices(){
         return _associatedChoices.get(_currentConversation.getId());
     }
 
@@ -51,9 +51,10 @@ public class ConversationGraph {
         if( _conversations.get(sourceID) == null ) return false;
 
         //First get edges/choices from the source
-        ArrayList<Integer> list = _associatedChoices.get(sourceID);
-        for(Integer id: list){
-            if( id == sinkID ){
+        ArrayList<ConversationChoice> list = _associatedChoices.get(sourceID);
+        for(ConversationChoice choice: list){
+            if(     choice.getSourceId() == sourceID &&
+                    choice.getDestinationId() == sinkID ){
                 return true;
             }
         }
@@ -68,6 +69,18 @@ public class ConversationGraph {
         return _conversations.get(id);
     }
 
+    public String getDestinationChoicePhraseByID(int id){
+        if( isReachable(_currentConversation.getId(), id) ){
+            ArrayList<ConversationChoice> list = _associatedChoices.get(_currentConversation.getId());
+            for(ConversationChoice choice: list){
+                if( choice.getDestinationId() == id ){
+                    return choice.getChoicePhrase();
+                }
+            }
+        }
+        return "";
+    }
+
     public String displayCurrentConversation(){
         return _currentConversation.getDialog();
     }
@@ -80,12 +93,12 @@ public class ConversationGraph {
         return _numChoices;
     }
 
-    public void addChoice(int sourceConversationID, int targetConversationID){
+    public void addChoice(ConversationChoice conversationChoice){
 
-        ArrayList<Integer> list = _associatedChoices.get(sourceConversationID);
+        ArrayList<ConversationChoice> list = _associatedChoices.get(conversationChoice.getSourceId());
         if( list == null) return;
 
-        list.add(targetConversationID);
+        list.add(conversationChoice);
         _numChoices++;
     }
 
@@ -99,8 +112,8 @@ public class ConversationGraph {
         for( Integer id: keys){
             outputString.append(String.format("[%d]: ", id));
 
-            for( Integer choiceID: _associatedChoices.get(id)){
-                outputString.append(String.format("%d ", choiceID));
+            for( ConversationChoice choice: _associatedChoices.get(id)){
+                outputString.append(String.format("%d ", choice.getDestinationId()));
             }
 
             outputString.append(System.getProperty("line.separator"));
