@@ -2,6 +2,7 @@
 entityID : TOWN_GUARD
 state : IDLE
 direction : DOWN
+conversationConfigPath : ""
 animationConfig: [
 	{
 	    frameDuration: 0.25

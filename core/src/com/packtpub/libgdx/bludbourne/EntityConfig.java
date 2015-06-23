@@ -12,10 +12,19 @@ public class EntityConfig {
     Entity.State state = Entity.State.IDLE;
     Entity.Direction direction = Entity.Direction.DOWN;
     String entityID;
+    String conversationConfigPath;
 
     EntityConfig(){
         animationConfig = new Array<AnimationConfig>();
         inventory = new Array<ItemTypeID>();
+    }
+
+    public String getConversationConfigPath() {
+        return conversationConfigPath;
+    }
+
+    public void setConversationConfigPath(String conversationConfigPath) {
+        this.conversationConfigPath = conversationConfigPath;
     }
 
     public String getEntityID() {

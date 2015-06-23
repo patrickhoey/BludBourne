@@ -8,20 +8,28 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.packtpub.libgdx.bludbourne.Entity;
+import com.packtpub.libgdx.bludbourne.EntityConfig;
 import com.packtpub.libgdx.bludbourne.InventoryItem.ItemTypeID;
 import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 import com.packtpub.libgdx.bludbourne.profile.ProfileObserver;
 
-public class PlayerHUD implements Screen, ProfileObserver {
+public class PlayerHUD implements Screen, ProfileObserver,UIObserver {
+    private static final String TAG = PlayerHUD.class.getSimpleName();
+
     private Stage _stage;
     private Viewport _viewport;
-    private StatusUI _statusUI;
-    private InventoryUI _inventoryUI;
     private Camera _camera;
     private Entity _player;
+
+    private StatusUI _statusUI;
+    private InventoryUI _inventoryUI;
+    private ConversationUI _conversationUI;
+
+    private Json _json;
 
     public PlayerHUD(Camera camera, Entity player) {
         _camera = camera;
@@ -30,6 +38,8 @@ public class PlayerHUD implements Screen, ProfileObserver {
         _stage = new Stage(_viewport);
         //_stage.setDebugAll(true);
 
+        _json = new Json();
+
         _statusUI = new StatusUI();
         _statusUI.setVisible(true);
         _statusUI.setPosition(0, 0);
@@ -37,10 +47,16 @@ public class PlayerHUD implements Screen, ProfileObserver {
         _inventoryUI = new InventoryUI();
         _inventoryUI.setMovable(false);
         _inventoryUI.setVisible(false);
-        _inventoryUI.setPosition(_stage.getWidth()/2, 0);
+        _inventoryUI.setPosition(_stage.getWidth() / 2, 0);
+
+        _conversationUI = new ConversationUI();
+        _conversationUI.setMovable(false);
+        _conversationUI.setVisible(false);
+        _conversationUI.setPosition(_stage.getWidth() / 2, _stage.getHeight() / 2);
 
         _stage.addActor(_statusUI);
         _stage.addActor(_inventoryUI);
+        _stage.addActor(_conversationUI);
 
         //add tooltips to the stage
         Array<Actor> actors = _inventoryUI.getInventoryActors();
@@ -93,6 +109,30 @@ public class PlayerHUD implements Screen, ProfileObserver {
     }
 
     @Override
+    public void onNotify(String value, UIEvent event) {
+        switch(event) {
+            case LOAD_CONVERSATION:
+                EntityConfig config = _json.fromJson(EntityConfig.class, value);
+                _conversationUI.loadConversation(config);
+                break;
+            case SHOW_CONVERSATION:
+                EntityConfig configShow = _json.fromJson(EntityConfig.class, value);
+                if( configShow.getEntityID().equalsIgnoreCase(_conversationUI.getCurrentEntityID())) {
+                    _conversationUI.setVisible(true);
+                }
+                break;
+            case HIDE_CONVERSATION:
+                EntityConfig configHide = _json.fromJson(EntityConfig.class, value);
+                if( configHide.getEntityID().equalsIgnoreCase(_conversationUI.getCurrentEntityID())) {
+                    _conversationUI.setVisible(false);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
     public void show() {
     }
 
@@ -126,5 +166,4 @@ public class PlayerHUD implements Screen, ProfileObserver {
     public void dispose() {
         _stage.dispose();
     }
-
 }

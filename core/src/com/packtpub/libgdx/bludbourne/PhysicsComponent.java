@@ -8,8 +8,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import com.packtpub.libgdx.bludbourne.UI.UISubject;
 
-public abstract class PhysicsComponent implements Component{
+public abstract class PhysicsComponent extends UISubject implements Component{
     private static final String TAG = PhysicsComponent.class.getSimpleName();
 
     public abstract void update(Entity entity, MapManager mapMgr, float delta);

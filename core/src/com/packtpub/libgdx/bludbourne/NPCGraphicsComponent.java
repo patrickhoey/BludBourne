@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.packtpub.libgdx.bludbourne.UI.UIObserver;
 
 public class NPCGraphicsComponent extends GraphicsComponent {
     private static final String TAG = NPCGraphicsComponent.class.getSimpleName();
@@ -34,7 +35,6 @@ public class NPCGraphicsComponent extends GraphicsComponent {
             }
         }
 
-        //Specifically for messages with 1 object payload
         if( string.length == 2 ) {
             if (string[0].equalsIgnoreCase(MESSAGE.CURRENT_POSITION.toString())) {
                 _currentPosition = _json.fromJson(Vector2.class, string[1]);
@@ -73,6 +73,9 @@ public class NPCGraphicsComponent extends GraphicsComponent {
 
         if( _isSelected ){
             drawSelected(entity, mapMgr);
+            notify(_json.toJson(entity.getEntityConfig()), UIObserver.UIEvent.SHOW_CONVERSATION);
+        }else{
+            notify(_json.toJson(entity.getEntityConfig()), UIObserver.UIEvent.HIDE_CONVERSATION);
         }
 
         batch.begin();

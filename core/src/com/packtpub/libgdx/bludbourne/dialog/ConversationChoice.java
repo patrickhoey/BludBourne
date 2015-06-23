@@ -2,27 +2,27 @@ package com.packtpub.libgdx.bludbourne.dialog;
 
 
 public class ConversationChoice {
-    private int sourceId = 0;
-    private int destinationId = 0;
-    private String choicePhrase = "";
+    private String sourceId;
+    private String destinationId;
+    private String choicePhrase;
 
     public ConversationChoice(){
 
     }
 
-    public int getSourceId() {
+    public String getSourceId() {
         return sourceId;
     }
 
-    public void setSourceId(int sourceId){
+    public void setSourceId(String sourceId){
         this.sourceId = sourceId;
     }
 
-    public int getDestinationId() {
+    public String getDestinationId() {
         return destinationId;
     }
 
-    public void setDestinationId(int destinationId){
+    public void setDestinationId(String destinationId){
         this.destinationId = destinationId;
     }
 
@@ -32,5 +32,9 @@ public class ConversationChoice {
 
     public void setChoicePhrase(String choicePhrase) {
         this.choicePhrase = choicePhrase;
+    }
+
+    public String toString(){
+        return choicePhrase;
     }
 }

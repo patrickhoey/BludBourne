@@ -3,6 +3,7 @@
 entityID : TOWN_FOLK1
 state : IMMOBILE
 direction : DOWN
+conversationConfigPath : ""
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -29,6 +30,7 @@ animationConfig: [
 entityID : TOWN_FOLK2
 state : IMMOBILE
 direction : DOWN
+conversationConfigPath : ""
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -55,6 +57,7 @@ animationConfig: [
 entityID : TOWN_FOLK3
 state : IMMOBILE
 direction : DOWN
+conversationConfigPath : ""
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -81,6 +84,7 @@ animationConfig: [
 entityID : TOWN_FOLK4
 state : IMMOBILE
 direction : DOWN
+conversationConfigPath : ""
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -107,6 +111,7 @@ animationConfig: [
 entityID : TOWN_FOLK5
 state : IMMOBILE
 direction : DOWN
+conversationConfigPath : ""
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -133,6 +138,7 @@ animationConfig: [
 entityID : TOWN_FOLK6
 state : IMMOBILE
 direction : DOWN
+conversationConfigPath : ""
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -159,6 +165,7 @@ animationConfig: [
 entityID : TOWN_FOLK7
 state : IMMOBILE
 direction : DOWN
+conversationConfigPath : ""
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -185,6 +192,7 @@ animationConfig: [
 entityID : TOWN_FOLK8
 state : IMMOBILE
 direction : DOWN
+conversationConfigPath : ""
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -211,6 +219,7 @@ animationConfig: [
 entityID : TOWN_FOLK9
 state : IMMOBILE
 direction : DOWN
+conversationConfigPath : ""
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -237,6 +246,7 @@ animationConfig: [
 entityID : TOWN_FOLK10
 state : IMMOBILE
 direction : DOWN
+conversationConfigPath : "conversations/testConversation001.json"
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -263,6 +273,7 @@ animationConfig: [
 entityID : TOWN_FOLK11
 state : IMMOBILE
 direction : DOWN
+conversationConfigPath : ""
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -289,6 +300,7 @@ animationConfig: [
 entityID : TOWN_FOLK12
 state : IMMOBILE
 direction : DOWN
+conversationConfigPath : ""
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -315,6 +327,7 @@ animationConfig: [
 entityID : TOWN_FOLK13
 state : IMMOBILE
 direction : DOWN
+conversationConfigPath : ""
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -341,6 +354,7 @@ animationConfig: [
 entityID : TOWN_FOLK14
 state : IMMOBILE
 direction : DOWN
+conversationConfigPath : ""
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -367,6 +381,7 @@ animationConfig: [
 entityID : TOWN_FOLK15
 state : IMMOBILE
 direction : DOWN
+conversationConfigPath : ""
 animationConfig: [
 	{
 	    frameDuration: 1.0

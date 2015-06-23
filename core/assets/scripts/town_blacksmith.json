@@ -2,6 +2,7 @@
 entityID : TOWN_BLACKSMITH
 state : IMMOBILE
 direction : DOWN
+conversationConfigPath : ""
 animationConfig: [
 	{
 	    frameDuration: 1.0

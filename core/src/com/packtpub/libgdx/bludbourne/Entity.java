@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
+import com.packtpub.libgdx.bludbourne.UI.UIObserver;
 
 import java.util.ArrayList;
 
@@ -99,6 +100,18 @@ public class Entity {
 		for(Component component: _components){
 			component.receiveMessage(fullMessage);
 		}
+	}
+
+	public void registerObserver(UIObserver observer){
+		_inputComponent.addObserver(observer);
+		_physicsComponent.addObserver(observer);
+		_graphicsComponent.addObserver(observer);
+	}
+
+	public void unregisterObservers(){
+		_inputComponent.removeAllObservers();
+		_physicsComponent.removeAllObservers();
+		_graphicsComponent.removeAllObservers();
 	}
 
 	public void update(MapManager mapMgr, Batch batch, float delta){

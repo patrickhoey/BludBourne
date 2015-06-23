@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 
 import com.packtpub.libgdx.bludbourne.BludBourne;
@@ -81,6 +82,8 @@ public class MainGameScreen implements Screen {
 
 		ProfileManager.getInstance().addObserver(_playerHUD);
 		ProfileManager.getInstance().addObserver(_mapMgr);
+
+		_player.registerObserver(_playerHUD);
 	}
 
 	@Override
@@ -116,6 +119,12 @@ public class MainGameScreen implements Screen {
 			_camera.position.set(_mapMgr.getPlayerStartUnitScaled().x, _mapMgr.getPlayerStartUnitScaled().y, 0f);
 			_camera.update();
 
+			//register observers
+			Array<Entity> entities = _mapMgr.getCurrentMapEntities();
+			for(Entity entity: entities){
+				entity.registerObserver(_playerHUD);
+			}
+
 			_mapMgr.setMapChanged(false);
 		}
 
@@ -148,6 +157,7 @@ public class MainGameScreen implements Screen {
 
 	@Override
 	public void dispose() {
+		_player.unregisterObservers();
 		_player.dispose();
 		_mapRenderer.dispose();
 	}

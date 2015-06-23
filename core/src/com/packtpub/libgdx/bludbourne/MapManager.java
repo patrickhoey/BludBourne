@@ -10,8 +10,6 @@ import com.badlogic.gdx.utils.Array;
 import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 import com.packtpub.libgdx.bludbourne.profile.ProfileObserver;
 
-import java.util.Vector;
-
 public class MapManager implements ProfileObserver {
     private static final String TAG = MapManager.class.getSimpleName();
 
@@ -69,6 +67,14 @@ public class MapManager implements ProfileObserver {
         if( map == null ){
             Gdx.app.debug(TAG, "Map does not exist!  ");
             return;
+        }
+
+        //Unregister observers
+        if( _currentMap != null ){
+            Array<Entity> entities = _currentMap.getMapEntities();
+            for(Entity entity: entities){
+                entity.unregisterObservers();
+            }
         }
 
         _currentMap = map;

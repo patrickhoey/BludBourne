@@ -2,6 +2,7 @@
 entityID : PLAYER
 state : IDLE
 direction : DOWN
+conversationConfigPath : ""
 inventory : [
 	{
 		value: ARMOR04
