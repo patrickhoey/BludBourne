@@ -2,11 +2,12 @@ package com.packtpub.libgdx.bludbourne.UI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Json;
 import com.packtpub.libgdx.bludbourne.EntityConfig;
 import com.packtpub.libgdx.bludbourne.Utility;
@@ -29,23 +30,22 @@ public class ConversationUI extends Window {
 
         _json = new Json();
         _graph = new ConversationGraph();
-        this.setFillParent(true);
 
         //create
         _dialogText = new Label("No Conversation", Utility.STATUSUI_SKIN);
         _dialogText.setWrap(true);
+        _dialogText.setAlignment(Align.center);
         _listItems = new List<ConversationChoice>(Utility.STATUSUI_SKIN);
 
         ScrollPane scrollPane = new ScrollPane(_listItems);
         scrollPane.setOverscroll(false, false);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(true, false);
-        scrollPane.setScrollbarsOnTop(true);
-        //_dialogTable.setBackground(new Image(new NinePatch(Utility.STATUSUI_TEXTUREATLAS.createPatch("dialog"))).getDrawable());
+        scrollPane.setScrollbarsOnTop(false);
 
         //layout
         this.defaults().expand().fill();
-        this.add(_dialogText).pad(10,10,10,10);
+        this.add(_dialogText).pad(10, 10, 10, 10);
         this.row();
         this.add(scrollPane);
 
@@ -53,15 +53,15 @@ public class ConversationUI extends Window {
         this.pack();
 
         //Listeners
-        scrollPane.addListener(new InputListener() {
-                                   @Override
-                                   public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                                       ConversationChoice choice = (ConversationChoice)_listItems.getSelected();
-                                       _graph.setCurrentConversation(choice.getDestinationId());
-                                       _dialogText.setText(_graph.getConversationByID(choice.getDestinationId()).getDialog());
-                                       _listItems.setItems(_graph.getCurrentChoices().toArray());
-                                       return true;
-                                   }
+        _listItems.addListener(new ClickListener() {
+            @Override
+            public void clicked (InputEvent event, float x, float y) {
+                ConversationChoice choice = (ConversationChoice)_listItems.getSelected();
+                _graph.setCurrentConversation(choice.getDestinationId());
+                _dialogText.setText(_graph.getConversationByID(choice.getDestinationId()).getDialog());
+                _listItems.setItems(_graph.getCurrentChoices().toArray());
+                _listItems.setSelectedIndex(-1);
+            }
                                }
         );
     }
@@ -88,8 +88,9 @@ public class ConversationUI extends Window {
         String id = _graph.getCurrentConversationID();
         Conversation conversation = _graph.getConversationByID(id);
         if( conversation == null ) return;
-        this._dialogText.setText(conversation.getDialog());
-        this._listItems.setItems(_graph.getCurrentChoices().toArray());
+        _dialogText.setText(conversation.getDialog());
+        _listItems.setItems(_graph.getCurrentChoices().toArray());
+        _listItems.setSelectedIndex(-1);
     }
 
 }

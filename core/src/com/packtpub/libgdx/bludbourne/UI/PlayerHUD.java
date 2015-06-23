@@ -50,9 +50,11 @@ public class PlayerHUD implements Screen, ProfileObserver,UIObserver {
         _inventoryUI.setPosition(_stage.getWidth() / 2, 0);
 
         _conversationUI = new ConversationUI();
-        _conversationUI.setMovable(false);
+        _conversationUI.setMovable(true);
         _conversationUI.setVisible(false);
-        _conversationUI.setPosition(_stage.getWidth() / 2, _stage.getHeight() / 2);
+        _conversationUI.setPosition(_stage.getWidth() / 2, 0);
+        _conversationUI.setWidth(_stage.getWidth()/2);
+        _conversationUI.setHeight(_stage.getHeight()/2);
 
         _stage.addActor(_statusUI);
         _stage.addActor(_inventoryUI);
