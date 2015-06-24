@@ -46,7 +46,10 @@ public class ConversationGraph {
         Conversation conversation = getConversationByID(id);
         if( conversation == null ) return;
         //Can we reach the new conversation from the current one?
-        if( isReachable(currentConversationID, id) ){
+
+        //Make sure we check case where the current node is checked against itself
+        if( currentConversationID.equalsIgnoreCase(id) ||
+                isReachable(currentConversationID, id) ){
             currentConversationID = id;
         }else{
             System.out.println("New conversation node [" + id +"] is not reachable from current node [" + currentConversationID + "]");
@@ -65,6 +68,7 @@ public class ConversationGraph {
 
         //First get edges/choices from the source
         ArrayList<ConversationChoice> list = associatedChoices.get(sourceID);
+        if( list == null ) return false;
         for(ConversationChoice choice: list){
             if(     choice.getSourceId().equalsIgnoreCase(sourceID) &&
                     choice.getDestinationId().equalsIgnoreCase(sinkID) ){

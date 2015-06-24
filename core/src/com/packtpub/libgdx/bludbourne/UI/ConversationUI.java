@@ -16,6 +16,8 @@ import com.packtpub.libgdx.bludbourne.dialog.Conversation;
 import com.packtpub.libgdx.bludbourne.dialog.ConversationChoice;
 import com.packtpub.libgdx.bludbourne.dialog.ConversationGraph;
 
+import java.util.ArrayList;
+
 public class ConversationUI extends Window {
     private static final String TAG = ConversationUI.class.getSimpleName();
 
@@ -67,10 +69,8 @@ public class ConversationUI extends Window {
             @Override
             public void clicked (InputEvent event, float x, float y) {
                 ConversationChoice choice = (ConversationChoice)_listItems.getSelected();
-                _graph.setCurrentConversation(choice.getDestinationId());
-                _dialogText.setText(_graph.getConversationByID(choice.getDestinationId()).getDialog());
-                _listItems.setItems(_graph.getCurrentChoices().toArray());
-                _listItems.setSelectedIndex(-1);
+                if( choice == null ) return;
+                populateConversationDialog(choice.getDestinationId());
             }
                                }
         );
@@ -83,10 +83,12 @@ public class ConversationUI extends Window {
     public void loadConversation(EntityConfig entityConfig){
         String fullFilenamePath = entityConfig.getConversationConfigPath();
         this.setTitle("");
+
+        _dialogText.setText("");
+        _listItems.clearItems();
+
         if( fullFilenamePath.isEmpty() || !Gdx.files.internal(fullFilenamePath).exists() ){
             Gdx.app.debug(TAG, "Conversation file does not exist!");
-            _dialogText.setText("");
-            _listItems.clearItems();
             return;
         }
 
@@ -99,11 +101,17 @@ public class ConversationUI extends Window {
 
     public void setConversationGraph(ConversationGraph graph){
         this._graph = graph;
-        String id = _graph.getCurrentConversationID();
-        Conversation conversation = _graph.getConversationByID(id);
+        populateConversationDialog(_graph.getCurrentConversationID());
+    }
+
+    private void populateConversationDialog(String conversationID){
+        Conversation conversation = _graph.getConversationByID(conversationID);
         if( conversation == null ) return;
+        _graph.setCurrentConversation(conversationID);
         _dialogText.setText(conversation.getDialog());
-        _listItems.setItems(_graph.getCurrentChoices().toArray());
+        ArrayList<ConversationChoice> choices =  _graph.getCurrentChoices();
+        if( choices == null ) return;
+        _listItems.setItems(choices.toArray());
         _listItems.setSelectedIndex(-1);
     }
 

@@ -246,7 +246,7 @@ animationConfig: [
 entityID : TOWN_FOLK10
 state : IMMOBILE
 direction : DOWN
-conversationConfigPath : "conversations/testConversation001.json"
+conversationConfigPath : "conversations/conversation001.json"
 animationConfig: [
 	{
 	    frameDuration: 1.0
