@@ -2,8 +2,6 @@ package com.packtpub.libgdx.bludbourne.UI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -48,7 +46,8 @@ public class ConversationUI extends Window {
         scrollPane.setOverscroll(false, false);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(true, false);
-        scrollPane.setScrollbarsOnTop(true);
+        scrollPane.setForceScroll(true, false);
+        scrollPane.setScrollBarPositions(false, true);
 
         //layout
         this.add();
@@ -58,7 +57,7 @@ public class ConversationUI extends Window {
         this.defaults().expand().fill();
         this.add(_dialogText).pad(10, 10, 10, 10);
         this.row();
-        this.add(scrollPane);
+        this.add(scrollPane).pad(10,10,10,10);
 
         //this.debug();
         this.pack();
@@ -83,6 +82,7 @@ public class ConversationUI extends Window {
 
     public void loadConversation(EntityConfig entityConfig){
         String fullFilenamePath = entityConfig.getConversationConfigPath();
+        this.setTitle("");
         if( fullFilenamePath.isEmpty() || !Gdx.files.internal(fullFilenamePath).exists() ){
             Gdx.app.debug(TAG, "Conversation file does not exist!");
             _dialogText.setText("");
@@ -91,6 +91,7 @@ public class ConversationUI extends Window {
         }
 
         _currentEntityID = entityConfig.getEntityID();
+        this.setTitle(entityConfig.getEntityID());
         Json json = new Json();
         ConversationGraph graph = json.fromJson(ConversationGraph.class, Gdx.files.internal(fullFilenamePath));
         setConversationGraph(graph);
