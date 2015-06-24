@@ -18,15 +18,12 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
     private Entity.State _state;
     private Vector3 _mouseSelectCoordinates;
     private boolean _isMouseSelectEnabled = false;
-    private Ray _selectionRay;
-    private float _selectRayMaximumDistance = 32.0f;
 
     public PlayerPhysicsComponent(){
         _boundingBoxLocation = BoundingBoxLocation.BOTTOM_CENTER;
         initBoundingBox(0.3f, 0.5f);
 
         _mouseSelectCoordinates = new Vector3(0,0,0);
-        _selectionRay = new Ray(new Vector3(), new Vector3());
     }
 
     @Override

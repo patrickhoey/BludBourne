@@ -3,6 +3,7 @@ package com.packtpub.libgdx.bludbourne.UI;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -72,6 +73,14 @@ public class PlayerHUD implements Screen, ProfileObserver,UIObserver {
                 _inventoryUI.setVisible(_inventoryUI.isVisible()?false:true);
             }
         });
+
+        _conversationUI._closeButton.addListener(new ClickListener() {
+                                                     @Override
+                                                     public void clicked (InputEvent event, float x, float y) {
+                                                         _conversationUI.setVisible(false);
+                                                     }
+                                                 }
+        );
     }
 
     public Stage getStage() {

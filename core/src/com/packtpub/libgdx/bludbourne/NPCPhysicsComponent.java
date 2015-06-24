@@ -40,6 +40,10 @@ public class NPCPhysicsComponent extends PhysicsComponent {
     public void update(Entity entity, MapManager mapMgr, float delta) {
         updateBoundingBoxPosition(_nextEntityPosition);
 
+        if( isEntityFarFromPlayer(mapMgr) ){
+            entity.sendMessage(MESSAGE.ENTITY_DESELECTED);
+        }
+
         if( _state == Entity.State.IMMOBILE ) return;
 
         if (    !isCollisionWithMapLayer(entity, mapMgr) &&
@@ -50,6 +54,18 @@ public class NPCPhysicsComponent extends PhysicsComponent {
             updateBoundingBoxPosition(_currentEntityPosition);
         }
         calculateNextPosition(delta);
+    }
+
+    private boolean isEntityFarFromPlayer(MapManager mapMgr){
+        //Check distance
+        _selectionRay.set(mapMgr.getPlayer().getCurrentBoundingBox().x, mapMgr.getPlayer().getCurrentBoundingBox().y, 0.0f, _boundingBox.x, _boundingBox.y, 0.0f);
+        float distance =  _selectionRay.origin.dst(_selectionRay.direction);
+
+        if( distance <= _selectRayMaximumDistance ){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     @Override

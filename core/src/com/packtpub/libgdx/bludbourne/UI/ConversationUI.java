@@ -2,9 +2,12 @@ package com.packtpub.libgdx.bludbourne.UI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -23,6 +26,8 @@ public class ConversationUI extends Window {
     private ConversationGraph _graph;
     private String _currentEntityID;
 
+    public TextButton _closeButton;
+
     private Json _json;
 
     public ConversationUI() {
@@ -37,6 +42,8 @@ public class ConversationUI extends Window {
         _dialogText.setAlignment(Align.center);
         _listItems = new List<ConversationChoice>(Utility.STATUSUI_SKIN);
 
+        _closeButton = new TextButton("X", Utility.STATUSUI_SKIN);
+
         ScrollPane scrollPane = new ScrollPane(_listItems);
         scrollPane.setOverscroll(false, false);
         scrollPane.setFadeScrollBars(false);
@@ -44,6 +51,10 @@ public class ConversationUI extends Window {
         scrollPane.setScrollbarsOnTop(false);
 
         //layout
+        this.add();
+        this.add(_closeButton);
+        this.row();
+
         this.defaults().expand().fill();
         this.add(_dialogText).pad(10, 10, 10, 10);
         this.row();
@@ -71,14 +82,16 @@ public class ConversationUI extends Window {
     }
 
     public void loadConversation(EntityConfig entityConfig){
-        Json json = new Json();
         String fullFilenamePath = entityConfig.getConversationConfigPath();
-        _currentEntityID = entityConfig.getEntityID();
         if( fullFilenamePath.isEmpty() || !Gdx.files.internal(fullFilenamePath).exists() ){
             Gdx.app.debug(TAG, "Conversation file does not exist!");
+            _dialogText.setText("");
+            _listItems.clearItems();
             return;
         }
 
+        _currentEntityID = entityConfig.getEntityID();
+        Json json = new Json();
         ConversationGraph graph = json.fromJson(ConversationGraph.class, Gdx.files.internal(fullFilenamePath));
         setConversationGraph(graph);
     }

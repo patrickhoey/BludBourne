@@ -16,6 +16,10 @@ public class NPCGraphicsComponent extends GraphicsComponent {
     private static final String TAG = NPCGraphicsComponent.class.getSimpleName();
 
     private boolean _isSelected = false;
+    private boolean _wasSelected = false;
+
+    private boolean _sentShowConversationMessage = false;
+    private boolean _sentHideCoversationMessage = false;
 
     public NPCGraphicsComponent(){
     }
@@ -29,8 +33,13 @@ public class NPCGraphicsComponent extends GraphicsComponent {
 
         if( string.length == 1 ) {
             if (string[0].equalsIgnoreCase(MESSAGE.ENTITY_SELECTED.toString())) {
-                _isSelected = true;
+                if( _wasSelected ){
+                    _isSelected = false;
+                }else{
+                    _isSelected = true;
+                }
             }else if (string[0].equalsIgnoreCase(MESSAGE.ENTITY_DESELECTED.toString())) {
+                _wasSelected = _isSelected;
                 _isSelected = false;
             }
         }
@@ -73,9 +82,17 @@ public class NPCGraphicsComponent extends GraphicsComponent {
 
         if( _isSelected ){
             drawSelected(entity, mapMgr);
-            notify(_json.toJson(entity.getEntityConfig()), UIObserver.UIEvent.SHOW_CONVERSATION);
+            if( _sentShowConversationMessage == false){
+                notify(_json.toJson(entity.getEntityConfig()), UIObserver.UIEvent.SHOW_CONVERSATION);
+                _sentShowConversationMessage = true;
+                _sentHideCoversationMessage = false;
+            }
         }else{
-            notify(_json.toJson(entity.getEntityConfig()), UIObserver.UIEvent.HIDE_CONVERSATION);
+            if( _sentHideCoversationMessage == false ){
+                notify(_json.toJson(entity.getEntityConfig()), UIObserver.UIEvent.HIDE_CONVERSATION);
+                _sentHideCoversationMessage = true;
+                _sentShowConversationMessage = false;
+            }
         }
 
         batch.begin();

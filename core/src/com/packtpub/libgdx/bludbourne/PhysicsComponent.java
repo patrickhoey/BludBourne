@@ -6,6 +6,8 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.packtpub.libgdx.bludbourne.UI.UISubject;
@@ -24,6 +26,9 @@ public abstract class PhysicsComponent extends UISubject implements Component{
     public Rectangle _boundingBox;
     protected BoundingBoxLocation _boundingBoxLocation;
 
+    protected Ray _selectionRay;
+    protected final float _selectRayMaximumDistance = 32.0f;
+
     public static enum BoundingBoxLocation{
         BOTTOM_LEFT,
         BOTTOM_CENTER,
@@ -37,6 +42,7 @@ public abstract class PhysicsComponent extends UISubject implements Component{
         this._boundingBox = new Rectangle();
         this._json = new Json();
         _boundingBoxLocation = BoundingBoxLocation.BOTTOM_LEFT;
+        _selectionRay = new Ray(new Vector3(), new Vector3());
     }
 
     protected boolean isCollisionWithMapEntities(Entity entity, MapManager mapMgr){
