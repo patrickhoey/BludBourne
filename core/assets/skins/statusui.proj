@@ -1,6 +1,6 @@
 name=statusui
 filename=statusui.atlas
-input=..\..\..\..\..\work\statusui_sprites
+input=..\..\..\..\..\work\sprites
 output=
 
 alias=true

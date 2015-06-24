@@ -44,11 +44,11 @@ public class ConversationUI extends Window {
 
         _closeButton = new TextButton("X", Utility.STATUSUI_SKIN);
 
-        ScrollPane scrollPane = new ScrollPane(_listItems);
+        ScrollPane scrollPane = new ScrollPane(_listItems, Utility.STATUSUI_SKIN, "inventoryPane");
         scrollPane.setOverscroll(false, false);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(true, false);
-        scrollPane.setScrollbarsOnTop(false);
+        scrollPane.setScrollbarsOnTop(true);
 
         //layout
         this.add();

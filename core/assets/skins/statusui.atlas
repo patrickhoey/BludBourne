@@ -62,23 +62,25 @@ dialogDim
   orig: 36, 36
   offset: 0, 0
   index: -1
-inventory_button_closed
+default-round-large
   rotate: false
-  xy: 197, 9
-  size: 16, 16
-  orig: 16, 16
+  xy: 197, 5
+  size: 20, 20
+  split: 9, 10, 9, 10
+  orig: 20, 20
   offset: 0, 0
   index: -1
-inventory_button_open
+default-scroll
   rotate: false
-  xy: 215, 9
-  size: 16, 16
-  orig: 16, 16
+  xy: 219, 5
+  size: 20, 20
+  split: 9, 10, 9, 10
+  orig: 20, 20
   offset: 0, 0
   index: -1
 default-round-down
   rotate: false
-  xy: 331, 18
+  xy: 241, 5
   size: 12, 20
   split: 6, 5, 8, 11
   orig: 12, 20
@@ -86,15 +88,29 @@ default-round-down
   index: -1
 default-round
   rotate: false
-  xy: 233, 5
+  xy: 255, 5
   size: 12, 20
   split: 5, 6, 8, 11
   orig: 12, 20
   offset: 0, 0
   index: -1
+inventory_button_closed
+  rotate: false
+  xy: 269, 9
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+inventory_button_open
+  rotate: false
+  xy: 331, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 textfield
   rotate: false
-  xy: 247, 11
+  xy: 331, 6
   size: 14, 14
   split: 7, 6, 7, 6
   orig: 14, 14
@@ -107,39 +123,47 @@ grey
   orig: 5, 5
   offset: 0, 0
   index: -1
+default-rect-pad
+  rotate: false
+  xy: 331, 1
+  size: 5, 3
+  split: 2, 2, 1, 1
+  orig: 5, 3
+  offset: 0, 0
+  index: -1
+cursor
+  rotate: false
+  xy: 338, 1
+  size: 3, 3
+  split: 1, 1, 1, 1
+  orig: 3, 3
+  offset: 0, 0
+  index: -1
 red
+  rotate: false
+  xy: 348, 40
+  size: 5, 5
+  orig: 5, 5
+  offset: 0, 0
+  index: -1
+default-rect
+  rotate: false
+  xy: 343, 1
+  size: 3, 3
+  split: 1, 1, 1, 1
+  orig: 3, 3
+  offset: 0, 0
+  index: -1
+white
   rotate: false
   xy: 1, 6
   size: 5, 5
   orig: 5, 5
   offset: 0, 0
   index: -1
-default-rect-pad
-  rotate: false
-  xy: 1, 1
-  size: 5, 3
-  split: 2, 2, 1, 1
-  orig: 5, 3
-  offset: 0, 0
-  index: -1
-white
-  rotate: false
-  xy: 331, 11
-  size: 5, 5
-  orig: 5, 5
-  offset: 0, 0
-  index: -1
-cursor
-  rotate: false
-  xy: 293, 41
-  size: 3, 3
-  split: 1, 1, 1, 1
-  orig: 3, 3
-  offset: 0, 0
-  index: -1
 selection
   rotate: false
-  xy: 247, 8
+  xy: 293, 43
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
