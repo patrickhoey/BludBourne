@@ -9,11 +9,10 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
-import com.packtpub.libgdx.bludbourne.UI.UISubject;
 
 import java.util.Hashtable;
 
-public abstract class GraphicsComponent extends UISubject implements Component {
+public abstract class GraphicsComponent extends ComponentSubject implements Component {
     protected TextureRegion _currentFrame = null;
     protected float _frameTime = 0f;
     protected Entity.State _currentState;

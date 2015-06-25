@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.packtpub.libgdx.bludbourne.UI.UIObserver;
 
 public class NPCGraphicsComponent extends GraphicsComponent {
     private static final String TAG = NPCGraphicsComponent.class.getSimpleName();
@@ -83,13 +82,13 @@ public class NPCGraphicsComponent extends GraphicsComponent {
         if( _isSelected ){
             drawSelected(entity, mapMgr);
             if( _sentShowConversationMessage == false){
-                notify(_json.toJson(entity.getEntityConfig()), UIObserver.UIEvent.SHOW_CONVERSATION);
+                notify(_json.toJson(entity.getEntityConfig()), ComponentObserver.UIEvent.SHOW_CONVERSATION);
                 _sentShowConversationMessage = true;
                 _sentHideCoversationMessage = false;
             }
         }else{
             if( _sentHideCoversationMessage == false ){
-                notify(_json.toJson(entity.getEntityConfig()), UIObserver.UIEvent.HIDE_CONVERSATION);
+                notify(_json.toJson(entity.getEntityConfig()), ComponentObserver.UIEvent.HIDE_CONVERSATION);
                 _sentHideCoversationMessage = true;
                 _sentShowConversationMessage = false;
             }

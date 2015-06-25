@@ -2,12 +2,11 @@ package com.packtpub.libgdx.bludbourne;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.utils.Json;
-import com.packtpub.libgdx.bludbourne.UI.UISubject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class InputComponent extends UISubject implements Component, InputProcessor {
+public abstract class InputComponent extends ComponentSubject implements Component, InputProcessor {
 
     protected Entity.Direction _currentDirection = null;
     protected Entity.State _currentState = null;

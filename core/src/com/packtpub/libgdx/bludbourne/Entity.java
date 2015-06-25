@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
-import com.packtpub.libgdx.bludbourne.UI.UIObserver;
 
 import java.util.ArrayList;
 
@@ -102,7 +101,7 @@ public class Entity {
 		}
 	}
 
-	public void registerObserver(UIObserver observer){
+	public void registerObserver(ComponentObserver observer){
 		_inputComponent.addObserver(observer);
 		_physicsComponent.addObserver(observer);
 		_graphicsComponent.addObserver(observer);

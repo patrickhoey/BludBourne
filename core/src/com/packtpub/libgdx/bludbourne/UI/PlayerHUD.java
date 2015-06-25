@@ -12,13 +12,14 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.packtpub.libgdx.bludbourne.ComponentObserver;
 import com.packtpub.libgdx.bludbourne.Entity;
 import com.packtpub.libgdx.bludbourne.EntityConfig;
 import com.packtpub.libgdx.bludbourne.InventoryItem.ItemTypeID;
 import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 import com.packtpub.libgdx.bludbourne.profile.ProfileObserver;
 
-public class PlayerHUD implements Screen, ProfileObserver,UIObserver {
+public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver {
     private static final String TAG = PlayerHUD.class.getSimpleName();
 
     private Stage _stage;
