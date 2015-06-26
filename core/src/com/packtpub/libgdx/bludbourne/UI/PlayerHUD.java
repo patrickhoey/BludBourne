@@ -91,12 +91,21 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
             }
         });
 
-        _conversationUI._closeButton.addListener(new ClickListener() {
-                                                     @Override
-                                                     public void clicked (InputEvent event, float x, float y) {
-                                                         _conversationUI.setVisible(false);
+        _conversationUI.getCloseButton().addListener(new ClickListener() {
+                                                         @Override
+                                                         public void clicked(InputEvent event, float x, float y) {
+                                                             _conversationUI.setVisible(false);
+                                                             _mapMgr.clearSelectedMapEntities();
+                                                         }
                                                      }
-                                                 }
+        );
+
+        _storeInventoryUI.getCloseButton().addListener(new ClickListener() {
+                                                         @Override
+                                                         public void clicked(InputEvent event, float x, float y) {
+                                                             _storeInventoryUI.setVisible(false);
+                                                         }
+                                                     }
         );
     }
 
@@ -154,6 +163,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 EntityConfig configHide = _json.fromJson(EntityConfig.class, value);
                 if( configHide.getEntityID().equalsIgnoreCase(_conversationUI.getCurrentEntityID())) {
                     _conversationUI.setVisible(false);
+                    _mapMgr.clearSelectedMapEntities();
                 }
                 break;
             default:
@@ -182,12 +192,14 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 }
 
                 _conversationUI.setVisible(false);
+                _mapMgr.clearSelectedMapEntities();
 
                 _storeInventoryUI.toFront();
                 _storeInventoryUI.setVisible(true);
                 break;
             case EXIT_CONVERSATION:
                 _conversationUI.setVisible(false);
+                _mapMgr.clearSelectedMapEntities();
                 break;
             case NONE:
                 break;

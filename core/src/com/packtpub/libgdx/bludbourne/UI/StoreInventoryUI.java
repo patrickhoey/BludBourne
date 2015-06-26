@@ -37,6 +37,7 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver{
 
     private Button _sellButton;
     private Button _buyButton;
+    public TextButton _closeButton;
 
     private Table _buttons;
     private Table _totalLabels;
@@ -72,6 +73,8 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver{
         _buyButton = new TextButton(BUY, Utility.STATUSUI_SKIN, "inventory");
         _buyButton.setDisabled(true);
         _buyButton.setTouchable(Touchable.disabled);
+
+        _closeButton = new TextButton("X", Utility.STATUSUI_SKIN);
 
         _buttons = new Table();
         _buttons.defaults().expand().fill();
@@ -117,6 +120,10 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver{
 
         _inventoryActors.add(_inventorySlotTooltip);
 
+        this.add();
+        this.add(_closeButton);
+        this.row();
+
         //this.debugAll();
         this.defaults().expand().fill();
         this.add(_inventorySlotTable).pad(10, 10, 10, 10);
@@ -127,6 +134,10 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver{
         this.row();
         this.add(_playerInventorySlotTable).pad(10, 10, 10, 10);
         this.pack();
+    }
+
+    public TextButton getCloseButton(){
+        return _closeButton;
     }
 
     public Table getInventorySlotTable() {

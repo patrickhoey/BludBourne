@@ -26,7 +26,7 @@ public class ConversationUI extends Window {
     private ConversationGraph _graph;
     private String _currentEntityID;
 
-    public TextButton _closeButton;
+    private TextButton _closeButton;
 
     private Json _json;
 
@@ -75,6 +75,10 @@ public class ConversationUI extends Window {
             }
                                }
         );
+    }
+
+    public TextButton getCloseButton(){
+        return _closeButton;
     }
 
     public String getCurrentEntityID() {

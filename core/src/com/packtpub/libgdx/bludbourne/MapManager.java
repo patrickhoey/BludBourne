@@ -112,6 +112,13 @@ public class MapManager implements ProfileObserver {
         return _currentMap.getMapEntities();
     }
 
+    public void clearSelectedMapEntities(){
+        Array<Entity> entities = _currentMap.getMapEntities();
+        for( Entity entity : entities ){
+            entity.sendMessage(Component.MESSAGE.ENTITY_DESELECTED);
+        }
+    }
+
     public void setPlayer(Entity entity){
         this._player = entity;
     }
