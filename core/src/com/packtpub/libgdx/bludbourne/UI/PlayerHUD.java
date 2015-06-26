@@ -137,7 +137,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
     }
 
     @Override
-    public void onNotify(String value, UIEvent event) {
+    public void onNotify(String value, ComponentEvent event) {
         switch(event) {
             case LOAD_CONVERSATION:
                 EntityConfig config = _json.fromJson(EntityConfig.class, value);

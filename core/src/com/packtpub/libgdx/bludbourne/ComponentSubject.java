@@ -23,7 +23,7 @@ public class ComponentSubject {
         }
     }
 
-    protected void notify(final String value, ComponentObserver.UIEvent event){
+    protected void notify(final String value, ComponentObserver.ComponentEvent event){
         for(ComponentObserver observer: _observers){
             observer.onNotify(value, event);
         }

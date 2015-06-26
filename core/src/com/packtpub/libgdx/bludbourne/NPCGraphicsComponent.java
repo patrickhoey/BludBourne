@@ -82,13 +82,13 @@ public class NPCGraphicsComponent extends GraphicsComponent {
         if( _isSelected ){
             drawSelected(entity, mapMgr);
             if( _sentShowConversationMessage == false){
-                notify(_json.toJson(entity.getEntityConfig()), ComponentObserver.UIEvent.SHOW_CONVERSATION);
+                notify(_json.toJson(entity.getEntityConfig()), ComponentObserver.ComponentEvent.SHOW_CONVERSATION);
                 _sentShowConversationMessage = true;
                 _sentHideCoversationMessage = false;
             }
         }else{
             if( _sentHideCoversationMessage == false ){
-                notify(_json.toJson(entity.getEntityConfig()), ComponentObserver.UIEvent.HIDE_CONVERSATION);
+                notify(_json.toJson(entity.getEntityConfig()), ComponentObserver.ComponentEvent.HIDE_CONVERSATION);
                 _sentHideCoversationMessage = true;
                 _sentShowConversationMessage = false;
             }

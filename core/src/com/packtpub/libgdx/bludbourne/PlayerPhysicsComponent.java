@@ -102,7 +102,7 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
                     //Picked/Selected
                     Gdx.app.debug(TAG, "Selected Entity! " + mapEntity.getEntityConfig().getEntityID());
                     mapEntity.sendMessage(MESSAGE.ENTITY_SELECTED);
-                    notify(_json.toJson(mapEntity.getEntityConfig()), ComponentObserver.UIEvent.LOAD_CONVERSATION);
+                    notify(_json.toJson(mapEntity.getEntityConfig()), ComponentObserver.ComponentEvent.LOAD_CONVERSATION);
                 }
             }
         }
