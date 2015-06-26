@@ -81,6 +81,7 @@ public class NPCGraphicsComponent extends GraphicsComponent {
 
         if( _isSelected ){
             drawSelected(entity, mapMgr);
+            mapMgr.setCurrentSelectedMapEntity(entity);
             if( _sentShowConversationMessage == false){
                 notify(_json.toJson(entity.getEntityConfig()), ComponentObserver.ComponentEvent.SHOW_CONVERSATION);
                 _sentShowConversationMessage = true;

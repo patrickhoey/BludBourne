@@ -17,6 +17,7 @@ public class MapManager implements ProfileObserver {
     private boolean _mapChanged = false;
     private Map _currentMap;
     private Entity _player;
+    private Entity _currentSelectedEntity = null;
 
     public MapManager(){
     }
@@ -79,6 +80,7 @@ public class MapManager implements ProfileObserver {
 
         _currentMap = map;
         _mapChanged = true;
+        clearCurrentSelectedMapEntity();
         Gdx.app.debug(TAG, "Player Start: (" + _currentMap.getPlayerStart().x + "," + _currentMap.getPlayerStart().y + ")");
     }
 
@@ -112,11 +114,18 @@ public class MapManager implements ProfileObserver {
         return _currentMap.getMapEntities();
     }
 
-    public void clearSelectedMapEntities(){
-        Array<Entity> entities = _currentMap.getMapEntities();
-        for( Entity entity : entities ){
-            entity.sendMessage(Component.MESSAGE.ENTITY_DESELECTED);
-        }
+    public Entity getCurrentSelectedMapEntity(){
+        return _currentSelectedEntity;
+    }
+
+    public void setCurrentSelectedMapEntity(Entity currentSelectedEntity){
+        this._currentSelectedEntity = currentSelectedEntity;
+    }
+
+    public void clearCurrentSelectedMapEntity(){
+        if( _currentSelectedEntity == null ) return;
+        _currentSelectedEntity.sendMessage(Component.MESSAGE.ENTITY_DESELECTED);
+        _currentSelectedEntity = null;
     }
 
     public void setPlayer(Entity entity){

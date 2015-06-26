@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.packtpub.libgdx.bludbourne.ComponentObserver;
 import com.packtpub.libgdx.bludbourne.Entity;
 import com.packtpub.libgdx.bludbourne.EntityConfig;
+import com.packtpub.libgdx.bludbourne.InventoryItem;
 import com.packtpub.libgdx.bludbourne.InventoryItem.ItemTypeID;
 import com.packtpub.libgdx.bludbourne.MapManager;
 import com.packtpub.libgdx.bludbourne.dialog.ConversationGraph;
@@ -95,7 +96,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                                                          @Override
                                                          public void clicked(InputEvent event, float x, float y) {
                                                              _conversationUI.setVisible(false);
-                                                             _mapMgr.clearSelectedMapEntities();
+                                                             _mapMgr.clearCurrentSelectedMapEntity();
                                                          }
                                                      }
         );
@@ -104,6 +105,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                                                          @Override
                                                          public void clicked(InputEvent event, float x, float y) {
                                                              _storeInventoryUI.setVisible(false);
+                                                             _mapMgr.clearCurrentSelectedMapEntity();
                                                          }
                                                      }
         );
@@ -163,7 +165,6 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 EntityConfig configHide = _json.fromJson(EntityConfig.class, value);
                 if( configHide.getEntityID().equalsIgnoreCase(_conversationUI.getCurrentEntityID())) {
                     _conversationUI.setVisible(false);
-                    _mapMgr.clearSelectedMapEntities();
                 }
                 break;
             default:
@@ -175,31 +176,29 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
     public void onNotify(ConversationGraph graph, ConversationCommandEvent event) {
         switch(event) {
             case LOAD_STORE_INVENTORY:
+                Entity selectedEntity = _mapMgr.getCurrentSelectedMapEntity();
+                if( selectedEntity == null ){
+                    break;
+                }
+
                 Array<InventoryItemLocation> inventory =  _inventoryUI.getInventory(_inventoryUI.getInventorySlotTable());
                 _storeInventoryUI.loadPlayerInventory(inventory);
 
-                Array<Entity> entities = _mapMgr.getCurrentMapEntities();
-                for(Entity entity: entities){
-                    if( entity.getEntityConfig().getEntityID().equalsIgnoreCase("TOWN_BLACKSMITH") ){
-                        Array<ItemTypeID> items  = entity.getEntityConfig().getInventory();
-                        Array<InventoryItemLocation> itemLocations = new Array<InventoryItemLocation>();
-                        for( int i = 0; i < items.size; i++){
-                            itemLocations.add(new InventoryItemLocation(i, items.get(i).toString(), 1));
-                        }
-                        _storeInventoryUI.loadStoreInventory(itemLocations);
-                        break;
-                    }
+                Array<InventoryItem.ItemTypeID> items  = selectedEntity.getEntityConfig().getInventory();
+                Array<InventoryItemLocation> itemLocations = new Array<InventoryItemLocation>();
+                for( int i = 0; i < items.size; i++){
+                    itemLocations.add(new InventoryItemLocation(i, items.get(i).toString(), 1));
                 }
 
-                _conversationUI.setVisible(false);
-                _mapMgr.clearSelectedMapEntities();
+                _storeInventoryUI.loadStoreInventory(itemLocations);
 
+                _conversationUI.setVisible(false);
                 _storeInventoryUI.toFront();
                 _storeInventoryUI.setVisible(true);
                 break;
             case EXIT_CONVERSATION:
                 _conversationUI.setVisible(false);
-                _mapMgr.clearSelectedMapEntities();
+                _mapMgr.clearCurrentSelectedMapEntity();
                 break;
             case NONE:
                 break;
