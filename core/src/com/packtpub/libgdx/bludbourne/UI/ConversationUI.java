@@ -70,6 +70,7 @@ public class ConversationUI extends Window {
             public void clicked (InputEvent event, float x, float y) {
                 ConversationChoice choice = (ConversationChoice)_listItems.getSelected();
                 if( choice == null ) return;
+                _graph.notify(_graph, choice.getConversationCommandEvent());
                 populateConversationDialog(choice.getDestinationId());
             }
                                }
@@ -84,8 +85,7 @@ public class ConversationUI extends Window {
         String fullFilenamePath = entityConfig.getConversationConfigPath();
         this.setTitle("");
 
-        _dialogText.setText("");
-        _listItems.clearItems();
+        clearDialog();
 
         if( fullFilenamePath.isEmpty() || !Gdx.files.internal(fullFilenamePath).exists() ){
             Gdx.app.debug(TAG, "Conversation file does not exist!");
@@ -94,17 +94,24 @@ public class ConversationUI extends Window {
 
         _currentEntityID = entityConfig.getEntityID();
         this.setTitle(entityConfig.getEntityID());
-        Json json = new Json();
-        ConversationGraph graph = json.fromJson(ConversationGraph.class, Gdx.files.internal(fullFilenamePath));
+
+        ConversationGraph graph = _json.fromJson(ConversationGraph.class, Gdx.files.internal(fullFilenamePath));
         setConversationGraph(graph);
     }
 
     public void setConversationGraph(ConversationGraph graph){
+        if( _graph != null ) _graph.removeAllObservers();
         this._graph = graph;
         populateConversationDialog(_graph.getCurrentConversationID());
     }
 
+    public ConversationGraph getCurrentConversationGraph(){
+        return this._graph;
+    }
+
     private void populateConversationDialog(String conversationID){
+        clearDialog();
+
         Conversation conversation = _graph.getConversationByID(conversationID);
         if( conversation == null ) return;
         _graph.setCurrentConversation(conversationID);
@@ -113,6 +120,11 @@ public class ConversationUI extends Window {
         if( choices == null ) return;
         _listItems.setItems(choices.toArray());
         _listItems.setSelectedIndex(-1);
+    }
+
+    private void clearDialog(){
+        _dialogText.setText("");
+        _listItems.clearItems();
     }
 
 }

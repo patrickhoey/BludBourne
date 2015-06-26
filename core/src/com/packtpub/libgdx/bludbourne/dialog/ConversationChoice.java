@@ -1,14 +1,14 @@
 package com.packtpub.libgdx.bludbourne.dialog;
 
+import com.packtpub.libgdx.bludbourne.dialog.ConversationGraphObserver.ConversationCommandEvent;
 
 public class ConversationChoice {
     private String sourceId;
     private String destinationId;
     private String choicePhrase;
+    private ConversationCommandEvent conversationCommandEvent;
 
-    public ConversationChoice(){
-
-    }
+    public ConversationChoice(){}
 
     public String getSourceId() {
         return sourceId;
@@ -32,6 +32,14 @@ public class ConversationChoice {
 
     public void setChoicePhrase(String choicePhrase) {
         this.choicePhrase = choicePhrase;
+    }
+
+    public ConversationCommandEvent getConversationCommandEvent() {
+        return conversationCommandEvent;
+    }
+
+    public void setConversationCommandEvent(ConversationCommandEvent choiceCommand) {
+        this.conversationCommandEvent = choiceCommand;
     }
 
     public String toString(){

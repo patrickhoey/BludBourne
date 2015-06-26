@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.SnapshotArray;
 import com.packtpub.libgdx.bludbourne.InventoryItem;
 import com.packtpub.libgdx.bludbourne.Utility;
 
-public class InventorySlot extends Stack {
+public class InventorySlot extends Stack implements InventorySlotSubject {
 
     //All slots have this default image
     private Stack _defaultBackground;
@@ -20,10 +20,13 @@ public class InventorySlot extends Stack {
     private int _numItemsVal = 0;
     private int _filterItemType;
 
+    private Array<InventorySlotObserver> _observers;
+
     public InventorySlot(){
         _filterItemType = 0; //filter nothing
         _defaultBackground = new Stack();
         _customBackgroundDecal = new Image();
+        _observers = new Array<InventorySlotObserver>();
         Image image = new Image(new NinePatch(Utility.STATUSUI_TEXTUREATLAS.createPatch("dialog")));
 
         _numItemsLabel = new Label(String.valueOf(_numItemsVal), Utility.STATUSUI_SKIN, "inventory-item-count");
@@ -50,6 +53,7 @@ public class InventorySlot extends Stack {
             _defaultBackground.add(_customBackgroundDecal);
         }
         checkVisibilityOfItemCount();
+        notify(this, InventorySlotObserver.SlotEvent.REMOVED_ITEM);
     }
 
     public void incrementItemCount() {
@@ -59,6 +63,7 @@ public class InventorySlot extends Stack {
             _defaultBackground.getChildren().pop();
         }
         checkVisibilityOfItemCount();
+        notify(this, InventorySlotObserver.SlotEvent.ADDED_ITEM);
     }
 
     @Override
@@ -94,8 +99,8 @@ public class InventorySlot extends Stack {
             SnapshotArray<Actor> arrayChildren = this.getChildren();
             int numInventoryItems =  arrayChildren.size - 2;
             for(int i = 0; i < numInventoryItems; i++) {
-                items.add(arrayChildren.pop());
                 decrementItemCount();
+                items.add(arrayChildren.pop());
             }
         }
         return items;
@@ -106,8 +111,8 @@ public class InventorySlot extends Stack {
             SnapshotArray<Actor> arrayChildren = this.getChildren();
             int numInventoryItems =  getNumItems();
             for(int i = 0; i < numInventoryItems; i++) {
-                arrayChildren.pop();
                 decrementItemCount();
+                arrayChildren.pop();
             }
         }
     }
@@ -170,5 +175,29 @@ public class InventorySlot extends Stack {
         tempArray.add(dragActor);
         inventorySlotSource.add(inventorySlotTarget.getAllInventoryItems());
         inventorySlotTarget.add(tempArray);
+    }
+
+    @Override
+    public void addObserver(InventorySlotObserver slotObserver) {
+        _observers.add(slotObserver);
+    }
+
+    @Override
+    public void removeObserver(InventorySlotObserver slotObserver) {
+        _observers.removeValue(slotObserver, true);
+    }
+
+    @Override
+    public void removeAllObservers() {
+        for(InventorySlotObserver observer: _observers){
+            _observers.removeValue(observer, true);
+        }
+    }
+
+    @Override
+    public void notify(final InventorySlot slot, InventorySlotObserver.SlotEvent event) {
+        for(InventorySlotObserver observer: _observers){
+            observer.onNotify(slot, event);
+        }
     }
 }

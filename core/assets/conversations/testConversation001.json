@@ -24,6 +24,7 @@ associatedChoices: {
                         sourceId: 601
                         destinationId: 500
                         choicePhrase: Go to beginning!
+						conversationCommandEvent: NONE
                 }
         ]
         250: []
@@ -33,12 +34,14 @@ associatedChoices: {
                         sourceId: 500
                         destinationId: 601
                         choicePhrase: YES
+						conversationCommandEvent: NONE
                 }
                 {
                         class: com.packtpub.libgdx.bludbourne.dialog.ConversationChoice
                         sourceId: 500
                         destinationId: 802
                         choicePhrase: NO
+						conversationCommandEvent: NONE
                 }
         ]
         802: [
@@ -47,6 +50,7 @@ associatedChoices: {
                         sourceId: 802
                         destinationId: 500
                         choicePhrase: Go to beginning!
+						conversationCommandEvent: NONE
                 }
         ]
 }

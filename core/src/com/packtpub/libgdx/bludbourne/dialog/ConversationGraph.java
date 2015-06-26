@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Set;
 
-public class ConversationGraph {
+public class ConversationGraph extends ConversationGraphSubject {
     private Hashtable<String, Conversation> conversations;
     private Hashtable<String, ArrayList<ConversationChoice>> associatedChoices;
     private String currentConversationID;

@@ -73,7 +73,7 @@ public class MainGameScreen implements Screen {
 		_hudCamera = new OrthographicCamera();
 		_hudCamera.setToOrtho(false, VIEWPORT.physicalWidth, VIEWPORT.physicalHeight);
 
-		_playerHUD = new PlayerHUD(_hudCamera, _player);
+		_playerHUD = new PlayerHUD(_hudCamera, _player, _mapMgr);
 
 		_multiplexer = new InputMultiplexer();
 		_multiplexer.addProcessor(_playerHUD.getStage());

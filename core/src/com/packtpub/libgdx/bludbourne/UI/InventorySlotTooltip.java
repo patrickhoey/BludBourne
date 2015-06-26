@@ -35,7 +35,13 @@ public class InventorySlotTooltip extends Window {
 
     public void updateDescription(InventorySlot inventorySlot){
         if( inventorySlot.hasItem() ){
-            _description.setText(inventorySlot.getTopInventoryItem().getItemShortDescription());
+            StringBuilder string = new StringBuilder();
+            string.append(inventorySlot.getTopInventoryItem().getItemShortDescription());
+            string.append(System.getProperty("line.separator"));
+            string.append(String.format("Original Value: %s GP", inventorySlot.getTopInventoryItem().getItemValue()));
+            string.append(System.getProperty("line.separator"));
+            string.append(String.format("Trade Value: %s GP", inventorySlot.getTopInventoryItem().getTradeValue()));
+            _description.setText(string);
             this.pack();
         }else{
             _description.setText("");

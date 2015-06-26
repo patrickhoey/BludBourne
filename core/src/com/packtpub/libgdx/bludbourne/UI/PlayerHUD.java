@@ -3,7 +3,6 @@ package com.packtpub.libgdx.bludbourne.UI;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -16,10 +15,13 @@ import com.packtpub.libgdx.bludbourne.ComponentObserver;
 import com.packtpub.libgdx.bludbourne.Entity;
 import com.packtpub.libgdx.bludbourne.EntityConfig;
 import com.packtpub.libgdx.bludbourne.InventoryItem.ItemTypeID;
+import com.packtpub.libgdx.bludbourne.MapManager;
+import com.packtpub.libgdx.bludbourne.dialog.ConversationGraph;
+import com.packtpub.libgdx.bludbourne.dialog.ConversationGraphObserver;
 import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 import com.packtpub.libgdx.bludbourne.profile.ProfileObserver;
 
-public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver {
+public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,ConversationGraphObserver {
     private static final String TAG = PlayerHUD.class.getSimpleName();
 
     private Stage _stage;
@@ -30,12 +32,15 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver {
     private StatusUI _statusUI;
     private InventoryUI _inventoryUI;
     private ConversationUI _conversationUI;
+    private StoreInventoryUI _storeInventoryUI;
 
     private Json _json;
+    private MapManager _mapMgr;
 
-    public PlayerHUD(Camera camera, Entity player) {
+    public PlayerHUD(Camera camera, Entity player, MapManager mapMgr) {
         _camera = camera;
         _player = player;
+        _mapMgr = mapMgr;
         _viewport = new ScreenViewport(_camera);
         _stage = new Stage(_viewport);
         //_stage.setDebugAll(true);
@@ -55,16 +60,27 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver {
         _conversationUI.setMovable(true);
         _conversationUI.setVisible(false);
         _conversationUI.setPosition(_stage.getWidth() / 2, 0);
-        _conversationUI.setWidth(_stage.getWidth()/2);
-        _conversationUI.setHeight(_stage.getHeight()/2);
+        _conversationUI.setWidth(_stage.getWidth() / 2);
+        _conversationUI.setHeight(_stage.getHeight() / 2);
 
-        _stage.addActor(_statusUI);
+        _storeInventoryUI = new StoreInventoryUI();
+        _storeInventoryUI.setMovable(false);
+        _storeInventoryUI.setVisible(false);
+        _storeInventoryUI.setPosition(0, 0);
+
+        _stage.addActor(_storeInventoryUI);
         _stage.addActor(_inventoryUI);
         _stage.addActor(_conversationUI);
+        _stage.addActor(_statusUI);
 
         //add tooltips to the stage
         Array<Actor> actors = _inventoryUI.getInventoryActors();
         for(Actor actor : actors){
+            _stage.addActor(actor);
+        }
+
+        Array<Actor> storeActors = _storeInventoryUI.getInventoryActors();
+        for(Actor actor : storeActors ){
             _stage.addActor(actor);
         }
 
@@ -94,7 +110,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver {
             case PROFILE_LOADED:
                 Array<InventoryItemLocation> inventory = profileManager.getProperty("playerInventory", Array.class);
                 if( inventory != null && inventory.size > 0 ){
-                    _inventoryUI.populateInventory(_inventoryUI.getInventorySlotTable(), inventory);
+                    InventoryUI.populateInventory(_inventoryUI.getInventorySlotTable(), inventory, _inventoryUI.getDragAndDrop());
                 }else{
                     //add default items if nothing is found
                     Array<ItemTypeID> items = _player.getEntityConfig().getInventory();
@@ -102,12 +118,12 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver {
                     for( int i = 0; i < items.size; i++){
                         itemLocations.add(new InventoryItemLocation(i, items.get(i).toString(), 1));
                     }
-                    _inventoryUI.populateInventory(_inventoryUI.getInventorySlotTable(), itemLocations);
+                    InventoryUI.populateInventory(_inventoryUI.getInventorySlotTable(), itemLocations, _inventoryUI.getDragAndDrop());
                 }
 
                 Array<InventoryItemLocation> equipInventory = profileManager.getProperty("playerEquipInventory", Array.class);
                 if( equipInventory != null && equipInventory.size > 0 ){
-                    _inventoryUI.populateInventory(_inventoryUI.getEquipSlotTable(), equipInventory);
+                    InventoryUI.populateInventory(_inventoryUI.getEquipSlotTable(), equipInventory, _inventoryUI.getDragAndDrop());
                 }
 
                 break;
@@ -126,6 +142,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver {
             case LOAD_CONVERSATION:
                 EntityConfig config = _json.fromJson(EntityConfig.class, value);
                 _conversationUI.loadConversation(config);
+                _conversationUI.getCurrentConversationGraph().addObserver(this);
                 break;
             case SHOW_CONVERSATION:
                 EntityConfig configShow = _json.fromJson(EntityConfig.class, value);
@@ -138,6 +155,41 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver {
                 if( configHide.getEntityID().equalsIgnoreCase(_conversationUI.getCurrentEntityID())) {
                     _conversationUI.setVisible(false);
                 }
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onNotify(ConversationGraph graph, ConversationCommandEvent event) {
+        switch(event) {
+            case LOAD_STORE_INVENTORY:
+                Array<InventoryItemLocation> inventory =  _inventoryUI.getInventory(_inventoryUI.getInventorySlotTable());
+                _storeInventoryUI.loadPlayerInventory(inventory);
+
+                Array<Entity> entities = _mapMgr.getCurrentMapEntities();
+                for(Entity entity: entities){
+                    if( entity.getEntityConfig().getEntityID().equalsIgnoreCase("TOWN_BLACKSMITH") ){
+                        Array<ItemTypeID> items  = entity.getEntityConfig().getInventory();
+                        Array<InventoryItemLocation> itemLocations = new Array<InventoryItemLocation>();
+                        for( int i = 0; i < items.size; i++){
+                            itemLocations.add(new InventoryItemLocation(i, items.get(i).toString(), 1));
+                        }
+                        _storeInventoryUI.loadStoreInventory(itemLocations);
+                        break;
+                    }
+                }
+
+                _conversationUI.setVisible(false);
+
+                _storeInventoryUI.toFront();
+                _storeInventoryUI.setVisible(true);
+                break;
+            case EXIT_CONVERSATION:
+                _conversationUI.setVisible(false);
+                break;
+            case NONE:
                 break;
             default:
                 break;
@@ -178,4 +230,5 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver {
     public void dispose() {
         _stage.dispose();
     }
+
 }

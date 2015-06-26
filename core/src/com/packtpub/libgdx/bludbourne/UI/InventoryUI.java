@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Array;
+import com.packtpub.libgdx.bludbourne.InventoryItem;
 import com.packtpub.libgdx.bludbourne.InventoryItemFactory;
 import com.packtpub.libgdx.bludbourne.InventoryItem.ItemUseType;
 import com.packtpub.libgdx.bludbourne.InventoryItem.ItemTypeID;
@@ -15,7 +16,7 @@ import com.packtpub.libgdx.bludbourne.Utility;
 
 public class InventoryUI extends Window {
 
-    private int _numSlots = 50;
+    public final static int _numSlots = 50;
     private int _lengthSlotRow = 10;
     private Table _inventorySlotTable;
     private Table _playerSlotsTable;
@@ -123,6 +124,10 @@ public class InventoryUI extends Window {
         this.pack();
     }
 
+    public DragAndDrop getDragAndDrop(){
+        return _dragAndDrop;
+    }
+
     public Table getInventorySlotTable() {
         return _inventorySlotTable;
     }
@@ -131,22 +136,30 @@ public class InventoryUI extends Window {
         return _equipSlots;
     }
 
-    public void populateInventory(Table targetTable, Array<InventoryItemLocation> inventoryItems){
+    public static void populateInventory(Table targetTable, Array<InventoryItemLocation> inventoryItems, DragAndDrop draganddrop){
         Array<Cell> cells = targetTable.getCells();
+
+        for( int i = 0; i < cells.size; i++){
+            InventorySlot inventorySlot = (InventorySlot)cells.get(i).getActor();
+            if( inventorySlot == null ) continue;
+            inventorySlot.clearAllInventoryItems();
+        }
+
         for(int i = 0; i < inventoryItems.size; i++){
             InventoryItemLocation itemLocation = inventoryItems.get(i);
             ItemTypeID itemTypeID = ItemTypeID.valueOf(itemLocation.getItemTypeAtLocation());
             InventorySlot inventorySlot =  ((InventorySlot)cells.get(itemLocation.getLocationIndex()).getActor());
-            inventorySlot.clearAllInventoryItems();
 
             for( int index = 0; index < itemLocation.getNumberItemsAtLocation(); index++ ){
-                inventorySlot.add(InventoryItemFactory.getInstance().getInventoryItem(itemTypeID));
-                _dragAndDrop.addSource(new InventorySlotSource(inventorySlot, _dragAndDrop));
+                InventoryItem item = InventoryItemFactory.getInstance().getInventoryItem(itemTypeID);
+                item.setName(targetTable.getName());
+                inventorySlot.add(item);
+                draganddrop.addSource(new InventorySlotSource(inventorySlot, draganddrop));
             }
         }
     }
 
-    public Array<InventoryItemLocation> getInventory(Table targetTable){
+    public static Array<InventoryItemLocation> getInventory(Table targetTable){
         Array<Cell> cells = targetTable.getCells();
         Array<InventoryItemLocation> items = new Array<InventoryItemLocation>();
         for(int i = 0; i < cells.size; i++){
