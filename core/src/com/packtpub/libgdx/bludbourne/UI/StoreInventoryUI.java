@@ -1,18 +1,22 @@
 package com.packtpub.libgdx.bludbourne.UI;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Array;
 import com.packtpub.libgdx.bludbourne.Utility;
+import com.packtpub.libgdx.bludbourne.UI.StoreInventoryObserver.StoreInventoryEvent;
 
-public class StoreInventoryUI extends Window implements InventorySlotObserver{
+public class StoreInventoryUI extends Window implements InventorySlotObserver, StoreInventorySubject{
 
     private int _numStoreInventorySlots = 30;
     private int _lengthSlotRow = 10;
@@ -31,9 +35,11 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver{
 
     private Label _sellTotalLabel;
     private Label _buyTotalLabel;
+    private Label _playerTotalGP;
 
     private int _tradeInVal = 0;
     private int _fullValue = 0;
+    private int _playerTotal = 0;
 
     private Button _sellButton;
     private Button _buyButton;
@@ -42,12 +48,17 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver{
     private Table _buttons;
     private Table _totalLabels;
 
+    private Array<StoreInventoryObserver> _observers;
+
     private static String SELL = "SELL";
     private static String BUY = "BUY";
     private static String GP = " GP";
+    private static String PLAYER_TOTAL = "Player Total";
 
     public StoreInventoryUI(){
         super("Store Inventory", Utility.STATUSUI_SKIN, "solidbackground");
+
+        _observers = new Array<StoreInventoryObserver>();
 
         this.setFillParent(true);
 
@@ -62,17 +73,17 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver{
         _inventorySlotTooltip = new InventorySlotTooltip(Utility.STATUSUI_SKIN);
 
         _sellButton = new TextButton(SELL, Utility.STATUSUI_SKIN, "inventory");
-        _sellButton.setDisabled(true);
-        _sellButton.setTouchable(Touchable.disabled);
+        disableButton(_sellButton, true);
 
         _sellTotalLabel = new Label(SELL + " : " + _tradeInVal + GP, Utility.STATUSUI_SKIN);
         _sellTotalLabel.setAlignment(Align.center);
         _buyTotalLabel = new Label(BUY + " : " + _fullValue + GP, Utility.STATUSUI_SKIN);
         _buyTotalLabel.setAlignment(Align.center);
 
+        _playerTotalGP = new Label(PLAYER_TOTAL + " : " + _playerTotal +  GP, Utility.STATUSUI_SKIN);
+
         _buyButton = new TextButton(BUY, Utility.STATUSUI_SKIN, "inventory");
-        _buyButton.setDisabled(true);
-        _buyButton.setTouchable(Touchable.disabled);
+        disableButton(_buyButton, true);
 
         _closeButton = new TextButton("X", Utility.STATUSUI_SKIN);
 
@@ -126,14 +137,55 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver{
 
         //this.debugAll();
         this.defaults().expand().fill();
-        this.add(_inventorySlotTable).pad(10, 10, 10, 10);
-        this.row();
-        this.add(_buttons);
-        this.row();
-        this.add(_totalLabels);
-        this.row();
-        this.add(_playerInventorySlotTable).pad(10, 10, 10, 10);
+        this.add(_inventorySlotTable).pad(10, 10, 10, 10).row();
+        this.add(_buttons).row();
+        this.add(_totalLabels).row();
+        this.add(_playerInventorySlotTable).pad(10, 10, 10, 10).row();
+        this.add(_playerTotalGP);
         this.pack();
+
+        //Listeners
+        _buyButton.addListener(new ClickListener() {
+                                               @Override
+                                               public void clicked(InputEvent event, float x, float y) {
+                                                   if( _fullValue > 0 && _playerTotal >= _fullValue) {
+                                                       _playerTotal -= _fullValue;
+                                                       StoreInventoryUI.this.notify(Integer.toString(_playerTotal), StoreInventoryEvent.PLAYER_GP_TOTAL_UPDATED);
+                                                       _fullValue = 0;
+                                                       _buyTotalLabel.setText(BUY  + " : " +  _fullValue + GP);
+                                                       disableButton(_buyButton, true);
+                                                   }
+                                                   //serialize
+                                                   //Array<InventoryItemLocation> items = InventoryUI.getInventory(_playerInventorySlotTable);
+                                                   //InventoryUI.populateInventory(_inventoryUI.getInventorySlotTable(), items, _inventoryUI.getDragAndDrop());
+                                               }
+                                           }
+        );
+
+        _sellButton.addListener(new ClickListener() {
+                                   @Override
+                                   public void clicked(InputEvent event, float x, float y) {
+                                       if( _tradeInVal > 0 ) {
+                                           _playerTotal += _tradeInVal;
+                                           StoreInventoryUI.this.notify(Integer.toString(_playerTotal), StoreInventoryEvent.PLAYER_GP_TOTAL_UPDATED);
+                                           _tradeInVal = 0;
+                                           _sellTotalLabel.setText(SELL  + " : " +  _tradeInVal + GP);
+                                           disableButton(_sellButton, true);
+
+                                           //Remove sold items
+                                           Array<Cell> cells = _inventorySlotTable.getCells();
+                                           for( int i = 0; i < cells.size; i++){
+                                               InventorySlot inventorySlot = (InventorySlot)cells.get(i).getActor();
+                                               if( inventorySlot == null ) continue;
+                                               if( inventorySlot.hasItem() &&
+                                                       inventorySlot.getTopInventoryItem().getName().equalsIgnoreCase(PLAYER_INVENTORY)){
+                                                   inventorySlot.clearAllInventoryItems(false);
+                                               }
+                                           }
+                                       }
+                                   }
+                                }
+        );
     }
 
     public TextButton getCloseButton(){
@@ -161,23 +213,22 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver{
         switch(event)
         {
             case ADDED_ITEM:
+                //moving from player inventory to store inventory to sell
                 if( slot.getTopInventoryItem().getName().equalsIgnoreCase(PLAYER_INVENTORY) &&
                         slot.getName().equalsIgnoreCase(STORE_INVENTORY) ) {
                     _tradeInVal += slot.getTopInventoryItem().getTradeValue();
                     _sellTotalLabel.setText(SELL + " : " + _tradeInVal + GP);
                     if( _tradeInVal > 0 ) {
-                        _sellButton.setDisabled(false);
-                        _sellButton.setTouchable(Touchable.enabled);
+                        disableButton(_sellButton, false);
                     }
                 }
-
+                //moving from store inventory to player inventory to buy
                 if( slot.getTopInventoryItem().getName().equalsIgnoreCase(STORE_INVENTORY) &&
                         slot.getName().equalsIgnoreCase(PLAYER_INVENTORY) ) {
                     _fullValue += slot.getTopInventoryItem().getItemValue();
                     _buyTotalLabel.setText(BUY  + " : " +  _fullValue + GP);
-                    if( _fullValue > 0 ) {
-                        _buyButton.setDisabled(false);
-                        _buyButton.setTouchable(Touchable.enabled);
+                    if( _fullValue > 0 && _playerTotal >= _fullValue) {
+                        disableButton(_buyButton, false);
                     }
                 }
                 break;
@@ -187,8 +238,7 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver{
                     _tradeInVal -= slot.getTopInventoryItem().getTradeValue();
                     _sellTotalLabel.setText(SELL  + " : " +  _tradeInVal + GP);
                     if( _tradeInVal <= 0 ) {
-                        _sellButton.setDisabled(true);
-                        _sellButton.setTouchable(Touchable.disabled);
+                        disableButton(_sellButton, true);
                     }
                 }
                 if( slot.getTopInventoryItem().getName().equalsIgnoreCase(STORE_INVENTORY) &&
@@ -196,12 +246,50 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver{
                     _fullValue -= slot.getTopInventoryItem().getItemValue();
                     _buyTotalLabel.setText(BUY  + " : " +  _fullValue + GP);
                     if( _fullValue <= 0 ) {
-                        _buyButton.setDisabled(true);
-                        _buyButton.setTouchable(Touchable.disabled);
+                        disableButton(_buyButton, true);
                     }
                 }
 
                 break;
+        }
+    }
+
+    public void setPlayerGP(int value){
+        _playerTotal = value;
+        _playerTotalGP.setText(PLAYER_TOTAL + " : " + _playerTotal +  GP);
+    }
+
+    private void disableButton(Button button, boolean disable){
+        if( disable ){
+            button.setDisabled(true);
+            button.setTouchable(Touchable.disabled);
+        }else{
+            button.setDisabled(false);
+            button.setTouchable(Touchable.enabled);
+        }
+    }
+
+    @Override
+    public void addObserver(StoreInventoryObserver storeObserver) {
+        _observers.add(storeObserver);
+    }
+
+    @Override
+    public void removeObserver(StoreInventoryObserver storeObserver) {
+        _observers.removeValue(storeObserver, true);
+    }
+
+    @Override
+    public void removeAllObservers() {
+        for(StoreInventoryObserver observer: _observers){
+            _observers.removeValue(observer, true);
+        }
+    }
+
+    @Override
+    public void notify(String value, StoreInventoryObserver.StoreInventoryEvent event) {
+        for(StoreInventoryObserver observer: _observers){
+            observer.onNotify(value, event);
         }
     }
 }

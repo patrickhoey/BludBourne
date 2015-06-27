@@ -20,6 +20,7 @@ public class MapManager implements ProfileObserver {
     private Entity _currentSelectedEntity = null;
 
     public MapManager(){
+        ProfileManager.getInstance().addObserver(this);
     }
 
     @Override

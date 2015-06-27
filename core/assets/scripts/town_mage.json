@@ -22,8 +22,26 @@ inventory : [
 	{
 		value: POTIONS01
 	},
+		{
+		value: POTIONS01
+	},
+	{
+		value: POTIONS01
+	},
 	{
 		value: POTIONS02
+	},
+	{
+		value: POTIONS02
+	},
+	{
+		value: POTIONS02
+	},
+	{
+		value: POTIONS03
+	},
+	{
+		value: POTIONS03
 	},
 	{
 		value: POTIONS03
@@ -32,7 +50,16 @@ inventory : [
 		value: SCROLL01
 	},
 	{
+		value: SCROLL01
+	},
+	{
 		value: SCROLL02
+	},
+	{
+		value: SCROLL02
+	},
+	{
+		value: SCROLL03
 	},
 	{
 		value: SCROLL03

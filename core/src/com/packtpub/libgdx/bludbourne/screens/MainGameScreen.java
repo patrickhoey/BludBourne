@@ -79,11 +79,6 @@ public class MainGameScreen implements Screen {
 		_multiplexer.addProcessor(_playerHUD.getStage());
 		_multiplexer.addProcessor(_player.getInputProcessor());
 		Gdx.input.setInputProcessor(_multiplexer);
-
-		ProfileManager.getInstance().addObserver(_playerHUD);
-		ProfileManager.getInstance().addObserver(_mapMgr);
-
-		_player.registerObserver(_playerHUD);
 	}
 
 	@Override

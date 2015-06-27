@@ -22,7 +22,7 @@ public class InventorySlotSource extends Source {
         Payload payload = new Payload();
 
         _sourceSlot = (InventorySlot)getActor().getParent();
-        _sourceSlot.decrementItemCount();
+        _sourceSlot.decrementItemCount(true);
 
         payload.setDragActor(getActor());
         _dragAndDrop.setDragActorPosition(-x, -y + getActor().getHeight());

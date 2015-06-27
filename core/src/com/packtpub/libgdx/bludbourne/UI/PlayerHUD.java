@@ -22,7 +22,7 @@ import com.packtpub.libgdx.bludbourne.dialog.ConversationGraphObserver;
 import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 import com.packtpub.libgdx.bludbourne.profile.ProfileObserver;
 
-public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,ConversationGraphObserver {
+public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,ConversationGraphObserver,StoreInventoryObserver, StatusObserver {
     private static final String TAG = PlayerHUD.class.getSimpleName();
 
     private Stage _stage;
@@ -85,6 +85,13 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
             _stage.addActor(actor);
         }
 
+        //Observers
+        ProfileManager.getInstance().addObserver(this);
+        _player.registerObserver(this);
+        _statusUI.addObserver(this);
+        _storeInventoryUI.addObserver(this);
+
+        //Listeners
         ImageButton inventoryButton = _statusUI.getInventoryButton();
         inventoryButton.addListener(new ClickListener() {
             public void clicked (InputEvent event, float x, float y) {
@@ -137,10 +144,19 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                     InventoryUI.populateInventory(_inventoryUI.getEquipSlotTable(), equipInventory, _inventoryUI.getDragAndDrop());
                 }
 
+                //Check gold
+                int goldVal = profileManager.getProperty("currentPlayerGP", Integer.class);
+                if( goldVal < 0 ){
+                    //start the player with some money
+                    goldVal = 20;
+                }
+                _statusUI.setGoldValue(goldVal);
+
                 break;
             case SAVING_PROFILE:
-                profileManager.setProperty("playerInventory", _inventoryUI.getInventory(_inventoryUI.getInventorySlotTable()));
-                profileManager.setProperty("playerEquipInventory", _inventoryUI.getInventory(_inventoryUI.getEquipSlotTable()));
+                profileManager.setProperty("playerInventory", InventoryUI.getInventory(_inventoryUI.getInventorySlotTable()));
+                profileManager.setProperty("playerEquipInventory", InventoryUI.getInventory(_inventoryUI.getEquipSlotTable()));
+                profileManager.setProperty("currentPlayerGP", _statusUI.getGoldValue() );
                 break;
             default:
                 break;
@@ -181,7 +197,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                     break;
                 }
 
-                Array<InventoryItemLocation> inventory =  _inventoryUI.getInventory(_inventoryUI.getInventorySlotTable());
+                Array<InventoryItemLocation> inventory =  InventoryUI.getInventory(_inventoryUI.getInventorySlotTable());
                 _storeInventoryUI.loadPlayerInventory(inventory);
 
                 Array<InventoryItem.ItemTypeID> items  = selectedEntity.getEntityConfig().getInventory();
@@ -201,6 +217,32 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 _mapMgr.clearCurrentSelectedMapEntity();
                 break;
             case NONE:
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onNotify(String value, StoreInventoryEvent event) {
+        switch (event) {
+            case PLAYER_GP_TOTAL_UPDATED:
+                int val = Integer.valueOf(value);
+                _statusUI.setGoldValue(val);
+                break;
+            case PLAYER_INVENTORY_UPDATED:
+                //_json.fromJson(value);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onNotify(int value, StatusEvent event) {
+        switch(event) {
+            case UPDATED_GP:
+                _storeInventoryUI.setPlayerGP(value);
                 break;
             default:
                 break;

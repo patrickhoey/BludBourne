@@ -46,24 +46,29 @@ public class InventorySlot extends Stack implements InventorySlotSubject {
         _defaultBackground.add(_customBackgroundDecal);
     }
 
-    public void decrementItemCount() {
+    public void decrementItemCount(boolean sendRemoveNotification) {
         _numItemsVal--;
         _numItemsLabel.setText(String.valueOf(_numItemsVal));
         if( _defaultBackground.getChildren().size == 1 ){
             _defaultBackground.add(_customBackgroundDecal);
         }
         checkVisibilityOfItemCount();
-        notify(this, InventorySlotObserver.SlotEvent.REMOVED_ITEM);
+        if( sendRemoveNotification ){
+            notify(this, InventorySlotObserver.SlotEvent.REMOVED_ITEM);
+        }
+
     }
 
-    public void incrementItemCount() {
+    public void incrementItemCount(boolean sendAddNotification) {
         _numItemsVal++;
         _numItemsLabel.setText(String.valueOf(_numItemsVal));
         if( _defaultBackground.getChildren().size > 1 ){
             _defaultBackground.getChildren().pop();
         }
         checkVisibilityOfItemCount();
-        notify(this, InventorySlotObserver.SlotEvent.ADDED_ITEM);
+        if( sendAddNotification ){
+            notify(this, InventorySlotObserver.SlotEvent.ADDED_ITEM);
+        }
     }
 
     @Override
@@ -75,7 +80,7 @@ public class InventorySlot extends Stack implements InventorySlotSubject {
         }
 
         if( !actor.equals(_defaultBackground) && !actor.equals(_numItemsLabel) ) {
-            incrementItemCount();
+            incrementItemCount(true);
         }
     }
 
@@ -88,7 +93,7 @@ public class InventorySlot extends Stack implements InventorySlotSubject {
             }
 
             if( !actor.equals(_defaultBackground) && !actor.equals(_numItemsLabel) ) {
-                incrementItemCount();
+                incrementItemCount(true);
             }
         }
     }
@@ -99,19 +104,19 @@ public class InventorySlot extends Stack implements InventorySlotSubject {
             SnapshotArray<Actor> arrayChildren = this.getChildren();
             int numInventoryItems =  arrayChildren.size - 2;
             for(int i = 0; i < numInventoryItems; i++) {
-                decrementItemCount();
+                decrementItemCount(true);
                 items.add(arrayChildren.pop());
             }
         }
         return items;
     }
 
-    public void clearAllInventoryItems() {
+    public void clearAllInventoryItems(boolean sendRemoveNotifications) {
         if( hasItem() ){
             SnapshotArray<Actor> arrayChildren = this.getChildren();
             int numInventoryItems =  getNumItems();
             for(int i = 0; i < numInventoryItems; i++) {
-                decrementItemCount();
+                decrementItemCount(sendRemoveNotifications);
                 arrayChildren.pop();
             }
         }

@@ -142,7 +142,7 @@ public class InventoryUI extends Window {
         for( int i = 0; i < cells.size; i++){
             InventorySlot inventorySlot = (InventorySlot)cells.get(i).getActor();
             if( inventorySlot == null ) continue;
-            inventorySlot.clearAllInventoryItems();
+            inventorySlot.clearAllInventoryItems(true);
         }
 
         for(int i = 0; i < inventoryItems.size; i++){
