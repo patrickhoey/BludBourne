@@ -35,6 +35,9 @@ public class InventorySlot extends Stack implements InventorySlotSubject {
 
         _defaultBackground.add(image);
 
+        _defaultBackground.setName("background");
+        _numItemsLabel.setName("numitems");
+
         this.add(_defaultBackground);
         this.add(_numItemsLabel);
     }
@@ -169,6 +172,20 @@ public class InventorySlot extends Stack implements InventorySlotSubject {
         if( hasChildren() ){
             SnapshotArray<Actor> items = this.getChildren();
             return items.size - 2;
+        }
+        return 0;
+    }
+
+    public int getNumItems(String name){
+        if( hasChildren() ){
+            SnapshotArray<Actor> items = this.getChildren();
+            int totalFilteredSize = 0;
+            for( Actor actor: items ){
+                if( actor.getName().equalsIgnoreCase(name)){
+                    totalFilteredSize++;
+                }
+            }
+            return totalFilteredSize;
         }
         return 0;
     }

@@ -180,16 +180,41 @@ public class InventoryUI extends Window {
         return items;
     }
 
-    public static Array<InventoryItemLocation> removeInventoryItems(String name, Table inventoryTable){
-        Array<Cell> cells = inventoryTable.getCells();
+    public static Array<InventoryItemLocation> getInventory(Table targetTable, String name){
+        Array<Cell> cells = targetTable.getCells();
         Array<InventoryItemLocation> items = new Array<InventoryItemLocation>();
         for(int i = 0; i < cells.size; i++){
             InventorySlot inventorySlot =  ((InventorySlot)cells.get(i).getActor());
             if( inventorySlot == null ) continue;
-            inventorySlot.removeAllInventoryItemsWithName(name);
+            int numItems = inventorySlot.getNumItems(name);
+            if( numItems > 0 ){
+                items.add(new InventoryItemLocation(
+                        i,
+                        inventorySlot.getTopInventoryItem().getItemTypeID().toString(),
+                        numItems));
+            }
         }
         return items;
     }
+
+    public static Array<InventoryItemLocation> getInventory(Table sourceTable, Table targetTable, String name){
+        Array<InventoryItemLocation> items = getInventory(targetTable, name);
+        Array<Cell> sourceCells = sourceTable.getCells();
+        int index = 0;
+        for( InventoryItemLocation item : items ) {
+            for (; index < sourceCells.size; index++) {
+                InventorySlot inventorySlot = ((InventorySlot) sourceCells.get(index).getActor());
+                if (inventorySlot == null) continue;
+                int numItems = inventorySlot.getNumItems(name);
+                if (numItems == 0) {
+                    item.setLocationIndex(index);
+                    break;
+                }
+            }
+        }
+        return items;
+    }
+
 
     public static void setInventoryItemNames(Table targetTable, String name){
         Array<Cell> cells = targetTable.getCells();

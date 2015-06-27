@@ -157,9 +157,17 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver, S
                                                        StoreInventoryUI.this.notify(Integer.toString(_playerTotal), StoreInventoryEvent.PLAYER_GP_TOTAL_UPDATED);
                                                        _fullValue = 0;
                                                        _buyTotalLabel.setText(BUY  + " : " +  _fullValue + GP);
+
                                                        disableButton(_buyButton, true);
+                                                       if( _tradeInVal > 0 ) {
+                                                           disableButton(_sellButton, false);
+                                                       }else{
+                                                           disableButton(_sellButton, true);
+                                                       }
+
                                                        //Make sure we update the owner of the items
                                                        InventoryUI.setInventoryItemNames(_playerInventorySlotTable, PLAYER_INVENTORY);
+                                                       savePlayerInventory();
                                                    }
                                                }
                                            }
@@ -173,7 +181,13 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver, S
                                            StoreInventoryUI.this.notify(Integer.toString(_playerTotal), StoreInventoryEvent.PLAYER_GP_TOTAL_UPDATED);
                                            _tradeInVal = 0;
                                            _sellTotalLabel.setText(SELL  + " : " +  _tradeInVal + GP);
+
                                            disableButton(_sellButton, true);
+                                           if( _fullValue > 0 && _playerTotal >= _fullValue) {
+                                               disableButton(_buyButton, false);
+                                           }else{
+                                               disableButton(_buyButton, true);
+                                           }
 
                                            //Remove sold items
                                            Array<Cell> cells = _inventorySlotTable.getCells();
@@ -185,6 +199,7 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver, S
                                                    inventorySlot.clearAllInventoryItems(false);
                                                }
                                            }
+                                           savePlayerInventory();
                                        }
                                    }
                                 }
@@ -212,9 +227,10 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver, S
     }
 
     public void savePlayerInventory(){
-        InventoryUI.removeInventoryItems(STORE_INVENTORY, _playerInventorySlotTable);
-        Array<InventoryItemLocation> items = InventoryUI.getInventory(_playerInventorySlotTable);
-        StoreInventoryUI.this.notify(_json.toJson(items), StoreInventoryEvent.PLAYER_INVENTORY_UPDATED);
+        Array<InventoryItemLocation> playerItemsInPlayerInventory = InventoryUI.getInventory(_playerInventorySlotTable, PLAYER_INVENTORY);
+        Array<InventoryItemLocation> playerItemsInStoreInventory = InventoryUI.getInventory(_playerInventorySlotTable, _inventorySlotTable, PLAYER_INVENTORY);
+        playerItemsInPlayerInventory.addAll(playerItemsInStoreInventory);
+        StoreInventoryUI.this.notify(_json.toJson(playerItemsInPlayerInventory), StoreInventoryEvent.PLAYER_INVENTORY_UPDATED);
     }
 
     @Override
@@ -227,44 +243,48 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver, S
                         slot.getName().equalsIgnoreCase(STORE_INVENTORY) ) {
                     _tradeInVal += slot.getTopInventoryItem().getTradeValue();
                     _sellTotalLabel.setText(SELL + " : " + _tradeInVal + GP);
-                    if( _tradeInVal > 0 ) {
-                        disableButton(_sellButton, false);
-                    }else{
-                        disableButton(_sellButton, true);
-                    }
                 }
                 //moving from store inventory to player inventory to buy
                 if( slot.getTopInventoryItem().getName().equalsIgnoreCase(STORE_INVENTORY) &&
                         slot.getName().equalsIgnoreCase(PLAYER_INVENTORY) ) {
                     _fullValue += slot.getTopInventoryItem().getItemValue();
                     _buyTotalLabel.setText(BUY  + " : " +  _fullValue + GP);
-                    if( _fullValue > 0 && _playerTotal >= _fullValue) {
-                        disableButton(_buyButton, false);
-                    }else{
-                        disableButton(_buyButton, true);
-                    }
                 }
+                if( _tradeInVal > 0 ) {
+                    disableButton(_sellButton, false);
+                }else{
+                    disableButton(_sellButton, true);
+                }
+
+                if( _fullValue > 0 && _playerTotal >= _fullValue) {
+                    disableButton(_buyButton, false);
+                }else{
+                    disableButton(_buyButton, true);
+                }
+
                 break;
             case REMOVED_ITEM:
                 if( slot.getTopInventoryItem().getName().equalsIgnoreCase(PLAYER_INVENTORY) &&
                         slot.getName().equalsIgnoreCase(STORE_INVENTORY) ) {
                     _tradeInVal -= slot.getTopInventoryItem().getTradeValue();
                     _sellTotalLabel.setText(SELL  + " : " +  _tradeInVal + GP);
-                    if( _tradeInVal <= 0 ) {
-                        disableButton(_sellButton, true);
-                    }else{
-                        disableButton(_sellButton, false);
-                    }
                 }
                 if( slot.getTopInventoryItem().getName().equalsIgnoreCase(STORE_INVENTORY) &&
                         slot.getName().equalsIgnoreCase(PLAYER_INVENTORY) ) {
                     _fullValue -= slot.getTopInventoryItem().getItemValue();
                     _buyTotalLabel.setText(BUY  + " : " +  _fullValue + GP);
-                    if( _fullValue <= 0 || _playerTotal < _fullValue) {
-                        disableButton(_buyButton, true);
-                    }else{
-                        disableButton(_buyButton, false);
-                    }
+                }
+
+                if( _tradeInVal <= 0 ) {
+                    disableButton(_sellButton, true);
+                }else{
+                    disableButton(_sellButton, false);
+                }
+
+                if( _fullValue <= 0 || _playerTotal < _fullValue) {
+                    disableButton(_buyButton, true);
+                }else{
+                    disableButton(_buyButton, false);
                 }
 
                 break;
