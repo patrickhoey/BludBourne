@@ -136,15 +136,19 @@ public class InventoryUI extends Window {
         return _equipSlots;
     }
 
-    public static void populateInventory(Table targetTable, Array<InventoryItemLocation> inventoryItems, DragAndDrop draganddrop){
+    public static void clearInventoryItems(Table targetTable){
         Array<Cell> cells = targetTable.getCells();
-
         for( int i = 0; i < cells.size; i++){
             InventorySlot inventorySlot = (InventorySlot)cells.get(i).getActor();
             if( inventorySlot == null ) continue;
-            inventorySlot.clearAllInventoryItems(true);
+            inventorySlot.clearAllInventoryItems(false);
         }
+    }
 
+    public static void populateInventory(Table targetTable, Array<InventoryItemLocation> inventoryItems, DragAndDrop draganddrop){
+        clearInventoryItems(targetTable);
+
+        Array<Cell> cells = targetTable.getCells();
         for(int i = 0; i < inventoryItems.size; i++){
             InventoryItemLocation itemLocation = inventoryItems.get(i);
             ItemTypeID itemTypeID = ItemTypeID.valueOf(itemLocation.getItemTypeAtLocation());

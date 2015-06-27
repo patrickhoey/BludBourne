@@ -254,7 +254,7 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver, S
                         slot.getName().equalsIgnoreCase(PLAYER_INVENTORY) ) {
                     _fullValue -= slot.getTopInventoryItem().getItemValue();
                     _buyTotalLabel.setText(BUY  + " : " +  _fullValue + GP);
-                    if( _fullValue <= 0 ) {
+                    if( _fullValue <= 0 || _playerTotal < _fullValue) {
                         disableButton(_buyButton, true);
                     }
                 }

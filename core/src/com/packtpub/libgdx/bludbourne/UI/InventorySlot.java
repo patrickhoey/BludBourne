@@ -128,6 +128,7 @@ public class InventorySlot extends Stack implements InventorySlotSubject {
             for(int i = 2; i < arrayChildren.size; i++) {
                 String itemName = arrayChildren.get(i).getName();
                 if( itemName.equalsIgnoreCase(name)){
+                    decrementItemCount(true);
                     arrayChildren.removeIndex(i);
                 }
             }
