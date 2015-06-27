@@ -229,6 +229,8 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver, S
                     _sellTotalLabel.setText(SELL + " : " + _tradeInVal + GP);
                     if( _tradeInVal > 0 ) {
                         disableButton(_sellButton, false);
+                    }else{
+                        disableButton(_sellButton, true);
                     }
                 }
                 //moving from store inventory to player inventory to buy
@@ -238,6 +240,8 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver, S
                     _buyTotalLabel.setText(BUY  + " : " +  _fullValue + GP);
                     if( _fullValue > 0 && _playerTotal >= _fullValue) {
                         disableButton(_buyButton, false);
+                    }else{
+                        disableButton(_buyButton, true);
                     }
                 }
                 break;
@@ -248,6 +252,8 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver, S
                     _sellTotalLabel.setText(SELL  + " : " +  _tradeInVal + GP);
                     if( _tradeInVal <= 0 ) {
                         disableButton(_sellButton, true);
+                    }else{
+                        disableButton(_sellButton, false);
                     }
                 }
                 if( slot.getTopInventoryItem().getName().equalsIgnoreCase(STORE_INVENTORY) &&
@@ -256,6 +262,8 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver, S
                     _buyTotalLabel.setText(BUY  + " : " +  _fullValue + GP);
                     if( _fullValue <= 0 || _playerTotal < _fullValue) {
                         disableButton(_buyButton, true);
+                    }else{
+                        disableButton(_buyButton, false);
                     }
                 }
 

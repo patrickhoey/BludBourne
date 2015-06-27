@@ -115,7 +115,7 @@ public class InventorySlot extends Stack implements InventorySlotSubject {
         if( hasItem() ){
             SnapshotArray<Actor> arrayChildren = this.getChildren();
             //skip first two elements
-            for(int i = 2; i < arrayChildren.size; i++) {
+            for(int i = arrayChildren.size - 1; i > 1 ; i--) {
                 arrayChildren.get(i).setName(name);
             }
         }
@@ -125,7 +125,7 @@ public class InventorySlot extends Stack implements InventorySlotSubject {
         if( hasItem() ){
             SnapshotArray<Actor> arrayChildren = this.getChildren();
             //skip first two elements
-            for(int i = 2; i < arrayChildren.size; i++) {
+            for(int i = arrayChildren.size - 1; i > 1 ; i--) {
                 String itemName = arrayChildren.get(i).getName();
                 if( itemName.equalsIgnoreCase(name)){
                     decrementItemCount(true);
