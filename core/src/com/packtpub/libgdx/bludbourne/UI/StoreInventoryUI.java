@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
 import com.packtpub.libgdx.bludbourne.Utility;
 import com.packtpub.libgdx.bludbourne.UI.StoreInventoryObserver.StoreInventoryEvent;
 
@@ -50,6 +51,8 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver, S
 
     private Array<StoreInventoryObserver> _observers;
 
+    private Json _json;
+
     private static String SELL = "SELL";
     private static String BUY = "BUY";
     private static String GP = " GP";
@@ -59,6 +62,7 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver, S
         super("Store Inventory", Utility.STATUSUI_SKIN, "solidbackground");
 
         _observers = new Array<StoreInventoryObserver>();
+        _json = new Json();
 
         this.setFillParent(true);
 
@@ -154,10 +158,9 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver, S
                                                        _fullValue = 0;
                                                        _buyTotalLabel.setText(BUY  + " : " +  _fullValue + GP);
                                                        disableButton(_buyButton, true);
+                                                       //Make sure we update the owner of the items
+                                                       InventoryUI.setInventoryItemNames(_playerInventorySlotTable, PLAYER_INVENTORY);
                                                    }
-                                                   //serialize
-                                                   //Array<InventoryItemLocation> items = InventoryUI.getInventory(_playerInventorySlotTable);
-                                                   //InventoryUI.populateInventory(_inventoryUI.getInventorySlotTable(), items, _inventoryUI.getDragAndDrop());
                                                }
                                            }
         );
@@ -206,6 +209,12 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver, S
 
     public void loadStoreInventory(Array<InventoryItemLocation> storeInventoryItems){
         InventoryUI.populateInventory(_inventorySlotTable, storeInventoryItems, _dragAndDrop);
+    }
+
+    public void savePlayerInventory(){
+        InventoryUI.removeInventoryItems(STORE_INVENTORY, _playerInventorySlotTable);
+        Array<InventoryItemLocation> items = InventoryUI.getInventory(_playerInventorySlotTable);
+        StoreInventoryUI.this.notify(_json.toJson(items), StoreInventoryEvent.PLAYER_INVENTORY_UPDATED);
     }
 
     @Override

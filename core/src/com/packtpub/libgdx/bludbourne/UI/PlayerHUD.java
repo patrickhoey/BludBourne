@@ -111,6 +111,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
         _storeInventoryUI.getCloseButton().addListener(new ClickListener() {
                                                          @Override
                                                          public void clicked(InputEvent event, float x, float y) {
+                                                             _storeInventoryUI.savePlayerInventory();
                                                              _storeInventoryUI.setVisible(false);
                                                              _mapMgr.clearCurrentSelectedMapEntity();
                                                          }
@@ -126,18 +127,23 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
     public void onNotify(ProfileManager profileManager, ProfileEvent event) {
         switch(event){
             case PROFILE_LOADED:
-                Array<InventoryItemLocation> inventory = profileManager.getProperty("playerInventory", Array.class);
-                if( inventory != null && inventory.size > 0 ){
-                    InventoryUI.populateInventory(_inventoryUI.getInventorySlotTable(), inventory, _inventoryUI.getDragAndDrop());
-                }else{
-                    //add default items if nothing is found
+                //if goldval is negative, this is our first save
+                int goldVal = profileManager.getProperty("currentPlayerGP", Integer.class);
+                boolean firstTime = goldVal<0?true:false;
+
+                if( firstTime ){
+                    //add default items if first time
                     Array<ItemTypeID> items = _player.getEntityConfig().getInventory();
                     Array<InventoryItemLocation> itemLocations = new Array<InventoryItemLocation>();
                     for( int i = 0; i < items.size; i++){
                         itemLocations.add(new InventoryItemLocation(i, items.get(i).toString(), 1));
                     }
                     InventoryUI.populateInventory(_inventoryUI.getInventorySlotTable(), itemLocations, _inventoryUI.getDragAndDrop());
+                    profileManager.setProperty("playerInventory", InventoryUI.getInventory(_inventoryUI.getInventorySlotTable()));
                 }
+
+                Array<InventoryItemLocation> inventory = profileManager.getProperty("playerInventory", Array.class);
+                InventoryUI.populateInventory(_inventoryUI.getInventorySlotTable(), inventory, _inventoryUI.getDragAndDrop());
 
                 Array<InventoryItemLocation> equipInventory = profileManager.getProperty("playerEquipInventory", Array.class);
                 if( equipInventory != null && equipInventory.size > 0 ){
@@ -145,8 +151,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 }
 
                 //Check gold
-                int goldVal = profileManager.getProperty("currentPlayerGP", Integer.class);
-                if( goldVal < 0 ){
+                if( firstTime){
                     //start the player with some money
                     goldVal = 20;
                 }
@@ -231,7 +236,8 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 _statusUI.setGoldValue(val);
                 break;
             case PLAYER_INVENTORY_UPDATED:
-                //_json.fromJson(value);
+                Array<InventoryItemLocation> items = _json.fromJson(Array.class, value);
+                InventoryUI.populateInventory(_inventoryUI.getInventorySlotTable(), items, _inventoryUI.getDragAndDrop());
                 break;
             default:
                 break;

@@ -111,6 +111,30 @@ public class InventorySlot extends Stack implements InventorySlotSubject {
         return items;
     }
 
+    public void updateAllInventoryItemNames(String name){
+        if( hasItem() ){
+            SnapshotArray<Actor> arrayChildren = this.getChildren();
+            //skip first two elements
+            for(int i = 2; i < arrayChildren.size; i++) {
+                arrayChildren.get(i).setName(name);
+            }
+        }
+    }
+
+    public void removeAllInventoryItemsWithName(String name){
+        if( hasItem() ){
+            SnapshotArray<Actor> arrayChildren = this.getChildren();
+            //skip first two elements
+            for(int i = 2; i < arrayChildren.size; i++) {
+                String itemName = arrayChildren.get(i).getName();
+                if( itemName.equalsIgnoreCase(name)){
+                    arrayChildren.removeIndex(i);
+                }
+            }
+        }
+    }
+
+
     public void clearAllInventoryItems(boolean sendRemoveNotifications) {
         if( hasItem() ){
             SnapshotArray<Actor> arrayChildren = this.getChildren();
