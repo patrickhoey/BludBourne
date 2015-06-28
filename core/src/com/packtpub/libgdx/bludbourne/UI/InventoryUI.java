@@ -145,6 +145,17 @@ public class InventoryUI extends Window {
         }
     }
 
+    public static Array<InventoryItemLocation> removeInventoryItems(String name, Table inventoryTable){
+        Array<Cell> cells = inventoryTable.getCells();
+        Array<InventoryItemLocation> items = new Array<InventoryItemLocation>();
+        for(int i = 0; i < cells.size; i++){
+            InventorySlot inventorySlot =  ((InventorySlot)cells.get(i).getActor());
+            if( inventorySlot == null ) continue;
+            inventorySlot.removeAllInventoryItemsWithName(name);
+        }
+        return items;
+    }
+
     public static void populateInventory(Table targetTable, Array<InventoryItemLocation> inventoryItems, DragAndDrop draganddrop){
         clearInventoryItems(targetTable);
 
