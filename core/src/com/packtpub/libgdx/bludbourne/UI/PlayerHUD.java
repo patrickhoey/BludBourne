@@ -112,6 +112,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                                                          @Override
                                                          public void clicked(InputEvent event, float x, float y) {
                                                              _storeInventoryUI.savePlayerInventory();
+                                                             _storeInventoryUI.cleanupStoreInventory();
                                                              _storeInventoryUI.setVisible(false);
                                                              _mapMgr.clearCurrentSelectedMapEntity();
                                                          }

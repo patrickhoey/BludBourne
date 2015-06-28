@@ -221,6 +221,9 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver, S
         Array<InventoryItemLocation> playerItemsInStoreInventory = InventoryUI.getInventory(_playerInventorySlotTable, _inventorySlotTable, PLAYER_INVENTORY);
         playerItemsInPlayerInventory.addAll(playerItemsInStoreInventory);
         StoreInventoryUI.this.notify(_json.toJson(playerItemsInPlayerInventory), StoreInventoryEvent.PLAYER_INVENTORY_UPDATED);
+    }
+
+    public void cleanupStoreInventory(){
         InventoryUI.removeInventoryItems(STORE_INVENTORY, _playerInventorySlotTable);
     }
 
