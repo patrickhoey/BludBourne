@@ -9,7 +9,7 @@ import java.util.Set;
 public class ConversationGraph extends ConversationGraphSubject {
     private Hashtable<String, Conversation> conversations;
     private Hashtable<String, ArrayList<ConversationChoice>> associatedChoices;
-    private String currentConversationID;
+    private String currentConversationID = null;
 
     public ConversationGraph(){
 
@@ -48,7 +48,8 @@ public class ConversationGraph extends ConversationGraphSubject {
         //Can we reach the new conversation from the current one?
 
         //Make sure we check case where the current node is checked against itself
-        if( currentConversationID.equalsIgnoreCase(id) ||
+        if(     currentConversationID == null ||
+                currentConversationID.equalsIgnoreCase(id) ||
                 isReachable(currentConversationID, id) ){
             currentConversationID = id;
         }else{
