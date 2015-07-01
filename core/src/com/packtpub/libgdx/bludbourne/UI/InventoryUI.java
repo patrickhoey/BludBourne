@@ -225,6 +225,10 @@ public class InventoryUI extends Window {
                     break;
                 }
             }
+            if( index == sourceCells.size ){
+                //System.out.println("[index] " + index + " itemtype: " + item.getItemTypeAtLocation() + " numItems " + item.getNumberItemsAtLocation());
+                item.setLocationIndex(index-1);
+            }
         }
         return items;
     }
