@@ -225,6 +225,7 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver, S
 
     public void cleanupStoreInventory(){
         InventoryUI.removeInventoryItems(STORE_INVENTORY, _playerInventorySlotTable);
+        InventoryUI.removeInventoryItems(PLAYER_INVENTORY, _inventorySlotTable);
     }
 
     @Override

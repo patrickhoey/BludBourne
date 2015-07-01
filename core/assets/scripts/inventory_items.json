@@ -234,21 +234,21 @@
 	itemAttributes: 5
 	itemUseType: 1
 	itemTypeID: SCROLL01
-	itemShortDescription: Potion that restores 10HP
+	itemShortDescription: Scroll that restores 10HP
 	itemValue: 10
 },
 {
 	itemAttributes: 5
 	itemUseType: 1
 	itemTypeID: SCROLL02
-	itemShortDescription: Potion that restores 50HP
+	itemShortDescription: Scroll that restores 50HP
 	itemValue: 50
 },
 {
 	itemAttributes: 5
 	itemUseType: 1
 	itemTypeID: SCROLL03
-	itemShortDescription: Potion that restores 100HP
+	itemShortDescription: Scroll that restores 100HP
 	itemValue: 100
 },
 

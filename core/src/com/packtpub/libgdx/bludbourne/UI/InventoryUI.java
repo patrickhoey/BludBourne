@@ -199,6 +199,7 @@ public class InventoryUI extends Window {
             if( inventorySlot == null ) continue;
             int numItems = inventorySlot.getNumItems(name);
             if( numItems > 0 ){
+                //System.out.println("[i] " + i + " itemtype: " + inventorySlot.getTopInventoryItem().getItemTypeID().toString() + " numItems " + numItems);
                 items.add(new InventoryItemLocation(
                         i,
                         inventorySlot.getTopInventoryItem().getItemTypeID().toString(),
@@ -219,6 +220,8 @@ public class InventoryUI extends Window {
                 int numItems = inventorySlot.getNumItems(name);
                 if (numItems == 0) {
                     item.setLocationIndex(index);
+                    //System.out.println("[index] " + index + " itemtype: " + item.getItemTypeAtLocation() + " numItems " + numItems);
+                    index++;
                     break;
                 }
             }
