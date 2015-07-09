@@ -31,7 +31,6 @@ public class ConversationGraph extends ConversationGraphSubject {
         for( Conversation conversation: conversations.values() ){
             associatedChoices.put(conversation.getId(), new ArrayList<ConversationChoice>());
         }
-        this.conversations = conversations;
     }
 
     public ArrayList<ConversationChoice> getCurrentChoices(){
