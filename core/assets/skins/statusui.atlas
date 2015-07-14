@@ -108,9 +108,23 @@ inventory_button_open
   orig: 16, 16
   offset: 0, 0
   index: -1
+quest_book_off
+  rotate: false
+  xy: 331, 4
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+quest_book_on
+  rotate: false
+  xy: 349, 29
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
 textfield
   rotate: false
-  xy: 331, 6
+  xy: 349, 13
   size: 14, 14
   split: 7, 6, 7, 6
   orig: 14, 14
@@ -123,47 +137,47 @@ grey
   orig: 5, 5
   offset: 0, 0
   index: -1
-default-rect-pad
-  rotate: false
-  xy: 331, 1
-  size: 5, 3
-  split: 2, 2, 1, 1
-  orig: 5, 3
-  offset: 0, 0
-  index: -1
-cursor
-  rotate: false
-  xy: 338, 1
-  size: 3, 3
-  split: 1, 1, 1, 1
-  orig: 3, 3
-  offset: 0, 0
-  index: -1
 red
-  rotate: false
-  xy: 348, 40
-  size: 5, 5
-  orig: 5, 5
-  offset: 0, 0
-  index: -1
-default-rect
-  rotate: false
-  xy: 343, 1
-  size: 3, 3
-  split: 1, 1, 1, 1
-  orig: 3, 3
-  offset: 0, 0
-  index: -1
-white
   rotate: false
   xy: 1, 6
   size: 5, 5
   orig: 5, 5
   offset: 0, 0
   index: -1
+default-rect-pad
+  rotate: false
+  xy: 1, 1
+  size: 5, 3
+  split: 2, 2, 1, 1
+  orig: 5, 3
+  offset: 0, 0
+  index: -1
+white
+  rotate: false
+  xy: 349, 6
+  size: 5, 5
+  orig: 5, 5
+  offset: 0, 0
+  index: -1
+cursor
+  rotate: false
+  xy: 349, 1
+  size: 3, 3
+  split: 1, 1, 1, 1
+  orig: 3, 3
+  offset: 0, 0
+  index: -1
+default-rect
+  rotate: false
+  xy: 354, 1
+  size: 3, 3
+  split: 1, 1, 1, 1
+  orig: 3, 3
+  offset: 0, 0
+  index: -1
 selection
   rotate: false
-  xy: 293, 43
+  xy: 331, 1
   size: 1, 1
   orig: 1, 1
   offset: 0, 0

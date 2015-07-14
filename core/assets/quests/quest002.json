@@ -1,0 +1,23 @@
+{
+questTitle : "Herbs for Mother"
+questTasks: {
+	2: {
+		id: 2
+		taskPhrase: Please collect 5 herbs for my sick mother
+	}
+	1: {
+		id: 1
+		taskPhrase: Come back to me with the herbs
+	}
+}
+questTaskDependencies: {
+	1: [
+		{
+			class: com.packtpub.libgdx.bludbourne.quest.QuestTaskDependency
+			sourceId: 1
+			destinationId: 2
+		}
+	]
+	2: []
+}
+}

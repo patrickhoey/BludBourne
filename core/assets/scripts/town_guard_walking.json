@@ -3,6 +3,7 @@ entityID : TOWN_GUARD
 state : IDLE
 direction : DOWN
 conversationConfigPath : "conversations/conversation002.json"
+questConfigPath : ""
 animationConfig: [
 	{
 	    frameDuration: 0.25

@@ -1,0 +1,50 @@
+{
+questTitle : "Beast Feast Leftovers"
+questTasks: {
+	4: {
+		id: 4
+		taskPhrase: Find the area where the Tuskan beast feasts
+	}
+	3: {
+		id: 3
+		taskPhrase: Collect 5 furs
+	}
+	2: {
+		id: 2
+		taskPhrase: Collect 5 horns
+	}
+	1: {
+		id: 1
+		taskPhrase: Come back to me with the items
+	}
+}
+questTaskDependencies: {
+	4: []
+	3: [
+		{
+			class: com.packtpub.libgdx.bludbourne.quest.QuestTaskDependency
+			sourceId: 3
+			destinationId: 4
+		}
+	]
+	2: [
+		{
+			class: com.packtpub.libgdx.bludbourne.quest.QuestTaskDependency
+			sourceId: 2
+			destinationId: 4
+		}
+	]
+	1: [
+		{
+			class: com.packtpub.libgdx.bludbourne.quest.QuestTaskDependency
+			sourceId: 1
+			destinationId: 2
+		}
+		{
+			class: com.packtpub.libgdx.bludbourne.quest.QuestTaskDependency
+			sourceId: 1
+			destinationId: 3
+		}
+	]
+}
+}

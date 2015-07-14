@@ -3,12 +3,23 @@ package com.packtpub.libgdx.bludbourne.quest;
 import com.badlogic.gdx.utils.Json;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Set;
 
 public class QuestGraph {
     private Hashtable<String, QuestTask> questTasks;
     private Hashtable<String, ArrayList<QuestTaskDependency>> questTaskDependencies;
+    private String questTitle;
+
+    public String getQuestTitle() {
+        return questTitle;
+    }
+
+    public void setQuestTitle(String questTitle) {
+        this.questTitle = questTitle;
+    }
 
     public void setTasks(Hashtable<String, QuestTask> questTasks) {
         if( questTasks.size() < 0 ){
@@ -21,6 +32,16 @@ public class QuestGraph {
         for( QuestTask questTask: questTasks.values() ){
             questTaskDependencies.put(questTask.getId(), new ArrayList<QuestTaskDependency>());
         }
+    }
+
+    public ArrayList<QuestTask> getAllQuestTasks(){
+        Enumeration<QuestTask> enumeration = questTasks.elements();
+        return Collections.list(enumeration);
+    }
+
+    public void clear(){
+        questTasks.clear();
+        questTaskDependencies.clear();
     }
 
     public boolean isValid(String taskID){
@@ -90,27 +111,7 @@ public class QuestGraph {
     }
 
     public String toString(){
-        StringBuilder outputString = new StringBuilder();
-        int numberTotalChoices = 0;
-
-        Set<String> keys = questTaskDependencies.keySet();
-        for( String id: keys){
-            outputString.append(String.format("[%s]: ", id));
-            outputString.append(String.format("[%s]: ", getQuestTaskByID(id).getTaskPhrase()));
-
-            for( QuestTaskDependency dependency: questTaskDependencies.get(id)){
-                numberTotalChoices++;
-                outputString.append(String.format("%s ", dependency.getDestinationId()));
-            }
-
-            outputString.append(System.getProperty("line.separator"));
-        }
-
-        outputString.append(String.format("Number quest tasks: %d", questTasks.size()));
-        outputString.append(String.format(", Number of dependencies: %d", numberTotalChoices));
-        outputString.append(System.getProperty("line.separator"));
-
-        return outputString.toString();
+        return questTitle;
     }
 
     public String toJson(){

@@ -13,10 +13,19 @@ public class EntityConfig {
     Entity.Direction direction = Entity.Direction.DOWN;
     String entityID;
     String conversationConfigPath;
+    String questConfigPath;
 
     EntityConfig(){
         animationConfig = new Array<AnimationConfig>();
         inventory = new Array<ItemTypeID>();
+    }
+
+    public String getQuestConfigPath() {
+        return questConfigPath;
+    }
+
+    public void setQuestConfigPath(String questConfigPath) {
+        this.questConfigPath = questConfigPath;
     }
 
     public String getConversationConfigPath() {

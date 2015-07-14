@@ -3,6 +3,7 @@ entityID : TOWN_BLACKSMITH
 state : IMMOBILE
 direction : DOWN
 conversationConfigPath : "conversations/conversation003.json"
+questConfigPath : ""
 inventory : [
 	{
 		value: SHIELD01

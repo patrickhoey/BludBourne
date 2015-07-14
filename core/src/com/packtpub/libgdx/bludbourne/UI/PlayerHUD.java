@@ -21,6 +21,7 @@ import com.packtpub.libgdx.bludbourne.dialog.ConversationGraph;
 import com.packtpub.libgdx.bludbourne.dialog.ConversationGraphObserver;
 import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 import com.packtpub.libgdx.bludbourne.profile.ProfileObserver;
+import com.packtpub.libgdx.bludbourne.quest.QuestGraph;
 
 public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,ConversationGraphObserver,StoreInventoryObserver, StatusObserver {
     private static final String TAG = PlayerHUD.class.getSimpleName();
@@ -34,6 +35,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
     private InventoryUI _inventoryUI;
     private ConversationUI _conversationUI;
     private StoreInventoryUI _storeInventoryUI;
+    private QuestUI _questUI;
 
     private Json _json;
     private MapManager _mapMgr;
@@ -69,6 +71,14 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
         _storeInventoryUI.setVisible(false);
         _storeInventoryUI.setPosition(0, 0);
 
+        _questUI = new QuestUI();
+        _questUI.setMovable(false);
+        _questUI.setVisible(false);
+        _questUI.setPosition(0, _stage.getHeight() / 2);
+        _questUI.setWidth(_stage.getWidth());
+        _questUI.setHeight(_stage.getHeight() / 2);
+
+        _stage.addActor(_questUI);
         _stage.addActor(_storeInventoryUI);
         _stage.addActor(_inventoryUI);
         _stage.addActor(_conversationUI);
@@ -94,8 +104,15 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
         //Listeners
         ImageButton inventoryButton = _statusUI.getInventoryButton();
         inventoryButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                _inventoryUI.setVisible(_inventoryUI.isVisible() ? false : true);
+            }
+        });
+
+        ImageButton questButton = _statusUI.getQuestButton();
+        questButton.addListener(new ClickListener() {
             public void clicked (InputEvent event, float x, float y) {
-                _inventoryUI.setVisible(_inventoryUI.isVisible()?false:true);
+                _questUI.setVisible(_questUI.isVisible()?false:true);
             }
         });
 
@@ -151,6 +168,9 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                     InventoryUI.populateInventory(_inventoryUI.getEquipSlotTable(), equipInventory, _inventoryUI.getDragAndDrop());
                 }
 
+                Array<QuestGraph> quests = profileManager.getProperty("playerQuests", Array.class);
+                _questUI.setQuests(quests);
+
                 //Check gold
                 if( firstTime){
                     //start the player with some money
@@ -160,6 +180,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
 
                 break;
             case SAVING_PROFILE:
+                profileManager.setProperty("playerQuests", _questUI.getQuests());
                 profileManager.setProperty("playerInventory", InventoryUI.getInventory(_inventoryUI.getInventorySlotTable()));
                 profileManager.setProperty("playerEquipInventory", InventoryUI.getInventory(_inventoryUI.getEquipSlotTable()));
                 profileManager.setProperty("currentPlayerGP", _statusUI.getGoldValue() );
@@ -219,6 +240,17 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 _storeInventoryUI.setVisible(true);
                 break;
             case EXIT_CONVERSATION:
+                _conversationUI.setVisible(false);
+                _mapMgr.clearCurrentSelectedMapEntity();
+                break;
+            case ACCEPT_QUEST:
+                Entity currentlySelectedEntity = _mapMgr.getCurrentSelectedMapEntity();
+                if( currentlySelectedEntity == null ){
+                    break;
+                }
+
+                _questUI.addQuest(currentlySelectedEntity.getEntityConfig().getQuestConfigPath());
+
                 _conversationUI.setVisible(false);
                 _mapMgr.clearCurrentSelectedMapEntity();
                 break;

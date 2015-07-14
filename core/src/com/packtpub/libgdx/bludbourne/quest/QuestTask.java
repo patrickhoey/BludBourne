@@ -42,6 +42,10 @@ public class QuestTask {
         return Boolean.getBoolean(taskProperties.get(IS_TASK_COMPLETE).toString());
     }
 
+    public String toString(){
+        return taskPhrase;
+    }
+
 
 
 }

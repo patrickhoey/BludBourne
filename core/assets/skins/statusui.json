@@ -20,7 +20,8 @@
 		"solidbackground": { "titleFont": "default-font", "background": "dialog" },
 	},
 	"com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle": {
-		"inventory-button": { "imageUp": "inventory_button_closed", "imageChecked": "inventory_button_open" }
+		"inventory-button": { "imageUp": "inventory_button_closed", "imageChecked": "inventory_button_open" },
+		"quest-button": { "imageUp": "quest_book_off", "imageChecked": "quest_book_on" },
 	},
 	"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
 		default: { down: default-round-down, up: default-round, font: default-font, fontColor: white },

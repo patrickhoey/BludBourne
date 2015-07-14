@@ -15,6 +15,7 @@ public class StatusUI extends Window implements StatusSubject {
     private Image _xpBar;
 
     private ImageButton _inventoryButton;
+    private ImageButton _questButton;
     Array<StatusObserver> _observers;
 
     //Attributes
@@ -64,6 +65,9 @@ public class StatusUI extends Window implements StatusSubject {
         _inventoryButton= new ImageButton(Utility.STATUSUI_SKIN, "inventory-button");
         _inventoryButton.getImageCell().size(32, 32);
 
+        _questButton = new ImageButton(Utility.STATUSUI_SKIN, "quest-button");
+        _questButton.getImageCell().size(32,32);
+
         //Align images
         _hpBar.setPosition(3, 6);
         _mpBar.setPosition(3, 6);
@@ -84,7 +88,7 @@ public class StatusUI extends Window implements StatusSubject {
         this.pad(this.getPadTop() + 10, 10, 10, 10);
 
         this.add();
-        this.add();
+        this.add(_questButton).align(Align.center);
         this.add(_inventoryButton).align(Align.right);
         this.row();
 
@@ -115,6 +119,10 @@ public class StatusUI extends Window implements StatusSubject {
 
     public ImageButton getInventoryButton() {
         return _inventoryButton;
+    }
+
+    public ImageButton getQuestButton() {
+        return _questButton;
     }
 
     public int getGoldValue(){

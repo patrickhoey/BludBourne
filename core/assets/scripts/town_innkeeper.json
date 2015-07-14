@@ -3,6 +3,7 @@ entityID : TOWN_INNKEEPER
 state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
+questConfigPath : ""
 animationConfig: [
 	{
 	    frameDuration: 1.0
