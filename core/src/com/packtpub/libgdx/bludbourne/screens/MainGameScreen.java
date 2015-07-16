@@ -120,6 +120,8 @@ public class MainGameScreen implements Screen {
 				entity.registerObserver(_playerHUD);
 			}
 
+			_playerHUD.mapChanged();
+
 			_mapMgr.setMapChanged(false);
 		}
 

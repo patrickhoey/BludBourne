@@ -1,21 +1,91 @@
 {
 questTitle : "Beast Feast Leftovers"
+questID : 1
+isQuestComplete : FALSE
 questTasks: {
 	4: {
+		taskProperties: {
+			IS_TASK_COMPLETE: {
+				class: java.lang.String
+				value: "false"
+			}
+			TARGET_TYPE: {
+				class: java.lang.String
+				value: "BEAST_AREA"
+			}
+			TARGET_LOCATION: {
+				class: java.lang.String
+				value: "TOP_WORLD"
+			}
+		}
 		id: 4
 		taskPhrase: Find the area where the Tuskan beast feasts
+		questType : DISCOVER
 	}
 	3: {
+		taskProperties: {
+			IS_TASK_COMPLETE: {
+				class: java.lang.String
+				value: "false"
+			}
+			TARGET_TYPE: {
+				class: java.lang.String
+				value: "FUR01"
+			}
+			TARGET_NUM: {
+				class: java.lang.String
+				value: "5"
+			}
+			TARGET_LOCATION: {
+				class: java.lang.String
+				value: "TOP_WORLD"
+			}
+		}
 		id: 3
 		taskPhrase: Collect 5 furs
+		questType : FETCH
 	}
 	2: {
+		taskProperties: {
+			IS_TASK_COMPLETE: {
+				class: java.lang.String
+				value: "false"
+			}
+			TARGET_TYPE: {
+				class: java.lang.String
+				value: "HORNS01"
+			}
+			TARGET_NUM: {
+				class: java.lang.String
+				value: "5"
+			}
+			TARGET_LOCATION: {
+				class: java.lang.String
+				value: "TOP_WORLD"
+			}
+		}
 		id: 2
 		taskPhrase: Collect 5 horns
+		questType : FETCH
 	}
 	1: {
+		taskProperties: {
+			IS_TASK_COMPLETE: {
+				class: java.lang.String
+				value: "false"
+			}
+			TARGET_TYPE: {
+				class: java.lang.String
+				value: "TOWN_FOLK02"
+			}
+			TARGET_LOCATION: {
+				class: java.lang.String
+				value: "TOWN"
+			}
+		}
 		id: 1
 		taskPhrase: Come back to me with the items
+		questType : RETURN
 	}
 }
 questTaskDependencies: {

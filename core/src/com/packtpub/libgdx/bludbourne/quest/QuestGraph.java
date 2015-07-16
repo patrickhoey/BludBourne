@@ -1,6 +1,12 @@
 package com.packtpub.libgdx.bludbourne.quest;
 
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import com.packtpub.libgdx.bludbourne.Entity;
+import com.packtpub.libgdx.bludbourne.Map;
+import com.packtpub.libgdx.bludbourne.MapManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,6 +18,24 @@ public class QuestGraph {
     private Hashtable<String, QuestTask> questTasks;
     private Hashtable<String, ArrayList<QuestTaskDependency>> questTaskDependencies;
     private String questTitle;
+    private String questID;
+    private boolean isQuestComplete;
+
+    public boolean isQuestComplete() {
+        return isQuestComplete;
+    }
+
+    public void setQuestComplete(boolean isQuestComplete) {
+        this.isQuestComplete = isQuestComplete;
+    }
+
+    public String getQuestID() {
+        return questID;
+    }
+
+    public void setQuestID(String questID) {
+        this.questID = questID;
+    }
 
     public String getQuestTitle() {
         return questTitle;
@@ -107,6 +131,60 @@ public class QuestGraph {
             return false;
         }else{
             return true;
+        }
+    }
+
+    public boolean isQuestTaskAvailable(String id){
+        QuestTask task = getQuestTaskByID(id);
+        if( task == null) return false;
+        ArrayList<QuestTaskDependency> list = questTaskDependencies.get(id);
+
+        for(QuestTaskDependency dep: list){
+            QuestTask depTask = getQuestTaskByID(dep.getDestinationId());
+            if( depTask == null ) continue;
+            if( dep.getSourceId().equalsIgnoreCase(id) &&
+                    !depTask.isTaskComplete()){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void update(MapManager mapMgr){
+        ArrayList<QuestTask> allQuestTasks = getAllQuestTasks();
+        for( QuestTask questTask: allQuestTasks ) {
+            //We first want to make sure the task is available and is relevant to current location
+            if (!isQuestTaskAvailable(questTask.getId())) continue;
+
+            String taskLocation = questTask.getPropertyValue(QuestTask.QuestTaskPropertyType.TARGET_LOCATION.toString());
+            if (     taskLocation == null ||
+                     taskLocation.isEmpty() ||
+                    !taskLocation.equalsIgnoreCase(mapMgr.getCurrentMapType().toString())) continue;
+
+            switch (questTask.getQuestType()) {
+                case FETCH:
+                    Array<Entity> entities = new Array<Entity>();
+                    Array<Vector2> positions = mapMgr.getQuestItemSpawnPositions(questID, questTask.getId());
+                    String taskConfig = questTask.getPropertyValue(QuestTask.QuestTaskPropertyType.TARGET_TYPE.toString());
+                    if( taskConfig == null || taskConfig.isEmpty() ) break;
+                    for( Vector2 position: positions ){
+                        entities.add(Map.initEntity(Entity.getEntityConfig(taskConfig), position));
+                    }
+                    mapMgr.addMapEntities(entities);
+                    break;
+                case KILL:
+                    break;
+                case DELIVERY:
+                    break;
+                case GUARD:
+                    break;
+                case ESCORT:
+                    break;
+                case RETURN:
+                    break;
+                case DISCOVER:
+                    break;
+            }
         }
     }
 

@@ -102,10 +102,12 @@ public class QuestGraphTest {
         QuestTask q01 = new QuestTask();
         q01.setId("1");
         q01.setTaskPhrase("Come back to me with the herbs");
+        q01.resetAllProperties();
 
         QuestTask q02 = new QuestTask();
         q02.setId("2");
         q02.setTaskPhrase("Please collect 5 herbs for my sick mother");
+        q02.resetAllProperties();
 
         _questTasks.put(q01.getId(), q01);
         _questTasks.put(q02.getId(), q02);

@@ -40,18 +40,6 @@ public class TownMap extends Map{
         }
     }
 
-    private Entity initEntity(EntityConfig entityConfig, Vector2 position){
-        Entity entity = EntityFactory.getEntity(EntityFactory.EntityType.NPC);
-        entity.setEntityConfig(entityConfig);
-
-        entity.sendMessage(Component.MESSAGE.LOAD_ANIMATIONS, _json.toJson(entity.getEntityConfig()));
-        entity.sendMessage(Component.MESSAGE.INIT_START_POSITION, _json.toJson(position));
-        entity.sendMessage(Component.MESSAGE.INIT_STATE, _json.toJson(entity.getEntityConfig().getState()));
-        entity.sendMessage(Component.MESSAGE.INIT_DIRECTION, _json.toJson(entity.getEntityConfig().getDirection()));
-
-        return entity;
-    }
-
     private Entity initSpecialEntity(EntityConfig entityConfig){
         Vector2 position = new Vector2(0,0);
 

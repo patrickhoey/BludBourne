@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import com.packtpub.libgdx.bludbourne.MapManager;
 import com.packtpub.libgdx.bludbourne.Utility;
 import com.packtpub.libgdx.bludbourne.quest.QuestGraph;
 import com.packtpub.libgdx.bludbourne.quest.QuestTask;
@@ -114,6 +115,17 @@ public class QuestUI extends Window {
 
         _listTasks.setItems(tasks.toArray());
         _listTasks.setSelectedIndex(-1);
+    }
+
+    public void mapChanged(MapManager mapMgr){
+        System.out.println("MAP CHANGED TO " + mapMgr.getCurrentMapType().toString());
+
+        //populate items if quests have them
+        for( QuestGraph quest : _quests ){
+            if( !quest.isQuestComplete() ){
+                quest.update(mapMgr);
+            }
+        }
     }
 
 }

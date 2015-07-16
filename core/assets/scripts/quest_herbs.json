@@ -1,0 +1,24 @@
+{
+entityID : HERB001
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+inventory : [
+	]
+animationConfig: [
+	{
+	    frameDuration: 1.0
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/items/Food.png
+		]
+		gridPoints: [
+			{
+				x: 3
+				y: 2
+			}
+		]
+	}
+]
+}	

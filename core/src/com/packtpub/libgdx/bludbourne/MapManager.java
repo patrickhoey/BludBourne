@@ -89,6 +89,10 @@ public class MapManager implements ProfileObserver {
         _currentMap.setClosestStartPositionFromScaledUnits(position);
     }
 
+    public void addMapEntities(Array<Entity> entities){
+        _currentMap.getMapEntities().addAll(entities);
+    }
+
     public MapLayer getCollisionLayer(){
         return _currentMap.getCollisionLayer();
     }
@@ -96,6 +100,19 @@ public class MapManager implements ProfileObserver {
     public MapLayer getPortalLayer(){
         return _currentMap.getPortalLayer();
     }
+
+    public Array<Vector2> getQuestItemSpawnPositions(String objectName, String objectTaskID) {
+        return _currentMap.getQuestItemSpawnPositions(objectName, objectTaskID);
+    }
+
+    public MapLayer getQuestDiscoverLayer(){
+        return _currentMap.getQuestDiscoverLayer();
+    }
+
+    public MapFactory.MapType getCurrentMapType(){
+        return _currentMap.getCurrentMapType();
+    }
+
     public Vector2 getPlayerStartUnitScaled() {
         return _currentMap.getPlayerStartUnitScaled();
     }

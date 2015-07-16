@@ -21,6 +21,8 @@ public abstract class Map {
     protected final static String COLLISION_LAYER = "MAP_COLLISION_LAYER";
     protected final static String SPAWNS_LAYER = "MAP_SPAWNS_LAYER";
     protected final static String PORTAL_LAYER = "MAP_PORTAL_LAYER";
+    protected final static String QUEST_ITEM_SPAWN_LAYER = "MAP_QUEST_ITEM_SPAWN_LAYER";
+    protected final static String QUEST_DISCOVER_LAYER = "MAP_QUEST_DISCOVER_LAYER";
 
     //Starting locations
     protected final static String PLAYER_START = "PLAYER_START";
@@ -39,6 +41,8 @@ public abstract class Map {
     protected MapLayer _collisionLayer = null;
     protected MapLayer _portalLayer = null;
     protected MapLayer _spawnsLayer = null;
+    protected MapLayer _questItemSpawnLayer = null;
+    protected MapLayer _questDiscoverLayer = null;
 
     protected MapFactory.MapType _currentMapType;
     protected Array<Entity> _mapEntities;
@@ -82,12 +86,57 @@ public abstract class Map {
             setClosestStartPosition(_playerStart);
         }
 
+        _questItemSpawnLayer = _currentMap.getLayers().get(QUEST_ITEM_SPAWN_LAYER);
+        if( _questItemSpawnLayer == null ){
+            Gdx.app.debug(TAG, "No quest item spawn layer!");
+        }
+
+        _questDiscoverLayer = _currentMap.getLayers().get(QUEST_DISCOVER_LAYER);
+        if( _questDiscoverLayer == null ){
+            Gdx.app.debug(TAG, "No quest discover layer!");
+        }
+
         _npcStartPositions = getNPCStartPositions();
         _specialNPCStartPositions = getSpecialNPCStartPositions();
     }
 
+    public Array<Vector2> getQuestItemSpawnPositions(String objectName, String objectTaskID) {
+        Array<MapObject> objects = new Array<MapObject>();
+        Array<Vector2> positions = new Array<Vector2>();
+
+        for( MapObject object: _questItemSpawnLayer.getObjects()){
+            String name = object.getName();
+            String taskID = (String)object.getProperties().get("taskID");
+
+            if(        name == null || taskID == null ||
+                       name.isEmpty() || taskID.isEmpty() ||
+                       !name.equalsIgnoreCase(objectName) ||
+                       !taskID.equalsIgnoreCase(objectTaskID)){
+                continue;
+            }
+            //Get center of rectangle
+            float x = ((RectangleMapObject)object).getRectangle().getX();
+            float y = ((RectangleMapObject)object).getRectangle().getY();
+
+            //scale by the unit to convert from map coordinates
+            x *= UNIT_SCALE;
+            y *= UNIT_SCALE;
+
+            positions.add(new Vector2(x,y));
+        }
+        return positions;
+    }
+
     public Array<Entity> getMapEntities(){
         return _mapEntities;
+    }
+
+    public void addMapEntities(Array<Entity> entities){
+        _mapEntities.addAll(entities);
+    }
+
+    public MapFactory.MapType getCurrentMapType(){
+        return _currentMapType;
     }
 
     public Vector2 getPlayerStart() {
@@ -106,6 +155,14 @@ public abstract class Map {
 
     public MapLayer getPortalLayer(){
         return _portalLayer;
+    }
+
+    public MapLayer getQuestItemSpawnLayer(){
+        return _questItemSpawnLayer;
+    }
+
+    public MapLayer getQuestDiscoverLayer(){
+        return _questDiscoverLayer;
     }
 
     public TiledMap getCurrentTiledMap() {
@@ -210,5 +267,18 @@ public abstract class Map {
 
         _convertedUnits.set(position.x/UNIT_SCALE, position.y/UNIT_SCALE);
         setClosestStartPosition(_convertedUnits);
+    }
+
+    public static Entity initEntity(EntityConfig entityConfig, Vector2 position){
+        Json json = new Json();
+        Entity entity = EntityFactory.getEntity(EntityFactory.EntityType.NPC);
+        entity.setEntityConfig(entityConfig);
+
+        entity.sendMessage(Component.MESSAGE.LOAD_ANIMATIONS, json.toJson(entity.getEntityConfig()));
+        entity.sendMessage(Component.MESSAGE.INIT_START_POSITION, json.toJson(position));
+        entity.sendMessage(Component.MESSAGE.INIT_STATE, json.toJson(entity.getEntityConfig().getState()));
+        entity.sendMessage(Component.MESSAGE.INIT_DIRECTION, json.toJson(entity.getEntityConfig().getDirection()));
+
+        return entity;
     }
 }

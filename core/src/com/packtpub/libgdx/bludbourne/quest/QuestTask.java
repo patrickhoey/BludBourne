@@ -1,14 +1,35 @@
 package com.packtpub.libgdx.bludbourne.quest;
 
-
 import com.badlogic.gdx.utils.ObjectMap;
 
 public class QuestTask {
-    private final String IS_TASK_COMPLETE = "IS_TASK_COMPLETE";
+
+    public static enum QuestType{
+        FETCH,
+        KILL,
+        DELIVERY,
+        GUARD,
+        ESCORT,
+        RETURN,
+        DISCOVER
+    }
+
+    public static enum QuestTaskPropertyType{
+        IS_TASK_COMPLETE,
+        TARGET_TYPE,
+        TARGET_NUM,
+        TARGET_LOCATION,
+        NONE
+    }
 
     private ObjectMap<String, Object> taskProperties;
     private String id;
     private String taskPhrase;
+    private QuestType questType;
+
+    public QuestTask(){
+        taskProperties = new ObjectMap<String, Object>();
+    }
 
     public String getId() {
         return id;
@@ -26,6 +47,14 @@ public class QuestTask {
         this.taskPhrase = taskPhrase;
     }
 
+    public QuestType getQuestType() {
+        return questType;
+    }
+
+    public void setQuestType(QuestType questType) {
+        this.questType = questType;
+    }
+
     public ObjectMap<String, Object> getTaskProperties() {
         return taskProperties;
     }
@@ -35,11 +64,29 @@ public class QuestTask {
     }
 
     public boolean isTaskComplete(){
-        if( !taskProperties.containsKey(IS_TASK_COMPLETE) ){
-            taskProperties.put(IS_TASK_COMPLETE, "false");
+        if( !taskProperties.containsKey(QuestTaskPropertyType.IS_TASK_COMPLETE.toString()) ){
+            setPropertyValue(QuestTaskPropertyType.IS_TASK_COMPLETE.toString(), "false");
             return false;
         }
-        return Boolean.getBoolean(taskProperties.get(IS_TASK_COMPLETE).toString());
+        return Boolean.getBoolean(taskProperties.get(QuestTaskPropertyType.IS_TASK_COMPLETE.toString()).toString());
+    }
+
+    public void setTaskComplete(){
+        setPropertyValue(QuestTaskPropertyType.IS_TASK_COMPLETE.toString(), "true");
+    }
+
+    public void resetAllProperties(){
+        taskProperties.put(QuestTaskPropertyType.IS_TASK_COMPLETE.toString(), "false");
+    }
+
+    public void setPropertyValue(String key, String value){
+        taskProperties.put(key, value);
+    }
+
+    public String getPropertyValue(String key){
+        Object propertyVal = taskProperties.get(key);
+        if( propertyVal == null ) return new String();
+        return propertyVal.toString();
     }
 
     public String toString(){

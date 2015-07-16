@@ -16,6 +16,7 @@ import com.packtpub.libgdx.bludbourne.Entity;
 import com.packtpub.libgdx.bludbourne.EntityConfig;
 import com.packtpub.libgdx.bludbourne.InventoryItem;
 import com.packtpub.libgdx.bludbourne.InventoryItem.ItemTypeID;
+import com.packtpub.libgdx.bludbourne.Map;
 import com.packtpub.libgdx.bludbourne.MapManager;
 import com.packtpub.libgdx.bludbourne.dialog.ConversationGraph;
 import com.packtpub.libgdx.bludbourne.dialog.ConversationGraphObserver;
@@ -139,6 +140,10 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
 
     public Stage getStage() {
         return _stage;
+    }
+
+    public void mapChanged(){
+        _questUI.mapChanged(_mapMgr);
     }
 
     @Override
