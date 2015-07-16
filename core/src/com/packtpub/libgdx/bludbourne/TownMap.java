@@ -38,6 +38,9 @@ public class TownMap extends Map{
         for( int i=0; i < _mapEntities.size; i++){
             _mapEntities.get(i).update(mapMgr, batch, delta);
         }
+        for( int i=0; i < _mapQuestEntities.size; i++){
+            _mapQuestEntities.get(i).update(mapMgr, batch, delta);
+        }
     }
 
     private Entity initSpecialEntity(EntityConfig entityConfig){

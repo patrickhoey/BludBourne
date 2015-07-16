@@ -46,10 +46,12 @@ public abstract class Map {
 
     protected MapFactory.MapType _currentMapType;
     protected Array<Entity> _mapEntities;
+    protected Array<Entity> _mapQuestEntities;
 
     Map( MapFactory.MapType mapType, String fullMapPath){
         _json = new Json();
         _mapEntities = new Array<Entity>(10);
+        _mapQuestEntities = new Array<Entity>();
         _currentMapType = mapType;
         _playerStart = new Vector2(0,0);
         _playerStartPositionRect = new Vector2(0,0);
@@ -131,8 +133,12 @@ public abstract class Map {
         return _mapEntities;
     }
 
-    public void addMapEntities(Array<Entity> entities){
-        _mapEntities.addAll(entities);
+    public Array<Entity> getMapQuestEntities(){
+        return _mapQuestEntities;
+    }
+
+    public void addMapQuestEntities(Array<Entity> entities){
+        _mapQuestEntities.addAll(entities);
     }
 
     public MapFactory.MapType getCurrentMapType(){

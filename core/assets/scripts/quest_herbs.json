@@ -2,7 +2,7 @@
 entityID : HERB001
 state : IMMOBILE
 direction : DOWN
-conversationConfigPath : ""
+conversationConfigPath : "conversations/conversation005.json"
 questConfigPath : ""
 inventory : [
 	]

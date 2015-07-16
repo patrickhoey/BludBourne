@@ -251,5 +251,12 @@
 	itemShortDescription: Scroll that restores 100HP
 	itemValue: 100
 },
+{
+	itemAttributes: 4
+	itemUseType: 2048
+	itemTypeID: HERB001
+	itemShortDescription: Quest Item Herb
+	itemValue: -1
+},
 
 ]

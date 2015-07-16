@@ -117,8 +117,8 @@ public class QuestUI extends Window {
         _listTasks.setSelectedIndex(-1);
     }
 
-    public void mapChanged(MapManager mapMgr){
-        System.out.println("MAP CHANGED TO " + mapMgr.getCurrentMapType().toString());
+    public void updateQuests(MapManager mapMgr){
+        mapMgr.clearAllMapQuestEntities();
 
         //populate items if quests have them
         for( QuestGraph quest : _quests ){

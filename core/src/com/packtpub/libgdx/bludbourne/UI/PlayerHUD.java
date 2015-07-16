@@ -142,8 +142,12 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
         return _stage;
     }
 
-    public void mapChanged(){
-        _questUI.mapChanged(_mapMgr);
+    public void updateEntityObservers(){
+        _mapMgr.unregisterCurrentMapEntityObservers();
+
+        _questUI.updateQuests(_mapMgr);
+
+        _mapMgr.registerCurrentMapEntityObservers(this);
     }
 
     @Override
@@ -205,6 +209,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 break;
             case SHOW_CONVERSATION:
                 EntityConfig configShow = _json.fromJson(EntityConfig.class, value);
+                //System.out.println("Show conversation for: " + configShow.getEntityID() + " current conversation ID: " + _conversationUI.getCurrentEntityID());
                 if( configShow.getEntityID().equalsIgnoreCase(_conversationUI.getCurrentEntityID())) {
                     _conversationUI.setVisible(true);
                 }
@@ -258,6 +263,21 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
 
                 _conversationUI.setVisible(false);
                 _mapMgr.clearCurrentSelectedMapEntity();
+                updateEntityObservers();
+
+                break;
+            case ADD_ENTITY_TO_INVENTORY:
+                Entity entity = _mapMgr.getCurrentSelectedMapEntity();
+                if( entity == null ){
+                    break;
+                }
+
+                _inventoryUI.addEntityToInventory(entity);
+                _mapMgr.clearCurrentSelectedMapEntity();
+                entity.unregisterObservers();
+                _mapMgr.removeMapQuestEntity(entity);
+
+                _conversationUI.setVisible(false);
                 break;
             case NONE:
                 break;

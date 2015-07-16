@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Array;
+import com.packtpub.libgdx.bludbourne.Entity;
 import com.packtpub.libgdx.bludbourne.InventoryItem;
 import com.packtpub.libgdx.bludbourne.InventoryItemFactory;
 import com.packtpub.libgdx.bludbourne.InventoryItem.ItemUseType;
@@ -241,6 +242,27 @@ public class InventoryUI extends Window {
             if( inventorySlot == null ) continue;
             inventorySlot.updateAllInventoryItemNames(name);
         }
+    }
+
+    public void addEntityToInventory(Entity entity){
+        Array<Cell> sourceCells = _inventorySlotTable.getCells();
+        int index = 0;
+
+            for (; index < sourceCells.size; index++) {
+                InventorySlot inventorySlot = ((InventorySlot) sourceCells.get(index).getActor());
+                if (inventorySlot == null) continue;
+                int numItems = inventorySlot.getNumItems();
+                if (numItems == 0) {
+                    InventoryItem inventoryItem = InventoryItemFactory.getInstance().getInventoryItem(ItemTypeID.valueOf(entity.getEntityConfig().getEntityID()));
+                    inventorySlot.add(inventoryItem);
+                    _dragAndDrop.addSource(new InventorySlotSource(inventorySlot, _dragAndDrop));
+                    break;
+                }
+            }
+            if( index == sourceCells.size ){
+                //No empty slot available
+                //TODO: ADD MESSAGE HERE THAT INVENTORY IS FULL
+            }
     }
 
     public Array<Actor> getInventoryActors(){

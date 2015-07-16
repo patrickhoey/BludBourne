@@ -71,26 +71,42 @@ public class MapManager implements ProfileObserver {
             return;
         }
 
-        //Unregister observers
-        if( _currentMap != null ){
-            Array<Entity> entities = _currentMap.getMapEntities();
-            for(Entity entity: entities){
-                entity.unregisterObservers();
-            }
-        }
-
         _currentMap = map;
         _mapChanged = true;
         clearCurrentSelectedMapEntity();
         Gdx.app.debug(TAG, "Player Start: (" + _currentMap.getPlayerStart().x + "," + _currentMap.getPlayerStart().y + ")");
     }
 
-    public void setClosestStartPositionFromScaledUnits(Vector2 position) {
-        _currentMap.setClosestStartPositionFromScaledUnits(position);
+    public void unregisterCurrentMapEntityObservers(){
+        if( _currentMap != null ){
+            Array<Entity> entities = _currentMap.getMapEntities();
+            for(Entity entity: entities){
+                entity.unregisterObservers();
+            }
+
+            Array<Entity> questEntities = _currentMap.getMapQuestEntities();
+            for(Entity questEntity: questEntities){
+                questEntity.unregisterObservers();
+            }
+        }
     }
 
-    public void addMapEntities(Array<Entity> entities){
-        _currentMap.getMapEntities().addAll(entities);
+    public void registerCurrentMapEntityObservers(ComponentObserver observer){
+        if( _currentMap != null ){
+            Array<Entity> entities = _currentMap.getMapEntities();
+            for(Entity entity: entities){
+                entity.registerObserver(observer);
+            }
+
+            Array<Entity> questEntities = _currentMap.getMapQuestEntities();
+            for(Entity questEntity: questEntities){
+                questEntity.registerObserver(observer);
+            }
+        }
+    }
+
+    public void setClosestStartPositionFromScaledUnits(Vector2 position) {
+        _currentMap.setClosestStartPositionFromScaledUnits(position);
     }
 
     public MapLayer getCollisionLayer(){
@@ -132,11 +148,28 @@ public class MapManager implements ProfileObserver {
         return _currentMap.getMapEntities();
     }
 
+    public final Array<Entity> getCurrentMapQuestEntities(){
+        return _currentMap.getMapQuestEntities();
+    }
+
+    public void addMapQuestEntities(Array<Entity> entities){
+        _currentMap.getMapQuestEntities().addAll(entities);
+    }
+
+    public void removeMapQuestEntity(Entity entity){
+        entity.unregisterObservers();
+        _currentMap.getMapQuestEntities().removeValue(entity, true);
+    }
+
+    public void clearAllMapQuestEntities(){
+        _currentMap.getMapQuestEntities().clear();
+    }
+
     public Entity getCurrentSelectedMapEntity(){
         return _currentSelectedEntity;
     }
 
-    public void setCurrentSelectedMapEntity(Entity currentSelectedEntity){
+    public void setCurrentSelectedMapEntity(Entity currentSelectedEntity) {
         this._currentSelectedEntity = currentSelectedEntity;
     }
 

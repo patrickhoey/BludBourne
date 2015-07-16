@@ -114,13 +114,7 @@ public class MainGameScreen implements Screen {
 			_camera.position.set(_mapMgr.getPlayerStartUnitScaled().x, _mapMgr.getPlayerStartUnitScaled().y, 0f);
 			_camera.update();
 
-			//register observers
-			Array<Entity> entities = _mapMgr.getCurrentMapEntities();
-			for(Entity entity: entities){
-				entity.registerObserver(_playerHUD);
-			}
-
-			_playerHUD.mapChanged();
+			_playerHUD.updateEntityObservers();
 
 			_mapMgr.setMapChanged(false);
 		}

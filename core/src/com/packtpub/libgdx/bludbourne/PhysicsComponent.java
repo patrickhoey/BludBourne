@@ -22,9 +22,10 @@ public abstract class PhysicsComponent extends ComponentSubject implements Compo
     protected Json _json;
     protected Vector2 _velocity;
 
+    protected Array<Entity> _tempEntities;
+
     public Rectangle _boundingBox;
     protected BoundingBoxLocation _boundingBoxLocation;
-
     protected Ray _selectionRay;
     protected final float _selectRayMaximumDistance = 32.0f;
 
@@ -40,15 +41,18 @@ public abstract class PhysicsComponent extends ComponentSubject implements Compo
         this._velocity = new Vector2(2f,2f);
         this._boundingBox = new Rectangle();
         this._json = new Json();
+        this._tempEntities = new Array<Entity>();
         _boundingBoxLocation = BoundingBoxLocation.BOTTOM_LEFT;
         _selectionRay = new Ray(new Vector3(), new Vector3());
     }
 
     protected boolean isCollisionWithMapEntities(Entity entity, MapManager mapMgr){
-        Array<Entity> entities = mapMgr.getCurrentMapEntities();
+        _tempEntities.clear();
+        _tempEntities.addAll(mapMgr.getCurrentMapEntities());
+        _tempEntities.addAll(mapMgr.getCurrentMapQuestEntities());
         boolean isCollisionWithMapEntities = false;
 
-        for(Entity mapEntity: entities){
+        for(Entity mapEntity: _tempEntities){
             //Check for testing against self
             if( mapEntity.equals(entity) ){
                 continue;
@@ -62,6 +66,7 @@ public abstract class PhysicsComponent extends ComponentSubject implements Compo
                 break;
             }
         }
+        _tempEntities.clear();
         return isCollisionWithMapEntities;
     }
 

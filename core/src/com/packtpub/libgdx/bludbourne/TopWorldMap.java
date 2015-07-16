@@ -11,8 +11,11 @@ public class TopWorldMap extends Map{
 
     @Override
     public void updateMapEntities(MapManager mapMgr, Batch batch, float delta){
-        for( Entity entity : _mapEntities ){
-            entity.update(mapMgr, batch, delta);
+        for( int i=0; i < _mapEntities.size; i++){
+            _mapEntities.get(i).update(mapMgr, batch, delta);
+        }
+        for( int i=0; i < _mapQuestEntities.size; i++){
+            _mapQuestEntities.get(i).update(mapMgr, batch, delta);
         }
     }
 }

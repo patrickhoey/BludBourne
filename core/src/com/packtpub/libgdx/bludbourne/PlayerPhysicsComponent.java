@@ -78,7 +78,9 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
     }
 
     private void selectMapEntityCandidate(MapManager mapMgr){
-        Array<Entity> currentEntities = mapMgr.getCurrentMapEntities();
+        _tempEntities.clear();
+        _tempEntities.addAll(mapMgr.getCurrentMapEntities());
+        _tempEntities.addAll(mapMgr.getCurrentMapQuestEntities());
 
         //Convert screen coordinates to world coordinates, then to unit scale coordinates
         mapMgr.getCamera().unproject(_mouseSelectCoordinates);
@@ -87,7 +89,7 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
 
         //Gdx.app.debug(TAG, "Mouse Coordinates " + "(" + _mouseSelectCoordinates.x + "," + _mouseSelectCoordinates.y + ")");
 
-        for( Entity mapEntity : currentEntities ) {
+        for( Entity mapEntity : _tempEntities ) {
             //Don't break, reset all entities
             mapEntity.sendMessage(MESSAGE.ENTITY_DESELECTED);
             Rectangle mapEntityBoundingBox = mapEntity.getCurrentBoundingBox();
@@ -106,6 +108,7 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
                 }
             }
         }
+        _tempEntities.clear();
     }
 
     private boolean updatePortalLayerActivation(MapManager mapMgr){

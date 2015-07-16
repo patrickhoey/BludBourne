@@ -34,7 +34,8 @@ public class InventoryItem extends Image {
         ARMOR_SHIELD(128),
         ARMOR_HELMET(256),
         ARMOR_CHEST(512),
-        ARMOR_FEET(1024);
+        ARMOR_FEET(1024),
+        QUEST_ITEM(2048);
 
         private int _itemUseType;
 
@@ -56,6 +57,7 @@ public class InventoryItem extends Image {
         WEAPON01,WEAPON02,WEAPON03,WEAPON04,WEAPON05,
         POTIONS01,POTIONS02,POTIONS03,
         SCROLL01,SCROLL02,SCROLL03,
+        HERB001,
         ;
     }
 

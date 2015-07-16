@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.packtpub.libgdx.bludbourne.Entity;
+import com.packtpub.libgdx.bludbourne.EntityConfig;
 import com.packtpub.libgdx.bludbourne.Map;
 import com.packtpub.libgdx.bludbourne.MapManager;
 
@@ -168,9 +169,11 @@ public class QuestGraph {
                     String taskConfig = questTask.getPropertyValue(QuestTask.QuestTaskPropertyType.TARGET_TYPE.toString());
                     if( taskConfig == null || taskConfig.isEmpty() ) break;
                     for( Vector2 position: positions ){
-                        entities.add(Map.initEntity(Entity.getEntityConfig(taskConfig), position));
+                        EntityConfig config = Entity.getEntityConfig(taskConfig);
+                        Entity entity = Map.initEntity(config, position);
+                        entities.add(entity);
                     }
-                    mapMgr.addMapEntities(entities);
+                    mapMgr.addMapQuestEntities(entities);
                     break;
                 case KILL:
                     break;
