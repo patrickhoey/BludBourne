@@ -68,7 +68,8 @@ public class QuestTask {
             setPropertyValue(QuestTaskPropertyType.IS_TASK_COMPLETE.toString(), "false");
             return false;
         }
-        return Boolean.getBoolean(taskProperties.get(QuestTaskPropertyType.IS_TASK_COMPLETE.toString()).toString());
+        String val = taskProperties.get(QuestTaskPropertyType.IS_TASK_COMPLETE.toString()).toString();
+        return Boolean.parseBoolean(val);
     }
 
     public void setTaskComplete(){

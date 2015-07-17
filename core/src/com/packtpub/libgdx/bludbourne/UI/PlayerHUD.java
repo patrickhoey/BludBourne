@@ -145,7 +145,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
     public void updateEntityObservers(){
         _mapMgr.unregisterCurrentMapEntityObservers();
 
-        _questUI.updateQuests(_mapMgr);
+        _questUI.initQuests(_mapMgr);
 
         _mapMgr.registerCurrentMapEntityObservers(this);
     }
@@ -272,15 +272,15 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                     break;
                 }
 
-                //Check if empty slots, if not, put up message
-
+                //TODO: Check if empty slots, if not, put up message
 
                 _inventoryUI.addEntityToInventory(entity);
                 _mapMgr.clearCurrentSelectedMapEntity();
                 entity.unregisterObservers();
                 _mapMgr.removeMapQuestEntity(entity);
-
                 _conversationUI.setVisible(false);
+
+                _questUI.updateQuests(_mapMgr);
                 break;
             case NONE:
                 break;

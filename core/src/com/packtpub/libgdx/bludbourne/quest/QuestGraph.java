@@ -142,9 +142,8 @@ public class QuestGraph {
 
         for(QuestTaskDependency dep: list){
             QuestTask depTask = getQuestTaskByID(dep.getDestinationId());
-            if( depTask == null ) continue;
-            if( dep.getSourceId().equalsIgnoreCase(id) &&
-                    !depTask.isTaskComplete()){
+            if( depTask == null || depTask.isTaskComplete() ) continue;
+            if( dep.getSourceId().equalsIgnoreCase(id) ){
                 return false;
             }
         }
@@ -152,6 +151,48 @@ public class QuestGraph {
     }
 
     public void update(MapManager mapMgr){
+        ArrayList<QuestTask> allQuestTasks = getAllQuestTasks();
+        for( QuestTask questTask: allQuestTasks ) {
+            //We first want to make sure the task is available and is relevant to current location
+            if (!isQuestTaskAvailable(questTask.getId())) continue;
+
+            String taskLocation = questTask.getPropertyValue(QuestTask.QuestTaskPropertyType.TARGET_LOCATION.toString());
+            if (taskLocation == null ||
+                    taskLocation.isEmpty() ||
+                    !taskLocation.equalsIgnoreCase(mapMgr.getCurrentMapType().toString())) continue;
+
+            switch (questTask.getQuestType()) {
+                case FETCH:
+                    String taskConfig = questTask.getPropertyValue(QuestTask.QuestTaskPropertyType.TARGET_TYPE.toString());
+                    if( taskConfig == null || taskConfig.isEmpty() ) break;
+                    EntityConfig config = Entity.getEntityConfig(taskConfig);
+
+                    Array<Vector2> questItemPositions = ProfileManager.getInstance().getProperty(config.getEntityID(), Array.class);
+                    if( questItemPositions == null ) break;
+
+                    //Case where all the items have been picked up
+                    if( questItemPositions.size == 0 ){
+                        questTask.setTaskComplete();
+                        System.out.println("TASK : " + questTask.getId() + " is complete!");
+                    }
+                    break;
+                case KILL:
+                    break;
+                case DELIVERY:
+                    break;
+                case GUARD:
+                    break;
+                case ESCORT:
+                    break;
+                case RETURN:
+                    break;
+                case DISCOVER:
+                    break;
+            }
+        }
+    }
+
+    public void init(MapManager mapMgr){
         ArrayList<QuestTask> allQuestTasks = getAllQuestTasks();
         for( QuestTask questTask: allQuestTasks ) {
             //We first want to make sure the task is available and is relevant to current location
@@ -198,6 +239,7 @@ public class QuestGraph {
                 case ESCORT:
                     break;
                 case RETURN:
+                    System.out.println("RETURN READY : " + questTask.getId());
                     break;
                 case DISCOVER:
                     break;

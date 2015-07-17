@@ -77,11 +77,6 @@
     <property name="taskID" value="2"/>
    </properties>
   </object>
-  <object id="139" name="2" x="608" y="16" width="16" height="16">
-   <properties>
-    <property name="taskID" value="2"/>
-   </properties>
-  </object>
   <object id="140" name="2" x="608" y="448" width="16" height="16">
    <properties>
     <property name="taskID" value="2"/>

@@ -84,7 +84,7 @@ public class QuestUI extends Window {
 
         QuestGraph graph = _json.fromJson(QuestGraph.class, Gdx.files.internal(questConfigPath));
         _quests.add(graph);
-        updateQuests();
+        updateQuestItemList();
     }
 
     public Array<QuestGraph> getQuests() {
@@ -93,10 +93,10 @@ public class QuestUI extends Window {
 
     public void setQuests(Array<QuestGraph> quests) {
         this._quests = quests;
-        updateQuests();
+        updateQuestItemList();
     }
 
-    public void updateQuests(){
+    public void updateQuestItemList(){
         clearDialog();
 
         _listQuests.setItems(_quests);
@@ -117,10 +117,18 @@ public class QuestUI extends Window {
         _listTasks.setSelectedIndex(-1);
     }
 
-    public void updateQuests(MapManager mapMgr){
+    public void initQuests(MapManager mapMgr){
         mapMgr.clearAllMapQuestEntities();
 
         //populate items if quests have them
+        for( QuestGraph quest : _quests ){
+            if( !quest.isQuestComplete() ){
+                quest.init(mapMgr);
+            }
+        }
+    }
+
+    public void updateQuests(MapManager mapMgr){
         for( QuestGraph quest : _quests ){
             if( !quest.isQuestComplete() ){
                 quest.update(mapMgr);
