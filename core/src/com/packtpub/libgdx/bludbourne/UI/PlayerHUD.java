@@ -16,7 +16,6 @@ import com.packtpub.libgdx.bludbourne.Entity;
 import com.packtpub.libgdx.bludbourne.EntityConfig;
 import com.packtpub.libgdx.bludbourne.InventoryItem;
 import com.packtpub.libgdx.bludbourne.InventoryItem.ItemTypeID;
-import com.packtpub.libgdx.bludbourne.Map;
 import com.packtpub.libgdx.bludbourne.MapManager;
 import com.packtpub.libgdx.bludbourne.dialog.ConversationGraph;
 import com.packtpub.libgdx.bludbourne.dialog.ConversationGraphObserver;
@@ -258,12 +257,36 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 if( currentlySelectedEntity == null ){
                     break;
                 }
+                EntityConfig config = currentlySelectedEntity.getEntityConfig();
 
-                _questUI.addQuest(currentlySelectedEntity.getEntityConfig().getQuestConfigPath());
+                EntityConfig configProperty = ProfileManager.getInstance().getProperty(config.getEntityID(), EntityConfig.class);
+                if( configProperty == null ){
+                    _questUI.addQuest(config.getQuestConfigPath());
+
+                    //Update conversation dialog
+                    config.setConversationConfigPath(QuestUI.RETURN_QUEST);
+                    ProfileManager.getInstance().setProperty(config.getEntityID(), config);
+                    updateEntityObservers();
+                }
 
                 _conversationUI.setVisible(false);
                 _mapMgr.clearCurrentSelectedMapEntity();
-                updateEntityObservers();
+                break;
+            case RETURN_QUEST:
+                Entity returnEntity = _mapMgr.getCurrentSelectedMapEntity();
+                if( returnEntity == null ){
+                    break;
+                }
+                EntityConfig configReturn = returnEntity.getEntityConfig();
+
+                EntityConfig configReturnProperty = ProfileManager.getInstance().getProperty(configReturn.getEntityID(), EntityConfig.class);
+                if( configReturnProperty == null ) return;
+
+                configReturnProperty.setConversationConfigPath(QuestUI.FINISHED_QUEST);
+                ProfileManager.getInstance().setProperty(configReturnProperty.getEntityID(), configReturnProperty);
+
+                _conversationUI.setVisible(false);
+                _mapMgr.clearCurrentSelectedMapEntity();
 
                 break;
             case ADD_ENTITY_TO_INVENTORY:

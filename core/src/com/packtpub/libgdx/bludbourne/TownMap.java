@@ -18,18 +18,18 @@ public class TownMap extends Map{
         super(MapFactory.MapType.TOWN, _mapPath);
 
         for( Vector2 position: _npcStartPositions){
-            _mapEntities.add(initEntity(Entity.getEntityConfig(_townGuardWalking), position));
+            _mapEntities.add(initEntity(Entity.loadEntityConfigByPath(_townGuardWalking), position));
         }
 
         //Special cases
-        _mapEntities.add(initSpecialEntity(Entity.getEntityConfig(_townBlacksmith)));
-        _mapEntities.add(initSpecialEntity(Entity.getEntityConfig(_townMage)));
-        _mapEntities.add(initSpecialEntity(Entity.getEntityConfig(_townInnKeeper)));
+        _mapEntities.add(initSpecialEntity(Entity.loadEntityConfigByPath(_townBlacksmith)));
+        _mapEntities.add(initSpecialEntity(Entity.loadEntityConfigByPath(_townMage)));
+        _mapEntities.add(initSpecialEntity(Entity.loadEntityConfigByPath(_townInnKeeper)));
 
         //When we have multiple configs in one file
         Array<EntityConfig> configs = Entity.getEntityConfigs(_townFolk);
         for(EntityConfig config: configs){
-            _mapEntities.add(initSpecialEntity(config));
+            _mapEntities.add(initSpecialEntity(Entity.loadEntityConfig(config)));
         }
     }
 

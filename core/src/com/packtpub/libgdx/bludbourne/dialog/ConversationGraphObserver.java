@@ -6,6 +6,7 @@ public interface ConversationGraphObserver {
         EXIT_CONVERSATION,
         ACCEPT_QUEST,
         ADD_ENTITY_TO_INVENTORY,
+        RETURN_QUEST,
         NONE
     }
 

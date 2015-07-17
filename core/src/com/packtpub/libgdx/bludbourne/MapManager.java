@@ -53,7 +53,10 @@ public class MapManager implements ProfileObserver {
 
                 break;
             case SAVING_PROFILE:
-                profileManager.setProperty("currentMapType", _currentMap._currentMapType.toString());
+                if( _currentMap != null ){
+                    profileManager.setProperty("currentMapType", _currentMap._currentMapType.toString());
+                }
+
                 profileManager.setProperty("topWorldMapStartPosition", MapFactory.getMap(MapFactory.MapType.TOP_WORLD).getPlayerStart() );
                 profileManager.setProperty("castleOfDoomMapStartPosition", MapFactory.getMap(MapFactory.MapType.CASTLE_OF_DOOM).getPlayerStart() );
                 profileManager.setProperty("townMapStartPosition", MapFactory.getMap(MapFactory.MapType.TOWN).getPlayerStart() );

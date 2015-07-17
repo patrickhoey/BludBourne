@@ -61,14 +61,9 @@ public class MainGameScreen implements Screen {
 		_camera = new OrthographicCamera();
 		_camera.setToOrtho(false, VIEWPORT.viewportWidth, VIEWPORT.viewportHeight);
 
-		_mapRenderer = new OrthogonalTiledMapRenderer(_mapMgr.getCurrentTiledMap(), Map.UNIT_SCALE);
-		_mapRenderer.setView(_camera);
-		_mapMgr.setCamera(_camera);
-
-		Gdx.app.debug(TAG, "UnitScale value is: " + _mapRenderer.getUnitScale());
-
 		_player = EntityFactory.getEntity(EntityFactory.EntityType.PLAYER);
 		_mapMgr.setPlayer(_player);
+		_mapMgr.setCamera(_camera);
 
 		_hudCamera = new OrthographicCamera();
 		_hudCamera.setToOrtho(false, VIEWPORT.physicalWidth, VIEWPORT.physicalHeight);
@@ -79,12 +74,18 @@ public class MainGameScreen implements Screen {
 		_multiplexer.addProcessor(_playerHUD.getStage());
 		_multiplexer.addProcessor(_player.getInputProcessor());
 		Gdx.input.setInputProcessor(_multiplexer);
+
+		//Gdx.app.debug(TAG, "UnitScale value is: " + _mapRenderer.getUnitScale());
 	}
 
 	@Override
 	public void show() {
 		_gameState = GameState.RUNNING;
 		Gdx.input.setInputProcessor(_multiplexer);
+
+		if( _mapRenderer == null ){
+			_mapRenderer = new OrthogonalTiledMapRenderer(_mapMgr.getCurrentTiledMap(), Map.UNIT_SCALE);
+		}
 	}
 
 	@Override

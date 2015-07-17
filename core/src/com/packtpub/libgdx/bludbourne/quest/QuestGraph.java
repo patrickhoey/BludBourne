@@ -239,7 +239,6 @@ public class QuestGraph {
                 case ESCORT:
                     break;
                 case RETURN:
-                    System.out.println("RETURN READY : " + questTask.getId());
                     break;
                 case DISCOVER:
                     break;

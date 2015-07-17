@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
+import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 
 import java.util.ArrayList;
 
@@ -163,5 +164,27 @@ public class Entity {
 
 		return configs;
 	}
+
+	public static EntityConfig loadEntityConfigByPath(String entityConfigPath){
+		EntityConfig entityConfig = Entity.getEntityConfig(entityConfigPath);
+		EntityConfig serializedConfig = ProfileManager.getInstance().getProperty(entityConfig.getEntityID(), EntityConfig.class);
+
+		if( serializedConfig == null ){
+			return entityConfig;
+		}else{
+			return serializedConfig;
+		}
+	}
+
+	public static EntityConfig loadEntityConfig(EntityConfig entityConfig){
+		EntityConfig serializedConfig = ProfileManager.getInstance().getProperty(entityConfig.getEntityID(), EntityConfig.class);
+
+		if( serializedConfig == null ){
+			return entityConfig;
+		}else{
+			return serializedConfig;
+		}
+	}
+
 
 }
