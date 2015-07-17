@@ -4,7 +4,7 @@ state : IDLE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
-persistenceKey : "PLAYER"
+itemTypeID: NONE
 inventory : [
 	{
 		value: ARMOR04

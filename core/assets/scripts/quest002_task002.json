@@ -1,10 +1,10 @@
 {
-entityID : HERB001
+entityID : QUEST002_TASK002
 state : IMMOBILE
 direction : DOWN
 conversationConfigPath : "conversations/conversation005.json"
 questConfigPath : ""
-persistenceKey : "quest2_task2"
+itemTypeID: HERB001
 inventory : [
 	]
 animationConfig: [

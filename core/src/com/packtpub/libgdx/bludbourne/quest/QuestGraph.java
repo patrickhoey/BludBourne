@@ -170,7 +170,7 @@ public class QuestGraph {
                     if( taskConfig == null || taskConfig.isEmpty() ) break;
                     EntityConfig config = Entity.getEntityConfig(taskConfig);
 
-                    Array<Vector2> questItemPositions = ProfileManager.getInstance().getProperty(config.getPersistenceKey(), Array.class);
+                    Array<Vector2> questItemPositions = ProfileManager.getInstance().getProperty(config.getEntityID(), Array.class);
 
                     if( questItemPositions == null ){
                         questItemPositions = new Array<Vector2>();
@@ -187,7 +187,7 @@ public class QuestGraph {
                     }
 
                     mapMgr.addMapQuestEntities(questEntities);
-                    ProfileManager.getInstance().setProperty(config.getPersistenceKey(), questItemPositions);
+                    ProfileManager.getInstance().setProperty(config.getEntityID(), questItemPositions);
                     break;
                 case KILL:
                     break;

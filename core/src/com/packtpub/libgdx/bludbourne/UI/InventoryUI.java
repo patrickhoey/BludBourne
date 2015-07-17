@@ -253,15 +253,11 @@ public class InventoryUI extends Window {
                 if (inventorySlot == null) continue;
                 int numItems = inventorySlot.getNumItems();
                 if (numItems == 0) {
-                    InventoryItem inventoryItem = InventoryItemFactory.getInstance().getInventoryItem(ItemTypeID.valueOf(entity.getEntityConfig().getEntityID()));
+                    InventoryItem inventoryItem = InventoryItemFactory.getInstance().getInventoryItem(ItemTypeID.valueOf(entity.getEntityConfig().getItemTypeID()));
                     inventorySlot.add(inventoryItem);
                     _dragAndDrop.addSource(new InventorySlotSource(inventorySlot, _dragAndDrop));
                     break;
                 }
-            }
-            if( index == sourceCells.size ){
-                //No empty slot available
-                //TODO: ADD MESSAGE HERE THAT INVENTORY IS FULL
             }
     }
 

@@ -272,6 +272,9 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                     break;
                 }
 
+                //Check if empty slots, if not, put up message
+
+
                 _inventoryUI.addEntityToInventory(entity);
                 _mapMgr.clearCurrentSelectedMapEntity();
                 entity.unregisterObservers();
