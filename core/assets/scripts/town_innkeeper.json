@@ -4,6 +4,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+persistenceKey : "TOWN_INNKEEPER"
 animationConfig: [
 	{
 	    frameDuration: 1.0

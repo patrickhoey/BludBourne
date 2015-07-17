@@ -1,6 +1,5 @@
 package com.packtpub.libgdx.bludbourne.quest;
 
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
@@ -8,6 +7,7 @@ import com.packtpub.libgdx.bludbourne.Entity;
 import com.packtpub.libgdx.bludbourne.EntityConfig;
 import com.packtpub.libgdx.bludbourne.Map;
 import com.packtpub.libgdx.bludbourne.MapManager;
+import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -164,16 +164,30 @@ public class QuestGraph {
 
             switch (questTask.getQuestType()) {
                 case FETCH:
-                    Array<Entity> entities = new Array<Entity>();
+                    Array<Entity> questEntities = new Array<Entity>();
                     Array<Vector2> positions = mapMgr.getQuestItemSpawnPositions(questID, questTask.getId());
                     String taskConfig = questTask.getPropertyValue(QuestTask.QuestTaskPropertyType.TARGET_TYPE.toString());
                     if( taskConfig == null || taskConfig.isEmpty() ) break;
-                    for( Vector2 position: positions ){
-                        EntityConfig config = Entity.getEntityConfig(taskConfig);
-                        Entity entity = Map.initEntity(config, position);
-                        entities.add(entity);
+                    EntityConfig config = Entity.getEntityConfig(taskConfig);
+
+                    Array<Vector2> questItemPositions = ProfileManager.getInstance().getProperty(config.getPersistenceKey(), Array.class);
+
+                    if( questItemPositions == null ){
+                        questItemPositions = new Array<Vector2>();
+                        for( Vector2 position: positions ){
+                            questItemPositions.add(position);
+                            Entity entity = Map.initEntity(config, position);
+                            questEntities.add(entity);
+                        }
+                    }else{
+                        for( Vector2 questItemPosition: questItemPositions ){
+                            Entity entity = Map.initEntity(config, questItemPosition);
+                            questEntities.add(entity);
+                        }
                     }
-                    mapMgr.addMapQuestEntities(entities);
+
+                    mapMgr.addMapQuestEntities(questEntities);
+                    ProfileManager.getInstance().setProperty(config.getPersistenceKey(), questItemPositions);
                     break;
                 case KILL:
                     break;

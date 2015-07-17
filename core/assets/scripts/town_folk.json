@@ -5,6 +5,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : "conversations/conversation004.json"
 questConfigPath : "quests/quest002.json"
+persistenceKey : "TOWN_FOLK1"
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -33,6 +34,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+persistenceKey : "TOWN_FOLK2"
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -61,6 +63,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+persistenceKey : "TOWN_FOLK3"
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -89,6 +92,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+persistenceKey : "TOWN_FOLK4"
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -117,6 +121,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+persistenceKey : "TOWN_FOLK5"
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -145,6 +150,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+persistenceKey : "TOWN_FOLK6"
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -173,6 +179,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+persistenceKey : "TOWN_FOLK7"
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -201,6 +208,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+persistenceKey : "TOWN_FOLK8"
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -229,6 +237,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+persistenceKey : "TOWN_FOLK9"
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -257,6 +266,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : "conversations/conversation001.json"
 questConfigPath : ""
+persistenceKey : "TOWN_FOLK10"
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -285,6 +295,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+persistenceKey : "TOWN_FOLK11"
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -313,6 +324,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+persistenceKey : "TOWN_FOLK12"
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -341,6 +353,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+persistenceKey : "TOWN_FOLK13"
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -369,6 +382,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+persistenceKey : "TOWN_FOLK14"
 animationConfig: [
 	{
 	    frameDuration: 1.0
@@ -397,6 +411,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+persistenceKey : "TOWN_FOLK15"
 animationConfig: [
 	{
 	    frameDuration: 1.0

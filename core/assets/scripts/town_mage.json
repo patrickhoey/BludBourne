@@ -4,6 +4,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : "conversations/conversation003.json"
 questConfigPath : ""
+persistenceKey : "TOWN_MAGE"
 inventory : [
 	{
 		value: WANDS01

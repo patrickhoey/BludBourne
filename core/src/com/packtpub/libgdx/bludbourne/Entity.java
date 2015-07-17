@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
@@ -131,6 +132,10 @@ public class Entity {
 
 	public Rectangle getCurrentBoundingBox(){
 		return _physicsComponent._boundingBox;
+	}
+
+	public Vector2 getCurrentPosition(){
+		return _graphicsComponent._currentPosition;
 	}
 
 	public InputProcessor getInputProcessor(){

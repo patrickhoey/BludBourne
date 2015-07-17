@@ -158,7 +158,19 @@ public class MapManager implements ProfileObserver {
 
     public void removeMapQuestEntity(Entity entity){
         entity.unregisterObservers();
+
+        Array<Vector2> positions = ProfileManager.getInstance().getProperty(entity.getEntityConfig().getPersistenceKey(), Array.class);
+        if( positions == null ) return;
+
+        for( Vector2 position : positions){
+            if( position.x == entity.getCurrentPosition().x &&
+                    position.y == entity.getCurrentPosition().y ){
+                positions.removeValue(position, true);
+                break;
+            }
+        }
         _currentMap.getMapQuestEntities().removeValue(entity, true);
+        ProfileManager.getInstance().setProperty(entity.getEntityConfig().getPersistenceKey(), positions);
     }
 
     public void clearAllMapQuestEntities(){

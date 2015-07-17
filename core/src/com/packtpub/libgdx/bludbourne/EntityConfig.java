@@ -14,10 +14,19 @@ public class EntityConfig {
     String entityID;
     String conversationConfigPath;
     String questConfigPath;
+    String persistenceKey;
 
     EntityConfig(){
         animationConfig = new Array<AnimationConfig>();
         inventory = new Array<ItemTypeID>();
+    }
+
+    public String getPersistenceKey() {
+        return persistenceKey;
+    }
+
+    public void setPersistenceKey(String persistenceKey) {
+        this.persistenceKey = persistenceKey;
     }
 
     public String getQuestConfigPath() {
