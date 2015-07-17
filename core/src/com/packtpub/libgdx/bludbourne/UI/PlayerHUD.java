@@ -1,11 +1,11 @@
 package com.packtpub.libgdx.bludbourne.UI;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
@@ -18,6 +18,7 @@ import com.packtpub.libgdx.bludbourne.EntityConfig;
 import com.packtpub.libgdx.bludbourne.InventoryItem;
 import com.packtpub.libgdx.bludbourne.InventoryItem.ItemTypeID;
 import com.packtpub.libgdx.bludbourne.MapManager;
+import com.packtpub.libgdx.bludbourne.Utility;
 import com.packtpub.libgdx.bludbourne.dialog.ConversationGraph;
 import com.packtpub.libgdx.bludbourne.dialog.ConversationGraphObserver;
 import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
@@ -38,8 +39,11 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
     private StoreInventoryUI _storeInventoryUI;
     private QuestUI _questUI;
 
+    private Dialog _messageBoxUI;
     private Json _json;
     private MapManager _mapMgr;
+
+    private static final String INVENTORY_FULL = "Your inventory is full!";
 
     public PlayerHUD(Camera camera, Entity player, MapManager mapMgr) {
         _camera = camera;
@@ -50,6 +54,21 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
         //_stage.setDebugAll(true);
 
         _json = new Json();
+        _messageBoxUI = new Dialog("Message", Utility.STATUSUI_SKIN, "solidbackground"){
+            {
+                button("OK");
+                text(INVENTORY_FULL);
+            }
+            @Override
+            protected void result(final Object object){
+                cancel();
+                setVisible(false);
+            }
+
+        };
+        _messageBoxUI.setVisible(false);
+        _messageBoxUI.pack();
+        _messageBoxUI.setPosition(_stage.getWidth() / 2 - _messageBoxUI.getWidth() / 2, _stage.getHeight() / 2 - _messageBoxUI.getHeight() / 2);
 
         _statusUI = new StatusUI();
         _statusUI.setVisible(true);
@@ -84,6 +103,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
         _stage.addActor(_inventoryUI);
         _stage.addActor(_conversationUI);
         _stage.addActor(_statusUI);
+        _stage.addActor(_messageBoxUI);
 
         //add tooltips to the stage
         Array<Actor> actors = _inventoryUI.getInventoryActors();
@@ -112,8 +132,8 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
 
         ImageButton questButton = _statusUI.getQuestButton();
         questButton.addListener(new ClickListener() {
-            public void clicked (InputEvent event, float x, float y) {
-                _questUI.setVisible(_questUI.isVisible()?false:true);
+            public void clicked(InputEvent event, float x, float y) {
+                _questUI.setVisible(_questUI.isVisible() ? false : true);
             }
         });
 
@@ -299,15 +319,19 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                     break;
                 }
 
-                //TODO: Check if empty slots, if not, put up message
+                if( _inventoryUI.doesInventoryHaveSpace() ){
+                    _inventoryUI.addEntityToInventory(entity, entity.getEntityConfig().getCurrentQuestID());
+                    _mapMgr.clearCurrentSelectedMapEntity();
+                    _conversationUI.setVisible(false);
+                    entity.unregisterObservers();
+                    _mapMgr.removeMapQuestEntity(entity);
+                    _questUI.updateQuests(_mapMgr);
+                }else{
+                    _mapMgr.clearCurrentSelectedMapEntity();
+                    _conversationUI.setVisible(false);
+                    _messageBoxUI.setVisible(true);
+                }
 
-                _inventoryUI.addEntityToInventory(entity, entity.getEntityConfig().getCurrentQuestID());
-                _mapMgr.clearCurrentSelectedMapEntity();
-                entity.unregisterObservers();
-                _mapMgr.removeMapQuestEntity(entity);
-                _conversationUI.setVisible(false);
-
-                _questUI.updateQuests(_mapMgr);
                 break;
             case NONE:
                 break;

@@ -280,6 +280,23 @@ public class InventoryUI extends Window {
         }
     }
 
+    public boolean doesInventoryHaveSpace(){
+        Array<Cell> sourceCells = _inventorySlotTable.getCells();
+        int index = 0;
+
+        for (; index < sourceCells.size; index++) {
+            InventorySlot inventorySlot = ((InventorySlot) sourceCells.get(index).getActor());
+            if (inventorySlot == null) continue;
+            int numItems = inventorySlot.getNumItems();
+            if (numItems == 0) {
+                return true;
+            }else{
+                index++;
+            }
+        }
+        return false;
+    }
+
     public void addEntityToInventory(Entity entity, String itemName){
         Array<Cell> sourceCells = _inventorySlotTable.getCells();
         int index = 0;
