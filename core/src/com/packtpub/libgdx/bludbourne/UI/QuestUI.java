@@ -60,7 +60,7 @@ public class QuestUI extends Window {
         this.add(_tasksLabel).align(Align.left);
         this.row();
         this.defaults().expand().fill();
-        this.add(scrollPane).padRight(5);
+        this.add(scrollPane).padRight(15);
         this.add(scrollPaneTasks).padLeft(5);
 
         //this.debug();

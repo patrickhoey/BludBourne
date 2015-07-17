@@ -163,18 +163,18 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                     Array<ItemTypeID> items = _player.getEntityConfig().getInventory();
                     Array<InventoryItemLocation> itemLocations = new Array<InventoryItemLocation>();
                     for( int i = 0; i < items.size; i++){
-                        itemLocations.add(new InventoryItemLocation(i, items.get(i).toString(), 1));
+                        itemLocations.add(new InventoryItemLocation(i, items.get(i).toString(), 1, InventoryUI.PLAYER_INVENTORY));
                     }
-                    InventoryUI.populateInventory(_inventoryUI.getInventorySlotTable(), itemLocations, _inventoryUI.getDragAndDrop());
+                    InventoryUI.populateInventory(_inventoryUI.getInventorySlotTable(), itemLocations, _inventoryUI.getDragAndDrop(), InventoryUI.PLAYER_INVENTORY, false);
                     profileManager.setProperty("playerInventory", InventoryUI.getInventory(_inventoryUI.getInventorySlotTable()));
                 }
 
                 Array<InventoryItemLocation> inventory = profileManager.getProperty("playerInventory", Array.class);
-                InventoryUI.populateInventory(_inventoryUI.getInventorySlotTable(), inventory, _inventoryUI.getDragAndDrop());
+                InventoryUI.populateInventory(_inventoryUI.getInventorySlotTable(), inventory, _inventoryUI.getDragAndDrop(), InventoryUI.PLAYER_INVENTORY, false);
 
                 Array<InventoryItemLocation> equipInventory = profileManager.getProperty("playerEquipInventory", Array.class);
                 if( equipInventory != null && equipInventory.size > 0 ){
-                    InventoryUI.populateInventory(_inventoryUI.getEquipSlotTable(), equipInventory, _inventoryUI.getDragAndDrop());
+                    InventoryUI.populateInventory(_inventoryUI.getEquipSlotTable(), equipInventory, _inventoryUI.getDragAndDrop(), InventoryUI.PLAYER_INVENTORY, false);
                 }
 
                 Array<QuestGraph> quests = profileManager.getProperty("playerQuests", Array.class);
@@ -240,7 +240,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 Array<InventoryItem.ItemTypeID> items  = selectedEntity.getEntityConfig().getInventory();
                 Array<InventoryItemLocation> itemLocations = new Array<InventoryItemLocation>();
                 for( int i = 0; i < items.size; i++){
-                    itemLocations.add(new InventoryItemLocation(i, items.get(i).toString(), 1));
+                    itemLocations.add(new InventoryItemLocation(i, items.get(i).toString(), 1, InventoryUI.STORE_INVENTORY));
                 }
 
                 _storeInventoryUI.loadStoreInventory(itemLocations);
@@ -325,7 +325,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 break;
             case PLAYER_INVENTORY_UPDATED:
                 Array<InventoryItemLocation> items = _json.fromJson(Array.class, value);
-                InventoryUI.populateInventory(_inventoryUI.getInventorySlotTable(), items, _inventoryUI.getDragAndDrop());
+                InventoryUI.populateInventory(_inventoryUI.getInventorySlotTable(), items, _inventoryUI.getDragAndDrop(), InventoryUI.PLAYER_INVENTORY, false);
                 break;
             default:
                 break;

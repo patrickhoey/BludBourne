@@ -26,9 +26,6 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver, S
     private DragAndDrop _dragAndDrop;
     private Array<Actor> _inventoryActors;
 
-    private static String STORE_INVENTORY = "Store_Inventory";
-    private static String PLAYER_INVENTORY = "Player_Inventory";
-
     private final int _slotWidth = 52;
     private final int _slotHeight = 52;
 
@@ -70,10 +67,10 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver, S
         _dragAndDrop = new DragAndDrop();
         _inventoryActors = new Array<Actor>();
         _inventorySlotTable = new Table();
-        _inventorySlotTable.setName(STORE_INVENTORY);
+        _inventorySlotTable.setName(InventoryUI.STORE_INVENTORY);
 
         _playerInventorySlotTable = new Table();
-        _playerInventorySlotTable.setName(PLAYER_INVENTORY);
+        _playerInventorySlotTable.setName(InventoryUI.PLAYER_INVENTORY);
         _inventorySlotTooltip = new InventorySlotTooltip(Utility.STATUSUI_SKIN);
 
         _sellButton = new TextButton(SELL, Utility.STATUSUI_SKIN, "inventory");
@@ -107,7 +104,7 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver, S
             InventorySlot inventorySlot = new InventorySlot();
             inventorySlot.addListener(new InventorySlotTooltipListener(_inventorySlotTooltip));
             inventorySlot.addObserver(this);
-            inventorySlot.setName(STORE_INVENTORY);
+            inventorySlot.setName(InventoryUI.STORE_INVENTORY);
 
             _dragAndDrop.addTarget(new InventorySlotTarget(inventorySlot));
 
@@ -122,7 +119,7 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver, S
             InventorySlot inventorySlot = new InventorySlot();
             inventorySlot.addListener(new InventorySlotTooltipListener(_inventorySlotTooltip));
             inventorySlot.addObserver(this);
-            inventorySlot.setName(PLAYER_INVENTORY);
+            inventorySlot.setName(InventoryUI.PLAYER_INVENTORY);
 
             _dragAndDrop.addTarget(new InventorySlotTarget(inventorySlot));
 
@@ -161,7 +158,7 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver, S
                                                        checkButtonStates();
 
                                                        //Make sure we update the owner of the items
-                                                       InventoryUI.setInventoryItemNames(_playerInventorySlotTable, PLAYER_INVENTORY);
+                                                       InventoryUI.setInventoryItemNames(_playerInventorySlotTable, InventoryUI.PLAYER_INVENTORY);
                                                        savePlayerInventory();
                                                    }
                                                }
@@ -185,7 +182,7 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver, S
                                                InventorySlot inventorySlot = (InventorySlot)cells.get(i).getActor();
                                                if( inventorySlot == null ) continue;
                                                if( inventorySlot.hasItem() &&
-                                                       inventorySlot.getTopInventoryItem().getName().equalsIgnoreCase(PLAYER_INVENTORY)){
+                                                       inventorySlot.getTopInventoryItem().getName().equalsIgnoreCase(InventoryUI.PLAYER_INVENTORY)){
                                                    inventorySlot.clearAllInventoryItems(false);
                                                }
                                            }
@@ -209,23 +206,23 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver, S
     }
 
     public void loadPlayerInventory(Array<InventoryItemLocation> playerInventoryItems){
-        InventoryUI.populateInventory(_playerInventorySlotTable, playerInventoryItems, _dragAndDrop);
+        InventoryUI.populateInventory(_playerInventorySlotTable, playerInventoryItems, _dragAndDrop, InventoryUI.PLAYER_INVENTORY, true);
     }
 
     public void loadStoreInventory(Array<InventoryItemLocation> storeInventoryItems){
-        InventoryUI.populateInventory(_inventorySlotTable, storeInventoryItems, _dragAndDrop);
+        InventoryUI.populateInventory(_inventorySlotTable, storeInventoryItems, _dragAndDrop, InventoryUI.STORE_INVENTORY, false);
     }
 
     public void savePlayerInventory(){
-        Array<InventoryItemLocation> playerItemsInPlayerInventory = InventoryUI.getInventory(_playerInventorySlotTable, PLAYER_INVENTORY);
-        Array<InventoryItemLocation> playerItemsInStoreInventory = InventoryUI.getInventory(_playerInventorySlotTable, _inventorySlotTable, PLAYER_INVENTORY);
+        Array<InventoryItemLocation> playerItemsInPlayerInventory = InventoryUI.getInventoryFiltered(_playerInventorySlotTable, InventoryUI.STORE_INVENTORY);
+        Array<InventoryItemLocation> playerItemsInStoreInventory = InventoryUI.getInventoryFiltered(_playerInventorySlotTable, _inventorySlotTable, InventoryUI.STORE_INVENTORY);
         playerItemsInPlayerInventory.addAll(playerItemsInStoreInventory);
         StoreInventoryUI.this.notify(_json.toJson(playerItemsInPlayerInventory), StoreInventoryEvent.PLAYER_INVENTORY_UPDATED);
     }
 
     public void cleanupStoreInventory(){
-        InventoryUI.removeInventoryItems(STORE_INVENTORY, _playerInventorySlotTable);
-        InventoryUI.removeInventoryItems(PLAYER_INVENTORY, _inventorySlotTable);
+        InventoryUI.removeInventoryItems(InventoryUI.STORE_INVENTORY, _playerInventorySlotTable);
+        InventoryUI.removeInventoryItems(InventoryUI.PLAYER_INVENTORY, _inventorySlotTable);
     }
 
     @Override
@@ -234,26 +231,26 @@ public class StoreInventoryUI extends Window implements InventorySlotObserver, S
         {
             case ADDED_ITEM:
                 //moving from player inventory to store inventory to sell
-                if( slot.getTopInventoryItem().getName().equalsIgnoreCase(PLAYER_INVENTORY) &&
-                        slot.getName().equalsIgnoreCase(STORE_INVENTORY) ) {
+                if( slot.getTopInventoryItem().getName().equalsIgnoreCase(InventoryUI.PLAYER_INVENTORY) &&
+                        slot.getName().equalsIgnoreCase(InventoryUI.STORE_INVENTORY) ) {
                     _tradeInVal += slot.getTopInventoryItem().getTradeValue();
                     _sellTotalLabel.setText(SELL + " : " + _tradeInVal + GP);
                 }
                 //moving from store inventory to player inventory to buy
-                if( slot.getTopInventoryItem().getName().equalsIgnoreCase(STORE_INVENTORY) &&
-                        slot.getName().equalsIgnoreCase(PLAYER_INVENTORY) ) {
+                if( slot.getTopInventoryItem().getName().equalsIgnoreCase(InventoryUI.STORE_INVENTORY) &&
+                        slot.getName().equalsIgnoreCase(InventoryUI.PLAYER_INVENTORY) ) {
                     _fullValue += slot.getTopInventoryItem().getItemValue();
                     _buyTotalLabel.setText(BUY + " : " +  _fullValue + GP);
                 }
                 break;
             case REMOVED_ITEM:
-                if( slot.getTopInventoryItem().getName().equalsIgnoreCase(PLAYER_INVENTORY) &&
-                        slot.getName().equalsIgnoreCase(STORE_INVENTORY) ) {
+                if( slot.getTopInventoryItem().getName().equalsIgnoreCase(InventoryUI.PLAYER_INVENTORY) &&
+                        slot.getName().equalsIgnoreCase(InventoryUI.STORE_INVENTORY) ) {
                     _tradeInVal -= slot.getTopInventoryItem().getTradeValue();
                     _sellTotalLabel.setText(SELL + " : " + _tradeInVal + GP);
                 }
-                if( slot.getTopInventoryItem().getName().equalsIgnoreCase(STORE_INVENTORY) &&
-                        slot.getName().equalsIgnoreCase(PLAYER_INVENTORY) ) {
+                if( slot.getTopInventoryItem().getName().equalsIgnoreCase(InventoryUI.STORE_INVENTORY) &&
+                        slot.getName().equalsIgnoreCase(InventoryUI.PLAYER_INVENTORY) ) {
                     _fullValue -= slot.getTopInventoryItem().getItemValue();
                     _buyTotalLabel.setText(BUY + " : " + _fullValue + GP);
                 }

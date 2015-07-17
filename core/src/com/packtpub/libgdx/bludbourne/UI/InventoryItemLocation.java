@@ -4,14 +4,24 @@ public class InventoryItemLocation {
     private int locationIndex;
     private String itemTypeAtLocation;
     private int numberItemsAtLocation;
+    private String itemNameProperty;
 
     public InventoryItemLocation(){
     }
 
-    public InventoryItemLocation( int locationIndex, String itemTypeAtLocation, int numberItemsAtLocation){
+    public InventoryItemLocation( int locationIndex, String itemTypeAtLocation, int numberItemsAtLocation, String itemNameProperty){
         this.locationIndex = locationIndex;
         this.itemTypeAtLocation = itemTypeAtLocation;
         this.numberItemsAtLocation = numberItemsAtLocation;
+        this.itemNameProperty = itemNameProperty;
+    }
+
+    public String getItemNameProperty() {
+        return itemNameProperty;
+    }
+
+    public void setItemNameProperty(String itemNameProperty) {
+        this.itemNameProperty = itemNameProperty;
     }
 
     public String getItemTypeAtLocation() {

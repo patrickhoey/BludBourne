@@ -18,6 +18,9 @@ import com.packtpub.libgdx.bludbourne.Utility;
 public class InventoryUI extends Window {
 
     public final static int _numSlots = 50;
+    public static final String PLAYER_INVENTORY = "Player_Inventory";
+    public static final String STORE_INVENTORY = "Store_Inventory";
+
     private int _lengthSlotRow = 10;
     private Table _inventorySlotTable;
     private Table _playerSlotsTable;
@@ -157,7 +160,7 @@ public class InventoryUI extends Window {
         return items;
     }
 
-    public static void populateInventory(Table targetTable, Array<InventoryItemLocation> inventoryItems, DragAndDrop draganddrop){
+    public static void populateInventory(Table targetTable, Array<InventoryItemLocation> inventoryItems, DragAndDrop draganddrop, String defaultName, boolean disableNonDefaultItems){
         clearInventoryItems(targetTable);
 
         Array<Cell> cells = targetTable.getCells();
@@ -168,12 +171,19 @@ public class InventoryUI extends Window {
 
             for( int index = 0; index < itemLocation.getNumberItemsAtLocation(); index++ ){
                 InventoryItem item = InventoryItemFactory.getInstance().getInventoryItem(itemTypeID);
-                if( item.getName() == null ){
-                    item.setName(targetTable.getName());
+                String itemName =  itemLocation.getItemNameProperty();
+                if( itemName == null || itemName.isEmpty() ){
+                    item.setName(defaultName);
+                }else{
+                    item.setName(itemName);
                 }
 
                 inventorySlot.add(item);
-                draganddrop.addSource(new InventorySlotSource(inventorySlot, draganddrop));
+                if( item.getName().equalsIgnoreCase(defaultName) ){
+                    draganddrop.addSource(new InventorySlotSource(inventorySlot, draganddrop));
+                }else if( disableNonDefaultItems == false ){
+                    draganddrop.addSource(new InventorySlotSource(inventorySlot, draganddrop));
+                }
             }
         }
     }
@@ -189,7 +199,29 @@ public class InventoryUI extends Window {
                 items.add(new InventoryItemLocation(
                         i,
                         inventorySlot.getTopInventoryItem().getItemTypeID().toString(),
-                        numItems));
+                        numItems,
+                        inventorySlot.getTopInventoryItem().getName()));
+            }
+        }
+        return items;
+    }
+
+    public static Array<InventoryItemLocation> getInventoryFiltered(Table targetTable, String filterOutName){
+        Array<Cell> cells = targetTable.getCells();
+        Array<InventoryItemLocation> items = new Array<InventoryItemLocation>();
+        for(int i = 0; i < cells.size; i++){
+            InventorySlot inventorySlot =  ((InventorySlot)cells.get(i).getActor());
+            if( inventorySlot == null ) continue;
+            int numItems = inventorySlot.getNumItems();
+            if( numItems > 0 ){
+                String topItemName = inventorySlot.getTopInventoryItem().getName();
+                if( topItemName.equalsIgnoreCase(filterOutName)) continue;
+                //System.out.println("[i] " + i + " itemtype: " + inventorySlot.getTopInventoryItem().getItemTypeID().toString() + " numItems " + numItems);
+                items.add(new InventoryItemLocation(
+                        i,
+                        inventorySlot.getTopInventoryItem().getItemTypeID().toString(),
+                        numItems,
+                        inventorySlot.getTopInventoryItem().getName()));
             }
         }
         return items;
@@ -207,21 +239,22 @@ public class InventoryUI extends Window {
                 items.add(new InventoryItemLocation(
                         i,
                         inventorySlot.getTopInventoryItem().getItemTypeID().toString(),
-                        numItems));
+                        numItems,
+                        name));
             }
         }
         return items;
     }
 
-    public static Array<InventoryItemLocation> getInventory(Table sourceTable, Table targetTable, String name){
-        Array<InventoryItemLocation> items = getInventory(targetTable, name);
+    public static Array<InventoryItemLocation> getInventoryFiltered(Table sourceTable, Table targetTable, String filterOutName){
+        Array<InventoryItemLocation> items = getInventoryFiltered(targetTable, filterOutName);
         Array<Cell> sourceCells = sourceTable.getCells();
         int index = 0;
         for( InventoryItemLocation item : items ) {
             for (; index < sourceCells.size; index++) {
                 InventorySlot inventorySlot = ((InventorySlot) sourceCells.get(index).getActor());
                 if (inventorySlot == null) continue;
-                int numItems = inventorySlot.getNumItems(name);
+                int numItems = inventorySlot.getNumItems();
                 if (numItems == 0) {
                     item.setLocationIndex(index);
                     //System.out.println("[index] " + index + " itemtype: " + item.getItemTypeAtLocation() + " numItems " + numItems);
