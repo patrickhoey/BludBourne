@@ -259,10 +259,9 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 }
                 EntityConfig config = currentlySelectedEntity.getEntityConfig();
 
-                EntityConfig configProperty = ProfileManager.getInstance().getProperty(config.getEntityID(), EntityConfig.class);
-                if( configProperty == null ){
-                    _questUI.addQuest(config.getQuestConfigPath());
+                boolean questAdded = _questUI.addQuest(config.getQuestConfigPath());
 
+                if( questAdded ){
                     //Update conversation dialog
                     config.setConversationConfigPath(QuestUI.RETURN_QUEST);
                     ProfileManager.getInstance().setProperty(config.getEntityID(), config);

@@ -77,17 +77,30 @@ public class QuestUI extends Window {
         );
     }
 
-    public void addQuest(String questConfigPath){
+    public boolean addQuest(String questConfigPath){
         if( questConfigPath.isEmpty() || !Gdx.files.internal(questConfigPath).exists() ){
             Gdx.app.debug(TAG, "Quest file does not exist!");
-            return;
+            return false;
+        }
+
+        QuestGraph graph = _json.fromJson(QuestGraph.class, Gdx.files.internal(questConfigPath));
+        if( doesQuestAlreadyExist(graph) ){
+            return false;
         }
 
         clearDialog();
-
-        QuestGraph graph = _json.fromJson(QuestGraph.class, Gdx.files.internal(questConfigPath));
         _quests.add(graph);
         updateQuestItemList();
+        return true;
+    }
+
+    public boolean doesQuestAlreadyExist(QuestGraph graph){
+        for( QuestGraph questGraph: _quests ){
+            if( questGraph.getQuestID().equalsIgnoreCase(graph.getQuestID())){
+                return true;
+            }
+        }
+        return false;
     }
 
     public Array<QuestGraph> getQuests() {
