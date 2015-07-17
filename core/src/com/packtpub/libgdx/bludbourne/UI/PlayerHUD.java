@@ -1,5 +1,6 @@
 package com.packtpub.libgdx.bludbourne.UI;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -259,11 +260,12 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 }
                 EntityConfig config = currentlySelectedEntity.getEntityConfig();
 
-                boolean questAdded = _questUI.addQuest(config.getQuestConfigPath());
+                QuestGraph questGraph = _questUI.loadQuest(config.getQuestConfigPath());
 
-                if( questAdded ){
+                if( questGraph != null ){
                     //Update conversation dialog
                     config.setConversationConfigPath(QuestUI.RETURN_QUEST);
+                    config.setCurrentQuestID(questGraph.getQuestID());
                     ProfileManager.getInstance().setProperty(config.getEntityID(), config);
                     updateEntityObservers();
                 }
@@ -281,8 +283,11 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 EntityConfig configReturnProperty = ProfileManager.getInstance().getProperty(configReturn.getEntityID(), EntityConfig.class);
                 if( configReturnProperty == null ) return;
 
-                configReturnProperty.setConversationConfigPath(QuestUI.FINISHED_QUEST);
-                ProfileManager.getInstance().setProperty(configReturnProperty.getEntityID(), configReturnProperty);
+                if( _questUI.isQuestReadyForReturn(configReturnProperty.getCurrentQuestID()) ){
+                    _inventoryUI.removeQuestItemFromInventory(configReturnProperty.getCurrentQuestID());
+                    configReturnProperty.setConversationConfigPath(QuestUI.FINISHED_QUEST);
+                    ProfileManager.getInstance().setProperty(configReturnProperty.getEntityID(), configReturnProperty);
+                }
 
                 _conversationUI.setVisible(false);
                 _mapMgr.clearCurrentSelectedMapEntity();
@@ -296,7 +301,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
 
                 //TODO: Check if empty slots, if not, put up message
 
-                _inventoryUI.addEntityToInventory(entity);
+                _inventoryUI.addEntityToInventory(entity, entity.getEntityConfig().getCurrentQuestID());
                 _mapMgr.clearCurrentSelectedMapEntity();
                 entity.unregisterObservers();
                 _mapMgr.removeMapQuestEntity(entity);

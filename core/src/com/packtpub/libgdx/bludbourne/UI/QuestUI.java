@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.packtpub.libgdx.bludbourne.MapManager;
 import com.packtpub.libgdx.bludbourne.Utility;
+import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 import com.packtpub.libgdx.bludbourne.quest.QuestGraph;
 import com.packtpub.libgdx.bludbourne.quest.QuestTask;
 
@@ -77,31 +78,60 @@ public class QuestUI extends Window {
         );
     }
 
-    public boolean addQuest(String questConfigPath){
+    public QuestGraph loadQuest(String questConfigPath){
         if( questConfigPath.isEmpty() || !Gdx.files.internal(questConfigPath).exists() ){
             Gdx.app.debug(TAG, "Quest file does not exist!");
-            return false;
+            return null;
         }
 
         QuestGraph graph = _json.fromJson(QuestGraph.class, Gdx.files.internal(questConfigPath));
-        if( doesQuestAlreadyExist(graph) ){
-            return false;
+        if( doesQuestExist(graph.getQuestID()) ){
+            return null;
         }
 
         clearDialog();
         _quests.add(graph);
         updateQuestItemList();
+        return graph;
+    }
+
+    public boolean isQuestReadyForReturn(String questID){
+        if( questID.isEmpty()){
+            Gdx.app.debug(TAG, "Quest ID not valid");
+            return false;
+        }
+
+        if( !doesQuestExist(questID) ) return false;
+
+        QuestGraph graph = getQuestByID(questID);
+        if( graph == null ) return false;
+
+        if( graph.updateQuestForReturn() ){
+            graph.setQuestComplete(true);
+        }else{
+            return false;
+        }
         return true;
     }
 
-    public boolean doesQuestAlreadyExist(QuestGraph graph){
+    public QuestGraph getQuestByID(String questGraphID){
         for( QuestGraph questGraph: _quests ){
-            if( questGraph.getQuestID().equalsIgnoreCase(graph.getQuestID())){
+            if( questGraph.getQuestID().equalsIgnoreCase(questGraphID)){
+                return questGraph;
+            }
+        }
+        return null;
+    }
+
+    public boolean doesQuestExist(String questGraphID){
+        for( QuestGraph questGraph: _quests ){
+            if( questGraph.getQuestID().equalsIgnoreCase(questGraphID)){
                 return true;
             }
         }
         return false;
     }
+
 
     public Array<QuestGraph> getQuests() {
         return _quests;
@@ -142,6 +172,7 @@ public class QuestUI extends Window {
                 quest.init(mapMgr);
             }
         }
+        ProfileManager.getInstance().setProperty("playerQuests", _quests);
     }
 
     public void updateQuests(MapManager mapMgr){
@@ -150,6 +181,7 @@ public class QuestUI extends Window {
                 quest.update(mapMgr);
             }
         }
+        ProfileManager.getInstance().setProperty("playerQuests", _quests);
     }
 
 }

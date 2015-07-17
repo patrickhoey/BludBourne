@@ -168,7 +168,10 @@ public class InventoryUI extends Window {
 
             for( int index = 0; index < itemLocation.getNumberItemsAtLocation(); index++ ){
                 InventoryItem item = InventoryItemFactory.getInstance().getInventoryItem(itemTypeID);
-                item.setName(targetTable.getName());
+                if( item.getName() == null ){
+                    item.setName(targetTable.getName());
+                }
+
                 inventorySlot.add(item);
                 draganddrop.addSource(new InventorySlotSource(inventorySlot, draganddrop));
             }
@@ -244,7 +247,7 @@ public class InventoryUI extends Window {
         }
     }
 
-    public void addEntityToInventory(Entity entity){
+    public void addEntityToInventory(Entity entity, String itemName){
         Array<Cell> sourceCells = _inventorySlotTable.getCells();
         int index = 0;
 
@@ -254,11 +257,26 @@ public class InventoryUI extends Window {
                 int numItems = inventorySlot.getNumItems();
                 if (numItems == 0) {
                     InventoryItem inventoryItem = InventoryItemFactory.getInstance().getInventoryItem(ItemTypeID.valueOf(entity.getEntityConfig().getItemTypeID()));
+                    inventoryItem.setName(itemName);
                     inventorySlot.add(inventoryItem);
                     _dragAndDrop.addSource(new InventorySlotSource(inventorySlot, _dragAndDrop));
                     break;
                 }
             }
+    }
+
+    public void removeQuestItemFromInventory(String questID){
+        Array<Cell> sourceCells = _inventorySlotTable.getCells();
+        for (int index = 0; index < sourceCells.size; index++) {
+            InventorySlot inventorySlot = ((InventorySlot) sourceCells.get(index).getActor());
+            if (inventorySlot == null) continue;
+            InventoryItem item = inventorySlot.getTopInventoryItem();
+            if( item == null ) continue;
+            String inventoryItemName = item.getName();
+            if (inventoryItemName != null && inventoryItemName.equals(questID) ) {
+                inventorySlot.clearAllInventoryItems(false);
+            }
+        }
     }
 
     public Array<Actor> getInventoryActors(){

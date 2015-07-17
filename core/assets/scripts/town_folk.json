@@ -5,6 +5,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : "conversations/conversation004.json"
 questConfigPath : "quests/quest002.json"
+currentQuestID : ""
 itemTypeID: NONE
 animationConfig: [
 	{
@@ -34,6 +35,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+currentQuestID : ""
 itemTypeID: NONE
 animationConfig: [
 	{
@@ -63,6 +65,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+currentQuestID : ""
 itemTypeID: NONE
 animationConfig: [
 	{
@@ -92,6 +95,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+currentQuestID : ""
 itemTypeID: NONE
 animationConfig: [
 	{
@@ -121,6 +125,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+currentQuestID : ""
 itemTypeID: NONE
 animationConfig: [
 	{
@@ -150,6 +155,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+currentQuestID : ""
 itemTypeID: NONE
 animationConfig: [
 	{
@@ -179,6 +185,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+currentQuestID : ""
 itemTypeID: NONE
 animationConfig: [
 	{
@@ -208,6 +215,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+currentQuestID : ""
 itemTypeID: NONE
 animationConfig: [
 	{
@@ -237,6 +245,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+currentQuestID : ""
 itemTypeID: NONE
 animationConfig: [
 	{
@@ -266,6 +275,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : "conversations/conversation001.json"
 questConfigPath : ""
+currentQuestID : ""
 itemTypeID: NONE
 animationConfig: [
 	{
@@ -295,6 +305,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+currentQuestID : ""
 itemTypeID: NONE
 animationConfig: [
 	{
@@ -324,6 +335,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+currentQuestID : ""
 itemTypeID: NONE
 animationConfig: [
 	{
@@ -353,6 +365,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+currentQuestID : ""
 itemTypeID: NONE
 animationConfig: [
 	{
@@ -382,6 +395,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+currentQuestID : ""
 itemTypeID: NONE
 animationConfig: [
 	{
@@ -411,6 +425,7 @@ state : IMMOBILE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+currentQuestID : ""
 itemTypeID: NONE
 animationConfig: [
 	{

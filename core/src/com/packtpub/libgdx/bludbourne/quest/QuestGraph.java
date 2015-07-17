@@ -1,5 +1,6 @@
 package com.packtpub.libgdx.bludbourne.quest;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
@@ -16,6 +17,8 @@ import java.util.Hashtable;
 import java.util.Set;
 
 public class QuestGraph {
+    private static final String TAG = QuestGraph.class.getSimpleName();
+
     private Hashtable<String, QuestTask> questTasks;
     private Hashtable<String, ArrayList<QuestTaskDependency>> questTaskDependencies;
     private String questTitle;
@@ -44,6 +47,16 @@ public class QuestGraph {
 
     public void setQuestTitle(String questTitle) {
         this.questTitle = questTitle;
+    }
+
+    public boolean areAllTasksComplete(){
+        ArrayList<QuestTask> tasks = getAllQuestTasks();
+        for( QuestTask task: tasks ){
+            if( !task.isTaskComplete() ){
+                return false;
+            }
+        }
+        return true;
     }
 
     public void setTasks(Hashtable<String, QuestTask> questTasks) {
@@ -135,6 +148,28 @@ public class QuestGraph {
         }
     }
 
+    public boolean updateQuestForReturn(){
+        ArrayList<QuestTask> tasks = getAllQuestTasks();
+        QuestTask readyTask = null;
+
+        //First, see if all tasks are available, meaning no blocking dependencies
+        for( QuestTask task : tasks){
+            if( !isQuestTaskAvailable(task.getId())){
+                return false;
+            }
+            if( !task.isTaskComplete() ){
+                if( task.getQuestType().equals(QuestTask.QuestType.RETURN) ){
+                    readyTask = task;
+                }else{
+                    return false;
+                }
+            }
+        }
+        if( readyTask == null ) return false;
+        readyTask.setTaskComplete();
+        return true;
+    }
+
     public boolean isQuestTaskAvailable(String id){
         QuestTask task = getQuestTaskByID(id);
         if( task == null) return false;
@@ -173,7 +208,7 @@ public class QuestGraph {
                     //Case where all the items have been picked up
                     if( questItemPositions.size == 0 ){
                         questTask.setTaskComplete();
-                        System.out.println("TASK : " + questTask.getId() + " is complete!");
+                        Gdx.app.debug(TAG, "TASK : " + questTask.getId() + " is complete!");
                     }
                     break;
                 case KILL:
@@ -218,11 +253,13 @@ public class QuestGraph {
                         for( Vector2 position: positions ){
                             questItemPositions.add(position);
                             Entity entity = Map.initEntity(config, position);
+                            entity.getEntityConfig().setCurrentQuestID(questID);
                             questEntities.add(entity);
                         }
                     }else{
                         for( Vector2 questItemPosition: questItemPositions ){
                             Entity entity = Map.initEntity(config, questItemPosition);
+                            entity.getEntityConfig().setCurrentQuestID(questID);
                             questEntities.add(entity);
                         }
                     }

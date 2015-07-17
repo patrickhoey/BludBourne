@@ -14,11 +14,20 @@ public class EntityConfig {
     String entityID;
     String conversationConfigPath;
     String questConfigPath;
+    String currentQuestID;
     String itemTypeID;
 
     EntityConfig(){
         animationConfig = new Array<AnimationConfig>();
         inventory = new Array<ItemTypeID>();
+    }
+
+    public String getCurrentQuestID() {
+        return currentQuestID;
+    }
+
+    public void setCurrentQuestID(String currentQuestID) {
+        this.currentQuestID = currentQuestID;
     }
 
     public String getItemTypeID() {

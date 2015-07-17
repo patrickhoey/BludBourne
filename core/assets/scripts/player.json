@@ -4,6 +4,7 @@ state : IDLE
 direction : DOWN
 conversationConfigPath : ""
 questConfigPath : ""
+currentQuestID : ""
 itemTypeID: NONE
 inventory : [
 	{
