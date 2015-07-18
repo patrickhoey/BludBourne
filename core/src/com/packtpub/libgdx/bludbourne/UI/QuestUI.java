@@ -72,10 +72,22 @@ public class QuestUI extends Window {
                                    public void clicked(InputEvent event, float x, float y) {
                                        QuestGraph quest = (QuestGraph) _listQuests.getSelected();
                                        if (quest == null) return;
-                                       populateQuestDialog(quest);
+                                       populateQuestTaskDialog(quest);
                                    }
                                }
         );
+    }
+
+    public void questTaskComplete(String questID, String questTaskID){
+        for( QuestGraph questGraph: _quests ){
+            if( questGraph.getQuestID().equalsIgnoreCase(questID)){
+                if( questGraph.isQuestTaskAvailable(questTaskID) ){
+                    questGraph.setQuestTaskComplete(questTaskID);
+                }else{
+                    return;
+                }
+            }
+        }
     }
 
     public QuestGraph loadQuest(String questConfigPath){
@@ -153,7 +165,7 @@ public class QuestUI extends Window {
         _listQuests.clearItems();
     }
 
-    private void populateQuestDialog(QuestGraph graph){
+    private void populateQuestTaskDialog(QuestGraph graph){
         _listTasks.clearItems();
 
         ArrayList<QuestTask> tasks =  graph.getAllQuestTasks();

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="75" height="75" tilewidth="16" tileheight="16" nextobjectid="400">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="75" height="75" tilewidth="16" tileheight="16" nextobjectid="412">
  <tileset firstgid="1" name="Wall" tilewidth="16" tileheight="16">
   <image source="../sprites/Objects/Wall.png" width="320" height="816"/>
  </tileset>
@@ -379,5 +379,64 @@
  <objectgroup name="MAP_PORTAL_LAYER">
   <object id="396" name="CASTLE_OF_DOOM" x="880" y="144" width="16" height="16"/>
   <object id="397" name="TOWN" x="208" y="848" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup name="MAP_QUEST_DISCOVER_LAYER">
+  <object id="400" name="1" x="464" y="768" width="328" height="356">
+   <properties>
+    <property name="taskID" value="4"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="MAP_QUEST_ITEM_SPAWN_LAYER">
+  <object id="402" name="1" x="668" y="848" width="16" height="16">
+   <properties>
+    <property name="taskID" value="3"/>
+   </properties>
+  </object>
+  <object id="403" name="1" x="628" y="812" width="16" height="16">
+   <properties>
+    <property name="taskID" value="3"/>
+   </properties>
+  </object>
+  <object id="404" name="1" x="688" y="992" width="16" height="16">
+   <properties>
+    <property name="taskID" value="3"/>
+   </properties>
+  </object>
+  <object id="405" name="1" x="544" y="976" width="16" height="16">
+   <properties>
+    <property name="taskID" value="3"/>
+   </properties>
+  </object>
+  <object id="406" name="1" x="560" y="896" width="16" height="16">
+   <properties>
+    <property name="taskID" value="3"/>
+   </properties>
+  </object>
+  <object id="407" name="1" x="752" y="896" width="16" height="16">
+   <properties>
+    <property name="taskID" value="2"/>
+   </properties>
+  </object>
+  <object id="408" name="1" x="528" y="768" width="16" height="16">
+   <properties>
+    <property name="taskID" value="2"/>
+   </properties>
+  </object>
+  <object id="409" name="1" x="588" y="1072" width="16" height="16">
+   <properties>
+    <property name="taskID" value="2"/>
+   </properties>
+  </object>
+  <object id="410" name="1" x="672" y="912" width="16" height="16">
+   <properties>
+    <property name="taskID" value="2"/>
+   </properties>
+  </object>
+  <object id="411" name="1" x="480" y="800" width="16" height="16">
+   <properties>
+    <property name="taskID" value="2"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

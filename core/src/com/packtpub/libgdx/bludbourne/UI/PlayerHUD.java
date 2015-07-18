@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.packtpub.libgdx.bludbourne.Component;
 import com.packtpub.libgdx.bludbourne.ComponentObserver;
 import com.packtpub.libgdx.bludbourne.Entity;
 import com.packtpub.libgdx.bludbourne.EntityConfig;
@@ -252,6 +253,13 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                     _conversationUI.setVisible(false);
                 }
                 break;
+            case QUEST_LOCATION_DISCOVERED:
+                String[] string = value.split(Component.MESSAGE_TOKEN);
+                String questID = string[0];
+                String questTaskID = string[1];
+
+                _questUI.questTaskComplete(questID, questTaskID);
+                updateEntityObservers();
             default:
                 break;
         }

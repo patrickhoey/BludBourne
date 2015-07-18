@@ -203,6 +203,12 @@ public class QuestGraph {
         return true;
     }
 
+    public void setQuestTaskComplete(String id){
+        QuestTask task = getQuestTaskByID(id);
+        if( task == null) return;
+        task.setTaskComplete();
+    }
+
     public void update(MapManager mapMgr){
         ArrayList<QuestTask> allQuestTasks = getAllQuestTasks();
         for( QuestTask questTask: allQuestTasks ) {

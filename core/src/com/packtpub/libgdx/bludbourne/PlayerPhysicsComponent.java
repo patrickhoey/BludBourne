@@ -16,10 +16,12 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
     private Entity.State _state;
     private Vector3 _mouseSelectCoordinates;
     private boolean _isMouseSelectEnabled = false;
+    private String previousDiscovery;
 
     public PlayerPhysicsComponent(){
         _boundingBoxLocation = BoundingBoxLocation.BOTTOM_CENTER;
         initBoundingBox(0.3f, 0.5f);
+        previousDiscovery = "";
 
         _mouseSelectCoordinates = new Vector3(0,0,0);
     }
@@ -56,6 +58,7 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
         //We want the hitbox to be at the feet for a better feel
         updateBoundingBoxPosition(_nextEntityPosition);
         updatePortalLayerActivation(mapMgr);
+        updateDiscoverLayerActivation(mapMgr);
 
         if( _isMouseSelectEnabled ){
             selectMapEntityCandidate(mapMgr);
@@ -109,6 +112,43 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
             }
         }
         _tempEntities.clear();
+    }
+
+    private boolean updateDiscoverLayerActivation(MapManager mapMgr){
+        MapLayer mapDiscoverLayer =  mapMgr.getQuestDiscoverLayer();
+
+        if( mapDiscoverLayer == null ){
+            return false;
+        }
+
+        Rectangle rectangle = null;
+
+        for( MapObject object: mapDiscoverLayer.getObjects()){
+            if(object instanceof RectangleMapObject) {
+                rectangle = ((RectangleMapObject)object).getRectangle();
+
+                if (_boundingBox.overlaps(rectangle) ){
+                    String questID = object.getName();
+                    String questTaskID = (String)object.getProperties().get("taskID");
+                    String val = questID + MESSAGE_TOKEN + questTaskID;
+
+                    if( questID == null ) {
+                        return false;
+                    }
+
+                    if( previousDiscovery.equalsIgnoreCase(val) ){
+                        return true;
+                    }else{
+                        previousDiscovery = val;
+                    }
+
+                    notify(_json.toJson(val), ComponentObserver.ComponentEvent.QUEST_LOCATION_DISCOVERED);
+                    Gdx.app.debug(TAG, "Discover Area Activated");
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private boolean updatePortalLayerActivation(MapManager mapMgr){

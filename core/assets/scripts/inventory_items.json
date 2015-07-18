@@ -265,5 +265,19 @@
 	itemShortDescription: Quest Item Baby
 	itemValue: -1
 },
+{
+	itemAttributes: 4
+	itemUseType: 2048
+	itemTypeID: FUR001
+	itemShortDescription: Quest Item Fur
+	itemValue: -1
+},
+{
+	itemAttributes: 4
+	itemUseType: 2048
+	itemTypeID: HORNS001
+	itemShortDescription: Quest Item Horns
+	itemValue: -1
+},
 
 ]

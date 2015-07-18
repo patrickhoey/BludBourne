@@ -21,7 +21,7 @@ questTasks: {
 			}
 		}
 		id: 4
-		taskPhrase: Find the area where the Tuskan beast feasts
+		taskPhrase: "Find the area where the Tuskan beast feasts, East of Town"
 		questType : DISCOVER
 	}
 	3: {
@@ -32,7 +32,7 @@ questTasks: {
 			}
 			TARGET_TYPE: {
 				class: java.lang.String
-				value: "FUR01"
+				value: "scripts/quest001_task003.json"
 			}
 			TARGET_NUM: {
 				class: java.lang.String
@@ -44,7 +44,7 @@ questTasks: {
 			}
 		}
 		id: 3
-		taskPhrase: Collect 5 furs
+		taskPhrase: "Collect 5 furs"
 		questType : FETCH
 	}
 	2: {
@@ -55,7 +55,7 @@ questTasks: {
 			}
 			TARGET_TYPE: {
 				class: java.lang.String
-				value: "HORNS01"
+				value: "scripts/quest001_task002.json"
 			}
 			TARGET_NUM: {
 				class: java.lang.String
@@ -67,7 +67,7 @@ questTasks: {
 			}
 		}
 		id: 2
-		taskPhrase: Collect 5 horns
+		taskPhrase: "Collect 5 horns"
 		questType : FETCH
 	}
 	1: {
@@ -78,7 +78,7 @@ questTasks: {
 			}
 			TARGET_TYPE: {
 				class: java.lang.String
-				value: "TOWN_FOLK02"
+				value: "TOWN_FOLK04"
 			}
 			TARGET_LOCATION: {
 				class: java.lang.String
@@ -86,7 +86,7 @@ questTasks: {
 			}
 		}
 		id: 1
-		taskPhrase: Come back to me with the items
+		taskPhrase: "Come back to me with the items"
 		questType : RETURN
 	}
 }
