@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="16" tileheight="16" nextobjectid="144">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="16" tileheight="16" nextobjectid="145">
  <tileset firstgid="1" name="Decor0" tilewidth="16" tileheight="16">
   <image source="../sprites/Objects/Decor0.png" width="128" height="352"/>
  </tileset>
@@ -93,6 +93,11 @@
    </properties>
   </object>
   <object id="143" name="2" x="608" y="128" width="16" height="16">
+   <properties>
+    <property name="taskID" value="2"/>
+   </properties>
+  </object>
+  <object id="144" name="3" x="320" y="144" width="16" height="16">
    <properties>
     <property name="taskID" value="2"/>
    </properties>

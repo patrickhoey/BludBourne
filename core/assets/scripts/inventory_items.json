@@ -258,5 +258,12 @@
 	itemShortDescription: Quest Item Herb
 	itemValue: -1
 },
+{
+	itemAttributes: 4
+	itemUseType: 2048
+	itemTypeID: BABY001
+	itemShortDescription: Quest Item Baby
+	itemValue: -1
+},
 
 ]
