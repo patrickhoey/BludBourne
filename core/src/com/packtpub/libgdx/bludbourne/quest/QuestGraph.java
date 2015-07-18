@@ -212,6 +212,9 @@ public class QuestGraph {
     public void update(MapManager mapMgr){
         ArrayList<QuestTask> allQuestTasks = getAllQuestTasks();
         for( QuestTask questTask: allQuestTasks ) {
+
+            if( questTask.isTaskComplete() ) continue;
+
             //We first want to make sure the task is available and is relevant to current location
             if (!isQuestTaskAvailable(questTask.getId())) continue;
 
@@ -232,7 +235,8 @@ public class QuestGraph {
                     //Case where all the items have been picked up
                     if( questItemPositions.size == 0 ){
                         questTask.setTaskComplete();
-                        Gdx.app.debug(TAG, "TASK : " + questTask.getId() + " is complete!");
+                        Gdx.app.debug(TAG, "TASK : " + questTask.getId() + " is complete of Quest: " + questID);
+                        Gdx.app.debug(TAG, "INFO : " + QuestTask.QuestTaskPropertyType.TARGET_TYPE.toString());
                     }
                     break;
                 case KILL:
@@ -254,6 +258,9 @@ public class QuestGraph {
     public void init(MapManager mapMgr){
         ArrayList<QuestTask> allQuestTasks = getAllQuestTasks();
         for( QuestTask questTask: allQuestTasks ) {
+
+            if( questTask.isTaskComplete() ) continue;
+
             //We first want to make sure the task is available and is relevant to current location
             if (!isQuestTaskAvailable(questTask.getId())) continue;
 
