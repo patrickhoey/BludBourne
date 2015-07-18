@@ -24,6 +24,24 @@ public class QuestGraph {
     private String questTitle;
     private String questID;
     private boolean isQuestComplete;
+    private int goldReward;
+    private int xpReward;
+
+    public int getGoldReward() {
+        return goldReward;
+    }
+
+    public void setGoldReward(int goldReward) {
+        this.goldReward = goldReward;
+    }
+
+    public int getXpReward() {
+        return xpReward;
+    }
+
+    public void setXpReward(int xpReward) {
+        this.xpReward = xpReward;
+    }
 
     public boolean isQuestComplete() {
         return isQuestComplete;

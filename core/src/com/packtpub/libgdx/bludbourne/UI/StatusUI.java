@@ -1,5 +1,6 @@
 package com.packtpub.libgdx.bludbourne.UI;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -25,11 +26,16 @@ public class StatusUI extends Window implements StatusSubject {
     private int _mpVal = 50;
     private int _xpVal = 0;
 
+    private int _xpCurrentMax = -1;
+
     private Label _hpValLabel;
     private Label _mpValLabel;
     private Label _xpValLabel;
     private Label _levelValLabel;
     private Label _goldValLabel;
+
+    private float _barWidth = 0;
+    private float _barHeight = 0;
 
     public StatusUI(){
         super("stats", Utility.STATUSUI_SKIN);
@@ -48,6 +54,10 @@ public class StatusUI extends Window implements StatusSubject {
         Image bar2 = new Image(Utility.STATUSUI_TEXTUREATLAS.findRegion("Bar"));
         _xpBar = new Image(Utility.STATUSUI_TEXTUREATLAS.findRegion("XP_Bar"));
         Image bar3 = new Image(Utility.STATUSUI_TEXTUREATLAS.findRegion("Bar"));
+
+        _barWidth = _hpBar.getWidth();
+        _barHeight = _hpBar.getHeight();
+
 
         //labels
         Label hpLabel = new Label(" hp:", Utility.STATUSUI_SKIN);
@@ -132,6 +142,49 @@ public class StatusUI extends Window implements StatusSubject {
         this._goldVal = goldValue;
         _goldValLabel.setText(String.valueOf(_goldVal));
         notify(goldValue, StatusObserver.StatusEvent.UPDATED_GP);
+    }
+
+    public void addGoldValue(int goldValue){
+        this._goldVal += goldValue;
+        _goldValLabel.setText(String.valueOf(_goldVal));
+        notify(goldValue, StatusObserver.StatusEvent.UPDATED_GP);
+    }
+
+    public int getXPValue(){
+        return _xpVal;
+    }
+
+    public void addXPValue(int xpValue){
+        this._xpVal += xpValue;
+        _xpValLabel.setText(String.valueOf(_xpVal));
+
+        updateBar(_xpBar, _xpVal, _xpCurrentMax);
+
+        notify(xpValue, StatusObserver.StatusEvent.UPDATED_XP);
+    }
+
+    public void setXPValue(int xpValue){
+        this._xpVal = xpValue;
+        _xpValLabel.setText(String.valueOf(_xpVal));
+
+        updateBar(_xpBar, _xpVal, _xpCurrentMax);
+
+        notify(xpValue, StatusObserver.StatusEvent.UPDATED_XP);
+    }
+
+    public void setXPValueMax(int maxXPValue){
+        this._xpCurrentMax = maxXPValue;
+    }
+
+    public int getXPValueMax(){
+        return _xpCurrentMax;
+    }
+
+    public void updateBar(Image bar, int currentVal, int maxVal){
+        int val = MathUtils.clamp(currentVal, 0, maxVal);
+        float tempPercent = (float) val / (float) maxVal;
+        float percentage = MathUtils.clamp(tempPercent, 0, 100);
+        bar.setSize(_barWidth*percentage, _barHeight);
     }
 
     @Override

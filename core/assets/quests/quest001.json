@@ -1,6 +1,8 @@
 {
 questTitle : "Beast Feast Leftovers"
 questID : 1
+goldReward : 100
+xpReward : 100
 isQuestComplete : FALSE
 questTasks: {
 	4: {

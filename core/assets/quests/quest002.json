@@ -1,6 +1,8 @@
 {
 questTitle : "Herbs for Mother"
 questID : 2
+goldReward : 20
+xpReward : 20
 isQuestComplete : FALSE
 questTasks: {
 	2: {

@@ -200,12 +200,22 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 Array<QuestGraph> quests = profileManager.getProperty("playerQuests", Array.class);
                 _questUI.setQuests(quests);
 
+                int xpMaxVal = profileManager.getProperty("currentPlayerXPMax", Integer.class);
+                int xpVal = profileManager.getProperty("currentPlayerXP", Integer.class);
+
                 //Check gold
-                if( firstTime){
+                if( firstTime ){
                     //start the player with some money
                     goldVal = 20;
+                    xpMaxVal = 200;
                 }
+
+                //set the current max values first
+                _statusUI.setXPValueMax(xpMaxVal);
+
+                //then add in current values
                 _statusUI.setGoldValue(goldVal);
+                _statusUI.setXPValue(xpVal);
 
                 break;
             case SAVING_PROFILE:
@@ -213,6 +223,8 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 profileManager.setProperty("playerInventory", InventoryUI.getInventory(_inventoryUI.getInventorySlotTable()));
                 profileManager.setProperty("playerEquipInventory", InventoryUI.getInventory(_inventoryUI.getEquipSlotTable()));
                 profileManager.setProperty("currentPlayerGP", _statusUI.getGoldValue() );
+                profileManager.setProperty("currentPlayerXP", _statusUI.getXPValue() );
+                profileManager.setProperty("currentPlayerXPMax", _statusUI.getXPValueMax() );
                 break;
             default:
                 break;
@@ -303,8 +315,13 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 EntityConfig configReturnProperty = ProfileManager.getInstance().getProperty(configReturn.getEntityID(), EntityConfig.class);
                 if( configReturnProperty == null ) return;
 
-                if( _questUI.isQuestReadyForReturn(configReturnProperty.getCurrentQuestID()) ){
-                    _inventoryUI.removeQuestItemFromInventory(configReturnProperty.getCurrentQuestID());
+                String questID = configReturnProperty.getCurrentQuestID();
+
+                if( _questUI.isQuestReadyForReturn(questID) ){
+                    QuestGraph quest = _questUI.getQuestByID(questID);
+                    _statusUI.addXPValue(quest.getXpReward());
+                    _statusUI.addGoldValue(quest.getGoldReward());
+                    _inventoryUI.removeQuestItemFromInventory(questID);
                     configReturnProperty.setConversationConfigPath(QuestUI.FINISHED_QUEST);
                     ProfileManager.getInstance().setProperty(configReturnProperty.getEntityID(), configReturnProperty);
                 }
