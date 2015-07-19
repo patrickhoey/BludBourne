@@ -37,7 +37,7 @@ questTasks: {
 			}
 			TARGET_TYPE: {
 				class: java.lang.String
-				value: "TOWN_FOLK1"
+				value: "TOWN_FOLK2"
 			}
 			TARGET_LOCATION: {
 				class: java.lang.String
