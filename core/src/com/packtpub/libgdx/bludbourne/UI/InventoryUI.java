@@ -1,11 +1,13 @@
 package com.packtpub.libgdx.bludbourne.UI;
 
 import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Array;
 import com.packtpub.libgdx.bludbourne.Entity;
@@ -15,7 +17,7 @@ import com.packtpub.libgdx.bludbourne.InventoryItem.ItemUseType;
 import com.packtpub.libgdx.bludbourne.InventoryItem.ItemTypeID;
 import com.packtpub.libgdx.bludbourne.Utility;
 
-public class InventoryUI extends Window {
+public class InventoryUI extends Window implements InventorySlotObserver{
 
     public final static int _numSlots = 50;
     public static final String PLAYER_INVENTORY = "Player_Inventory";
@@ -27,6 +29,11 @@ public class InventoryUI extends Window {
     private Table _equipSlots;
     private DragAndDrop _dragAndDrop;
     private Array<Actor> _inventoryActors;
+
+    private Label _DPValLabel;
+    private int _DPVal = 0;
+    private Label _APValLabel;
+    private int _APVal = 0;
 
     private final int _slotWidth = 52;
     private final int _slotHeight = 52;
@@ -49,6 +56,20 @@ public class InventoryUI extends Window {
 
         _equipSlots.defaults().space(10);
         _inventorySlotTooltip = new InventorySlotTooltip(Utility.STATUSUI_SKIN);
+
+        Label DPLabel = new Label("Defense: ", Utility.STATUSUI_SKIN);
+        _DPValLabel = new Label(String.valueOf(_DPVal), Utility.STATUSUI_SKIN);
+
+        Label APLabel = new Label("Attack : ", Utility.STATUSUI_SKIN);
+        _APValLabel = new Label(String.valueOf(_APVal), Utility.STATUSUI_SKIN);
+
+        Table labelTable = new Table();
+        labelTable.add(DPLabel).align(Align.left);
+        labelTable.add(_DPValLabel).align(Align.center);
+        labelTable.row();
+        labelTable.row();
+        labelTable.add(APLabel).align(Align.left);
+        labelTable.add(_APValLabel).align(Align.center);
 
         InventorySlot headSlot = new InventorySlot(
                 ItemUseType.ARMOR_HELMET.getValue(),
@@ -86,6 +107,12 @@ public class InventoryUI extends Window {
         chestSlot.addListener(new InventorySlotTooltipListener(_inventorySlotTooltip));
         legsSlot.addListener(new InventorySlotTooltipListener(_inventorySlotTooltip));
 
+        headSlot.addObserver(this);
+        leftArmSlot.addObserver(this);
+        rightArmSlot.addObserver(this);
+        chestSlot.addObserver(this);
+        legsSlot.addObserver(this);
+
         _dragAndDrop.addTarget(new InventorySlotTarget(headSlot));
         _dragAndDrop.addTarget(new InventorySlotTarget(leftArmSlot));
         _dragAndDrop.addTarget(new InventorySlotTarget(chestSlot));
@@ -120,11 +147,13 @@ public class InventoryUI extends Window {
         _equipSlots.right().add(legsSlot).size(_slotWidth, _slotHeight);
 
         _playerSlotsTable.add(_equipSlots);
-
         _inventoryActors.add(_inventorySlotTooltip);
 
-        this.add(_playerSlotsTable).padBottom(20).row();
-        this.add(_inventorySlotTable).row();
+        this.add(_playerSlotsTable).padBottom(20);
+        this.add(labelTable);
+        this.row();
+        this.add(_inventorySlotTable).colspan(2);
+        this.row();
         this.pack();
     }
 
@@ -331,5 +360,36 @@ public class InventoryUI extends Window {
 
     public Array<Actor> getInventoryActors(){
         return _inventoryActors;
+    }
+
+    @Override
+    public void onNotify(InventorySlot slot, SlotEvent event) {
+        switch(event)
+        {
+            case ADDED_ITEM:
+                InventoryItem addItem = slot.getTopInventoryItem();
+                if( addItem == null ) return;
+                if( addItem.isInventoryItemOffensive() ){
+                    _APVal += addItem.getItemUseTypeValue();
+                    _APValLabel.setText(String.valueOf(_APVal));
+                }else if( addItem.isInventoryItemDefensive() ){
+                    _DPVal += addItem.getItemUseTypeValue();
+                    _DPValLabel.setText(String.valueOf(_DPVal));
+                }
+                break;
+            case REMOVED_ITEM:
+                InventoryItem removeItem = slot.getTopInventoryItem();
+                if( removeItem == null ) return;
+                if( removeItem.isInventoryItemOffensive() ){
+                    _APVal -= removeItem.getItemUseTypeValue();
+                    _APValLabel.setText(String.valueOf(_APVal));
+                }else if( removeItem.isInventoryItemDefensive() ){
+                    _DPVal -= removeItem.getItemUseTypeValue();
+                    _DPValLabel.setText(String.valueOf(_DPVal));
+                }
+                break;
+            default:
+                break;
+        }
     }
 }

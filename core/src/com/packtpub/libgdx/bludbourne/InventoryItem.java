@@ -64,16 +64,18 @@ public class InventoryItem extends Image {
 
     private int itemAttributes;
     private int itemUseType;
+    private int itemUseTypeValue;
     private ItemTypeID itemTypeID;
     private String itemShortDescription;
     private int itemValue;
 
-    public InventoryItem(TextureRegion textureRegion, int itemAttributes, ItemTypeID itemTypeID, int itemUseType, int itemValue){
+    public InventoryItem(TextureRegion textureRegion, int itemAttributes, ItemTypeID itemTypeID, int itemUseType, int itemUseTypeValue, int itemValue){
         super(textureRegion);
 
         this.itemTypeID = itemTypeID;
         this.itemAttributes = itemAttributes;
         this.itemUseType = itemUseType;
+        this.itemUseTypeValue = itemUseTypeValue;
         this.itemValue = itemValue;
     }
 
@@ -86,8 +88,17 @@ public class InventoryItem extends Image {
         this.itemTypeID = inventoryItem.getItemTypeID();
         this.itemAttributes = inventoryItem.getItemAttributes();
         this.itemUseType = inventoryItem.getItemUseType();
+        this.itemUseTypeValue = inventoryItem.getItemUseTypeValue();
         this.itemShortDescription = inventoryItem.getItemShortDescription();
         this.itemValue = inventoryItem.getItemValue();
+    }
+
+    public int getItemUseTypeValue() {
+        return itemUseTypeValue;
+    }
+
+    public void setItemUseTypeValue(int itemUseTypeValue) {
+        this.itemUseTypeValue = itemUseTypeValue;
     }
 
     public int getItemValue() {
@@ -144,6 +155,30 @@ public class InventoryItem extends Image {
             return MathUtils.floor(itemValue * .33f) + 2;
         }else{
             return 0;
+        }
+    }
+
+    public boolean isInventoryItemOffensive(){
+        if(     (itemUseType & ItemUseType.WEAPON_ONEHAND.getValue() ) == ItemUseType.WEAPON_ONEHAND.getValue() ||
+                (itemUseType & ItemUseType.WEAPON_TWOHAND.getValue() ) == ItemUseType.WEAPON_TWOHAND.getValue() ||
+                (itemUseType & ItemUseType.WAND_ONEHAND.getValue() ) == ItemUseType.WAND_ONEHAND.getValue() ||
+                (itemUseType & ItemUseType.WAND_TWOHAND.getValue() ) == ItemUseType.WAND_TWOHAND.getValue()
+                ){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public boolean isInventoryItemDefensive(){
+        if(     (itemUseType & ItemUseType.ARMOR_CHEST.getValue() ) == ItemUseType.ARMOR_CHEST.getValue() ||
+                (itemUseType & ItemUseType.ARMOR_HELMET.getValue() ) == ItemUseType.ARMOR_HELMET.getValue() ||
+                (itemUseType & ItemUseType.ARMOR_FEET.getValue() ) == ItemUseType.ARMOR_FEET.getValue() ||
+                (itemUseType & ItemUseType.ARMOR_SHIELD.getValue() ) == ItemUseType.ARMOR_SHIELD.getValue()
+                ){
+            return true;
+        }else{
+            return false;
         }
     }
 }

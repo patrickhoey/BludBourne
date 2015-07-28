@@ -2,6 +2,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 128
+	itemUseTypeValue: 20 
 	itemTypeID: SHIELD01
 	itemShortDescription: Medium tier shield forged from copper
 	itemValue: 50
@@ -9,6 +10,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 128
+	itemUseTypeValue: 10 
 	itemTypeID: SHIELD02
 	itemShortDescription: A wooden shield fit for a peasant
 	itemValue: 25
@@ -16,6 +18,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 128
+	itemUseTypeValue: 30 
 	itemTypeID: SHIELD03
 	itemShortDescription: Medium tier shield carved from dragon bone
 	itemValue: 100
@@ -23,6 +26,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 128
+	itemUseTypeValue: 60 
 	itemTypeID: SHIELD04
 	itemShortDescription: Top tier shield forged from iron
 	itemValue: 200
@@ -30,6 +34,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 128
+	itemUseTypeValue: 100 
 	itemTypeID: SHIELD05
 	itemShortDescription: Top tier shield forged by a rare metal Adamantium
 	itemValue: 400
@@ -37,6 +42,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 512
+	itemUseTypeValue: 60 
 	itemTypeID: ARMOR01
 	itemShortDescription: Top tier armor built from the scales of a dragon
 	itemValue: 200
@@ -44,6 +50,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 512
+	itemUseTypeValue: 30 
 	itemTypeID: ARMOR02
 	itemShortDescription: Top tier armor blessed by fairies
 	itemValue: 100
@@ -51,6 +58,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 512
+	itemUseTypeValue: 100 
 	itemTypeID: ARMOR03
 	itemShortDescription: Top tier armor forged from the hide of a hellspawn demon
 	itemValue: 400
@@ -58,6 +66,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 512
+	itemUseTypeValue: 10 
 	itemTypeID: ARMOR04
 	itemShortDescription: Broken mail armor fit for a peasant
 	itemValue: 25
@@ -65,6 +74,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 512
+	itemUseTypeValue: 20 
 	itemTypeID: ARMOR05
 	itemShortDescription: Medium tier armor with iron plates
 	itemValue: 50
@@ -72,6 +82,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 1024
+	itemUseTypeValue: 60 
 	itemTypeID: BOOTS01
 	itemShortDescription: Top tier boots worthy of a knight
 	itemValue: 200
@@ -79,6 +90,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 1024
+	itemUseTypeValue: 20 
 	itemTypeID: BOOTS02
 	itemShortDescription: Medium tier boots with iron buckles
 	itemValue: 50
@@ -86,6 +98,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 1024
+	itemUseTypeValue: 10 
 	itemTypeID: BOOTS03
 	itemShortDescription: Leather boots fit for a peasant
 	itemValue: 25
@@ -93,6 +106,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 1024
+	itemUseTypeValue: 30 
 	itemTypeID: BOOTS04
 	itemShortDescription: Medium tier boots made of imp hide
 	itemValue: 100
@@ -100,6 +114,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 1024
+	itemUseTypeValue: 100 
 	itemTypeID: BOOTS05
 	itemShortDescription: Top tier boots made from dragon's tongue
 	itemValue: 400
@@ -107,6 +122,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 256
+	itemUseTypeValue: 100 
 	itemTypeID: HELMET01
 	itemShortDescription: Top tier helmet built for a king's guard
 	itemValue: 400
@@ -114,6 +130,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 256
+	itemUseTypeValue: 20 
 	itemTypeID: HELMET02
 	itemShortDescription: A medium tier helmet made of copper
 	itemValue: 50
@@ -121,6 +138,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 256
+	itemUseTypeValue: 60 
 	itemTypeID: HELMET03
 	itemShortDescription: A medium tier helmet built for prolonged battles
 	itemValue: 200
@@ -128,6 +146,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 256
+	itemUseTypeValue: 30 
 	itemTypeID: HELMET04
 	itemShortDescription: A medium tier helmet forged from iron
 	itemValue: 100
@@ -135,6 +154,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 256
+	itemUseTypeValue: 10 
 	itemTypeID: HELMET05
 	itemShortDescription: A leather helmet fit for a peasant
 	itemValue: 25
@@ -142,6 +162,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 32
+	itemUseTypeValue: 100 
 	itemTypeID: WANDS01
 	itemShortDescription: Top tier wand used by fairies
 	itemValue: 400
@@ -149,6 +170,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 32
+	itemUseTypeValue: 10 
 	itemTypeID: WANDS02
 	itemShortDescription: Small wand used by mage apprentices
 	itemValue: 25
@@ -156,6 +178,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 32
+	itemUseTypeValue: 60 
 	itemTypeID: WANDS03
 	itemShortDescription: Medium tier wand used to smite fire demons
 	itemValue: 200
@@ -163,6 +186,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 64
+	itemUseTypeValue: 20 
 	itemTypeID: WANDS04
 	itemShortDescription: Medium tier wand used for spell damage bonuses
 	itemValue: 50
@@ -170,6 +194,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 64
+	itemUseTypeValue: 30 
 	itemTypeID: WANDS05
 	itemShortDescription: Medium tier wand used to increase luck in loot drops
 	itemValue: 100
@@ -177,6 +202,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 8
+	itemUseTypeValue: 10 
 	itemTypeID: WEAPON01
 	itemShortDescription: A copper sword of a peasant
 	itemValue: 25
@@ -184,6 +210,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 8
+	itemUseTypeValue: 100 
 	itemTypeID: WEAPON02
 	itemShortDescription: Top tier sword forged from the hate of the demon king
 	itemValue: 400
@@ -191,6 +218,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 16
+	itemUseTypeValue: 30 
 	itemTypeID: WEAPON03
 	itemShortDescription: Medium tier axe forged from iron
 	itemValue: 100
@@ -198,6 +226,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 16
+	itemUseTypeValue: 60 
 	itemTypeID: WEAPON04
 	itemShortDescription: Top tier pike used by the king's guard
 	itemValue: 200
@@ -205,6 +234,7 @@
 {
 	itemAttributes: 2
 	itemUseType: 16
+	itemUseTypeValue: 20 
 	itemTypeID: WEAPON05
 	itemShortDescription: Medium tier hammer forged from iron
 	itemValue: 50
@@ -212,6 +242,7 @@
 {
 	itemAttributes: 5
 	itemUseType: 2
+	itemUseTypeValue: 10 
 	itemTypeID: POTIONS01
 	itemShortDescription: Potion that restores 10MP
 	itemValue: 10
@@ -219,6 +250,7 @@
 {
 	itemAttributes: 5
 	itemUseType: 2
+	itemUseTypeValue: 50 
 	itemTypeID: POTIONS02
 	itemShortDescription: Potion that restores 50MP
 	itemValue: 50
@@ -226,6 +258,7 @@
 {
 	itemAttributes: 5
 	itemUseType: 2
+	itemUseTypeValue: 100 
 	itemTypeID: POTIONS03
 	itemShortDescription: Potion that restores 100MP
 	itemValue: 100
@@ -233,6 +266,7 @@
 {
 	itemAttributes: 5
 	itemUseType: 1
+	itemUseTypeValue: 10 
 	itemTypeID: SCROLL01
 	itemShortDescription: Scroll that restores 10HP
 	itemValue: 10
@@ -240,6 +274,7 @@
 {
 	itemAttributes: 5
 	itemUseType: 1
+	itemUseTypeValue: 50 
 	itemTypeID: SCROLL02
 	itemShortDescription: Scroll that restores 50HP
 	itemValue: 50
@@ -247,6 +282,7 @@
 {
 	itemAttributes: 5
 	itemUseType: 1
+	itemUseTypeValue: 100 
 	itemTypeID: SCROLL03
 	itemShortDescription: Scroll that restores 100HP
 	itemValue: 100
@@ -254,6 +290,7 @@
 {
 	itemAttributes: 4
 	itemUseType: 2048
+	itemUseTypeValue: 0
 	itemTypeID: HERB001
 	itemShortDescription: Quest Item Herb
 	itemValue: -1
@@ -261,6 +298,7 @@
 {
 	itemAttributes: 4
 	itemUseType: 2048
+	itemUseTypeValue: 0 
 	itemTypeID: BABY001
 	itemShortDescription: Quest Item Baby
 	itemValue: -1
@@ -268,6 +306,7 @@
 {
 	itemAttributes: 4
 	itemUseType: 2048
+	itemUseTypeValue: 0
 	itemTypeID: FUR001
 	itemShortDescription: Quest Item Fur
 	itemValue: -1
@@ -275,6 +314,7 @@
 {
 	itemAttributes: 4
 	itemUseType: 2048
+	itemUseTypeValue: 0
 	itemTypeID: HORNS001
 	itemShortDescription: Quest Item Horns
 	itemValue: -1
