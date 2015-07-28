@@ -2,6 +2,7 @@ package com.packtpub.libgdx.bludbourne;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -12,11 +13,10 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 public class Entity {
 	private static final String TAG = Entity.class.getSimpleName();
-	private Json _json;
-	private EntityConfig _entityConfig;
 
 	public static enum Direction {
 		UP,
@@ -64,13 +64,29 @@ public class Entity {
 
 	public static final int FRAME_WIDTH = 16;
 	public static final int FRAME_HEIGHT = 16;
-
 	private static final int MAX_COMPONENTS = 5;
-	private Array<Component> _components;
 
+	private Json _json;
+	private EntityConfig _entityConfig;
+	private Array<Component> _components;
 	private InputComponent _inputComponent;
 	private GraphicsComponent _graphicsComponent;
 	private PhysicsComponent _physicsComponent;
+
+	public Entity(Entity entity){
+		set(entity);
+	}
+
+	private Entity set(Entity entity) {
+		_inputComponent = entity._inputComponent;
+		_graphicsComponent = entity._graphicsComponent;
+		_physicsComponent = entity._physicsComponent;
+		_json = entity._json;
+		_entityConfig = entity._entityConfig;
+		_components = entity._components;
+
+		return this;
+	}
 
 	public Entity(InputComponent inputComponent, PhysicsComponent physicsComponent, GraphicsComponent graphicsComponent){
 		_entityConfig = new EntityConfig();
@@ -147,6 +163,10 @@ public class Entity {
 		this._entityConfig = entityConfig;
 	}
 
+	public Animation getAnimation(Entity.AnimationType type){
+		return _graphicsComponent.getAnimation(type);
+	}
+
 	static public EntityConfig getEntityConfig(String configFilePath){
 		Json json = new Json();
 		return json.fromJson(EntityConfig.class, Gdx.files.internal(configFilePath));
@@ -184,6 +204,37 @@ public class Entity {
 		}else{
 			return serializedConfig;
 		}
+	}
+
+	public static Entity initEntity(EntityConfig entityConfig, Vector2 position){
+		Json json = new Json();
+		Entity entity = EntityFactory.getEntity(EntityFactory.EntityType.NPC);
+		entity.setEntityConfig(entityConfig);
+
+		entity.sendMessage(Component.MESSAGE.LOAD_ANIMATIONS, json.toJson(entity.getEntityConfig()));
+		entity.sendMessage(Component.MESSAGE.INIT_START_POSITION, json.toJson(position));
+		entity.sendMessage(Component.MESSAGE.INIT_STATE, json.toJson(entity.getEntityConfig().getState()));
+		entity.sendMessage(Component.MESSAGE.INIT_DIRECTION, json.toJson(entity.getEntityConfig().getDirection()));
+
+		return entity;
+	}
+
+	public static Hashtable<String, Entity> initEntities(Array<EntityConfig> configs){
+		Json json = new Json();
+		Hashtable<String, Entity > entities = new Hashtable<String, Entity>();
+		for( EntityConfig config: configs ){
+			Entity entity = EntityFactory.getEntity(EntityFactory.EntityType.NPC);
+
+			entity.setEntityConfig(config);
+			entity.sendMessage(Component.MESSAGE.LOAD_ANIMATIONS, json.toJson(entity.getEntityConfig()));
+			entity.sendMessage(Component.MESSAGE.INIT_START_POSITION, json.toJson(new Vector2(0,0)));
+			entity.sendMessage(Component.MESSAGE.INIT_STATE, json.toJson(entity.getEntityConfig().getState()));
+			entity.sendMessage(Component.MESSAGE.INIT_DIRECTION, json.toJson(entity.getEntityConfig().getDirection()));
+
+			entities.put(entity.getEntityConfig().getEntityID(), entity);
+		}
+
+		return entities;
 	}
 
 

@@ -138,4 +138,8 @@ public abstract class GraphicsComponent extends ComponentSubject implements Comp
 
         return new Animation(frameDuration, animationKeyFrames, Animation.PlayMode.LOOP);
     }
+
+    public Animation getAnimation(Entity.AnimationType type){
+        return _animations.get(type);
+    }
 }

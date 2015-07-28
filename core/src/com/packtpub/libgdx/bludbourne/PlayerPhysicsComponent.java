@@ -17,11 +17,13 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
     private Vector3 _mouseSelectCoordinates;
     private boolean _isMouseSelectEnabled = false;
     private String previousDiscovery;
+    private String previousEnemySpawn;
 
     public PlayerPhysicsComponent(){
         _boundingBoxLocation = BoundingBoxLocation.BOTTOM_CENTER;
         initBoundingBox(0.3f, 0.5f);
         previousDiscovery = "";
+        previousEnemySpawn = "";
 
         _mouseSelectCoordinates = new Vector3(0,0,0);
     }
@@ -42,6 +44,8 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
             if (string[0].equalsIgnoreCase(MESSAGE.INIT_START_POSITION.toString())) {
                 _currentEntityPosition = _json.fromJson(Vector2.class, string[1]);
                 _nextEntityPosition.set(_currentEntityPosition.x, _currentEntityPosition.y);
+                previousDiscovery = "";
+                previousEnemySpawn = "";
             } else if (string[0].equalsIgnoreCase(MESSAGE.CURRENT_STATE.toString())) {
                 _state = _json.fromJson(Entity.State.class, string[1]);
             } else if (string[0].equalsIgnoreCase(MESSAGE.CURRENT_DIRECTION.toString())) {
@@ -59,6 +63,7 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
         updateBoundingBoxPosition(_nextEntityPosition);
         updatePortalLayerActivation(mapMgr);
         updateDiscoverLayerActivation(mapMgr);
+        updateEnemySpawnLayerActivation(mapMgr);
 
         if( _isMouseSelectEnabled ){
             selectMapEntityCandidate(mapMgr);
@@ -145,6 +150,44 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
                     notify(_json.toJson(val), ComponentObserver.ComponentEvent.QUEST_LOCATION_DISCOVERED);
                     Gdx.app.debug(TAG, "Discover Area Activated");
                     return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean updateEnemySpawnLayerActivation(MapManager mapMgr){
+        MapLayer mapDiscoverLayer =  mapMgr.getEnemySpawnLayer();
+
+        if( mapDiscoverLayer == null ){
+            return false;
+        }
+
+        Rectangle rectangle = null;
+
+        for( MapObject object: mapDiscoverLayer.getObjects()){
+            if(object instanceof RectangleMapObject) {
+                rectangle = ((RectangleMapObject)object).getRectangle();
+
+                if (_boundingBox.overlaps(rectangle) ){
+                    String enemySpawnID = object.getName();
+
+                    if( enemySpawnID == null ) {
+                        return false;
+                    }
+
+                    if( previousEnemySpawn.equalsIgnoreCase(enemySpawnID) ){
+                        return true;
+                    }else{
+                        previousEnemySpawn = enemySpawnID;
+                    }
+
+                    notify(enemySpawnID, ComponentObserver.ComponentEvent.ENEMY_SPAWN_LOCATION_CHANGED);
+                    Gdx.app.debug(TAG, "Enemy Spawn Area Activated");
+                    return true;
+                }else{
+                    //If no collision, reset the value
+                    previousEnemySpawn = "";
                 }
             }
         }

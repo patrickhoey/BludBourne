@@ -23,6 +23,7 @@ public abstract class Map {
     protected final static String PORTAL_LAYER = "MAP_PORTAL_LAYER";
     protected final static String QUEST_ITEM_SPAWN_LAYER = "MAP_QUEST_ITEM_SPAWN_LAYER";
     protected final static String QUEST_DISCOVER_LAYER = "MAP_QUEST_DISCOVER_LAYER";
+    protected final static String ENEMY_SPAWN_LAYER = "MAP_ENEMY_SPAWN_LAYER";
 
     //Starting locations
     protected final static String PLAYER_START = "PLAYER_START";
@@ -43,6 +44,7 @@ public abstract class Map {
     protected MapLayer _spawnsLayer = null;
     protected MapLayer _questItemSpawnLayer = null;
     protected MapLayer _questDiscoverLayer = null;
+    protected MapLayer _enemySpawnLayer = null;
 
     protected MapFactory.MapType _currentMapType;
     protected Array<Entity> _mapEntities;
@@ -96,6 +98,11 @@ public abstract class Map {
         _questDiscoverLayer = _currentMap.getLayers().get(QUEST_DISCOVER_LAYER);
         if( _questDiscoverLayer == null ){
             Gdx.app.debug(TAG, "No quest discover layer!");
+        }
+
+        _enemySpawnLayer = _currentMap.getLayers().get(ENEMY_SPAWN_LAYER);
+        if( _enemySpawnLayer == null ){
+            Gdx.app.debug(TAG, "No enemy layer found!");
         }
 
         _npcStartPositions = getNPCStartPositions();
@@ -169,6 +176,10 @@ public abstract class Map {
 
     public MapLayer getQuestDiscoverLayer(){
         return _questDiscoverLayer;
+    }
+
+    public MapLayer getEnemySpawnLayer() {
+        return _enemySpawnLayer;
     }
 
     public TiledMap getCurrentTiledMap() {
@@ -273,18 +284,5 @@ public abstract class Map {
 
         _convertedUnits.set(position.x/UNIT_SCALE, position.y/UNIT_SCALE);
         setClosestStartPosition(_convertedUnits);
-    }
-
-    public static Entity initEntity(EntityConfig entityConfig, Vector2 position){
-        Json json = new Json();
-        Entity entity = EntityFactory.getEntity(EntityFactory.EntityType.NPC);
-        entity.setEntityConfig(entityConfig);
-
-        entity.sendMessage(Component.MESSAGE.LOAD_ANIMATIONS, json.toJson(entity.getEntityConfig()));
-        entity.sendMessage(Component.MESSAGE.INIT_START_POSITION, json.toJson(position));
-        entity.sendMessage(Component.MESSAGE.INIT_STATE, json.toJson(entity.getEntityConfig().getState()));
-        entity.sendMessage(Component.MESSAGE.INIT_DIRECTION, json.toJson(entity.getEntityConfig().getDirection()));
-
-        return entity;
     }
 }

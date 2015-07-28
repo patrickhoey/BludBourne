@@ -283,13 +283,13 @@ public class QuestGraph {
                         questItemPositions = new Array<Vector2>();
                         for( Vector2 position: positions ){
                             questItemPositions.add(position);
-                            Entity entity = Map.initEntity(config, position);
+                            Entity entity = Entity.initEntity(config, position);
                             entity.getEntityConfig().setCurrentQuestID(questID);
                             questEntities.add(entity);
                         }
                     }else{
                         for( Vector2 questItemPosition: questItemPositions ){
-                            Entity entity = Map.initEntity(config, questItemPosition);
+                            Entity entity = Entity.initEntity(config, questItemPosition);
                             entity.getEntityConfig().setCurrentQuestID(questID);
                             questEntities.add(entity);
                         }

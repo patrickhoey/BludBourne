@@ -1,0 +1,32 @@
+[
+{
+entityID : MONSTER001
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 1
+				y: 0
+			}
+			
+			{
+				x: 1
+				y: 0
+			}
+		]
+	}
+]
+},
+]

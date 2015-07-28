@@ -128,6 +128,10 @@ public class MapManager implements ProfileObserver {
         return _currentMap.getQuestDiscoverLayer();
     }
 
+    public MapLayer getEnemySpawnLayer(){
+        return _currentMap.getEnemySpawnLayer();
+    }
+
     public MapFactory.MapType getCurrentMapType(){
         return _currentMap.getCurrentMapType();
     }

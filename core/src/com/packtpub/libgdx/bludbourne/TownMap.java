@@ -18,7 +18,7 @@ public class TownMap extends Map{
         super(MapFactory.MapType.TOWN, _mapPath);
 
         for( Vector2 position: _npcStartPositions){
-            _mapEntities.add(initEntity(Entity.loadEntityConfigByPath(_townGuardWalking), position));
+            _mapEntities.add(Entity.initEntity(Entity.loadEntityConfigByPath(_townGuardWalking), position));
         }
 
         //Special cases
@@ -49,6 +49,6 @@ public class TownMap extends Map{
         if( _specialNPCStartPositions.containsKey(entityConfig.getEntityID()) ) {
              position = _specialNPCStartPositions.get(entityConfig.getEntityID());
         }
-        return initEntity(entityConfig, position);
+        return Entity.initEntity(entityConfig, position);
     }
 }

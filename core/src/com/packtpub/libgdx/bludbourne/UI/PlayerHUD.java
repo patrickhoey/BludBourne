@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -39,6 +40,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
     private ConversationUI _conversationUI;
     private StoreInventoryUI _storeInventoryUI;
     private QuestUI _questUI;
+    private BattleUI _battleUI;
 
     private Dialog _messageBoxUI;
     private Json _json;
@@ -99,12 +101,20 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
         _questUI.setWidth(_stage.getWidth());
         _questUI.setHeight(_stage.getHeight() / 2);
 
+        _battleUI = new BattleUI();
+        _battleUI.setFillParent(true);
+        _battleUI.setVisible(false);
+        _battleUI.setMovable(false);
+        _battleUI.setTouchable(Touchable.childrenOnly);
+
         _stage.addActor(_questUI);
         _stage.addActor(_storeInventoryUI);
         _stage.addActor(_inventoryUI);
         _stage.addActor(_conversationUI);
         _stage.addActor(_statusUI);
         _stage.addActor(_messageBoxUI);
+        _stage.addActor(_battleUI);
+        _statusUI.toFront();
 
         //add tooltips to the stage
         Array<Actor> actors = _inventoryUI.getInventoryActors();
@@ -258,8 +268,16 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 String questID = string[0];
                 String questTaskID = string[1];
 
+
                 _questUI.questTaskComplete(questID, questTaskID);
                 updateEntityObservers();
+                break;
+            case ENEMY_SPAWN_LOCATION_CHANGED:
+                String enemyZoneID = value;
+                _battleUI.battleZoneTriggered(Integer.valueOf(enemyZoneID));
+                _battleUI.setVisible(true);
+                _battleUI.toBack();
+                break;
             default:
                 break;
         }
