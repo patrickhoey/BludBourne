@@ -1,0 +1,67 @@
+[
+{
+zoneID : 1
+monsters: [
+	{
+		value: MONSTER001
+	}
+	{
+		value: MONSTER002
+	}
+	{
+		value: MONSTER003
+	}
+	{
+		value: MONSTER004
+	}
+	{
+		value: MONSTER005
+	}
+	]
+},
+{
+zoneID : 2
+monsters: [
+]
+},
+{
+zoneID : 3
+monsters: [
+]
+},
+{
+zoneID : 4
+monsters: [
+]
+},
+{
+zoneID : 5
+monsters: [
+]
+},
+{
+zoneID : 6
+monsters: [
+]
+},
+{
+zoneID : 7
+monsters: [
+]
+},
+{
+zoneID : 8
+monsters: [
+]
+},
+{
+zoneID : 9
+monsters: [
+]
+},
+{
+zoneID : 10
+monsters: [
+]
+},
+]

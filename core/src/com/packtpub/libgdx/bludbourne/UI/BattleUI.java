@@ -64,7 +64,7 @@ public class BattleUI extends Window implements BattleObserver {
     }
 
     public void battleZoneTriggered(int battleZoneValue){
-        _battleState.battleZoneEntered(battleZoneValue);
+        _battleState.setCurrentOpponent(battleZoneValue);
     }
 
     public BattleState getCurrentState(){

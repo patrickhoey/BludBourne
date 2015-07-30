@@ -10,25 +10,19 @@ public class BattleState extends BattleSubject implements InventoryObserver {
     private int _currentPlayerAP;
     private int _currentPlayerDP;
 
-    private void setCurrentOpponent(MonsterFactory.MonsterEntityType monsterType){
-        Entity entity = MonsterFactory.getInstance().getMonster(monsterType);
+    public void setCurrentOpponent(int battleZoneLevel){
+        System.out.print("Entered BATTLE ZONE: " + battleZoneLevel);
+        Entity entity = MonsterFactory.getInstance().getRandomMonster(battleZoneLevel);
         if( entity == null ) return;
         this._currentOpponent = entity;
         notify(entity, BattleObserver.BattleEvent.OPPONENT_ADDED);
     }
 
-    public void battleZoneEntered(int battleZoneID){
-        switch(battleZoneID){
-            case 1:
-                System.out.print("Entered BATTLE ZONE: " + battleZoneID);
-                setCurrentOpponent(MonsterFactory.MonsterEntityType.MONSTER001);
-                break;
-            default:
-                break;
-        }
-    }
-
     public void playerAttacks(){
+        if( _currentOpponent == null ){
+            return;
+        }
+
         int currentOpponentHP = Integer.parseInt(_currentOpponent.getEntityConfig().getPropertyValue(EntityConfig.EntityProperties.ENTITY_HEALTH_POINTS.toString()));
         int currentOpponentDP = Integer.parseInt(_currentOpponent.getEntityConfig().getPropertyValue(EntityConfig.EntityProperties.ENTITY_DEFENSE_POINTS.toString()));
 
