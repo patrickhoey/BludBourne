@@ -32,6 +32,8 @@ public class MainGameScreen implements Screen {
 	}
 
 	public static enum GameState {
+		SAVING,
+		LOADING,
 		RUNNING,
 		PAUSED
 	}
@@ -53,7 +55,8 @@ public class MainGameScreen implements Screen {
 		_mapMgr = new MapManager();
 		_json = new Json();
 
-		_gameState = GameState.RUNNING;
+		setGameState(GameState.RUNNING);
+
 		//_camera setup
 		setupViewport(10, 10);
 
@@ -80,7 +83,7 @@ public class MainGameScreen implements Screen {
 
 	@Override
 	public void show() {
-		_gameState = GameState.RUNNING;
+		setGameState(GameState.RUNNING);
 		Gdx.input.setInputProcessor(_multiplexer);
 
 		if( _mapRenderer == null ){
@@ -90,7 +93,7 @@ public class MainGameScreen implements Screen {
 
 	@Override
 	public void hide() {
-		_gameState = GameState.PAUSED;
+		setGameState(GameState.PAUSED);
 		Gdx.input.setInputProcessor(null);
 	}
 
@@ -98,6 +101,7 @@ public class MainGameScreen implements Screen {
 	public void render(float delta) {
 		if( _gameState == GameState.PAUSED ){
 			_player.updateInput(delta);
+			_playerHUD.render(delta);
 			return;
 		}
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -137,21 +141,24 @@ public class MainGameScreen implements Screen {
 
 	@Override
 	public void pause() {
-		_gameState = GameState.PAUSED;
-		ProfileManager.getInstance().saveProfile();
+		setGameState(GameState.SAVING);
 	}
 
 	@Override
 	public void resume() {
-		_gameState = GameState.RUNNING;
-		ProfileManager.getInstance().loadProfile();
+		setGameState(GameState.LOADING);
 	}
 
 	@Override
 	public void dispose() {
-		_player.unregisterObservers();
-		_player.dispose();
-		_mapRenderer.dispose();
+		if( _player != null ){
+			_player.unregisterObservers();
+			_player.dispose();
+		}
+
+		if( _mapRenderer != null ){
+			_mapRenderer.dispose();
+		}
 	}
 
 	public static void setGameState(GameState gameState){
@@ -159,13 +166,19 @@ public class MainGameScreen implements Screen {
 			case RUNNING:
 				_gameState = GameState.RUNNING;
 				break;
+			case LOADING:
+				_gameState = GameState.RUNNING;
+				ProfileManager.getInstance().loadProfile();
+				break;
+			case SAVING:
+				ProfileManager.getInstance().saveProfile();
+				_gameState = GameState.PAUSED;
+				break;
 			case PAUSED:
 				if( _gameState == GameState.PAUSED ){
 					_gameState = GameState.RUNNING;
-					ProfileManager.getInstance().loadProfile();
 				}else if( _gameState == GameState.RUNNING ){
 					_gameState = GameState.PAUSED;
-					ProfileManager.getInstance().saveProfile();
 				}
 				break;
 			default:

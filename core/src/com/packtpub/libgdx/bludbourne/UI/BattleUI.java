@@ -1,6 +1,5 @@
 package com.packtpub.libgdx.bludbourne.UI;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -78,10 +77,6 @@ public class BattleUI extends Window implements BattleObserver {
             case OPPONENT_ADDED:
                 _image.setAnimation(entity.getAnimation(Entity.AnimationType.IMMOBILE));
                 break;
-            case OPPONENT_DEFEATED:
-                this.setVisible(false);
-            case PLAYER_RUNNING:
-                this.setVisible(false);
             default:
                 break;
         }

@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -21,13 +20,15 @@ import com.packtpub.libgdx.bludbourne.InventoryItem;
 import com.packtpub.libgdx.bludbourne.InventoryItem.ItemTypeID;
 import com.packtpub.libgdx.bludbourne.MapManager;
 import com.packtpub.libgdx.bludbourne.Utility;
+import com.packtpub.libgdx.bludbourne.battle.BattleObserver;
 import com.packtpub.libgdx.bludbourne.dialog.ConversationGraph;
 import com.packtpub.libgdx.bludbourne.dialog.ConversationGraphObserver;
 import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 import com.packtpub.libgdx.bludbourne.profile.ProfileObserver;
 import com.packtpub.libgdx.bludbourne.quest.QuestGraph;
+import com.packtpub.libgdx.bludbourne.screens.MainGameScreen;
 
-public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,ConversationGraphObserver,StoreInventoryObserver, StatusObserver {
+public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,ConversationGraphObserver,StoreInventoryObserver, BattleObserver, StatusObserver {
     private static final String TAG = PlayerHUD.class.getSimpleName();
 
     private Stage _stage;
@@ -133,6 +134,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
         _statusUI.addObserver(this);
         _storeInventoryUI.addObserver(this);
         _inventoryUI.addObserver(_battleUI.getCurrentState());
+        _battleUI.getCurrentState().addObserver(this);
 
         //Listeners
         ImageButton inventoryButton = _statusUI.getInventoryButton();
@@ -277,6 +279,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 String enemyZoneID = value;
                 _battleUI.battleZoneTriggered(Integer.parseInt(enemyZoneID));
                 _battleUI.toBack();
+                MainGameScreen.setGameState(MainGameScreen.GameState.PAUSED);
                 _battleUI.setVisible(true);
                 break;
             default:
@@ -446,4 +449,17 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
         _stage.dispose();
     }
 
+    @Override
+    public void onNotify(Entity enemyEntity, BattleEvent event) {
+        switch (event) {
+            case OPPONENT_DEFEATED:
+                MainGameScreen.setGameState(MainGameScreen.GameState.RUNNING);
+                _battleUI.setVisible(false);
+            case PLAYER_RUNNING:
+                MainGameScreen.setGameState(MainGameScreen.GameState.RUNNING);
+                _battleUI.setVisible(false);
+            default:
+                break;
+        }
+    }
 }
