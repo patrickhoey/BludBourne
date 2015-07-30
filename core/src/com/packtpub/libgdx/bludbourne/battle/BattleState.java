@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.packtpub.libgdx.bludbourne.Entity;
 import com.packtpub.libgdx.bludbourne.EntityConfig;
 import com.packtpub.libgdx.bludbourne.UI.InventoryObserver;
+import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 
 public class BattleState extends BattleSubject implements InventoryObserver {
     private Entity _currentOpponent;
@@ -22,6 +23,7 @@ public class BattleState extends BattleSubject implements InventoryObserver {
         if( _currentOpponent == null ){
             return;
         }
+        notify(_currentOpponent, BattleObserver.BattleEvent.PLAYER_TURN_START);
 
         int currentOpponentHP = Integer.parseInt(_currentOpponent.getEntityConfig().getPropertyValue(EntityConfig.EntityProperties.ENTITY_HEALTH_POINTS.toString()));
         int currentOpponentDP = Integer.parseInt(_currentOpponent.getEntityConfig().getPropertyValue(EntityConfig.EntityProperties.ENTITY_DEFENSE_POINTS.toString()));
@@ -32,9 +34,31 @@ public class BattleState extends BattleSubject implements InventoryObserver {
         _currentOpponent.getEntityConfig().setPropertyValue(EntityConfig.EntityProperties.ENTITY_HEALTH_POINTS.toString(), String.valueOf(currentOpponentHP));
         System.out.println("Player attacks " + _currentOpponent.getEntityConfig().getEntityID() + " leaving it with HP: " + currentOpponentHP);
 
+        _currentOpponent.getEntityConfig().setPropertyValue(EntityConfig.EntityProperties.ENTITY_HIT_DAMAGE_TOTAL.toString(), String.valueOf(damage));
+        notify(_currentOpponent, BattleObserver.BattleEvent.OPPONENT_HIT_DAMAGE);
+
         if( currentOpponentHP == 0 ){
             notify(_currentOpponent, BattleObserver.BattleEvent.OPPONENT_DEFEATED);
         }
+
+        notify(_currentOpponent, BattleObserver.BattleEvent.PLAYER_TURN_DONE);
+    }
+
+    public void opponentAttacks(){
+        if( _currentOpponent == null ){
+            return;
+        }
+
+        int currentOpponentAP = Integer.parseInt(_currentOpponent.getEntityConfig().getPropertyValue(EntityConfig.EntityProperties.ENTITY_ATTACK_POINTS.toString()));
+        int damage = MathUtils.clamp(currentOpponentAP - _currentPlayerDP, 0, currentOpponentAP);
+        int hpVal = ProfileManager.getInstance().getProperty("currentPlayerHP", Integer.class);
+        hpVal = MathUtils.clamp( hpVal - damage, 0, hpVal);
+        ProfileManager.getInstance().setProperty("currentPlayerHP", hpVal);
+        notify(_currentOpponent, BattleObserver.BattleEvent.PLAYER_HIT_DAMAGE);
+
+        System.out.println("Player HIT for " + damage + " BY " + _currentOpponent.getEntityConfig().getEntityID() + " leaving player with HP: " + hpVal);
+
+        notify(_currentOpponent, BattleObserver.BattleEvent.OPPONENT_TURN_DONE);
     }
 
     public void playerRuns(){
@@ -59,4 +83,5 @@ public class BattleState extends BattleSubject implements InventoryObserver {
                 break;
         }
     }
+
 }

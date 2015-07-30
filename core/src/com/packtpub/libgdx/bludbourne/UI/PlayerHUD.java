@@ -217,19 +217,37 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 int xpMaxVal = profileManager.getProperty("currentPlayerXPMax", Integer.class);
                 int xpVal = profileManager.getProperty("currentPlayerXP", Integer.class);
 
+                int hpMaxVal = profileManager.getProperty("currentPlayerHPMax", Integer.class);
+                int hpVal = profileManager.getProperty("currentPlayerHP", Integer.class);
+
+                int mpMaxVal = profileManager.getProperty("currentPlayerMPMax", Integer.class);
+                int mpVal = profileManager.getProperty("currentPlayerMP", Integer.class);
+
+                int levelVal = profileManager.getProperty("currentPlayerLevel", Integer.class);
+
                 //Check gold
                 if( firstTime ){
                     //start the player with some money
                     goldVal = 20;
                     xpMaxVal = 200;
+                    hpMaxVal = 50;
+                    hpVal = 50;
+                    mpMaxVal = 50;
+                    mpVal = 50;
+                    levelVal = 1;
                 }
 
                 //set the current max values first
                 _statusUI.setXPValueMax(xpMaxVal);
+                _statusUI.setHPValueMax(hpMaxVal);
+                _statusUI.setMPValueMax(mpMaxVal);
 
                 //then add in current values
                 _statusUI.setGoldValue(goldVal);
                 _statusUI.setXPValue(xpVal);
+                _statusUI.setHPValue(hpVal);
+                _statusUI.setMPValue(mpVal);
+                _statusUI.setLevelValue(levelVal);
 
                 break;
             case SAVING_PROFILE:
@@ -237,8 +255,13 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 profileManager.setProperty("playerInventory", InventoryUI.getInventory(_inventoryUI.getInventorySlotTable()));
                 profileManager.setProperty("playerEquipInventory", InventoryUI.getInventory(_inventoryUI.getEquipSlotTable()));
                 profileManager.setProperty("currentPlayerGP", _statusUI.getGoldValue() );
+                profileManager.setProperty("currentPlayerLevel", _statusUI.getLevelValue() );
                 profileManager.setProperty("currentPlayerXP", _statusUI.getXPValue() );
                 profileManager.setProperty("currentPlayerXPMax", _statusUI.getXPValueMax() );
+                profileManager.setProperty("currentPlayerHP", _statusUI.getHPValue() );
+                profileManager.setProperty("currentPlayerHPMax", _statusUI.getHPValueMax() );
+                profileManager.setProperty("currentPlayerMP", _statusUI.getMPValue() );
+                profileManager.setProperty("currentPlayerMPMax", _statusUI.getMPValueMax() );
                 break;
             default:
                 break;
@@ -408,6 +431,19 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
         switch(event) {
             case UPDATED_GP:
                 _storeInventoryUI.setPlayerGP(value);
+                ProfileManager.getInstance().setProperty("currentPlayerGP", _statusUI.getGoldValue());
+                break;
+            case UPDATED_HP:
+                ProfileManager.getInstance().setProperty("currentPlayerHP", _statusUI.getHPValue());
+                break;
+            case UPDATED_LEVEL:
+                ProfileManager.getInstance().setProperty("currentPlayerLevel", _statusUI.getLevelValue());
+                break;
+            case UPDATED_MP:
+                ProfileManager.getInstance().setProperty("currentPlayerMP", _statusUI.getMPValue());
+                break;
+            case UPDATED_XP:
+                ProfileManager.getInstance().setProperty("currentPlayerXP", _statusUI.getXPValue());
                 break;
             default:
                 break;
@@ -458,6 +494,9 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
             case PLAYER_RUNNING:
                 MainGameScreen.setGameState(MainGameScreen.GameState.RUNNING);
                 _battleUI.setVisible(false);
+            case PLAYER_HIT_DAMAGE:
+                int hpVal = ProfileManager.getInstance().getProperty("currentPlayerHP", Integer.class);
+                _statusUI.setHPValue(hpVal);
             default:
                 break;
         }

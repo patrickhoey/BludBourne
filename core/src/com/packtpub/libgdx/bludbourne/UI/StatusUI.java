@@ -20,13 +20,15 @@ public class StatusUI extends Window implements StatusSubject {
     private Array<StatusObserver> _observers;
 
     //Attributes
-    private int _levelVal = 1;
+    private int _levelVal = -1;
     private int _goldVal = -1;
-    private int _hpVal = 50;
-    private int _mpVal = 50;
+    private int _hpVal = -1;
+    private int _mpVal = -1;
     private int _xpVal = 0;
 
     private int _xpCurrentMax = -1;
+    private int _hpCurrentMax = -1;
+    private int _mpCurrentMax = -1;
 
     private Label _hpValLabel;
     private Label _mpValLabel;
@@ -135,6 +137,15 @@ public class StatusUI extends Window implements StatusSubject {
         return _questButton;
     }
 
+    public int getLevelValue(){
+        return _levelVal;
+    }
+    public void setLevelValue(int levelValue){
+        this._levelVal = levelValue;
+        _levelValLabel.setText(String.valueOf(_levelVal));
+        notify(levelValue, StatusObserver.StatusEvent.UPDATED_LEVEL);
+    }
+
     public int getGoldValue(){
         return _goldVal;
     }
@@ -178,6 +189,86 @@ public class StatusUI extends Window implements StatusSubject {
 
     public int getXPValueMax(){
         return _xpCurrentMax;
+    }
+
+    //HP
+    public int getHPValue(){
+        return _hpVal;
+    }
+
+    public void removeHPValue(int hpValue){
+        _hpVal = MathUtils.clamp(_hpVal - hpValue, 0, _hpCurrentMax);
+        _hpValLabel.setText(String.valueOf(_hpVal));
+
+        updateBar(_hpBar, _hpVal, _hpCurrentMax);
+
+        notify(hpValue, StatusObserver.StatusEvent.UPDATED_HP);
+    }
+
+    public void addHPValue(int hpValue){
+        _hpVal = MathUtils.clamp(_hpVal + hpValue, 0, _hpCurrentMax);
+        _hpValLabel.setText(String.valueOf(_hpVal));
+
+        updateBar(_hpBar, _hpVal, _hpCurrentMax);
+
+        notify(hpValue, StatusObserver.StatusEvent.UPDATED_HP);
+    }
+
+    public void setHPValue(int hpValue){
+        this._hpVal = hpValue;
+        _hpValLabel.setText(String.valueOf(_hpVal));
+
+        updateBar(_hpBar, _hpVal, _hpCurrentMax);
+
+        notify(hpValue, StatusObserver.StatusEvent.UPDATED_HP);
+    }
+
+    public void setHPValueMax(int maxHPValue){
+        this._hpCurrentMax = maxHPValue;
+    }
+
+    public int getHPValueMax(){
+        return _hpCurrentMax;
+    }
+
+    //MP
+    public int getMPValue(){
+        return _mpVal;
+    }
+
+    public void removeMPValue(int mpValue){
+        _mpVal = MathUtils.clamp(_mpVal - mpValue, 0, _mpCurrentMax);
+        _mpValLabel.setText(String.valueOf(_mpVal));
+
+        updateBar(_mpBar, _mpVal, _mpCurrentMax);
+
+        notify(mpValue, StatusObserver.StatusEvent.UPDATED_MP);
+    }
+
+    public void addMPValue(int mpValue){
+        _mpVal = MathUtils.clamp(_mpVal + mpValue, 0, _mpCurrentMax);
+        _mpValLabel.setText(String.valueOf(_mpVal));
+
+        updateBar(_mpBar, _mpVal, _mpCurrentMax);
+
+        notify(mpValue, StatusObserver.StatusEvent.UPDATED_MP);
+    }
+
+    public void setMPValue(int mpValue){
+        this._mpVal = mpValue;
+        _mpValLabel.setText(String.valueOf(_mpVal));
+
+        updateBar(_mpBar, _mpVal, _mpCurrentMax);
+
+        notify(mpValue, StatusObserver.StatusEvent.UPDATED_MP);
+    }
+
+    public void setMPValueMax(int maxMPValue){
+        this._mpCurrentMax = maxMPValue;
+    }
+
+    public int getMPValueMax(){
+        return _mpCurrentMax;
     }
 
     public void updateBar(Image bar, int currentVal, int maxVal){
