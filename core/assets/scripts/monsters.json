@@ -7,6 +7,21 @@ conversationConfigPath : ""
 questConfigPath : ""
 currentQuestID : ""
 itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 15
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 40
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 5
+	}
+}
+
 animationConfig: [
 	{
 	    frameDuration: .5

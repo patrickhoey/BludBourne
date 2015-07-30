@@ -17,7 +17,7 @@ import com.packtpub.libgdx.bludbourne.InventoryItem.ItemUseType;
 import com.packtpub.libgdx.bludbourne.InventoryItem.ItemTypeID;
 import com.packtpub.libgdx.bludbourne.Utility;
 
-public class InventoryUI extends Window implements InventorySlotObserver{
+public class InventoryUI extends Window implements InventorySubject, InventorySlotObserver{
 
     public final static int _numSlots = 50;
     public static final String PLAYER_INVENTORY = "Player_Inventory";
@@ -38,10 +38,14 @@ public class InventoryUI extends Window implements InventorySlotObserver{
     private final int _slotWidth = 52;
     private final int _slotHeight = 52;
 
+    private Array<InventoryObserver> _observers;
+
     private InventorySlotTooltip _inventorySlotTooltip;
 
     public InventoryUI(){
         super("Inventory", Utility.STATUSUI_SKIN, "solidbackground");
+
+        _observers = new Array<InventoryObserver>();
 
         _dragAndDrop = new DragAndDrop();
         _inventoryActors = new Array<Actor>();
@@ -372,9 +376,11 @@ public class InventoryUI extends Window implements InventorySlotObserver{
                 if( addItem.isInventoryItemOffensive() ){
                     _APVal += addItem.getItemUseTypeValue();
                     _APValLabel.setText(String.valueOf(_APVal));
+                    notify(String.valueOf(_APVal), InventoryObserver.InventoryEvent.UPDATED_AP);
                 }else if( addItem.isInventoryItemDefensive() ){
                     _DPVal += addItem.getItemUseTypeValue();
                     _DPValLabel.setText(String.valueOf(_DPVal));
+                    notify(String.valueOf(_DPVal), InventoryObserver.InventoryEvent.UPDATED_DP);
                 }
                 break;
             case REMOVED_ITEM:
@@ -383,13 +389,39 @@ public class InventoryUI extends Window implements InventorySlotObserver{
                 if( removeItem.isInventoryItemOffensive() ){
                     _APVal -= removeItem.getItemUseTypeValue();
                     _APValLabel.setText(String.valueOf(_APVal));
+                    notify(String.valueOf(_APVal), InventoryObserver.InventoryEvent.UPDATED_AP);
                 }else if( removeItem.isInventoryItemDefensive() ){
                     _DPVal -= removeItem.getItemUseTypeValue();
                     _DPValLabel.setText(String.valueOf(_DPVal));
+                    notify(String.valueOf(_DPVal), InventoryObserver.InventoryEvent.UPDATED_DP);
                 }
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void addObserver(InventoryObserver inventoryObserver) {
+        _observers.add(inventoryObserver);
+    }
+
+    @Override
+    public void removeObserver(InventoryObserver inventoryObserver) {
+        _observers.removeValue(inventoryObserver, true);
+    }
+
+    @Override
+    public void removeAllObservers() {
+        for(InventoryObserver observer: _observers){
+            _observers.removeValue(observer, true);
+        }
+    }
+
+    @Override
+    public void notify(String value, InventoryObserver.InventoryEvent event) {
+        for(InventoryObserver observer: _observers){
+            observer.onNotify(value, event);
         }
     }
 }

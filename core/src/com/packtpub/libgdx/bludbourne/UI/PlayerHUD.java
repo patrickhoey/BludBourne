@@ -105,16 +105,16 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
         _battleUI.setFillParent(true);
         _battleUI.setVisible(false);
         _battleUI.setMovable(false);
-        _battleUI.setTouchable(Touchable.childrenOnly);
+        //removes all listeners including ones that handle focus
+        _battleUI.clearListeners();
 
+        _stage.addActor(_battleUI);
         _stage.addActor(_questUI);
         _stage.addActor(_storeInventoryUI);
-        _stage.addActor(_inventoryUI);
         _stage.addActor(_conversationUI);
-        _stage.addActor(_statusUI);
         _stage.addActor(_messageBoxUI);
-        _stage.addActor(_battleUI);
-        _statusUI.toFront();
+        _stage.addActor(_statusUI);
+        _stage.addActor(_inventoryUI);
 
         //add tooltips to the stage
         Array<Actor> actors = _inventoryUI.getInventoryActors();
@@ -132,6 +132,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
         _player.registerObserver(this);
         _statusUI.addObserver(this);
         _storeInventoryUI.addObserver(this);
+        _inventoryUI.addObserver(_battleUI.getCurrentState());
 
         //Listeners
         ImageButton inventoryButton = _statusUI.getInventoryButton();
@@ -274,9 +275,9 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 break;
             case ENEMY_SPAWN_LOCATION_CHANGED:
                 String enemyZoneID = value;
-                _battleUI.battleZoneTriggered(Integer.valueOf(enemyZoneID));
-                _battleUI.setVisible(true);
+                _battleUI.battleZoneTriggered(Integer.parseInt(enemyZoneID));
                 _battleUI.toBack();
+                _battleUI.setVisible(true);
                 break;
             default:
                 break;

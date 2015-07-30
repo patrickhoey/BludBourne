@@ -81,10 +81,10 @@ public class Entity {
 		_inputComponent = entity._inputComponent;
 		_graphicsComponent = entity._graphicsComponent;
 		_physicsComponent = entity._physicsComponent;
-		_json = entity._json;
-		_entityConfig = entity._entityConfig;
 		_components = entity._components;
+		_json = entity._json;
 
+		_entityConfig = new EntityConfig(entity._entityConfig);
 		return this;
 	}
 

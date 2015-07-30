@@ -17,7 +17,7 @@ public class StatusUI extends Window implements StatusSubject {
 
     private ImageButton _inventoryButton;
     private ImageButton _questButton;
-    Array<StatusObserver> _observers;
+    private Array<StatusObserver> _observers;
 
     //Attributes
     private int _levelVal = 1;

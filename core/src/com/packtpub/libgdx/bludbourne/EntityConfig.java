@@ -3,23 +3,70 @@ package com.packtpub.libgdx.bludbourne;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.Array;
 
+import com.badlogic.gdx.utils.ObjectMap;
 import com.packtpub.libgdx.bludbourne.Entity.AnimationType;
 import com.packtpub.libgdx.bludbourne.InventoryItem.ItemTypeID;
 
 public class EntityConfig {
-    Array<AnimationConfig> animationConfig;
-    Array<ItemTypeID> inventory;
-    Entity.State state = Entity.State.IDLE;
-    Entity.Direction direction = Entity.Direction.DOWN;
-    String entityID;
-    String conversationConfigPath;
-    String questConfigPath;
-    String currentQuestID;
-    String itemTypeID;
+    private Array<AnimationConfig> animationConfig;
+    private Array<ItemTypeID> inventory;
+    private Entity.State state = Entity.State.IDLE;
+    private Entity.Direction direction = Entity.Direction.DOWN;
+    private String entityID;
+    private String conversationConfigPath;
+    private String questConfigPath;
+    private String currentQuestID;
+    private String itemTypeID;
+    private ObjectMap<String, String> entityProperties;
+
+    public static enum EntityProperties{
+        ENTITY_HEALTH_POINTS,
+        ENTITY_ATTACK_POINTS,
+        ENTITY_DEFENSE_POINTS,
+        NONE
+    }
 
     EntityConfig(){
         animationConfig = new Array<AnimationConfig>();
         inventory = new Array<ItemTypeID>();
+        entityProperties = new ObjectMap<String, String>();
+    }
+
+    EntityConfig(EntityConfig config){
+        state = config.getState();
+        direction = config.getDirection();
+        entityID = config.getEntityID();
+        conversationConfigPath = config.getConversationConfigPath();
+        questConfigPath = config.getQuestConfigPath();
+        currentQuestID = config.getCurrentQuestID();
+        itemTypeID = config.getItemTypeID();
+
+        animationConfig = new Array<AnimationConfig>();
+        animationConfig.addAll(config.getAnimationConfig());
+
+        inventory = new Array<ItemTypeID>();
+        inventory.addAll(config.getInventory());
+
+        entityProperties = new ObjectMap<String, String>();
+        entityProperties.putAll(config.entityProperties);
+    }
+
+    public ObjectMap<String, String> getEntityProperties() {
+        return entityProperties;
+    }
+
+    public void setEntityProperties(ObjectMap<String, String> entityProperties) {
+        this.entityProperties = entityProperties;
+    }
+
+    public void setPropertyValue(String key, String value){
+        entityProperties.put(key, value);
+    }
+
+    public String getPropertyValue(String key){
+        Object propertyVal = entityProperties.get(key);
+        if( propertyVal == null ) return new String();
+        return propertyVal.toString();
     }
 
     public String getCurrentQuestID() {
