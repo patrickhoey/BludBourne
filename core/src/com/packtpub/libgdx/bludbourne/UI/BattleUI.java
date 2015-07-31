@@ -25,6 +25,8 @@ public class BattleUI extends Window implements BattleObserver {
     private TextButton _runButton = null;
     private Label _damageValLabel = null;
 
+    private int _currentBattleZone = 0;
+
     private float _origDamageValLabelY = 0;
 
     public BattleUI(){
@@ -74,6 +76,7 @@ public class BattleUI extends Window implements BattleObserver {
     }
 
     public void battleZoneTriggered(int battleZoneValue){
+        _currentBattleZone = battleZoneValue;
         _battleState.setCurrentOpponent(battleZoneValue);
     }
 
@@ -90,6 +93,7 @@ public class BattleUI extends Window implements BattleObserver {
                 break;
             case OPPONENT_ADDED:
                 _image.setAnimation(entity.getAnimation(Entity.AnimationType.IMMOBILE));
+                this.setTitle("Level " + _currentBattleZone + " " + entity.getEntityConfig().getEntityID());
                 break;
             case OPPONENT_HIT_DAMAGE:
                 int damage = Integer.parseInt(entity.getEntityConfig().getPropertyValue(EntityConfig.EntityProperties.ENTITY_HIT_DAMAGE_TOTAL.toString()));
