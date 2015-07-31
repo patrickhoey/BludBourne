@@ -208,6 +208,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
 
                 Array<InventoryItemLocation> equipInventory = profileManager.getProperty("playerEquipInventory", Array.class);
                 if( equipInventory != null && equipInventory.size > 0 ){
+                    _inventoryUI.resetEquipSlots();
                     InventoryUI.populateInventory(_inventoryUI.getEquipSlotTable(), equipInventory, _inventoryUI.getDragAndDrop(), InventoryUI.PLAYER_INVENTORY, false);
                 }
 
@@ -489,6 +490,10 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
     public void onNotify(Entity enemyEntity, BattleEvent event) {
         switch (event) {
             case OPPONENT_DEFEATED:
+                int goldReward = Integer.parseInt(enemyEntity.getEntityConfig().getPropertyValue(EntityConfig.EntityProperties.ENTITY_GP_REWARD.toString()));
+                _statusUI.addGoldValue(goldReward);
+                int xpReward = Integer.parseInt(enemyEntity.getEntityConfig().getPropertyValue(EntityConfig.EntityProperties.ENTITY_XP_REWARD.toString()));
+                _statusUI.addXPValue(xpReward);
                 MainGameScreen.setGameState(MainGameScreen.GameState.RUNNING);
                 _battleUI.setVisible(false);
             case PLAYER_RUNNING:

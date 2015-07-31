@@ -20,6 +20,14 @@ entityProperties: {
 		class: java.lang.String
 		value: 5
 	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 5
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 5
+	}
 }
 animationConfig: [
 	{
@@ -62,6 +70,14 @@ entityProperties: {
 		value: 40
 	}
 	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 5
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 5
+	}
+	ENTITY_GP_REWARD: {
 		class: java.lang.String
 		value: 5
 	}
@@ -110,6 +126,14 @@ entityProperties: {
 		class: java.lang.String
 		value: 5
 	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 5
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 5
+	}
 }
 animationConfig: [
 	{
@@ -155,6 +179,14 @@ entityProperties: {
 		class: java.lang.String
 		value: 5
 	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 5
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 5
+	}
 }
 animationConfig: [
 	{
@@ -197,6 +229,14 @@ entityProperties: {
 		value: 40
 	}
 	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 5
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 5
+	}
+	ENTITY_GP_REWARD: {
 		class: java.lang.String
 		value: 5
 	}

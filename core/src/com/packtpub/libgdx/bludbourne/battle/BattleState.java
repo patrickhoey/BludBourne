@@ -30,8 +30,11 @@ public class BattleState extends BattleSubject implements InventoryObserver {
 
         int damage = MathUtils.clamp( _currentPlayerAP - currentOpponentDP, 0, _currentPlayerAP);
 
+        System.out.println("ENEMY HAS " + currentOpponentHP + " hit with damage: " + damage);
+
         currentOpponentHP = MathUtils.clamp( currentOpponentHP - damage, 0, currentOpponentHP);
         _currentOpponent.getEntityConfig().setPropertyValue(EntityConfig.EntityProperties.ENTITY_HEALTH_POINTS.toString(), String.valueOf(currentOpponentHP));
+
         System.out.println("Player attacks " + _currentOpponent.getEntityConfig().getEntityID() + " leaving it with HP: " + currentOpponentHP);
 
         _currentOpponent.getEntityConfig().setPropertyValue(EntityConfig.EntityProperties.ENTITY_HIT_DAMAGE_TOTAL.toString(), String.valueOf(damage));

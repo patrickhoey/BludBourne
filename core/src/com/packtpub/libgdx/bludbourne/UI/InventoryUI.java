@@ -173,6 +173,11 @@ public class InventoryUI extends Window implements InventorySubject, InventorySl
         return _equipSlots;
     }
 
+    public void resetEquipSlots(){
+        _DPVal = 0;
+        _APVal = 0;
+    }
+
     public static void clearInventoryItems(Table targetTable){
         Array<Cell> cells = targetTable.getCells();
         for( int i = 0; i < cells.size; i++){
