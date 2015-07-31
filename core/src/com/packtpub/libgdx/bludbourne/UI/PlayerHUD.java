@@ -230,24 +230,22 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 if( firstTime ){
                     //start the player with some money
                     goldVal = 20;
-                    xpMaxVal = 200;
-                    hpMaxVal = 50;
-                    hpVal = 50;
-                    mpMaxVal = 50;
-                    mpVal = 50;
                     levelVal = 1;
-                }
 
-                //set the current max values first
-                _statusUI.setXPValueMax(xpMaxVal);
-                _statusUI.setHPValueMax(hpMaxVal);
-                _statusUI.setMPValueMax(mpMaxVal);
+                    _statusUI.setStatusForLevel(levelVal);
+                }else{
+                    //set the current max values first
+                    _statusUI.setXPValueMax(xpMaxVal);
+                    _statusUI.setHPValueMax(hpMaxVal);
+                    _statusUI.setMPValueMax(mpMaxVal);
+
+                    _statusUI.setXPValue(xpVal);
+                    _statusUI.setHPValue(hpVal);
+                    _statusUI.setMPValue(mpVal);
+                }
 
                 //then add in current values
                 _statusUI.setGoldValue(goldVal);
-                _statusUI.setXPValue(xpVal);
-                _statusUI.setHPValue(hpVal);
-                _statusUI.setMPValue(mpVal);
                 _statusUI.setLevelValue(levelVal);
 
                 break;

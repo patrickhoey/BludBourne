@@ -75,12 +75,12 @@ public class BattleState extends BattleSubject implements InventoryObserver {
             case UPDATED_AP:
                 int apVal = Integer.valueOf(value);
                 _currentPlayerAP = apVal;
-                System.out.println("APVAL: " + _currentPlayerAP);
+                //System.out.println("APVAL: " + _currentPlayerAP);
                 break;
             case UPDATED_DP:
                 int dpVal = Integer.valueOf(value);
                 _currentPlayerDP = dpVal;
-                System.out.println("DPVAL: " + _currentPlayerDP);
+                //System.out.println("DPVAL: " + _currentPlayerDP);
                 break;
             default:
                 break;

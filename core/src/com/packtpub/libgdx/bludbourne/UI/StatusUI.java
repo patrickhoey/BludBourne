@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.packtpub.libgdx.bludbourne.Utility;
+import com.packtpub.libgdx.bludbourne.battle.LevelTable;
 
 public class StatusUI extends Window implements StatusSubject {
     private Image _hpBar;
@@ -18,6 +19,9 @@ public class StatusUI extends Window implements StatusSubject {
     private ImageButton _inventoryButton;
     private ImageButton _questButton;
     private Array<StatusObserver> _observers;
+
+    private Array<LevelTable> _levelTables;
+    private static final String LEVEL_TABLE_CONFIG = "scripts/level_tables.json";
 
     //Attributes
     private int _levelVal = -1;
@@ -42,6 +46,8 @@ public class StatusUI extends Window implements StatusSubject {
     public StatusUI(){
         super("stats", Utility.STATUSUI_SKIN);
 
+        _levelTables = LevelTable.getLevelTables(LEVEL_TABLE_CONFIG);
+
         _observers = new Array<StatusObserver>();
 
         //groups
@@ -62,15 +68,15 @@ public class StatusUI extends Window implements StatusSubject {
 
 
         //labels
-        Label hpLabel = new Label(" hp:", Utility.STATUSUI_SKIN);
+        Label hpLabel = new Label(" hp: ", Utility.STATUSUI_SKIN);
         _hpValLabel = new Label(String.valueOf(_hpVal), Utility.STATUSUI_SKIN);
-        Label mpLabel = new Label(" mp:", Utility.STATUSUI_SKIN);
+        Label mpLabel = new Label(" mp: ", Utility.STATUSUI_SKIN);
         _mpValLabel = new Label(String.valueOf(_mpVal), Utility.STATUSUI_SKIN);
-        Label xpLabel = new Label(" xp:", Utility.STATUSUI_SKIN);
+        Label xpLabel = new Label(" xp: ", Utility.STATUSUI_SKIN);
         _xpValLabel = new Label(String.valueOf(_xpVal), Utility.STATUSUI_SKIN);
-        Label levelLabel = new Label(" lv:", Utility.STATUSUI_SKIN);
+        Label levelLabel = new Label(" lv: ", Utility.STATUSUI_SKIN);
         _levelValLabel = new Label(String.valueOf(_levelVal), Utility.STATUSUI_SKIN);
-        Label goldLabel = new Label(" gp:", Utility.STATUSUI_SKIN);
+        Label goldLabel = new Label(" gp: ", Utility.STATUSUI_SKIN);
         _goldValLabel = new Label(String.valueOf(_goldVal), Utility.STATUSUI_SKIN);
 
         //buttons
@@ -104,19 +110,19 @@ public class StatusUI extends Window implements StatusSubject {
         this.add(_inventoryButton).align(Align.right);
         this.row();
 
-        this.add(group).size(bar.getWidth(), bar.getHeight());
+        this.add(group).size(bar.getWidth(), bar.getHeight()).padRight(10);
         this.add(hpLabel);
         this.add(_hpValLabel).align(Align.left);
         this.row();
 
-        this.add(group2).size(bar2.getWidth(), bar2.getHeight());
+        this.add(group2).size(bar2.getWidth(), bar2.getHeight()).padRight(10);
         this.add(mpLabel);
         this.add(_mpValLabel).align(Align.left);
         this.row();
 
-        this.add(group3).size(bar3.getWidth(), bar3.getHeight());
+        this.add(group3).size(bar3.getWidth(), bar3.getHeight()).padRight(10);
         this.add(xpLabel);
-        this.add(_xpValLabel).align(Align.left);
+        this.add(_xpValLabel).align(Align.left).padRight(20);
         this.row();
 
         this.add(levelLabel).align(Align.left);
@@ -167,6 +173,11 @@ public class StatusUI extends Window implements StatusSubject {
 
     public void addXPValue(int xpValue){
         this._xpVal += xpValue;
+
+        if( _xpVal > _xpCurrentMax ){
+            updateToNewLevel();
+        }
+
         _xpValLabel.setText(String.valueOf(_xpVal));
 
         updateBar(_xpBar, _xpVal, _xpCurrentMax);
@@ -176,6 +187,11 @@ public class StatusUI extends Window implements StatusSubject {
 
     public void setXPValue(int xpValue){
         this._xpVal = xpValue;
+
+        if( _xpVal > _xpCurrentMax ){
+            updateToNewLevel();
+        }
+
         _xpValLabel.setText(String.valueOf(_xpVal));
 
         updateBar(_xpBar, _xpVal, _xpCurrentMax);
@@ -185,6 +201,43 @@ public class StatusUI extends Window implements StatusSubject {
 
     public void setXPValueMax(int maxXPValue){
         this._xpCurrentMax = maxXPValue;
+    }
+
+    public void setStatusForLevel(int level){
+        for( LevelTable table: _levelTables ){
+            if( Integer.parseInt(table.getLevelID()) == level ){
+                setXPValueMax(table.getXpMax());
+
+                setHPValueMax(table.getHpMax());
+                setHPValue(table.getHpMax());
+
+                setMPValueMax(table.getMpMax());
+                setMPValue(table.getMpMax());
+
+                setLevelValue(Integer.parseInt(table.getLevelID()));
+                return;
+            }
+        }
+    }
+
+    public void updateToNewLevel(){
+        for( LevelTable table: _levelTables ){
+            //System.out.println("XPVAL " + _xpVal + " table XPMAX " + table.getXpMax() );
+            if( _xpVal > table.getXpMax() ){
+                continue;
+            }else{
+                setXPValueMax(table.getXpMax());
+
+                setHPValueMax(table.getHpMax());
+                setHPValue(table.getHpMax());
+
+                setMPValueMax(table.getMpMax());
+                setMPValue(table.getMpMax());
+
+                setLevelValue(Integer.parseInt(table.getLevelID()));
+                return;
+            }
+        }
     }
 
     public int getXPValueMax(){
