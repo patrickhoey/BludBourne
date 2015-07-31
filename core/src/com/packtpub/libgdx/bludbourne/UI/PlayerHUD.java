@@ -300,9 +300,9 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 break;
             case ENEMY_SPAWN_LOCATION_CHANGED:
                 String enemyZoneID = value;
+                MainGameScreen.setGameState(MainGameScreen.GameState.SAVING);
                 _battleUI.battleZoneTriggered(Integer.parseInt(enemyZoneID));
                 _battleUI.toBack();
-                MainGameScreen.setGameState(MainGameScreen.GameState.PAUSED);
                 _battleUI.setVisible(true);
                 break;
             default:
@@ -497,6 +497,12 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
             case PLAYER_HIT_DAMAGE:
                 int hpVal = ProfileManager.getInstance().getProperty("currentPlayerHP", Integer.class);
                 _statusUI.setHPValue(hpVal);
+
+                if( hpVal <= 0 ){
+                    _battleUI.setVisible(false);
+                    MainGameScreen.setGameState(MainGameScreen.GameState.GAME_OVER);
+                }
+
             default:
                 break;
         }

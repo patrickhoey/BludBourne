@@ -35,7 +35,8 @@ public class MainGameScreen implements Screen {
 		SAVING,
 		LOADING,
 		RUNNING,
-		PAUSED
+		PAUSED,
+		GAME_OVER
 	}
 	private static GameState _gameState;
 
@@ -93,12 +94,16 @@ public class MainGameScreen implements Screen {
 
 	@Override
 	public void hide() {
-		setGameState(GameState.PAUSED);
+		setGameState(GameState.LOADING);
 		Gdx.input.setInputProcessor(null);
 	}
 
 	@Override
 	public void render(float delta) {
+		if( _gameState == GameState.GAME_OVER ){
+			_game.setScreen(_game.getScreenType(BludBourne.ScreenType.GameOver));
+		}
+
 		if( _gameState == GameState.PAUSED ){
 			_player.updateInput(delta);
 			_playerHUD.render(delta);
@@ -180,6 +185,9 @@ public class MainGameScreen implements Screen {
 				}else if( _gameState == GameState.RUNNING ){
 					_gameState = GameState.PAUSED;
 				}
+				break;
+			case GAME_OVER:
+				_gameState = GameState.GAME_OVER;
 				break;
 			default:
 				_gameState = GameState.RUNNING;
