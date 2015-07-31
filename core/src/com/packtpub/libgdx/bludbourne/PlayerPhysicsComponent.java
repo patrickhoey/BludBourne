@@ -187,7 +187,11 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
                     return true;
                 }else{
                     //If no collision, reset the value
-                    previousEnemySpawn = "";
+                    if( !previousEnemySpawn.equalsIgnoreCase(String.valueOf(0)) ){
+                        previousEnemySpawn = String.valueOf(0);
+                        notify(previousEnemySpawn, ComponentObserver.ComponentEvent.ENEMY_SPAWN_LOCATION_CHANGED);
+                        Gdx.app.debug(TAG, "Enemy Spawn Area RESET");
+                    }
                 }
             }
         }

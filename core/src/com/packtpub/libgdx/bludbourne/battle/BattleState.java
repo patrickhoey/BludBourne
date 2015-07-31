@@ -8,12 +8,38 @@ import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 
 public class BattleState extends BattleSubject implements InventoryObserver {
     private Entity _currentOpponent;
+    private int _currentZoneLevel = 0;
     private int _currentPlayerAP;
     private int _currentPlayerDP;
+    private final int _chanceOfAttack = 25;
+    private final int _chanceOfEscape = 40;
+    private final int _criticalChance = 90;
 
-    public void setCurrentOpponent(int battleZoneLevel){
-        System.out.print("Entered BATTLE ZONE: " + battleZoneLevel);
-        Entity entity = MonsterFactory.getInstance().getRandomMonster(battleZoneLevel);
+    public void setCurrentZoneLevel(int zoneLevel){
+        _currentZoneLevel = zoneLevel;
+    }
+
+    public int getCurrentZoneLevel(){
+        return _currentZoneLevel;
+    }
+
+    public boolean isOpponentReady(){
+        if( _currentZoneLevel == 0 ) return false;
+        int randomVal = MathUtils.random(1,100);
+
+        //System.out.println("CHANGE OF ATTACK: " + _chanceOfAttack + " randomval: " + randomVal);
+
+        if( _chanceOfAttack > randomVal  ){
+            setCurrentOpponent();
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public void setCurrentOpponent(){
+        System.out.print("Entered BATTLE ZONE: " + _currentZoneLevel);
+        Entity entity = MonsterFactory.getInstance().getRandomMonster(_currentZoneLevel);
         if( entity == null ) return;
         this._currentOpponent = entity;
         notify(entity, BattleObserver.BattleEvent.OPPONENT_ADDED);
@@ -65,8 +91,14 @@ public class BattleState extends BattleSubject implements InventoryObserver {
     }
 
     public void playerRuns(){
-        //TODO FINISH
-        notify(_currentOpponent, BattleObserver.BattleEvent.PLAYER_RUNNING);
+        int randomVal = MathUtils.random(1,100);
+        if( _chanceOfEscape > randomVal  ) {
+            notify(_currentOpponent, BattleObserver.BattleEvent.PLAYER_RUNNING);
+        }else if (randomVal > _criticalChance){
+            opponentAttacks();
+        }else{
+            return;
+        }
     }
 
     @Override

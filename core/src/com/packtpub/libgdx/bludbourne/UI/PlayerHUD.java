@@ -299,10 +299,15 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 break;
             case ENEMY_SPAWN_LOCATION_CHANGED:
                 String enemyZoneID = value;
-                MainGameScreen.setGameState(MainGameScreen.GameState.SAVING);
                 _battleUI.battleZoneTriggered(Integer.parseInt(enemyZoneID));
-                _battleUI.toBack();
-                _battleUI.setVisible(true);
+                break;
+            case PLAYER_HAS_MOVED:
+                //System.out.println("Player has moved!!!");
+                if( _battleUI.isBattleReady() ){
+                    MainGameScreen.setGameState(MainGameScreen.GameState.SAVING);
+                    _battleUI.toBack();
+                    _battleUI.setVisible(true);
+                }
                 break;
             default:
                 break;

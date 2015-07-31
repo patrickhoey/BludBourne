@@ -13,7 +13,10 @@ public class PlayerGraphicsComponent extends GraphicsComponent {
 
     private static final String TAG = PlayerGraphicsComponent.class.getSimpleName();
 
+    protected Vector2 _previousPosition;
+
     public PlayerGraphicsComponent(){
+        _previousPosition = new Vector2(0,0);
     }
 
     @Override
@@ -59,6 +62,13 @@ public class PlayerGraphicsComponent extends GraphicsComponent {
     @Override
     public void update(Entity entity, MapManager mapMgr, Batch batch, float delta){
         updateAnimations(delta);
+
+        //Player has moved
+        if( _previousPosition.x != _currentPosition.x ||
+                _previousPosition.y != _currentPosition.y){
+            notify("", ComponentObserver.ComponentEvent.PLAYER_HAS_MOVED);
+            _previousPosition = _currentPosition.cpy();
+        }
 
         Camera camera = mapMgr.getCamera();
         camera.position.set(_currentPosition.x, _currentPosition.y, 0f);

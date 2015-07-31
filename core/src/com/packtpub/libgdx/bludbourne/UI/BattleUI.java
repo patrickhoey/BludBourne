@@ -25,13 +25,15 @@ public class BattleUI extends Window implements BattleObserver {
     private TextButton _runButton = null;
     private Label _damageValLabel = null;
 
-    private int _currentBattleZone = 0;
+    private float _battleTimer = 0;
+    private final float _checkTimer = 1;
 
     private float _origDamageValLabelY = 0;
 
     public BattleUI(){
         super("BATTLE", Utility.STATUSUI_SKIN, "solidbackground");
 
+        _battleTimer = 0;
         _battleState = new BattleState();
         _battleState.addObserver(this);
 
@@ -76,8 +78,16 @@ public class BattleUI extends Window implements BattleObserver {
     }
 
     public void battleZoneTriggered(int battleZoneValue){
-        _currentBattleZone = battleZoneValue;
-        _battleState.setCurrentOpponent(battleZoneValue);
+        _battleState.setCurrentZoneLevel(battleZoneValue);
+    }
+
+    public boolean isBattleReady(){
+        if( _battleTimer > _checkTimer ){
+            _battleTimer = 0;
+            return _battleState.isOpponentReady();
+        }else{
+            return false;
+        }
     }
 
     public BattleState getCurrentState(){
@@ -93,7 +103,7 @@ public class BattleUI extends Window implements BattleObserver {
                 break;
             case OPPONENT_ADDED:
                 _image.setAnimation(entity.getAnimation(Entity.AnimationType.IMMOBILE));
-                this.setTitle("Level " + _currentBattleZone + " " + entity.getEntityConfig().getEntityID());
+                this.setTitle("Level " + _battleState.getCurrentZoneLevel() + " " + entity.getEntityConfig().getEntityID());
                 break;
             case OPPONENT_HIT_DAMAGE:
                 int damage = Integer.parseInt(entity.getEntityConfig().getPropertyValue(EntityConfig.EntityProperties.ENTITY_HIT_DAMAGE_TOTAL.toString()));
@@ -119,6 +129,7 @@ public class BattleUI extends Window implements BattleObserver {
 
     @Override
     public void act(float delta){
+        _battleTimer = (_battleTimer + delta)%60;
         if( _damageValLabel.isVisible() ){
             _damageValLabel.setY(_damageValLabel.getY()+3);
         }
