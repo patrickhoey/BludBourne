@@ -149,7 +149,7 @@ public class StatusUI extends Window implements StatusSubject {
     public void setLevelValue(int levelValue){
         this._levelVal = levelValue;
         _levelValLabel.setText(String.valueOf(_levelVal));
-        notify(levelValue, StatusObserver.StatusEvent.UPDATED_LEVEL);
+        notify(_levelVal, StatusObserver.StatusEvent.UPDATED_LEVEL);
     }
 
     public int getGoldValue(){
@@ -158,13 +158,13 @@ public class StatusUI extends Window implements StatusSubject {
     public void setGoldValue(int goldValue){
         this._goldVal = goldValue;
         _goldValLabel.setText(String.valueOf(_goldVal));
-        notify(goldValue, StatusObserver.StatusEvent.UPDATED_GP);
+        notify(_goldVal, StatusObserver.StatusEvent.UPDATED_GP);
     }
 
     public void addGoldValue(int goldValue){
         this._goldVal += goldValue;
         _goldValLabel.setText(String.valueOf(_goldVal));
-        notify(goldValue, StatusObserver.StatusEvent.UPDATED_GP);
+        notify(_goldVal, StatusObserver.StatusEvent.UPDATED_GP);
     }
 
     public int getXPValue(){
@@ -182,7 +182,7 @@ public class StatusUI extends Window implements StatusSubject {
 
         updateBar(_xpBar, _xpVal, _xpCurrentMax);
 
-        notify(xpValue, StatusObserver.StatusEvent.UPDATED_XP);
+        notify(_xpVal, StatusObserver.StatusEvent.UPDATED_XP);
     }
 
     public void setXPValue(int xpValue){
@@ -196,7 +196,7 @@ public class StatusUI extends Window implements StatusSubject {
 
         updateBar(_xpBar, _xpVal, _xpCurrentMax);
 
-        notify(xpValue, StatusObserver.StatusEvent.UPDATED_XP);
+        notify(_xpVal, StatusObserver.StatusEvent.UPDATED_XP);
     }
 
     public void setXPValueMax(int maxXPValue){
@@ -207,6 +207,7 @@ public class StatusUI extends Window implements StatusSubject {
         for( LevelTable table: _levelTables ){
             if( Integer.parseInt(table.getLevelID()) == level ){
                 setXPValueMax(table.getXpMax());
+                setXPValue(_xpVal);
 
                 setHPValueMax(table.getHpMax());
                 setHPValue(table.getHpMax());
@@ -255,7 +256,7 @@ public class StatusUI extends Window implements StatusSubject {
 
         updateBar(_hpBar, _hpVal, _hpCurrentMax);
 
-        notify(hpValue, StatusObserver.StatusEvent.UPDATED_HP);
+        notify(_hpVal, StatusObserver.StatusEvent.UPDATED_HP);
     }
 
     public void addHPValue(int hpValue){
@@ -264,7 +265,7 @@ public class StatusUI extends Window implements StatusSubject {
 
         updateBar(_hpBar, _hpVal, _hpCurrentMax);
 
-        notify(hpValue, StatusObserver.StatusEvent.UPDATED_HP);
+        notify(_hpVal, StatusObserver.StatusEvent.UPDATED_HP);
     }
 
     public void setHPValue(int hpValue){
@@ -273,7 +274,7 @@ public class StatusUI extends Window implements StatusSubject {
 
         updateBar(_hpBar, _hpVal, _hpCurrentMax);
 
-        notify(hpValue, StatusObserver.StatusEvent.UPDATED_HP);
+        notify(_hpVal, StatusObserver.StatusEvent.UPDATED_HP);
     }
 
     public void setHPValueMax(int maxHPValue){
@@ -295,7 +296,7 @@ public class StatusUI extends Window implements StatusSubject {
 
         updateBar(_mpBar, _mpVal, _mpCurrentMax);
 
-        notify(mpValue, StatusObserver.StatusEvent.UPDATED_MP);
+        notify(_mpVal, StatusObserver.StatusEvent.UPDATED_MP);
     }
 
     public void addMPValue(int mpValue){
@@ -304,7 +305,7 @@ public class StatusUI extends Window implements StatusSubject {
 
         updateBar(_mpBar, _mpVal, _mpCurrentMax);
 
-        notify(mpValue, StatusObserver.StatusEvent.UPDATED_MP);
+        notify(_mpVal, StatusObserver.StatusEvent.UPDATED_MP);
     }
 
     public void setMPValue(int mpValue){
@@ -313,7 +314,7 @@ public class StatusUI extends Window implements StatusSubject {
 
         updateBar(_mpBar, _mpVal, _mpCurrentMax);
 
-        notify(mpValue, StatusObserver.StatusEvent.UPDATED_MP);
+        notify(_mpVal, StatusObserver.StatusEvent.UPDATED_MP);
     }
 
     public void setMPValueMax(int maxMPValue){

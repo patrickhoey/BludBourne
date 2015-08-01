@@ -25,7 +25,7 @@ public class MonsterFactory {
     private Hashtable<String, Entity> _entities;
     private Hashtable<String, Array<MonsterEntityType>> _monsterZones;
 
-    public MonsterFactory(){
+    private MonsterFactory(){
         Array<EntityConfig> configs = Entity.getEntityConfigs("scripts/monsters.json");
         _entities =  Entity.initEntities(configs);
 

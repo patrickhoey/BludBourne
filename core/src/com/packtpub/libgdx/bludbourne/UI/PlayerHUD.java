@@ -493,15 +493,17 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
     public void onNotify(Entity enemyEntity, BattleEvent event) {
         switch (event) {
             case OPPONENT_DEFEATED:
+                MainGameScreen.setGameState(MainGameScreen.GameState.RUNNING);
                 int goldReward = Integer.parseInt(enemyEntity.getEntityConfig().getPropertyValue(EntityConfig.EntityProperties.ENTITY_GP_REWARD.toString()));
                 _statusUI.addGoldValue(goldReward);
                 int xpReward = Integer.parseInt(enemyEntity.getEntityConfig().getPropertyValue(EntityConfig.EntityProperties.ENTITY_XP_REWARD.toString()));
                 _statusUI.addXPValue(xpReward);
-                MainGameScreen.setGameState(MainGameScreen.GameState.RUNNING);
                 _battleUI.setVisible(false);
+                break;
             case PLAYER_RUNNING:
                 MainGameScreen.setGameState(MainGameScreen.GameState.RUNNING);
                 _battleUI.setVisible(false);
+                break;
             case PLAYER_HIT_DAMAGE:
                 int hpVal = ProfileManager.getInstance().getProperty("currentPlayerHP", Integer.class);
                 _statusUI.setHPValue(hpVal);
@@ -510,6 +512,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                     _battleUI.setVisible(false);
                     MainGameScreen.setGameState(MainGameScreen.GameState.GAME_OVER);
                 }
+                break;
             case PLAYER_USED_MAGIC:
                 int mpVal = ProfileManager.getInstance().getProperty("currentPlayerMP", Integer.class);
                 _statusUI.setMPValue(mpVal);
