@@ -511,7 +511,10 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                     _battleUI.setVisible(false);
                     MainGameScreen.setGameState(MainGameScreen.GameState.GAME_OVER);
                 }
-
+            case PLAYER_USED_MAGIC:
+                int mpVal = ProfileManager.getInstance().getProperty("currentPlayerMP", Integer.class);
+                _statusUI.setMPValue(mpVal);
+                break;
             default:
                 break;
         }

@@ -11,6 +11,7 @@ public class BattleState extends BattleSubject implements InventoryObserver {
     private int _currentZoneLevel = 0;
     private int _currentPlayerAP;
     private int _currentPlayerDP;
+    private int _currentPlayerWandAPPoints = 0;
     private final int _chanceOfAttack = 25;
     private final int _chanceOfEscape = 40;
     private final int _criticalChance = 90;
@@ -49,8 +50,15 @@ public class BattleState extends BattleSubject implements InventoryObserver {
         if( _currentOpponent == null ){
             return;
         }
-        //Check for magic if used in attack
-        //int mpVal = ProfileManager.getInstance().getProperty("currentPlayerMP", Integer.class);
+        //Check for magic if used in attack; If we don't have enough MP, then return
+        int mpVal = ProfileManager.getInstance().getProperty("currentPlayerMP", Integer.class);
+        if( _currentPlayerWandAPPoints > mpVal ){
+            return;
+        }else{
+            mpVal -= _currentPlayerWandAPPoints;
+            ProfileManager.getInstance().setProperty("currentPlayerMP", mpVal);
+            notify(_currentOpponent, BattleObserver.BattleEvent.PLAYER_USED_MAGIC);
+        }
 
         notify(_currentOpponent, BattleObserver.BattleEvent.PLAYER_TURN_START);
 
@@ -116,6 +124,14 @@ public class BattleState extends BattleSubject implements InventoryObserver {
                 int dpVal = Integer.valueOf(value);
                 _currentPlayerDP = dpVal;
                 //System.out.println("DPVAL: " + _currentPlayerDP);
+                break;
+            case ADD_WAND_AP:
+                int wandAP = Integer.valueOf(value);
+                _currentPlayerWandAPPoints += wandAP;
+                break;
+            case REMOVE_WAND_AP:
+                int removeWandAP = Integer.valueOf(value);
+                _currentPlayerWandAPPoints -= removeWandAP;
                 break;
             default:
                 break;

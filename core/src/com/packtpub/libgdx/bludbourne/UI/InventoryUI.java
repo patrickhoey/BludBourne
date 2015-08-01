@@ -48,7 +48,7 @@ public class InventoryUI extends Window implements InventorySubject, InventorySl
 
     public InventoryUI(){
         super("Inventory", Utility.STATUSUI_SKIN, "solidbackground");
-        
+
         _observers = new Array<InventoryObserver>();
 
         _dragAndDrop = new DragAndDrop();
@@ -408,6 +408,11 @@ public class InventoryUI extends Window implements InventorySubject, InventorySl
                     _APVal += addItem.getItemUseTypeValue();
                     _APValLabel.setText(String.valueOf(_APVal));
                     notify(String.valueOf(_APVal), InventoryObserver.InventoryEvent.UPDATED_AP);
+
+                    if( addItem.isInventoryItemOffensiveWand() ){
+                        notify(String.valueOf(addItem.getItemUseTypeValue()), InventoryObserver.InventoryEvent.ADD_WAND_AP);
+                    }
+
                 }else if( addItem.isInventoryItemDefensive() ){
                     _DPVal += addItem.getItemUseTypeValue();
                     _DPValLabel.setText(String.valueOf(_DPVal));
@@ -421,6 +426,11 @@ public class InventoryUI extends Window implements InventorySubject, InventorySl
                     _APVal -= removeItem.getItemUseTypeValue();
                     _APValLabel.setText(String.valueOf(_APVal));
                     notify(String.valueOf(_APVal), InventoryObserver.InventoryEvent.UPDATED_AP);
+
+                    if( removeItem.isInventoryItemOffensiveWand() ){
+                        notify(String.valueOf(removeItem.getItemUseTypeValue()), InventoryObserver.InventoryEvent.REMOVE_WAND_AP);
+                    }
+
                 }else if( removeItem.isInventoryItemDefensive() ){
                     _DPVal -= removeItem.getItemUseTypeValue();
                     _DPValLabel.setText(String.valueOf(_DPVal));

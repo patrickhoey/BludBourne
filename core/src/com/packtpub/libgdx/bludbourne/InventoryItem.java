@@ -170,6 +170,17 @@ public class InventoryItem extends Image {
         }
     }
 
+    public boolean isInventoryItemOffensiveWand(){
+        if(     (itemUseType & ItemUseType.WAND_ONEHAND.getValue() ) == ItemUseType.WAND_ONEHAND.getValue() ||
+                (itemUseType & ItemUseType.WAND_TWOHAND.getValue() ) == ItemUseType.WAND_TWOHAND.getValue()
+                ){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
     public boolean isInventoryItemOffensive(){
         if(     (itemUseType & ItemUseType.WEAPON_ONEHAND.getValue() ) == ItemUseType.WEAPON_ONEHAND.getValue() ||
                 (itemUseType & ItemUseType.WEAPON_TWOHAND.getValue() ) == ItemUseType.WEAPON_TWOHAND.getValue() ||
