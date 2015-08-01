@@ -16,14 +16,14 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
     private Entity.State _state;
     private Vector3 _mouseSelectCoordinates;
     private boolean _isMouseSelectEnabled = false;
-    private String previousDiscovery;
-    private String previousEnemySpawn;
+    private String _previousDiscovery;
+    private String _previousEnemySpawn;
 
     public PlayerPhysicsComponent(){
         _boundingBoxLocation = BoundingBoxLocation.BOTTOM_CENTER;
         initBoundingBox(0.3f, 0.5f);
-        previousDiscovery = "";
-        previousEnemySpawn = "";
+        _previousDiscovery = "";
+        _previousEnemySpawn = "";
 
         _mouseSelectCoordinates = new Vector3(0,0,0);
     }
@@ -44,8 +44,8 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
             if (string[0].equalsIgnoreCase(MESSAGE.INIT_START_POSITION.toString())) {
                 _currentEntityPosition = _json.fromJson(Vector2.class, string[1]);
                 _nextEntityPosition.set(_currentEntityPosition.x, _currentEntityPosition.y);
-                previousDiscovery = "";
-                previousEnemySpawn = "";
+                _previousDiscovery = "";
+                _previousEnemySpawn = "";
             } else if (string[0].equalsIgnoreCase(MESSAGE.CURRENT_STATE.toString())) {
                 _state = _json.fromJson(Entity.State.class, string[1]);
             } else if (string[0].equalsIgnoreCase(MESSAGE.CURRENT_DIRECTION.toString())) {
@@ -141,10 +141,10 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
                         return false;
                     }
 
-                    if( previousDiscovery.equalsIgnoreCase(val) ){
+                    if( _previousDiscovery.equalsIgnoreCase(val) ){
                         return true;
                     }else{
-                        previousDiscovery = val;
+                        _previousDiscovery = val;
                     }
 
                     notify(_json.toJson(val), ComponentObserver.ComponentEvent.QUEST_LOCATION_DISCOVERED);
@@ -157,15 +157,15 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
     }
 
     private boolean updateEnemySpawnLayerActivation(MapManager mapMgr){
-        MapLayer mapDiscoverLayer =  mapMgr.getEnemySpawnLayer();
+        MapLayer mapEnemySpawnLayer =  mapMgr.getEnemySpawnLayer();
 
-        if( mapDiscoverLayer == null ){
+        if( mapEnemySpawnLayer == null ){
             return false;
         }
 
         Rectangle rectangle = null;
 
-        for( MapObject object: mapDiscoverLayer.getObjects()){
+        for( MapObject object: mapEnemySpawnLayer.getObjects()){
             if(object instanceof RectangleMapObject) {
                 rectangle = ((RectangleMapObject)object).getRectangle();
 
@@ -176,25 +176,27 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
                         return false;
                     }
 
-                    if( previousEnemySpawn.equalsIgnoreCase(enemySpawnID) ){
+                    if( _previousEnemySpawn.equalsIgnoreCase(enemySpawnID) ){
+                        //Gdx.app.debug(TAG, "Enemy Spawn Area already activated " + enemySpawnID);
                         return true;
                     }else{
-                        previousEnemySpawn = enemySpawnID;
+                        Gdx.app.debug(TAG, "Enemy Spawn Area " + enemySpawnID + " Activated with previous Spawn value: " + _previousEnemySpawn);
+                        _previousEnemySpawn = enemySpawnID;
                     }
 
                     notify(enemySpawnID, ComponentObserver.ComponentEvent.ENEMY_SPAWN_LOCATION_CHANGED);
-                    Gdx.app.debug(TAG, "Enemy Spawn Area Activated");
                     return true;
-                }else{
-                    //If no collision, reset the value
-                    if( !previousEnemySpawn.equalsIgnoreCase(String.valueOf(0)) ){
-                        previousEnemySpawn = String.valueOf(0);
-                        notify(previousEnemySpawn, ComponentObserver.ComponentEvent.ENEMY_SPAWN_LOCATION_CHANGED);
-                        Gdx.app.debug(TAG, "Enemy Spawn Area RESET");
-                    }
                 }
             }
         }
+
+        //If no collision, reset the value
+        if( !_previousEnemySpawn.equalsIgnoreCase(String.valueOf(0)) ){
+            Gdx.app.debug(TAG, "Enemy Spawn Area RESET with previous value " + _previousEnemySpawn);
+            _previousEnemySpawn = String.valueOf(0);
+            notify(_previousEnemySpawn, ComponentObserver.ComponentEvent.ENEMY_SPAWN_LOCATION_CHANGED);
+        }
+
         return false;
     }
 

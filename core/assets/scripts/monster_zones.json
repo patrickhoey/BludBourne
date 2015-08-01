@@ -22,46 +22,157 @@ monsters: [
 {
 zoneID : 2
 monsters: [
+	{
+		value: MONSTER006
+	}
+	{
+		value: MONSTER007
+	}
+	{
+		value: MONSTER008
+	}
+	{
+		value: MONSTER009
+	}
+	{
+		value: MONSTER010
+	}
 ]
 },
 {
 zoneID : 3
 monsters: [
+	{
+		value: MONSTER011
+	}
+	{
+		value: MONSTER012
+	}
+	{
+		value: MONSTER013
+	}
+	{
+		value: MONSTER014
+	}
+	{
+		value: MONSTER015
+	}
 ]
 },
 {
 zoneID : 4
 monsters: [
+	{
+		value: MONSTER016
+	}
+	{
+		value: MONSTER017
+	}
+	{
+		value: MONSTER018
+	}
+	{
+		value: MONSTER019
+	}
+	{
+		value: MONSTER020
+	}
 ]
 },
 {
 zoneID : 5
 monsters: [
+	{
+		value: MONSTER021
+	}
+	{
+		value: MONSTER022
+	}
+	{
+		value: MONSTER023
+	}
+	{
+		value: MONSTER024
+	}
+	{
+		value: MONSTER025
+	}
 ]
 },
 {
 zoneID : 6
 monsters: [
+	{
+		value: MONSTER026
+	}
+	{
+		value: MONSTER027
+	}
+	{
+		value: MONSTER028
+	}
+	{
+		value: MONSTER029
+	}
+	{
+		value: MONSTER030
+	}
 ]
 },
 {
 zoneID : 7
 monsters: [
+	{
+		value: MONSTER031
+	}
+	{
+		value: MONSTER032
+	}
+	{
+		value: MONSTER033
+	}
+	{
+		value: MONSTER034
+	}
+	{
+		value: MONSTER035
+	}
 ]
 },
 {
 zoneID : 8
 monsters: [
+	{
+		value: MONSTER036
+	}
+	{
+		value: MONSTER037
+	}
+	{
+		value: MONSTER038
+	}
+	{
+		value: MONSTER039
+	}
+	{
+		value: MONSTER040
+	}
 ]
 },
 {
 zoneID : 9
 monsters: [
+	{
+		value: MONSTER041
+	}
 ]
 },
 {
 zoneID : 10
 monsters: [
+	{
+		value: MONSTER042
+	}
 ]
 },
 ]

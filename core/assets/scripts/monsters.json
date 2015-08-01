@@ -39,12 +39,12 @@ animationConfig: [
 		]
 		gridPoints: [
 			{
-				x: 1
+				x: 0
 				y: 0
 			}
 			
 			{
-				x: 1
+				x: 0
 				y: 0
 			}
 		]
@@ -93,12 +93,12 @@ animationConfig: [
 		gridPoints: [
 			{
 				x: 0
-				y: 0
+				y: 1
 			}
 			
 			{
 				x: 0
-				y: 0
+				y: 1
 			}
 		]
 	}
@@ -146,12 +146,12 @@ animationConfig: [
 		gridPoints: [
 			{
 				x: 0
-				y: 1
+				y: 2
 			}
 			
 			{
 				x: 0
-				y: 1
+				y: 2
 			}
 		]
 	}
@@ -199,12 +199,12 @@ animationConfig: [
 		gridPoints: [
 			{
 				x: 0
-				y: 2
+				y: 3
 			}
 			
 			{
 				x: 0
-				y: 2
+				y: 3
 			}
 		]
 	}
@@ -252,12 +252,1971 @@ animationConfig: [
 		gridPoints: [
 			{
 				x: 0
-				y: 3
+				y: 4
 			}
 			
 			{
 				x: 0
+				y: 4
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER006
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 25
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 50
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 10
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 10
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 10
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 5
+			}
+			
+			{
+				x: 0
+				y: 5
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER007
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 25
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 50
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 10
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 10
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 10
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 6
+			}
+			
+			{
+				x: 0
+				y: 6
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER008
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 25
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 50
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 10
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 10
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 10
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 7
+			}
+			
+			{
+				x: 0
+				y: 7
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER009
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 25
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 50
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 10
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 10
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 10
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 1
+				y: 0
+			}
+			
+			{
+				x: 1
+				y: 0
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER010
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 25
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 50
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 10
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 10
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 10
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 1
+				y: 1
+			}
+			
+			{
+				x: 1
+				y: 1
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER011
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 35
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 60
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 20
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 20
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 20
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 1
+				y: 2
+			}
+			
+			{
+				x: 1
+				y: 2
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER012
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 35
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 60
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 20
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 20
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 20
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 1
 				y: 3
+			}
+			
+			{
+				x: 1
+				y: 3
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER013
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 35
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 60
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 20
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 20
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 20
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 1
+				y: 4
+			}
+			
+			{
+				x: 1
+				y: 4
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER014
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 35
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 60
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 20
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 20
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 20
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 1
+				y: 5
+			}
+			
+			{
+				x: 1
+				y: 5
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER015
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 35
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 60
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 20
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 20
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 20
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 1
+				y: 6
+			}
+			
+			{
+				x: 1
+				y: 6
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER016
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 40
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 65
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 25
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 40
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 40
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 1
+				y: 7
+			}
+			
+			{
+				x: 1
+				y: 7
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER017
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 40
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 65
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 25
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 40
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 40
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 2
+				y: 0
+			}
+			
+			{
+				x: 2
+				y: 0
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER018
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 40
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 65
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 25
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 40
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 40
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 2
+				y: 1
+			}
+			
+			{
+				x: 2
+				y: 1
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER019
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 40
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 65
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 25
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 40
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 40
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 2
+				y: 2
+			}
+			
+			{
+				x: 2
+				y: 2
+			}
+		]
+	}
+]
+},
+{
+entityID : MONSTER020
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 40
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 65
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 25
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 40
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 40
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 2
+				y: 3
+			}
+			
+			{
+				x: 2
+				y: 3
+			}
+		]
+	}
+]
+},
+{
+entityID : MONSTER021
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 70
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 75
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 35
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 50
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 50
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 2
+				y: 4
+			}
+			
+			{
+				x: 2
+				y: 4
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER022
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 70
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 75
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 35
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 50
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 50
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 2
+				y: 5
+			}
+			
+			{
+				x: 2
+				y: 5
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER023
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 70
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 75
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 35
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 50
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 50
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 2
+				y: 6
+			}
+			
+			{
+				x: 2
+				y: 6
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER024
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 70
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 75
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 35
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 50
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 50
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 3
+				y: 0
+			}
+			
+			{
+				x: 3
+				y: 0
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER025
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 70
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 75
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 35
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 50
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 50
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 3
+				y: 1
+			}
+			
+			{
+				x: 3
+				y: 1
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER026
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 80
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 85
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 45
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 60
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 60
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 3
+				y: 2
+			}
+			
+			{
+				x: 3
+				y: 2
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER027
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 80
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 85
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 45
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 60
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 60
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 4
+				y: 0
+			}
+			
+			{
+				x: 4
+				y: 0
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER028
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 80
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 85
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 45
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 60
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 60
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 4
+				y: 1
+			}
+			
+			{
+				x: 4
+				y: 1
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER029
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 80
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 85
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 45
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 60
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 60
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 4
+				y: 2
+			}
+			
+			{
+				x: 4
+				y: 2
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER030
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 80
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 85
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 45
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 60
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 60
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 5
+				y: 0
+			}
+			
+			{
+				x: 5
+				y: 0
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER031
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 90
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 95
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 55
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 70
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 70
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 5
+				y: 1
+			}
+			
+			{
+				x: 5
+				y: 1
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER032
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 90
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 95
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 55
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 70
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 70
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 6
+				y: 0
+			}
+			
+			{
+				x: 6
+				y: 0
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER033
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 90
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 95
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 55
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 70
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 70
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 6
+				y: 1
+			}
+			
+			{
+				x: 6
+				y: 1
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER034
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 90
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 95
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 55
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 70
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 70
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 7
+				y: 0
+			}
+			
+			{
+				x: 7
+				y: 0
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER035
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 90
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 95
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 55
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 70
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 70
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 7
+				y: 1
+			}
+			
+			{
+				x: 7
+				y: 1
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER036
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 100
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 110
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 70
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 80
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 80
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 8
+				y: 0
+			}
+			
+			{
+				x: 8
+				y: 0
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER037
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 100
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 110
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 70
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 80
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 80
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 8
+				y: 1
+			}
+			
+			{
+				x: 8
+				y: 1
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER038
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 100
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 110
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 70
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 80
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 80
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Elemental0.png
+				sprites/characters/Elemental1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 0
+			}
+			
+			{
+				x: 0
+				y: 0
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER039
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 100
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 110
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 70
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 80
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 80
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Elemental0.png
+				sprites/characters/Elemental1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 1
+			}
+			
+			{
+				x: 0
+				y: 1
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER040
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 100
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 110
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 70
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 80
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 80
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Elemental0.png
+				sprites/characters/Elemental1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 2
+			}
+			
+			{
+				x: 0
+				y: 2
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER041
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 100
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 110
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 70
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 200
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 300
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Reptile0.png
+				sprites/characters/Reptile1.png
+		]
+		gridPoints: [
+			{
+				x: 12
+				y: 3
+			}
+			
+			{
+				x: 12
+				y: 3
+			}
+		]
+	}
+]
+},
+
+{
+entityID : MONSTER042
+state : IMMOBILE
+direction : DOWN
+conversationConfigPath : ""
+questConfigPath : ""
+currentQuestID : ""
+itemTypeID: NONE
+entityProperties: {
+	ENTITY_HEALTH_POINTS: {
+		class: java.lang.String
+		value: 500
+	}
+	ENTITY_ATTACK_POINTS: {
+		class: java.lang.String
+		value: 150
+	}
+	ENTITY_DEFENSE_POINTS: {
+		class: java.lang.String
+		value: 90
+	}
+	ENTITY_XP_REWARD: {
+		class: java.lang.String
+		value: 2000
+	}
+	ENTITY_GP_REWARD: {
+		class: java.lang.String
+		value: 3000
+	}
+}
+animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IMMOBILE
+		texturePaths: [
+				sprites/characters/Elemental0.png
+				sprites/characters/Elemental1.png
+		]
+		gridPoints: [
+			{
+				x: 5
+				y: 2
+			}
+			
+			{
+				x: 5
+				y: 2
 			}
 		]
 	}

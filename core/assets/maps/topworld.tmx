@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="75" height="75" tilewidth="16" tileheight="16" nextobjectid="413">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="75" height="75" tilewidth="16" tileheight="16" nextobjectid="420">
  <tileset firstgid="1" name="Wall" tilewidth="16" tileheight="16">
   <image source="../sprites/Objects/Wall.png" width="320" height="816"/>
  </tileset>
@@ -440,6 +440,12 @@
   </object>
  </objectgroup>
  <objectgroup name="MAP_ENEMY_SPAWN_LAYER">
-  <object id="412" name="1" x="300" y="748" width="180" height="212"/>
+  <object id="412" name="1" x="76" y="768" width="692" height="420"/>
+  <object id="414" name="2" x="776" y="552" width="200" height="404"/>
+  <object id="415" name="3" x="76" y="488" width="684" height="268"/>
+  <object id="416" name="4" x="80" y="172" width="600" height="300"/>
+  <object id="417" name="5" x="696" y="204" width="232" height="280"/>
+  <object id="418" name="9" x="128" y="76" width="48" height="48"/>
+  <object id="419" name="6" x="204" y="40" width="800" height="128"/>
  </objectgroup>
 </map>
