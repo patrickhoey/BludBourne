@@ -49,6 +49,9 @@ public class BattleState extends BattleSubject implements InventoryObserver {
         if( _currentOpponent == null ){
             return;
         }
+        //Check for magic if used in attack
+        //int mpVal = ProfileManager.getInstance().getProperty("currentPlayerMP", Integer.class);
+
         notify(_currentOpponent, BattleObserver.BattleEvent.PLAYER_TURN_START);
 
         int currentOpponentHP = Integer.parseInt(_currentOpponent.getEntityConfig().getPropertyValue(EntityConfig.EntityProperties.ENTITY_HEALTH_POINTS.toString()));

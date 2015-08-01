@@ -87,6 +87,18 @@ public class InventorySlot extends Stack implements InventorySlotSubject {
         }
     }
 
+    public void remove(Actor actor) {
+        super.removeActor(actor);
+
+        if( _numItemsLabel == null ){
+            return;
+        }
+
+        if( !actor.equals(_defaultBackground) && !actor.equals(_numItemsLabel) ) {
+            decrementItemCount(true);
+        }
+    }
+
     public void add(Array<Actor> array) {
         for( Actor actor : array){
             super.add(actor);

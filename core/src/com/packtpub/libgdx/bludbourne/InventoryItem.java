@@ -145,8 +145,20 @@ public class InventoryItem extends Image {
         return ((itemAttributes & ItemAttribute.STACKABLE.getValue()) == ItemAttribute.STACKABLE.getValue());
     }
 
+    public boolean isConsumable(){
+        return ((itemAttributes & ItemAttribute.CONSUMABLE.getValue()) == ItemAttribute.CONSUMABLE.getValue());
+    }
+
     public boolean isSameItemType(InventoryItem candidateInventoryItem){
         return itemTypeID == candidateInventoryItem.getItemTypeID();
+    }
+
+    public static boolean doesRestoreHP(int itemUseType){
+        return ((itemUseType & ItemUseType.ITEM_RESTORE_HEALTH.getValue()) == ItemUseType.ITEM_RESTORE_HEALTH.getValue());
+    }
+
+    public static boolean doesRestoreMP(int itemUseType){
+        return ((itemUseType & ItemUseType.ITEM_RESTORE_MP.getValue()) == ItemUseType.ITEM_RESTORE_MP.getValue());
     }
 
     public int getTradeValue(){

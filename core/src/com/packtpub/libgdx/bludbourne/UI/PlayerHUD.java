@@ -28,7 +28,7 @@ import com.packtpub.libgdx.bludbourne.profile.ProfileObserver;
 import com.packtpub.libgdx.bludbourne.quest.QuestGraph;
 import com.packtpub.libgdx.bludbourne.screens.MainGameScreen;
 
-public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,ConversationGraphObserver,StoreInventoryObserver, BattleObserver, StatusObserver {
+public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,ConversationGraphObserver,StoreInventoryObserver, BattleObserver, InventoryObserver, StatusObserver {
     private static final String TAG = PlayerHUD.class.getSimpleName();
 
     private Stage _stage;
@@ -134,6 +134,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
         _statusUI.addObserver(this);
         _storeInventoryUI.addObserver(this);
         _inventoryUI.addObserver(_battleUI.getCurrentState());
+        _inventoryUI.addObserver(this);
         _battleUI.getCurrentState().addObserver(this);
 
         //Listeners
@@ -511,6 +512,27 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                     MainGameScreen.setGameState(MainGameScreen.GameState.GAME_OVER);
                 }
 
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onNotify(String value, InventoryEvent event) {
+        switch(event){
+            case ITEM_CONSUMED:
+                String[] strings = value.split(Component.MESSAGE_TOKEN);
+                if( strings.length != 2) return;
+
+                int type = Integer.parseInt(strings[0]);
+                int typeValue = Integer.parseInt(strings[1]);
+
+                if( InventoryItem.doesRestoreHP(type) ){
+                    _statusUI.addHPValue(typeValue);
+                }else if( InventoryItem.doesRestoreMP(type) ){
+                    _statusUI.addMPValue(typeValue);
+                }
+                break;
             default:
                 break;
         }

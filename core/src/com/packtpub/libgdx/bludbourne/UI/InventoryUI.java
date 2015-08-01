@@ -1,6 +1,7 @@
 package com.packtpub.libgdx.bludbourne.UI;
 
 import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -8,8 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
+import com.packtpub.libgdx.bludbourne.Component;
 import com.packtpub.libgdx.bludbourne.Entity;
 import com.packtpub.libgdx.bludbourne.InventoryItem;
 import com.packtpub.libgdx.bludbourne.InventoryItemFactory;
@@ -44,7 +48,7 @@ public class InventoryUI extends Window implements InventorySubject, InventorySl
 
     public InventoryUI(){
         super("Inventory", Utility.STATUSUI_SKIN, "solidbackground");
-
+        
         _observers = new Array<InventoryObserver>();
 
         _dragAndDrop = new DragAndDrop();
@@ -132,6 +136,28 @@ public class InventoryUI extends Window implements InventorySubject, InventorySl
             _dragAndDrop.addTarget(new InventorySlotTarget(inventorySlot));
 
             _inventorySlotTable.add(inventorySlot).size(_slotWidth, _slotHeight);
+
+            inventorySlot.addListener(new ClickListener() {
+                                         @Override
+                                         public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                                             super.touchUp(event, x, y, pointer, button);
+                                             if( getTapCount() == 2 ){
+                                                 InventorySlot slot = (InventorySlot)event.getListenerActor();
+                                                 if( slot.hasItem() ){
+                                                     InventoryItem item = slot.getTopInventoryItem();
+                                                     if( item.isConsumable() ){
+                                                         String itemInfo = item.getItemUseType() + Component.MESSAGE_TOKEN + item.getItemUseTypeValue();
+                                                         InventoryUI.this.notify(itemInfo, InventoryObserver.InventoryEvent.ITEM_CONSUMED);
+                                                         slot.remove(item);
+                                                     }
+                                                 }
+                                             }
+                                         }
+
+
+                                      }
+            );
+
 
             if(i % _lengthSlotRow == 0){
                 _inventorySlotTable.row();
