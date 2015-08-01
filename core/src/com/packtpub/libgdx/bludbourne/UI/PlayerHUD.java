@@ -303,7 +303,6 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 _battleUI.battleZoneTriggered(Integer.parseInt(enemyZoneID));
                 break;
             case PLAYER_HAS_MOVED:
-                //System.out.println("Player has moved!!!");
                 if( _battleUI.isBattleReady() ){
                     MainGameScreen.setGameState(MainGameScreen.GameState.SAVING);
                     _battleUI.toBack();

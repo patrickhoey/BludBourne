@@ -23,7 +23,7 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
         _boundingBoxLocation = BoundingBoxLocation.BOTTOM_CENTER;
         initBoundingBox(0.3f, 0.5f);
         _previousDiscovery = "";
-        _previousEnemySpawn = "";
+        _previousEnemySpawn = "0";
 
         _mouseSelectCoordinates = new Vector3(0,0,0);
     }
@@ -45,7 +45,8 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
                 _currentEntityPosition = _json.fromJson(Vector2.class, string[1]);
                 _nextEntityPosition.set(_currentEntityPosition.x, _currentEntityPosition.y);
                 _previousDiscovery = "";
-                _previousEnemySpawn = "";
+                _previousEnemySpawn = "0";
+                notify(_previousEnemySpawn, ComponentObserver.ComponentEvent.ENEMY_SPAWN_LOCATION_CHANGED);
             } else if (string[0].equalsIgnoreCase(MESSAGE.CURRENT_STATE.toString())) {
                 _state = _json.fromJson(Entity.State.class, string[1]);
             } else if (string[0].equalsIgnoreCase(MESSAGE.CURRENT_DIRECTION.toString())) {
