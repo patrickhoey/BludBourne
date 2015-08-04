@@ -20,6 +20,7 @@ import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 public class LoadGameScreen implements Screen {
     private Stage _stage;
 	private BludBourne _game;
+	private List _listItems;
 	
 	public LoadGameScreen(BludBourne game){
 		_game = game;
@@ -30,10 +31,10 @@ public class LoadGameScreen implements Screen {
 		TextButton backButton = new TextButton("Back",Utility.STATUSUI_SKIN);
 
 		ProfileManager.getInstance().storeAllProfiles();
+		_listItems = new List(Utility.STATUSUI_SKIN, "inventory");
 		Array<String> list = ProfileManager.getInstance().getProfileList();
-		final List listItems = new List(Utility.STATUSUI_SKIN, "inventory");
-		listItems.setItems(list);
-		ScrollPane scrollPane = new ScrollPane(listItems);
+		_listItems.setItems(list);
+		ScrollPane scrollPane = new ScrollPane(_listItems);
 
 		scrollPane.setOverscroll(false, false);
 		scrollPane.setFadeScrollBars(false);
@@ -71,8 +72,8 @@ public class LoadGameScreen implements Screen {
 		loadButton.addListener(new InputListener() {
 								   @Override
 								   public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-									   if( listItems.getSelected() == null ) return true;
-									   String fileName = listItems.getSelected().toString();
+									   if( _listItems.getSelected() == null ) return true;
+									   String fileName = _listItems.getSelected().toString();
 									   if (fileName != null && !fileName.isEmpty()) {
 										   FileHandle file = ProfileManager.getInstance().getProfileFile(fileName);
 										   if (file != null) {
@@ -106,6 +107,8 @@ public class LoadGameScreen implements Screen {
 
 	@Override
 	public void show() {
+		Array<String> list = ProfileManager.getInstance().getProfileList();
+		_listItems.setItems(list);
 		Gdx.input.setInputProcessor(_stage);
 	}
 
