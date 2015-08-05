@@ -17,8 +17,8 @@ import com.packtpub.libgdx.bludbourne.battle.BattleState;
 public class BattleUI extends Window implements BattleObserver {
     private AnimatedImage _image;
 
-    private final int _enemyWidth = 160;
-    private final int _enemyHeight = 160;
+    private final int _enemyWidth = 96;
+    private final int _enemyHeight = 96;
 
     private BattleState _battleState = null;
     private TextButton _attackButton = null;
@@ -130,8 +130,8 @@ public class BattleUI extends Window implements BattleObserver {
     @Override
     public void act(float delta){
         _battleTimer = (_battleTimer + delta)%60;
-        if( _damageValLabel.isVisible() ){
-            _damageValLabel.setY(_damageValLabel.getY()+3);
+        if( _damageValLabel.isVisible() && _damageValLabel.getY() < this.getHeight()){
+            _damageValLabel.setY(_damageValLabel.getY()+5);
         }
 
         super.act(delta);
