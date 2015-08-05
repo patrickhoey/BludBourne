@@ -20,6 +20,8 @@ public class NewGameScreen implements Screen {
 
 	private Stage _stage;
 	private BludBourne _game;
+	private TextField _profileText;
+	private Dialog _overwriteDialog;
 
 	public NewGameScreen(BludBourne game){
 		_game = game;
@@ -28,31 +30,31 @@ public class NewGameScreen implements Screen {
 		_stage = new Stage();
 
 		Label profileName = new Label("Enter Profile Name: ", Utility.STATUSUI_SKIN);
-		final TextField profileText = new TextField("",Utility.STATUSUI_SKIN, "inventory");
-		profileText.setMaxLength(20);
+		_profileText  = new TextField("",Utility.STATUSUI_SKIN, "inventory");
+		_profileText.setMaxLength(20);
 
-		final Dialog overwriteDialog = new Dialog("Overwrite?", Utility.STATUSUI_SKIN, "solidbackground");
+		_overwriteDialog = new Dialog("Overwrite?", Utility.STATUSUI_SKIN, "solidbackground");
 		Label overwriteLabel = new Label("Overwrite existing profile name?", Utility.STATUSUI_SKIN);
 		TextButton cancelButton = new TextButton("Cancel", Utility.STATUSUI_SKIN, "inventory");
 
 		TextButton overwriteButton = new TextButton("Overwrite", Utility.STATUSUI_SKIN, "inventory");
-		overwriteDialog.setKeepWithinStage(true);
-		overwriteDialog.setModal(true);
-		overwriteDialog.setMovable(false);
-		overwriteDialog.text(overwriteLabel);
+		_overwriteDialog.setKeepWithinStage(true);
+		_overwriteDialog.setModal(true);
+		_overwriteDialog.setMovable(false);
+		_overwriteDialog.text(overwriteLabel);
 
 		TextButton startButton = new TextButton("Start", Utility.STATUSUI_SKIN);
 		TextButton backButton = new TextButton("Back", Utility.STATUSUI_SKIN);
 
 		//Layout
-		overwriteDialog.row();
-		overwriteDialog.button(overwriteButton).bottom().left();
-		overwriteDialog.button(cancelButton).bottom().right();
+		_overwriteDialog.row();
+		_overwriteDialog.button(overwriteButton).bottom().left();
+		_overwriteDialog.button(cancelButton).bottom().right();
 
 		Table topTable = new Table();
 		topTable.setFillParent(true);
 		topTable.add(profileName).center();
-		topTable.add(profileText).center();
+		topTable.add(_profileText).center();
 
 		Table bottomTable = new Table();
 		bottomTable.setHeight(startButton.getHeight());
@@ -69,7 +71,7 @@ public class NewGameScreen implements Screen {
 
 									 @Override
 									 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button ){
-										 overwriteDialog.hide();
+										 _overwriteDialog.hide();
 										 return true;
 									 }
 								 }
@@ -79,7 +81,7 @@ public class NewGameScreen implements Screen {
 
 										@Override
 										public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-											String messageText = profileText.getText();
+											String messageText = _profileText.getText();
 											ProfileManager.getInstance().writeProfileToStorage(messageText, "", true);
 											ProfileManager.getInstance().setCurrentProfile(messageText);
 											ProfileManager.getInstance().saveProfile();
@@ -94,7 +96,7 @@ public class NewGameScreen implements Screen {
 
 									@Override
 									public boolean touchDown(InputEvent event, float x, float y, int pointer, int button ){
-										String messageText = profileText.getText();
+										String messageText = _profileText.getText();
 										//check to see if the current profile matches one that already exists
 										boolean exists = false;
 
@@ -102,7 +104,7 @@ public class NewGameScreen implements Screen {
 
 										if( exists ){
 											//Pop up dialog for Overwrite
-											overwriteDialog.show(_stage);
+											_overwriteDialog.show(_stage);
 										}else{
 											ProfileManager.getInstance().writeProfileToStorage(messageText,"",false);
 											ProfileManager.getInstance().setCurrentProfile(messageText);
@@ -147,11 +149,15 @@ public class NewGameScreen implements Screen {
 
 	@Override
 	public void show() {
+		_overwriteDialog.hide();
+		_profileText.setText("");
 		Gdx.input.setInputProcessor(_stage);
 	}
 
 	@Override
 	public void hide() {
+		_overwriteDialog.hide();
+		_profileText.setText("");
 		Gdx.input.setInputProcessor(null);
 	}
 

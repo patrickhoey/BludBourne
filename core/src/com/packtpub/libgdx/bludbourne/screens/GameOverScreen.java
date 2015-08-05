@@ -25,6 +25,7 @@ public class GameOverScreen implements Screen {
         //create
         _stage = new Stage();
         TextButton continueButton = new TextButton("Continue", Utility.STATUSUI_SKIN);
+        TextButton mainMenuButton = new TextButton("Main Menu", Utility.STATUSUI_SKIN);
         Label messageLabel = new Label(DEATH_MESSAGE, Utility.STATUSUI_SKIN);
         messageLabel.setWrap(true);
 
@@ -35,10 +36,12 @@ public class GameOverScreen implements Screen {
 
         //Layout
         table.setFillParent(true);
-        table.add(messageLabel).pad(50,50,50,50).expandX().fillX().row();
+        table.add(messageLabel).pad(50, 50,50,50).expandX().fillX().row();
         table.add(gameOverLabel);
         table.row();
-        table.add(continueButton).pad(50,50,50,50);
+        table.add(continueButton).pad(50,50,10,50);
+        table.row();
+        table.add(mainMenuButton).pad(10,50,50,50);
 
         _stage.addActor(table);
 
@@ -50,6 +53,16 @@ public class GameOverScreen implements Screen {
                                        return true;
                                    }
                                }
+        );
+
+        mainMenuButton.addListener(new InputListener() {
+
+                                       @Override
+                                       public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                                           _game.setScreen(_game.getScreenType(BludBourne.ScreenType.MainMenu));
+                                           return true;
+                                       }
+                                   }
         );
 
     }
