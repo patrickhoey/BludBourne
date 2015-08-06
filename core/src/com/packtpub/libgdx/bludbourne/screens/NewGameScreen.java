@@ -4,13 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.packtpub.libgdx.bludbourne.BludBourne.ScreenType;
 import com.packtpub.libgdx.bludbourne.BludBourne;
 import com.packtpub.libgdx.bludbourne.Utility;
@@ -67,35 +67,50 @@ public class NewGameScreen implements Screen {
 		_stage.addActor(bottomTable);
 
 		//Listeners
-		cancelButton.addListener(new InputListener() {
+		cancelButton.addListener(new ClickListener() {
 
 									 @Override
 									 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button ){
-										 _overwriteDialog.hide();
 										 return true;
+									 }
+
+									 @Override
+									 public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+										 _overwriteDialog.hide();
 									 }
 								 }
 		);
 
-		overwriteButton.addListener(new InputListener() {
+		overwriteButton.addListener(new ClickListener() {
 
 										@Override
 										public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+											return true;
+										}
+
+										@Override
+										public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
 											String messageText = _profileText.getText();
 											ProfileManager.getInstance().writeProfileToStorage(messageText, "", true);
 											ProfileManager.getInstance().setCurrentProfile(messageText);
 											ProfileManager.getInstance().saveProfile();
 											ProfileManager.getInstance().loadProfile();
+											_overwriteDialog.hide();
 											_game.setScreen(_game.getScreenType(ScreenType.MainGame));
-											return true;
 										}
+
 									}
 		);
 
-		startButton.addListener(new InputListener() {
+		startButton.addListener(new ClickListener() {
 
 									@Override
 									public boolean touchDown(InputEvent event, float x, float y, int pointer, int button ){
+										return true;
+									}
+
+									@Override
+									public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
 										String messageText = _profileText.getText();
 										//check to see if the current profile matches one that already exists
 										boolean exists = false;
@@ -112,18 +127,20 @@ public class NewGameScreen implements Screen {
 											ProfileManager.getInstance().loadProfile();
 											_game.setScreen(_game.getScreenType(ScreenType.MainGame));
 										}
-
-										return true;
 									}
 								}
 		);
 
-		backButton.addListener(new InputListener() {
+		backButton.addListener(new ClickListener() {
 
 								   @Override
 								   public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-									   _game.setScreen(_game.getScreenType(ScreenType.MainMenu));
 									   return true;
+								   }
+
+								   @Override
+								   public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+									   _game.setScreen(_game.getScreenType(ScreenType.MainMenu));
 								   }
 							   }
 		);

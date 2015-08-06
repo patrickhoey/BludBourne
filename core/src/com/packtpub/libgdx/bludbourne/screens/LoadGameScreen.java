@@ -5,12 +5,12 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.packtpub.libgdx.bludbourne.BludBourne;
 import com.packtpub.libgdx.bludbourne.Utility;
@@ -60,19 +60,28 @@ public class LoadGameScreen implements Screen {
 		_stage.addActor(bottomTable);
 
 		//Listeners
-		backButton.addListener(new InputListener() {
+		backButton.addListener(new ClickListener() {
 								   @Override
 								   public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-									   _game.setScreen(_game.getScreenType(BludBourne.ScreenType.MainMenu));
 									   return true;
+								   }
+
+								   @Override
+								   public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+									   _game.setScreen(_game.getScreenType(BludBourne.ScreenType.MainMenu));
 								   }
 							   }
 		);
 
-		loadButton.addListener(new InputListener() {
+		loadButton.addListener(new ClickListener() {
 								   @Override
 								   public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-									   if( _listItems.getSelected() == null ) return true;
+									   return true;
+								   }
+
+								   @Override
+								   public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+									   if( _listItems.getSelected() == null ) return;
 									   String fileName = _listItems.getSelected().toString();
 									   if (fileName != null && !fileName.isEmpty()) {
 										   FileHandle file = ProfileManager.getInstance().getProfileFile(fileName);
@@ -82,8 +91,8 @@ public class LoadGameScreen implements Screen {
 											   _game.setScreen(_game.getScreenType(BludBourne.ScreenType.MainGame));
 										   }
 									   }
-									   return true;
 								   }
+
 							   }
 		);
 	}

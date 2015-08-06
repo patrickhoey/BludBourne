@@ -4,11 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.packtpub.libgdx.bludbourne.BludBourne.ScreenType;
 import com.packtpub.libgdx.bludbourne.BludBourne;
 import com.packtpub.libgdx.bludbourne.Utility;
@@ -41,31 +41,43 @@ public class MainMenuScreen implements Screen {
 		_stage.addActor(table);
 
 		//Listeners
-		newGameButton.addListener(new InputListener() {
+		newGameButton.addListener(new ClickListener() {
 									  @Override
 									  public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-										  _game.setScreen(_game.getScreenType(ScreenType.NewGame));
 										  return true;
+									  }
+
+									  @Override
+									  public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+										  _game.setScreen(_game.getScreenType(ScreenType.NewGame));
 									  }
 								  }
 		);
 
-		loadGameButton.addListener(new InputListener() {
+		loadGameButton.addListener(new ClickListener() {
 
 									   @Override
 									   public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-										   _game.setScreen(_game.getScreenType(ScreenType.LoadGame));
 										   return true;
+									   }
+
+									   @Override
+									   public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+										   _game.setScreen(_game.getScreenType(ScreenType.LoadGame));
 									   }
 								   }
 		);
 
-		exitButton.addListener(new InputListener() {
+		exitButton.addListener(new ClickListener() {
 
 								   @Override
 								   public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-									   Gdx.app.exit();
 									   return true;
+								   }
+
+								   @Override
+								   public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+									   Gdx.app.exit();
 								   }
 
 							   }

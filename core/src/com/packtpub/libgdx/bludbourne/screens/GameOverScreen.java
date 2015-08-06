@@ -4,12 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.packtpub.libgdx.bludbourne.BludBourne;
 import com.packtpub.libgdx.bludbourne.Utility;
 
@@ -46,21 +46,30 @@ public class GameOverScreen implements Screen {
         _stage.addActor(table);
 
         //Listeners
-        continueButton.addListener(new InputListener() {
-                                   @Override
-                                   public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                                       _game.setScreen(_game.getScreenType(BludBourne.ScreenType.LoadGame));
-                                       return true;
-                                   }
+        continueButton.addListener(new ClickListener() {
+                                       @Override
+                                       public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                                           return true;
+                                       }
+
+                                       @Override
+                                       public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                                           _game.setScreen(_game.getScreenType(BludBourne.ScreenType.LoadGame));
+                                       }
+
                                }
         );
 
-        mainMenuButton.addListener(new InputListener() {
+        mainMenuButton.addListener(new ClickListener() {
 
                                        @Override
                                        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                                           _game.setScreen(_game.getScreenType(BludBourne.ScreenType.MainMenu));
                                            return true;
+                                       }
+
+                                       @Override
+                                       public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                                           _game.setScreen(_game.getScreenType(BludBourne.ScreenType.MainMenu));
                                        }
                                    }
         );
