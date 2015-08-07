@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -15,6 +16,7 @@ import com.packtpub.libgdx.bludbourne.Component;
 import com.packtpub.libgdx.bludbourne.Entity;
 import com.packtpub.libgdx.bludbourne.EntityFactory;
 import com.packtpub.libgdx.bludbourne.Map;
+import com.packtpub.libgdx.bludbourne.MapFactory;
 import com.packtpub.libgdx.bludbourne.UI.AnimatedImage;
 
 public class CutSceneScreen extends MainGameScreen {
@@ -24,6 +26,7 @@ public class CutSceneScreen extends MainGameScreen {
     private Image _image;
     private AnimatedImage _animImage;
     private Entity _entity;
+    private Actor _followingActor;
 
     public CutSceneScreen(BludBourne game) {
         super(game);
@@ -32,6 +35,9 @@ public class CutSceneScreen extends MainGameScreen {
 
         _viewport = new ScreenViewport(_camera);
         _stage = new Stage(_viewport);
+
+        _followingActor = new Actor();
+        _followingActor.setPosition(0,0);
 
         _entity = EntityFactory.getEntity(EntityFactory.EntityType.NPC);
         _entity.setEntityConfig(_entity.loadEntityConfigByPath(EntityFactory.PLAYER_CONFIG));
@@ -55,6 +61,12 @@ public class CutSceneScreen extends MainGameScreen {
                                 new Runnable(){
                                     @Override
                                     public void run() {
+                                        followActor(_animImage);
+                                    }}),
+                        Actions.run(
+                                new Runnable(){
+                                    @Override
+                                    public void run() {
                                         _animImage.setAnimation(_entity.getAnimation(Entity.AnimationType.WALK_RIGHT));
                                         float width = _animImage.getWidth() * Map.UNIT_SCALE;
                                         float height =  _animImage.getHeight() * Map.UNIT_SCALE;
@@ -71,10 +83,23 @@ public class CutSceneScreen extends MainGameScreen {
                                         _animImage.setSize(width, height);
                                     }
                                 }),
-                        Actions.moveTo(10, 10, 10f))
+                        Actions.moveTo(10, 10, 10f),
+                        Actions.run(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        _mapMgr.loadMap(MapFactory.MapType.CASTLE_OF_DOOM);
+                                    }
+                                })
+
+                )
         );
 
         _stage.addActor(_animImage);
+    }
+
+    public void followActor(Actor actor){
+        _followingActor = actor;
     }
 
     @Override
@@ -91,11 +116,8 @@ public class CutSceneScreen extends MainGameScreen {
 
         _mapRenderer.render();
 
-        _camera.position.set(_animImage.getX(), _animImage.getY(), 0f);
+        _camera.position.set(_followingActor.getX(), _followingActor.getY(), 0f);
         _camera.update();
-
-        //_player.updateInput(delta);
-        //_player.updatePhysics(_mapMgr, delta);
 
         _stage.act(delta);
         _stage.draw();
