@@ -3,6 +3,7 @@ package com.packtpub.libgdx.bludbourne;
 import com.badlogic.gdx.Game;
 
 import com.badlogic.gdx.Screen;
+import com.packtpub.libgdx.bludbourne.screens.CutSceneScreen;
 import com.packtpub.libgdx.bludbourne.screens.GameOverScreen;
 import com.packtpub.libgdx.bludbourne.screens.LoadGameScreen;
 import com.packtpub.libgdx.bludbourne.screens.MainGameScreen;
@@ -17,13 +18,15 @@ public class BludBourne extends Game {
 	private static LoadGameScreen _loadGameScreen;
 	private static NewGameScreen _newGameScreen;
 	private static GameOverScreen _gameOverScreen;
+	private static CutSceneScreen _cutSceneScreen;
 
 	public static enum ScreenType{
 		MainMenu,
 		MainGame,
 		LoadGame,
 		NewGame,
-		GameOver
+		GameOver,
+		WatchIntro
 	}
 
 	public Screen getScreenType(ScreenType screenType){
@@ -38,6 +41,8 @@ public class BludBourne extends Game {
 				return _newGameScreen;
 			case GameOver:
 				return _gameOverScreen;
+			case WatchIntro:
+				return _cutSceneScreen;
 			default:
 				return _mainMenuScreen;
 		}
@@ -51,6 +56,7 @@ public class BludBourne extends Game {
 		_loadGameScreen = new LoadGameScreen(this);
 		_newGameScreen = new NewGameScreen(this);
 		_gameOverScreen = new GameOverScreen(this);
+		_cutSceneScreen = new CutSceneScreen(this);
 		setScreen(_mainMenuScreen);
 	}
 

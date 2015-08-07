@@ -39,16 +39,17 @@ public class MainGameScreen implements Screen {
 	}
 	private static GameState _gameState;
 
-	private OrthogonalTiledMapRenderer _mapRenderer = null;
-	private OrthographicCamera _camera = null;
+	protected OrthogonalTiledMapRenderer _mapRenderer = null;
+	protected MapManager _mapMgr;
+	protected OrthographicCamera _camera = null;
+
 	private OrthographicCamera _hudCamera = null;
-	private static MapManager _mapMgr;
 	private Json _json;
 	private BludBourne _game;
 	private InputMultiplexer _multiplexer;
 
-	private static Entity _player;
-	private static PlayerHUD _playerHUD;
+	private Entity _player;
+	private PlayerHUD _playerHUD;
 
 	public MainGameScreen(BludBourne game){
 		_game = game;

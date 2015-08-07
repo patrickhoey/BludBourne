@@ -103,6 +103,7 @@ public class BattleUI extends Window implements BattleObserver {
                 break;
             case OPPONENT_ADDED:
                 _image.setAnimation(entity.getAnimation(Entity.AnimationType.IMMOBILE));
+                _image.setSize(_enemyWidth, _enemyHeight);
                 this.setTitle("Level " + _battleState.getCurrentZoneLevel() + " " + entity.getEntityConfig().getEntityID());
                 break;
             case OPPONENT_HIT_DAMAGE:
