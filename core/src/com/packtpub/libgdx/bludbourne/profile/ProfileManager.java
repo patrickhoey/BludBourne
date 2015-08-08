@@ -15,9 +15,11 @@ public class ProfileManager extends ProfileSubject {
     private Hashtable<String,FileHandle> _profiles = null;
     private ObjectMap<String, Object> _profileProperties = new ObjectMap<String, Object>();
     private String _profileName;
+    private boolean _isNewProfile = false;
 
     private static final String SAVEGAME_SUFFIX = ".sav";
     public static final String DEFAULT_PROFILE = "default";
+
 
     private ProfileManager(){
         _json = new Json();
@@ -32,6 +34,10 @@ public class ProfileManager extends ProfileSubject {
             _profileManager = new ProfileManager();
         }
         return _profileManager;
+    }
+
+    public void setIsNewProfile(boolean isNewProfile){
+        this._isNewProfile = isNewProfile;
     }
 
     public Array<String> getProfileList(){
@@ -106,6 +112,10 @@ public class ProfileManager extends ProfileSubject {
     }
 
     public void loadProfile(){
+        if( _isNewProfile ){
+            saveProfile();
+            _isNewProfile = false;
+        }
         String fullProfileFileName = _profileName+SAVEGAME_SUFFIX;
         boolean doesProfileFileExist = Gdx.files.internal(fullProfileFileName).exists();
 

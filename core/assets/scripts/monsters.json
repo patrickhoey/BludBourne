@@ -32,6 +32,25 @@ entityProperties: {
 animationConfig: [
 	{
 	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 0
+			}
+			
+			{
+				x: 0
+				y: 0
+			}
+		]
+	}
+	{
+	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
 				sprites/characters/Demon0.png
@@ -83,6 +102,25 @@ entityProperties: {
 	}
 }
 animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 1
+			}
+			
+			{
+				x: 0
+				y: 1
+			}
+		]
+	}
 	{
 	    frameDuration: .5
 		animationType: IMMOBILE
@@ -138,6 +176,25 @@ entityProperties: {
 animationConfig: [
 	{
 	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 2
+			}
+			
+			{
+				x: 0
+				y: 2
+			}
+		]
+	}
+	{
+	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
 				sprites/characters/Demon0.png
@@ -189,6 +246,25 @@ entityProperties: {
 	}
 }
 animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 3
+			}
+			
+			{
+				x: 0
+				y: 3
+			}
+		]
+	}
 	{
 	    frameDuration: .5
 		animationType: IMMOBILE
@@ -244,6 +320,25 @@ entityProperties: {
 animationConfig: [
 	{
 	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 4
+			}
+			
+			{
+				x: 0
+				y: 4
+			}
+		]
+	}
+	{
+	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
 				sprites/characters/Demon0.png
@@ -295,6 +390,25 @@ entityProperties: {
 	}
 }
 animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 5
+			}
+			
+			{
+				x: 0
+				y: 5
+			}
+		]
+	}
 	{
 	    frameDuration: .5
 		animationType: IMMOBILE
@@ -350,6 +464,25 @@ entityProperties: {
 animationConfig: [
 	{
 	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 6
+			}
+			
+			{
+				x: 0
+				y: 6
+			}
+		]
+	}
+	{
+	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
 				sprites/characters/Demon0.png
@@ -401,6 +534,25 @@ entityProperties: {
 	}
 }
 animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 7
+			}
+			
+			{
+				x: 0
+				y: 7
+			}
+		]
+	}
 	{
 	    frameDuration: .5
 		animationType: IMMOBILE
@@ -456,6 +608,25 @@ entityProperties: {
 animationConfig: [
 	{
 	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 1
+				y: 0
+			}
+			
+			{
+				x: 1
+				y: 0
+			}
+		]
+	}
+	{
+	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
 				sprites/characters/Demon0.png
@@ -507,6 +678,25 @@ entityProperties: {
 	}
 }
 animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 1
+				y: 1
+			}
+			
+			{
+				x: 1
+				y: 1
+			}
+		]
+	}
 	{
 	    frameDuration: .5
 		animationType: IMMOBILE
@@ -562,6 +752,25 @@ entityProperties: {
 animationConfig: [
 	{
 	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 1
+				y: 2
+			}
+			
+			{
+				x: 1
+				y: 2
+			}
+		]
+	}
+	{
+	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
 				sprites/characters/Demon0.png
@@ -613,6 +822,25 @@ entityProperties: {
 	}
 }
 animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 1
+				y: 3
+			}
+			
+			{
+				x: 1
+				y: 3
+			}
+		]
+	}
 	{
 	    frameDuration: .5
 		animationType: IMMOBILE
@@ -668,6 +896,25 @@ entityProperties: {
 animationConfig: [
 	{
 	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 1
+				y: 4
+			}
+			
+			{
+				x: 1
+				y: 4
+			}
+		]
+	}
+	{
+	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
 				sprites/characters/Demon0.png
@@ -719,6 +966,25 @@ entityProperties: {
 	}
 }
 animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 1
+				y: 5
+			}
+			
+			{
+				x: 1
+				y: 5
+			}
+		]
+	}
 	{
 	    frameDuration: .5
 		animationType: IMMOBILE
@@ -774,6 +1040,25 @@ entityProperties: {
 animationConfig: [
 	{
 	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 1
+				y: 6
+			}
+			
+			{
+				x: 1
+				y: 6
+			}
+		]
+	}
+	{
+	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
 				sprites/characters/Demon0.png
@@ -825,6 +1110,25 @@ entityProperties: {
 	}
 }
 animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 1
+				y: 7
+			}
+			
+			{
+				x: 1
+				y: 7
+			}
+		]
+	}
 	{
 	    frameDuration: .5
 		animationType: IMMOBILE
@@ -880,6 +1184,25 @@ entityProperties: {
 animationConfig: [
 	{
 	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 2
+				y: 0
+			}
+			
+			{
+				x: 2
+				y: 0
+			}
+		]
+	}
+	{
+	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
 				sprites/characters/Demon0.png
@@ -931,6 +1254,25 @@ entityProperties: {
 	}
 }
 animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 2
+				y: 1
+			}
+			
+			{
+				x: 2
+				y: 1
+			}
+		]
+	}
 	{
 	    frameDuration: .5
 		animationType: IMMOBILE
@@ -986,6 +1328,25 @@ entityProperties: {
 animationConfig: [
 	{
 	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 2
+				y: 2
+			}
+			
+			{
+				x: 2
+				y: 2
+			}
+		]
+	}
+	{
+	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
 				sprites/characters/Demon0.png
@@ -1038,6 +1399,25 @@ entityProperties: {
 animationConfig: [
 	{
 	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 2
+				y: 3
+			}
+			
+			{
+				x: 2
+				y: 3
+			}
+		]
+	}
+	{
+	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
 				sprites/characters/Demon0.png
@@ -1088,6 +1468,25 @@ entityProperties: {
 	}
 }
 animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 2
+				y: 4
+			}
+			
+			{
+				x: 2
+				y: 4
+			}
+		]
+	}
 	{
 	    frameDuration: .5
 		animationType: IMMOBILE
@@ -1143,6 +1542,25 @@ entityProperties: {
 animationConfig: [
 	{
 	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 2
+				y: 5
+			}
+			
+			{
+				x: 2
+				y: 5
+			}
+		]
+	}
+	{
+	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
 				sprites/characters/Demon0.png
@@ -1194,6 +1612,25 @@ entityProperties: {
 	}
 }
 animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 2
+				y: 6
+			}
+			
+			{
+				x: 2
+				y: 6
+			}
+		]
+	}
 	{
 	    frameDuration: .5
 		animationType: IMMOBILE
@@ -1249,6 +1686,25 @@ entityProperties: {
 animationConfig: [
 	{
 	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 3
+				y: 0
+			}
+			
+			{
+				x: 3
+				y: 0
+			}
+		]
+	}
+	{
+	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
 				sprites/characters/Demon0.png
@@ -1300,6 +1756,25 @@ entityProperties: {
 	}
 }
 animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 3
+				y: 1
+			}
+			
+			{
+				x: 3
+				y: 1
+			}
+		]
+	}
 	{
 	    frameDuration: .5
 		animationType: IMMOBILE
@@ -1355,6 +1830,25 @@ entityProperties: {
 animationConfig: [
 	{
 	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 3
+				y: 2
+			}
+			
+			{
+				x: 3
+				y: 2
+			}
+		]
+	}
+	{
+	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
 				sprites/characters/Demon0.png
@@ -1406,6 +1900,25 @@ entityProperties: {
 	}
 }
 animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 4
+				y: 0
+			}
+			
+			{
+				x: 4
+				y: 0
+			}
+		]
+	}
 	{
 	    frameDuration: .5
 		animationType: IMMOBILE
@@ -1461,6 +1974,25 @@ entityProperties: {
 animationConfig: [
 	{
 	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 4
+				y: 1
+			}
+			
+			{
+				x: 4
+				y: 1
+			}
+		]
+	}
+	{
+	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
 				sprites/characters/Demon0.png
@@ -1512,6 +2044,25 @@ entityProperties: {
 	}
 }
 animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 4
+				y: 2
+			}
+			
+			{
+				x: 4
+				y: 2
+			}
+		]
+	}
 	{
 	    frameDuration: .5
 		animationType: IMMOBILE
@@ -1567,6 +2118,25 @@ entityProperties: {
 animationConfig: [
 	{
 	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 5
+				y: 0
+			}
+			
+			{
+				x: 5
+				y: 0
+			}
+		]
+	}
+	{
+	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
 				sprites/characters/Demon0.png
@@ -1618,6 +2188,25 @@ entityProperties: {
 	}
 }
 animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 5
+				y: 1
+			}
+			
+			{
+				x: 5
+				y: 1
+			}
+		]
+	}
 	{
 	    frameDuration: .5
 		animationType: IMMOBILE
@@ -1673,6 +2262,25 @@ entityProperties: {
 animationConfig: [
 	{
 	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 6
+				y: 0
+			}
+			
+			{
+				x: 6
+				y: 0
+			}
+		]
+	}
+	{
+	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
 				sprites/characters/Demon0.png
@@ -1724,6 +2332,25 @@ entityProperties: {
 	}
 }
 animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 6
+				y: 1
+			}
+			
+			{
+				x: 6
+				y: 1
+			}
+		]
+	}
 	{
 	    frameDuration: .5
 		animationType: IMMOBILE
@@ -1779,6 +2406,25 @@ entityProperties: {
 animationConfig: [
 	{
 	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 7
+				y: 0
+			}
+			
+			{
+				x: 7
+				y: 0
+			}
+		]
+	}
+	{
+	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
 				sprites/characters/Demon0.png
@@ -1830,6 +2476,25 @@ entityProperties: {
 	}
 }
 animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 7
+				y: 1
+			}
+			
+			{
+				x: 7
+				y: 1
+			}
+		]
+	}
 	{
 	    frameDuration: .5
 		animationType: IMMOBILE
@@ -1885,6 +2550,25 @@ entityProperties: {
 animationConfig: [
 	{
 	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 8
+				y: 0
+			}
+			
+			{
+				x: 8
+				y: 0
+			}
+		]
+	}
+	{
+	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
 				sprites/characters/Demon0.png
@@ -1936,6 +2620,25 @@ entityProperties: {
 	}
 }
 animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Demon0.png
+				sprites/characters/Demon1.png
+		]
+		gridPoints: [
+			{
+				x: 8
+				y: 1
+			}
+			
+			{
+				x: 8
+				y: 1
+			}
+		]
+	}
 	{
 	    frameDuration: .5
 		animationType: IMMOBILE
@@ -1991,6 +2694,25 @@ entityProperties: {
 animationConfig: [
 	{
 	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Elemental0.png
+				sprites/characters/Elemental1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 0
+			}
+			
+			{
+				x: 0
+				y: 0
+			}
+		]
+	}
+	{
+	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
 				sprites/characters/Elemental0.png
@@ -2042,6 +2764,25 @@ entityProperties: {
 	}
 }
 animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Elemental0.png
+				sprites/characters/Elemental1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 1
+			}
+			
+			{
+				x: 0
+				y: 1
+			}
+		]
+	}
 	{
 	    frameDuration: .5
 		animationType: IMMOBILE
@@ -2097,6 +2838,25 @@ entityProperties: {
 animationConfig: [
 	{
 	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Elemental0.png
+				sprites/characters/Elemental1.png
+		]
+		gridPoints: [
+			{
+				x: 0
+				y: 2
+			}
+			
+			{
+				x: 0
+				y: 2
+			}
+		]
+	}
+	{
+	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
 				sprites/characters/Elemental0.png
@@ -2150,6 +2910,25 @@ entityProperties: {
 animationConfig: [
 	{
 	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Reptile0.png
+				sprites/characters/Reptile1.png
+		]
+		gridPoints: [
+			{
+				x: 12
+				y: 3
+			}
+			
+			{
+				x: 12
+				y: 3
+			}
+		]
+	}
+	{
+	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
 				sprites/characters/Reptile0.png
@@ -2201,6 +2980,25 @@ entityProperties: {
 	}
 }
 animationConfig: [
+	{
+	    frameDuration: .5
+		animationType: IDLE
+		texturePaths: [
+				sprites/characters/Elemental0.png
+				sprites/characters/Elemental1.png
+		]
+		gridPoints: [
+			{
+				x: 5
+				y: 2
+			}
+			
+			{
+				x: 5
+				y: 2
+			}
+		]
+	}
 	{
 	    frameDuration: .5
 		animationType: IMMOBILE

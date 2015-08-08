@@ -87,7 +87,6 @@ public class LoadGameScreen implements Screen {
 										   FileHandle file = ProfileManager.getInstance().getProfileFile(fileName);
 										   if (file != null) {
 											   ProfileManager.getInstance().setCurrentProfile(fileName);
-											   ProfileManager.getInstance().loadProfile();
 											   _game.setScreen(_game.getScreenType(BludBourne.ScreenType.MainGame));
 										   }
 									   }

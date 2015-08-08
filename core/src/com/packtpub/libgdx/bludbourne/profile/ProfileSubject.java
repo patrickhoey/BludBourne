@@ -18,6 +18,10 @@ public class ProfileSubject {
         _observers.removeValue(profileObserver, true);
     }
 
+    public void removeAllObservers(){
+        _observers.removeAll(_observers, true);
+    }
+
     protected void notify(final ProfileManager profileManager, ProfileObserver.ProfileEvent event){
         for(ProfileObserver observer: _observers){
             observer.onNotify(profileManager, event);

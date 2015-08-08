@@ -65,7 +65,7 @@ public class MainGameScreen implements Screen {
 		_camera = new OrthographicCamera();
 		_camera.setToOrtho(false, VIEWPORT.viewportWidth, VIEWPORT.viewportHeight);
 
-		_player = EntityFactory.getEntity(EntityFactory.EntityType.PLAYER);
+		_player = EntityFactory.getInstance().getEntity(EntityFactory.EntityType.PLAYER);
 		_mapMgr.setPlayer(_player);
 		_mapMgr.setCamera(_camera);
 
@@ -84,7 +84,10 @@ public class MainGameScreen implements Screen {
 
 	@Override
 	public void show() {
-		setGameState(GameState.RUNNING);
+		ProfileManager.getInstance().addObserver(_mapMgr);
+		ProfileManager.getInstance().addObserver(_playerHUD);
+
+		setGameState(GameState.LOADING);
 		Gdx.input.setInputProcessor(_multiplexer);
 
 		if( _mapRenderer == null ){
@@ -94,7 +97,7 @@ public class MainGameScreen implements Screen {
 
 	@Override
 	public void hide() {
-		setGameState(GameState.LOADING);
+		setGameState(GameState.SAVING);
 		Gdx.input.setInputProcessor(null);
 	}
 
@@ -172,8 +175,8 @@ public class MainGameScreen implements Screen {
 				_gameState = GameState.RUNNING;
 				break;
 			case LOADING:
-				_gameState = GameState.RUNNING;
 				ProfileManager.getInstance().loadProfile();
+				_gameState = GameState.RUNNING;
 				break;
 			case SAVING:
 				ProfileManager.getInstance().saveProfile();

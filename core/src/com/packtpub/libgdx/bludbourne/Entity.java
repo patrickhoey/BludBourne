@@ -81,7 +81,15 @@ public class Entity {
 		_inputComponent = entity._inputComponent;
 		_graphicsComponent = entity._graphicsComponent;
 		_physicsComponent = entity._physicsComponent;
-		_components = entity._components;
+
+		if( _components == null ){
+			_components = new Array<Component>(MAX_COMPONENTS);
+		}
+		_components.clear();
+		_components.add(_inputComponent);
+		_components.add(_physicsComponent);
+		_components.add(_graphicsComponent);
+
 		_json = entity._json;
 
 		_entityConfig = new EntityConfig(entity._entityConfig);
@@ -235,6 +243,19 @@ public class Entity {
 		}
 
 		return entities;
+	}
+
+	public static Entity initEntity(EntityConfig entityConfig){
+		Json json = new Json();
+		Entity entity = EntityFactory.getEntity(EntityFactory.EntityType.NPC);
+		entity.setEntityConfig(entityConfig);
+
+		entity.sendMessage(Component.MESSAGE.LOAD_ANIMATIONS, json.toJson(entity.getEntityConfig()));
+		entity.sendMessage(Component.MESSAGE.INIT_START_POSITION, json.toJson(new Vector2(0,0)));
+		entity.sendMessage(Component.MESSAGE.INIT_STATE, json.toJson(entity.getEntityConfig().getState()));
+		entity.sendMessage(Component.MESSAGE.INIT_DIRECTION, json.toJson(entity.getEntityConfig().getDirection()));
+
+		return entity;
 	}
 
 

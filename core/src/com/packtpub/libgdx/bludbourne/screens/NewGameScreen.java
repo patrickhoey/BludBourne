@@ -93,8 +93,7 @@ public class NewGameScreen implements Screen {
 											String messageText = _profileText.getText();
 											ProfileManager.getInstance().writeProfileToStorage(messageText, "", true);
 											ProfileManager.getInstance().setCurrentProfile(messageText);
-											ProfileManager.getInstance().saveProfile();
-											ProfileManager.getInstance().loadProfile();
+											ProfileManager.getInstance().setIsNewProfile(true);
 											_overwriteDialog.hide();
 											_game.setScreen(_game.getScreenType(ScreenType.MainGame));
 										}
@@ -123,8 +122,7 @@ public class NewGameScreen implements Screen {
 										}else{
 											ProfileManager.getInstance().writeProfileToStorage(messageText,"",false);
 											ProfileManager.getInstance().setCurrentProfile(messageText);
-											ProfileManager.getInstance().saveProfile();
-											ProfileManager.getInstance().loadProfile();
+											ProfileManager.getInstance().setIsNewProfile(true);
 											_game.setScreen(_game.getScreenType(ScreenType.MainGame));
 										}
 									}

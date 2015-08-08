@@ -129,7 +129,6 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
         }
 
         //Observers
-        ProfileManager.getInstance().addObserver(this);
         _player.registerObserver(this);
         _statusUI.addObserver(this);
         _storeInventoryUI.addObserver(this);

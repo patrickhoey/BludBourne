@@ -2,35 +2,98 @@ package com.packtpub.libgdx.bludbourne;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
 
 public class TownMap extends Map{
     private static final String TAG = PlayerPhysicsComponent.class.getSimpleName();
 
     private static String _mapPath = "maps/town.tmx";
-    private static String _townGuardWalking = "scripts/town_guard_walking.json";
-    private static String _townBlacksmith = "scripts/town_blacksmith.json";
-    private static String _townMage = "scripts/town_mage.json";
-    private static String _townInnKeeper = "scripts/town_innkeeper.json";
-    private static String _townFolk = "scripts/town_folk.json";
+    private Json _json;
 
     TownMap(){
         super(MapFactory.MapType.TOWN, _mapPath);
 
+        _json = new Json();
+
         for( Vector2 position: _npcStartPositions){
-            _mapEntities.add(Entity.initEntity(Entity.loadEntityConfigByPath(_townGuardWalking), position));
+            Entity entity = EntityFactory.getInstance().getEntityByName(EntityFactory.EntityName.TOWN_GUARD_WALKING);
+            entity.sendMessage(Component.MESSAGE.INIT_START_POSITION, _json.toJson(position));
+            _mapEntities.add(entity);
         }
 
         //Special cases
-        _mapEntities.add(initSpecialEntity(Entity.loadEntityConfigByPath(_townBlacksmith)));
-        _mapEntities.add(initSpecialEntity(Entity.loadEntityConfigByPath(_townMage)));
-        _mapEntities.add(initSpecialEntity(Entity.loadEntityConfigByPath(_townInnKeeper)));
+        Entity blackSmith = EntityFactory.getInstance().getEntityByName(EntityFactory.EntityName.TOWN_BLACKSMITH);
+        initSpecialEntityPosition(blackSmith);
+        _mapEntities.add(blackSmith);
 
-        //When we have multiple configs in one file
-        Array<EntityConfig> configs = Entity.getEntityConfigs(_townFolk);
-        for(EntityConfig config: configs){
-            _mapEntities.add(initSpecialEntity(Entity.loadEntityConfig(config)));
-        }
+        Entity mage = EntityFactory.getInstance().getEntityByName(EntityFactory.EntityName.TOWN_MAGE);
+        initSpecialEntityPosition(mage);
+        _mapEntities.add(mage);
+
+        Entity innKeeper = EntityFactory.getInstance().getEntityByName(EntityFactory.EntityName.TOWN_INNKEEPER);
+        initSpecialEntityPosition(innKeeper);
+        _mapEntities.add(innKeeper);
+
+        Entity townfolk1 = EntityFactory.getInstance().getEntityByName(EntityFactory.EntityName.TOWN_FOLK1);
+        initSpecialEntityPosition(townfolk1);
+        _mapEntities.add(townfolk1);
+
+        Entity townfolk2 = EntityFactory.getInstance().getEntityByName(EntityFactory.EntityName.TOWN_FOLK2);
+        initSpecialEntityPosition(townfolk2);
+        _mapEntities.add(townfolk2);
+
+        Entity townfolk3 = EntityFactory.getInstance().getEntityByName(EntityFactory.EntityName.TOWN_FOLK3);
+        initSpecialEntityPosition(townfolk3);
+        _mapEntities.add(townfolk3);
+
+        Entity townfolk4 = EntityFactory.getInstance().getEntityByName(EntityFactory.EntityName.TOWN_FOLK4);
+        initSpecialEntityPosition(townfolk4);
+        _mapEntities.add(townfolk4);
+
+        Entity townfolk5 = EntityFactory.getInstance().getEntityByName(EntityFactory.EntityName.TOWN_FOLK5);
+        initSpecialEntityPosition(townfolk5);
+        _mapEntities.add(townfolk5);
+
+        Entity townfolk6 = EntityFactory.getInstance().getEntityByName(EntityFactory.EntityName.TOWN_FOLK6);
+        initSpecialEntityPosition(townfolk6);
+        _mapEntities.add(townfolk6);
+
+        Entity townfolk7 = EntityFactory.getInstance().getEntityByName(EntityFactory.EntityName.TOWN_FOLK7);
+        initSpecialEntityPosition(townfolk7);
+        _mapEntities.add(townfolk7);
+
+        Entity townfolk8 = EntityFactory.getInstance().getEntityByName(EntityFactory.EntityName.TOWN_FOLK8);
+        initSpecialEntityPosition(townfolk8);
+        _mapEntities.add(townfolk8);
+
+        Entity townfolk9 = EntityFactory.getInstance().getEntityByName(EntityFactory.EntityName.TOWN_FOLK9);
+        initSpecialEntityPosition(townfolk9);
+        _mapEntities.add(townfolk9);
+
+        Entity townfolk10 = EntityFactory.getInstance().getEntityByName(EntityFactory.EntityName.TOWN_FOLK10);
+        initSpecialEntityPosition(townfolk10);
+        _mapEntities.add(townfolk10);
+
+        Entity townfolk11 = EntityFactory.getInstance().getEntityByName(EntityFactory.EntityName.TOWN_FOLK11);
+        initSpecialEntityPosition(townfolk11);
+        _mapEntities.add(townfolk11);
+
+        Entity townfolk12 = EntityFactory.getInstance().getEntityByName(EntityFactory.EntityName.TOWN_FOLK12);
+        initSpecialEntityPosition(townfolk12);
+        _mapEntities.add(townfolk12);
+
+        Entity townfolk13 = EntityFactory.getInstance().getEntityByName(EntityFactory.EntityName.TOWN_FOLK13);
+        initSpecialEntityPosition(townfolk13);
+        _mapEntities.add(townfolk13);
+
+        Entity townfolk14 = EntityFactory.getInstance().getEntityByName(EntityFactory.EntityName.TOWN_FOLK14);
+        initSpecialEntityPosition(townfolk14);
+        _mapEntities.add(townfolk14);
+
+        Entity townfolk15 = EntityFactory.getInstance().getEntityByName(EntityFactory.EntityName.TOWN_FOLK15);
+        initSpecialEntityPosition(townfolk15);
+        _mapEntities.add(townfolk15);
+
     }
 
     @Override
@@ -43,12 +106,12 @@ public class TownMap extends Map{
         }
     }
 
-    private Entity initSpecialEntity(EntityConfig entityConfig){
+    private void initSpecialEntityPosition(Entity entity){
         Vector2 position = new Vector2(0,0);
 
-        if( _specialNPCStartPositions.containsKey(entityConfig.getEntityID()) ) {
-             position = _specialNPCStartPositions.get(entityConfig.getEntityID());
+        if( _specialNPCStartPositions.containsKey(entity.getEntityConfig().getEntityID()) ) {
+            position = _specialNPCStartPositions.get(entity.getEntityConfig().getEntityID());
         }
-        return Entity.initEntity(entityConfig, position);
+        entity.sendMessage(Component.MESSAGE.INIT_START_POSITION, _json.toJson(position));
     }
 }
