@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -15,15 +16,19 @@ import com.packtpub.libgdx.bludbourne.EntityFactory;
 import com.packtpub.libgdx.bludbourne.Map;
 import com.packtpub.libgdx.bludbourne.MapFactory;
 import com.packtpub.libgdx.bludbourne.UI.AnimatedImage;
+import com.packtpub.libgdx.bludbourne.Utility;
 import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 
 public class CutSceneScreen extends MainGameScreen {
     private Json _json;
     private Stage _stage;
     private Viewport _viewport;
+    private Stage _UIStage;
+    private Viewport _UIViewport;
     private AnimatedImage _animImage;
     private Entity _entity;
     private Actor _followingActor;
+    private Dialog _messageBoxUI;
 
     public CutSceneScreen(BludBourne game) {
         super(game);
@@ -32,6 +37,24 @@ public class CutSceneScreen extends MainGameScreen {
 
         _viewport = new ScreenViewport(_camera);
         _stage = new Stage(_viewport);
+
+        _UIViewport = new ScreenViewport(_hudCamera);
+        _UIStage = new Stage(_UIViewport);
+
+        _messageBoxUI = new Dialog("", Utility.STATUSUI_SKIN, "solidbackground"){
+            {
+                text("");
+            }
+            @Override
+            protected void result(final Object object){
+                cancel();
+                setVisible(false);
+            }
+
+        };
+        _messageBoxUI.setVisible(false);
+        _messageBoxUI.pack();
+        _messageBoxUI.setPosition(_stage.getWidth() / 2 - _messageBoxUI.getWidth() / 2, _stage.getHeight() / 2 - _messageBoxUI.getHeight() / 2);
 
         _followingActor = new Actor();
         _followingActor.setPosition(0,0);
@@ -62,6 +85,21 @@ public class CutSceneScreen extends MainGameScreen {
                                         _animImage.setSize(width, height);
                                     }
                                 }),
+                        Actions.run(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        showMessage("We begin our adventure...");
+                                    }
+                                }),
+                        Actions.delay(3),
+                        Actions.run(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        hideMessage();
+                                    }
+                                }),
                         Actions.moveTo(10, 1, 10f),
                         Actions.run(
                                 new Runnable() {
@@ -86,10 +124,22 @@ public class CutSceneScreen extends MainGameScreen {
         );
 
         _stage.addActor(_animImage);
+
+        _UIStage.addActor(_messageBoxUI);
     }
 
     public void followActor(Actor actor){
         _followingActor = actor;
+    }
+
+    public void showMessage(String message){
+        _messageBoxUI.text(message);
+        _messageBoxUI.pack();
+        _messageBoxUI.setVisible(true);
+    }
+
+    public void hideMessage(){
+        _messageBoxUI.setVisible(false);
     }
 
     @Override
@@ -98,6 +148,9 @@ public class CutSceneScreen extends MainGameScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         _mapRenderer.setView(_camera);
+
+        _mapRenderer.getBatch().enableBlending();
+        _mapRenderer.getBatch().setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
         if( _mapMgr.hasMapChanged() ){
             _mapRenderer.setMap(_mapMgr.getCurrentTiledMap());
@@ -111,6 +164,9 @@ public class CutSceneScreen extends MainGameScreen {
 
         _stage.act(delta);
         _stage.draw();
+
+        _UIStage.act(delta);
+        _UIStage.draw();
     }
 
     @Override

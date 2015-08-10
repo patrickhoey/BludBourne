@@ -42,8 +42,8 @@ public class MainGameScreen implements Screen {
 	protected OrthogonalTiledMapRenderer _mapRenderer = null;
 	protected MapManager _mapMgr;
 	protected OrthographicCamera _camera = null;
+	protected OrthographicCamera _hudCamera = null;
 
-	private OrthographicCamera _hudCamera = null;
 	private Json _json;
 	private BludBourne _game;
 	private InputMultiplexer _multiplexer;
