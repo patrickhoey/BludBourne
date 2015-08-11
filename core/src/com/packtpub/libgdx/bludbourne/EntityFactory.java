@@ -26,7 +26,8 @@ public class EntityFactory {
         TOWN_INNKEEPER,
         TOWN_FOLK1, TOWN_FOLK2, TOWN_FOLK3, TOWN_FOLK4, TOWN_FOLK5,
         TOWN_FOLK6, TOWN_FOLK7, TOWN_FOLK8, TOWN_FOLK9, TOWN_FOLK10,
-        TOWN_FOLK11, TOWN_FOLK12, TOWN_FOLK13, TOWN_FOLK14, TOWN_FOLK15
+        TOWN_FOLK11, TOWN_FOLK12, TOWN_FOLK13, TOWN_FOLK14, TOWN_FOLK15,
+        FIRE
     }
 
     public static String PLAYER_CONFIG = "scripts/player.json";
@@ -35,12 +36,18 @@ public class EntityFactory {
     public static String TOWN_MAGE_CONFIG = "scripts/town_mage.json";
     public static String TOWN_INNKEEPER_CONFIG = "scripts/town_innkeeper.json";
     public static String TOWN_FOLK_CONFIGS = "scripts/town_folk.json";
+    public static String ENVIRONMENTAL_ENTITY_CONFIGS = "scripts/environmental_entities.json";
 
     private EntityFactory(){
         _entities = new Hashtable<String, EntityConfig>();
 
         Array<EntityConfig> townFolkConfigs = Entity.getEntityConfigs(TOWN_FOLK_CONFIGS);
         for( EntityConfig config: townFolkConfigs){
+            _entities.put(config.getEntityID(), config);
+        }
+
+        Array<EntityConfig> environmentalEntityConfigs = Entity.getEntityConfigs(ENVIRONMENTAL_ENTITY_CONFIGS);
+        for( EntityConfig config: environmentalEntityConfigs){
             _entities.put(config.getEntityID(), config);
         }
 
