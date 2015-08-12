@@ -9,17 +9,24 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
 import com.packtpub.libgdx.bludbourne.BludBourne.ScreenType;
 import com.packtpub.libgdx.bludbourne.BludBourne;
 import com.packtpub.libgdx.bludbourne.Utility;
+import com.packtpub.libgdx.bludbourne.audio.AudioManager;
+import com.packtpub.libgdx.bludbourne.audio.AudioObserver;
+import com.packtpub.libgdx.bludbourne.audio.AudioSubject;
 
-public class MainMenuScreen implements Screen {
+public class MainMenuScreen implements Screen, AudioSubject {
 
 	private Stage _stage;
 	private BludBourne _game;
+	private Array<AudioObserver> _observers;
 
 	public MainMenuScreen(BludBourne game){
 		_game = game;
+
+		_observers = new Array<AudioObserver>();
 
 		//creation
 		_stage = new Stage();
@@ -87,19 +94,21 @@ public class MainMenuScreen implements Screen {
 
 		watchIntroButton.addListener(new ClickListener() {
 
-									   @Override
-									   public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-										   return true;
-									   }
+										 @Override
+										 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+											 return true;
+										 }
 
-									   @Override
-									   public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-										   _game.setScreen(_game.getScreenType(ScreenType.WatchIntro));
-									   }
-								   }
+										 @Override
+										 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+											 _game.setScreen(_game.getScreenType(ScreenType.WatchIntro));
+										 }
+									 }
 		);
 
-
+		//Observers
+		this.addObserver(AudioManager.getInstance());
+		notify(AudioObserver.AudioCommand.MUSIC_LOAD, AudioObserver.AudioTypeEvent.MUSIC_TITLE);
 	}
 	
 	@Override
@@ -118,11 +127,13 @@ public class MainMenuScreen implements Screen {
 
 	@Override
 	public void show() {
+		notify(AudioObserver.AudioCommand.MUSIC_PLAY_LOOP, AudioObserver.AudioTypeEvent.MUSIC_TITLE);
 		Gdx.input.setInputProcessor(_stage);
 	}
 
 	@Override
 	public void hide() {
+		notify(AudioObserver.AudioCommand.MUSIC_STOP, AudioObserver.AudioTypeEvent.MUSIC_TITLE);
 		Gdx.input.setInputProcessor(null);
 	}
 
@@ -138,7 +149,28 @@ public class MainMenuScreen implements Screen {
 	public void dispose() {
 		_stage.dispose();
 	}
-	
+
+	@Override
+	public void addObserver(AudioObserver audioObserver) {
+		_observers.add(audioObserver);
+	}
+
+	@Override
+	public void removeObserver(AudioObserver audioObserver) {
+		_observers.removeValue(audioObserver, true);
+	}
+
+	@Override
+	public void removeAllObservers() {
+		_observers.removeAll(_observers, true);
+	}
+
+	@Override
+	public void notify(AudioObserver.AudioCommand command, AudioObserver.AudioTypeEvent event) {
+		for(AudioObserver observer: _observers){
+			observer.onNotify(command, event);
+		}
+	}
 }
 
 
