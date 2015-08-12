@@ -222,7 +222,7 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
                     }
 
                     mapMgr.setClosestStartPositionFromScaledUnits(_currentEntityPosition);
-                    mapMgr.loadMap(MapFactory.MapType.valueOf(mapName));
+                    mapMgr.loadMap(true, MapFactory.MapType.valueOf(mapName));
 
                     _currentEntityPosition.x = mapMgr.getPlayerStartUnitScaled().x;
                     _currentEntityPosition.y = mapMgr.getPlayerStartUnitScaled().y;

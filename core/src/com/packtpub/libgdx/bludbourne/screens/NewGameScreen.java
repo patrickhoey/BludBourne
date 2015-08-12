@@ -14,9 +14,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.packtpub.libgdx.bludbourne.BludBourne.ScreenType;
 import com.packtpub.libgdx.bludbourne.BludBourne;
 import com.packtpub.libgdx.bludbourne.Utility;
+import com.packtpub.libgdx.bludbourne.audio.AudioObserver;
 import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 
-public class NewGameScreen implements Screen {
+public class NewGameScreen extends GameScreen {
 
 	private Stage _stage;
 	private BludBourne _game;
@@ -95,6 +96,7 @@ public class NewGameScreen implements Screen {
 											ProfileManager.getInstance().setCurrentProfile(messageText);
 											ProfileManager.getInstance().setIsNewProfile(true);
 											_overwriteDialog.hide();
+											NewGameScreen.this.notify(AudioObserver.AudioCommand.MUSIC_STOP, AudioObserver.AudioTypeEvent.MUSIC_TITLE);
 											_game.setScreen(_game.getScreenType(ScreenType.MainGame));
 										}
 
@@ -123,6 +125,7 @@ public class NewGameScreen implements Screen {
 											ProfileManager.getInstance().writeProfileToStorage(messageText,"",false);
 											ProfileManager.getInstance().setCurrentProfile(messageText);
 											ProfileManager.getInstance().setIsNewProfile(true);
+											NewGameScreen.this.notify(AudioObserver.AudioCommand.MUSIC_STOP, AudioObserver.AudioTypeEvent.MUSIC_TITLE);
 											_game.setScreen(_game.getScreenType(ScreenType.MainGame));
 										}
 									}

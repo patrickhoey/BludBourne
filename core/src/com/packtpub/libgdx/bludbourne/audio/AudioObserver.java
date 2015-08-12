@@ -3,7 +3,7 @@ package com.packtpub.libgdx.bludbourne.audio;
 public interface AudioObserver {
     public static enum AudioTypeEvent{
         MUSIC_TITLE("audio/10112013.wav"),
-        MUSIC_TOWN(""),
+        MUSIC_TOWN("audio/Magic Town_0.mp3"),
         MUSIC_TOPWORLD(""),
         MUSIC_CASTLEDOOM(""),
         MUSIC_BATTLE("audio/Random Battle.mp3");

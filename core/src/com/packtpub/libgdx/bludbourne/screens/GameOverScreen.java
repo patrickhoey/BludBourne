@@ -12,8 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.packtpub.libgdx.bludbourne.BludBourne;
 import com.packtpub.libgdx.bludbourne.Utility;
+import com.packtpub.libgdx.bludbourne.audio.AudioObserver;
 
-public class GameOverScreen implements Screen {
+public class GameOverScreen extends GameScreen {
     private Stage _stage;
     private BludBourne _game;
     private static final String DEATH_MESSAGE = "You have fought bravely, but alas, you have fallen during your epic struggle.";
@@ -74,6 +75,7 @@ public class GameOverScreen implements Screen {
                                    }
         );
 
+        notify(AudioObserver.AudioCommand.MUSIC_LOAD, AudioObserver.AudioTypeEvent.MUSIC_TITLE);
     }
 
     @Override
@@ -96,6 +98,7 @@ public class GameOverScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(_stage);
+        notify(AudioObserver.AudioCommand.MUSIC_PLAY_LOOP, AudioObserver.AudioTypeEvent.MUSIC_TITLE);
     }
 
     @Override

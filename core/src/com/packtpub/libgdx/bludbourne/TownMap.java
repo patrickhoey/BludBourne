@@ -3,6 +3,7 @@ package com.packtpub.libgdx.bludbourne;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Json;
+import com.packtpub.libgdx.bludbourne.audio.AudioObserver;
 
 public class TownMap extends Map{
     private static final String TAG = PlayerPhysicsComponent.class.getSimpleName();
@@ -104,6 +105,17 @@ public class TownMap extends Map{
         for( int i=0; i < _mapQuestEntities.size; i++){
             _mapQuestEntities.get(i).update(mapMgr, batch, delta);
         }
+    }
+
+    @Override
+    public void unloadMusic() {
+        notify(AudioObserver.AudioCommand.MUSIC_STOP, AudioObserver.AudioTypeEvent.MUSIC_TOWN);
+    }
+
+    @Override
+    public void loadMusic() {
+        notify(AudioObserver.AudioCommand.MUSIC_LOAD, AudioObserver.AudioTypeEvent.MUSIC_TOWN);
+        notify(AudioObserver.AudioCommand.MUSIC_PLAY_LOOP, AudioObserver.AudioTypeEvent.MUSIC_TOWN);
     }
 
     private void initSpecialEntityPosition(Entity entity){

@@ -19,4 +19,14 @@ public class CastleDoomMap extends Map{
         }
     }
 
+    @Override
+    public void unloadMusic() {
+
+    }
+
+    @Override
+    public void loadMusic() {
+
+    }
+
 }

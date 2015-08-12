@@ -33,7 +33,7 @@ public class MapManager implements ProfileObserver {
                 }else{
                     mapType = MapFactory.MapType.valueOf(currentMap);
                 }
-                loadMap(mapType);
+                loadMap(true, mapType);
 
                 Vector2 topWorldMapStartPosition = profileManager.getProperty("topWorldMapStartPosition", Vector2.class);
                 if( topWorldMapStartPosition != null ){
@@ -65,12 +65,20 @@ public class MapManager implements ProfileObserver {
         }
     }
 
-    public void loadMap(MapFactory.MapType mapType){
+    public void loadMap(boolean playMusic, MapFactory.MapType mapType){
         Map map = MapFactory.getMap(mapType);
 
         if( map == null ){
             Gdx.app.debug(TAG, "Map does not exist!  ");
             return;
+        }
+
+        if( _currentMap != null ){
+            _currentMap.unloadMusic();
+        }
+
+        if( playMusic ){
+            map.loadMusic();
         }
 
         _currentMap = map;
@@ -141,7 +149,7 @@ public class MapManager implements ProfileObserver {
 
     public TiledMap getCurrentTiledMap(){
         if( _currentMap == null ) {
-            loadMap(MapFactory.MapType.TOWN);
+            loadMap(true, MapFactory.MapType.TOWN);
         }
         return _currentMap.getCurrentTiledMap();
     }

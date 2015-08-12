@@ -14,10 +14,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.packtpub.libgdx.bludbourne.BludBourne;
 import com.packtpub.libgdx.bludbourne.Utility;
+import com.packtpub.libgdx.bludbourne.audio.AudioObserver;
 import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 
 
-public class LoadGameScreen implements Screen {
+public class LoadGameScreen extends GameScreen {
     private Stage _stage;
 	private BludBourne _game;
 	private List _listItems;
@@ -87,6 +88,7 @@ public class LoadGameScreen implements Screen {
 										   FileHandle file = ProfileManager.getInstance().getProfileFile(fileName);
 										   if (file != null) {
 											   ProfileManager.getInstance().setCurrentProfile(fileName);
+											   LoadGameScreen.this.notify(AudioObserver.AudioCommand.MUSIC_STOP, AudioObserver.AudioTypeEvent.MUSIC_TITLE);
 											   _game.setScreen(_game.getScreenType(BludBourne.ScreenType.MainGame));
 										   }
 									   }

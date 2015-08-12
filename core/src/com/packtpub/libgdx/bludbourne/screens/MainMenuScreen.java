@@ -1,7 +1,6 @@
 package com.packtpub.libgdx.bludbourne.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -9,24 +8,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Array;
 import com.packtpub.libgdx.bludbourne.BludBourne.ScreenType;
 import com.packtpub.libgdx.bludbourne.BludBourne;
 import com.packtpub.libgdx.bludbourne.Utility;
 import com.packtpub.libgdx.bludbourne.audio.AudioManager;
 import com.packtpub.libgdx.bludbourne.audio.AudioObserver;
-import com.packtpub.libgdx.bludbourne.audio.AudioSubject;
 
-public class MainMenuScreen implements Screen, AudioSubject {
+public class MainMenuScreen extends GameScreen {
 
 	private Stage _stage;
 	private BludBourne _game;
-	private Array<AudioObserver> _observers;
 
 	public MainMenuScreen(BludBourne game){
 		_game = game;
-
-		_observers = new Array<AudioObserver>();
 
 		//creation
 		_stage = new Stage();
@@ -101,13 +95,12 @@ public class MainMenuScreen implements Screen, AudioSubject {
 
 										 @Override
 										 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+											 MainMenuScreen.this.notify(AudioObserver.AudioCommand.MUSIC_STOP, AudioObserver.AudioTypeEvent.MUSIC_TITLE);
 											 _game.setScreen(_game.getScreenType(ScreenType.WatchIntro));
 										 }
 									 }
 		);
 
-		//Observers
-		this.addObserver(AudioManager.getInstance());
 		notify(AudioObserver.AudioCommand.MUSIC_LOAD, AudioObserver.AudioTypeEvent.MUSIC_TITLE);
 	}
 	
@@ -133,7 +126,6 @@ public class MainMenuScreen implements Screen, AudioSubject {
 
 	@Override
 	public void hide() {
-		notify(AudioObserver.AudioCommand.MUSIC_STOP, AudioObserver.AudioTypeEvent.MUSIC_TITLE);
 		Gdx.input.setInputProcessor(null);
 	}
 
@@ -150,27 +142,6 @@ public class MainMenuScreen implements Screen, AudioSubject {
 		_stage.dispose();
 	}
 
-	@Override
-	public void addObserver(AudioObserver audioObserver) {
-		_observers.add(audioObserver);
-	}
-
-	@Override
-	public void removeObserver(AudioObserver audioObserver) {
-		_observers.removeValue(audioObserver, true);
-	}
-
-	@Override
-	public void removeAllObservers() {
-		_observers.removeAll(_observers, true);
-	}
-
-	@Override
-	public void notify(AudioObserver.AudioCommand command, AudioObserver.AudioTypeEvent event) {
-		for(AudioObserver observer: _observers){
-			observer.onNotify(command, event);
-		}
-	}
 }
 
 

@@ -18,4 +18,14 @@ public class TopWorldMap extends Map{
             _mapQuestEntities.get(i).update(mapMgr, batch, delta);
         }
     }
+
+    @Override
+    public void unloadMusic() {
+
+    }
+
+    @Override
+    public void loadMusic() {
+
+    }
 }

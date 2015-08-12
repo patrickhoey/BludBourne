@@ -17,7 +17,7 @@ import com.packtpub.libgdx.bludbourne.UI.PlayerHUD;
 import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 import com.packtpub.libgdx.bludbourne.Component;
 
-public class MainGameScreen implements Screen {
+public class MainGameScreen extends GameScreen {
 	private static final String TAG = MainGameScreen.class.getSimpleName();
 
 	public static class VIEWPORT {
