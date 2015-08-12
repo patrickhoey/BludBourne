@@ -33,7 +33,7 @@ public class MapManager implements ProfileObserver {
                 }else{
                     mapType = MapFactory.MapType.valueOf(currentMap);
                 }
-                loadMap(true, mapType);
+                loadMap(mapType);
 
                 Vector2 topWorldMapStartPosition = profileManager.getProperty("topWorldMapStartPosition", Vector2.class);
                 if( topWorldMapStartPosition != null ){
@@ -65,7 +65,7 @@ public class MapManager implements ProfileObserver {
         }
     }
 
-    public void loadMap(boolean playMusic, MapFactory.MapType mapType){
+    public void loadMap(MapFactory.MapType mapType){
         Map map = MapFactory.getMap(mapType);
 
         if( map == null ){
@@ -77,9 +77,7 @@ public class MapManager implements ProfileObserver {
             _currentMap.unloadMusic();
         }
 
-        if( playMusic ){
-            map.loadMusic();
-        }
+        map.loadMusic();
 
         _currentMap = map;
         _mapChanged = true;
@@ -113,6 +111,14 @@ public class MapManager implements ProfileObserver {
                 questEntity.registerObserver(observer);
             }
         }
+    }
+
+    public void disableCurrentmapMusic(){
+        _currentMap.unloadMusic();
+    }
+
+    public void enableCurrentmapMusic(){
+        _currentMap.loadMusic();
     }
 
     public void setClosestStartPositionFromScaledUnits(Vector2 position) {
@@ -149,7 +155,7 @@ public class MapManager implements ProfileObserver {
 
     public TiledMap getCurrentTiledMap(){
         if( _currentMap == null ) {
-            loadMap(true, MapFactory.MapType.TOWN);
+            loadMap(MapFactory.MapType.TOWN);
         }
         return _currentMap.getCurrentTiledMap();
     }

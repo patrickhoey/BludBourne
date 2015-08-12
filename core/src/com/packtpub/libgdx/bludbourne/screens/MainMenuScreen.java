@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.packtpub.libgdx.bludbourne.BludBourne.ScreenType;
 import com.packtpub.libgdx.bludbourne.BludBourne;
 import com.packtpub.libgdx.bludbourne.Utility;
-import com.packtpub.libgdx.bludbourne.audio.AudioManager;
 import com.packtpub.libgdx.bludbourne.audio.AudioObserver;
 
 public class MainMenuScreen extends GameScreen {

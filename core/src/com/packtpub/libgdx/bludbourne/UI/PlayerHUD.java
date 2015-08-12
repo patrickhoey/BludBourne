@@ -20,6 +20,9 @@ import com.packtpub.libgdx.bludbourne.InventoryItem;
 import com.packtpub.libgdx.bludbourne.InventoryItem.ItemTypeID;
 import com.packtpub.libgdx.bludbourne.MapManager;
 import com.packtpub.libgdx.bludbourne.Utility;
+import com.packtpub.libgdx.bludbourne.audio.AudioManager;
+import com.packtpub.libgdx.bludbourne.audio.AudioObserver;
+import com.packtpub.libgdx.bludbourne.audio.AudioSubject;
 import com.packtpub.libgdx.bludbourne.battle.BattleObserver;
 import com.packtpub.libgdx.bludbourne.dialog.ConversationGraph;
 import com.packtpub.libgdx.bludbourne.dialog.ConversationGraphObserver;
@@ -28,7 +31,7 @@ import com.packtpub.libgdx.bludbourne.profile.ProfileObserver;
 import com.packtpub.libgdx.bludbourne.quest.QuestGraph;
 import com.packtpub.libgdx.bludbourne.screens.MainGameScreen;
 
-public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,ConversationGraphObserver,StoreInventoryObserver, BattleObserver, InventoryObserver, StatusObserver {
+public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,ComponentObserver,ConversationGraphObserver,StoreInventoryObserver, BattleObserver, InventoryObserver, StatusObserver {
     private static final String TAG = PlayerHUD.class.getSimpleName();
 
     private Stage _stage;
@@ -47,6 +50,8 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
     private Json _json;
     private MapManager _mapMgr;
 
+    private Array<AudioObserver> _observers;
+
     private static final String INVENTORY_FULL = "Your inventory is full!";
 
     public PlayerHUD(Camera camera, Entity player, MapManager mapMgr) {
@@ -56,6 +61,8 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
         _viewport = new ScreenViewport(_camera);
         _stage = new Stage(_viewport);
         //_stage.setDebugAll(true);
+
+        _observers = new Array<AudioObserver>();
 
         _json = new Json();
         _messageBoxUI = new Dialog("Message", Utility.STATUSUI_SKIN, "solidbackground"){
@@ -135,6 +142,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
         _inventoryUI.addObserver(_battleUI.getCurrentState());
         _inventoryUI.addObserver(this);
         _battleUI.getCurrentState().addObserver(this);
+        this.addObserver(AudioManager.getInstance());
 
         //Listeners
         ImageButton inventoryButton = _statusUI.getInventoryButton();
@@ -304,6 +312,9 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
             case PLAYER_HAS_MOVED:
                 if( _battleUI.isBattleReady() ){
                     MainGameScreen.setGameState(MainGameScreen.GameState.SAVING);
+                    _mapMgr.disableCurrentmapMusic();
+                    notify(AudioObserver.AudioCommand.MUSIC_LOAD, AudioObserver.AudioTypeEvent.MUSIC_BATTLE);
+                    notify(AudioObserver.AudioCommand.MUSIC_PLAY_LOOP, AudioObserver.AudioTypeEvent.MUSIC_BATTLE);
                     _battleUI.toBack();
                     _battleUI.setVisible(true);
                 }
@@ -497,10 +508,14 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 _statusUI.addGoldValue(goldReward);
                 int xpReward = Integer.parseInt(enemyEntity.getEntityConfig().getPropertyValue(EntityConfig.EntityProperties.ENTITY_XP_REWARD.toString()));
                 _statusUI.addXPValue(xpReward);
+                notify(AudioObserver.AudioCommand.MUSIC_STOP, AudioObserver.AudioTypeEvent.MUSIC_BATTLE);
+                _mapMgr.enableCurrentmapMusic();
                 _battleUI.setVisible(false);
                 break;
             case PLAYER_RUNNING:
                 MainGameScreen.setGameState(MainGameScreen.GameState.RUNNING);
+                notify(AudioObserver.AudioCommand.MUSIC_STOP, AudioObserver.AudioTypeEvent.MUSIC_BATTLE);
+                _mapMgr.enableCurrentmapMusic();
                 _battleUI.setVisible(false);
                 break;
             case PLAYER_HIT_DAMAGE:
@@ -508,6 +523,7 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 _statusUI.setHPValue(hpVal);
 
                 if( hpVal <= 0 ){
+                    notify(AudioObserver.AudioCommand.MUSIC_STOP, AudioObserver.AudioTypeEvent.MUSIC_BATTLE);
                     _battleUI.setVisible(false);
                     MainGameScreen.setGameState(MainGameScreen.GameState.GAME_OVER);
                 }
@@ -541,4 +557,30 @@ public class PlayerHUD implements Screen, ProfileObserver,ComponentObserver,Conv
                 break;
         }
     }
+
+    @Override
+    public void addObserver(AudioObserver audioObserver) {
+        _observers.add(audioObserver);
+    }
+
+    @Override
+    public void removeObserver(AudioObserver audioObserver) {
+        _observers.removeValue(audioObserver, true);
+    }
+
+    @Override
+    public void removeAllObservers() {
+        _observers.removeAll(_observers, true);
+    }
+
+    @Override
+    public void notify(AudioObserver.AudioCommand command, AudioObserver.AudioTypeEvent event) {
+        for(AudioObserver observer: _observers){
+            observer.onNotify(command, event);
+        }
+    }
+
+
+
+
 }

@@ -44,7 +44,9 @@ public class AudioManager implements AudioObserver {
                 break;
             case MUSIC_STOP:
                 Music music = _queuedMusic.get(event.getValue());
-                music.stop();
+                if( music != null ){
+                    music.stop();
+                }
                 break;
             case SOUND_LOAD:
                 Utility.loadSoundAsset(event.getValue());
@@ -57,7 +59,9 @@ public class AudioManager implements AudioObserver {
                 break;
             case SOUND_STOP:
                 Sound sound = _queuedSounds.get(event.getValue());
-                sound.stop();
+                if( sound != null ){
+                    sound.stop();
+                }
                 break;
             default:
                 break;
@@ -65,11 +69,15 @@ public class AudioManager implements AudioObserver {
     }
 
     private void playMusic(boolean isLooping, String fullFilePath){
-        if( Utility.isAssetLoaded(fullFilePath) ) {
-            Music music = Utility.getMusicAsset(fullFilePath);
+        Music music = _queuedMusic.get(fullFilePath);
+        if( music != null ){
             music.setLooping(isLooping);
             music.play();
-            _queuedMusic.put(fullFilePath, music);
+        }else if(Utility.isAssetLoaded(fullFilePath)){
+            Music asset = Utility.getMusicAsset(fullFilePath);
+            asset.setLooping(isLooping);
+            asset.play();
+            _queuedMusic.put(fullFilePath, asset);
         }else{
             Gdx.app.debug(TAG, "Music not loaded");
             return;
@@ -77,11 +85,15 @@ public class AudioManager implements AudioObserver {
     }
 
     private void playSound(boolean isLooping, String fullFilePath){
-        if( Utility.isAssetLoaded(fullFilePath) ) {
-            Sound sound = Utility.getSoundAsset(fullFilePath);
+        Sound sound = _queuedSounds.get(fullFilePath);
+        if( sound != null ){
             long soundId = sound.play();
             sound.setLooping(soundId, isLooping);
-            _queuedSounds.put(fullFilePath, sound);
+        }else if( Utility.isAssetLoaded(fullFilePath) ) {
+            Sound asset = Utility.getSoundAsset(fullFilePath);
+            long soundId = asset.play();
+            asset.setLooping(soundId, isLooping);
+            _queuedSounds.put(fullFilePath, asset);
         }else{
             Gdx.app.debug(TAG, "Sound not loaded");
             return;

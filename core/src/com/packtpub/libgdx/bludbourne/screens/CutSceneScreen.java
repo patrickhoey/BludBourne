@@ -141,7 +141,8 @@ public class CutSceneScreen extends MainGameScreen {
                                 new Runnable() {
                                     @Override
                                     public void run() {
-                                        _mapMgr.loadMap(false, MapFactory.MapType.TOWN);
+                                        _mapMgr.loadMap(MapFactory.MapType.TOWN);
+                                        _mapMgr.disableCurrentmapMusic();
                                         setCameraPosition(10, 16);
                                         showMessage("BLACKSMITH: We have planned this long enough. The time is now! I have had enough talk...");
                                     }
@@ -170,7 +171,8 @@ public class CutSceneScreen extends MainGameScreen {
                                     @Override
                                     public void run() {
                                         hideMessage();
-                                        _mapMgr.loadMap(false, MapFactory.MapType.TOP_WORLD);
+                                        _mapMgr.loadMap(MapFactory.MapType.TOP_WORLD);
+                                        _mapMgr.disableCurrentmapMusic();
                                         setCameraPosition(50, 30);
                                         animBlackSmith.setPosition(50, 30);
                                         animInnKeeper.setPosition(52, 30);
@@ -272,7 +274,8 @@ public class CutSceneScreen extends MainGameScreen {
                                         animMage.setVisible(false);
                                         animFire.setVisible(false);
 
-                                        _mapMgr.loadMap(false, MapFactory.MapType.TOP_WORLD);
+                                        _mapMgr.loadMap(MapFactory.MapType.TOP_WORLD);
+                                        _mapMgr.disableCurrentmapMusic();
 
                                         animDemon.setVisible(true);
                                         animDemon.setScale(1, 1);
@@ -297,7 +300,8 @@ public class CutSceneScreen extends MainGameScreen {
                                         animInnKeeper.setVisible(false);
                                         animMage.setVisible(false);
                                         animFire.setVisible(false);
-                                        _mapMgr.loadMap(false, MapFactory.MapType.CASTLE_OF_DOOM);
+                                        _mapMgr.loadMap(MapFactory.MapType.CASTLE_OF_DOOM);
+                                        _mapMgr.disableCurrentmapMusic();
                                         followActor(animDemon);
                                         animDemon.setVisible(true);
                                         animDemon.setPosition(15, 1);
