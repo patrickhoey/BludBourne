@@ -27,6 +27,7 @@ import com.packtpub.libgdx.bludbourne.Map;
 import com.packtpub.libgdx.bludbourne.MapFactory;
 import com.packtpub.libgdx.bludbourne.UI.AnimatedImage;
 import com.packtpub.libgdx.bludbourne.Utility;
+import com.packtpub.libgdx.bludbourne.audio.AudioObserver;
 import com.packtpub.libgdx.bludbourne.battle.MonsterFactory;
 import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 
@@ -68,6 +69,8 @@ public class CutSceneScreen extends MainGameScreen {
 
         _followingActor = new Actor();
         _followingActor.setPosition(0, 0);
+
+        notify(AudioObserver.AudioCommand.MUSIC_LOAD, AudioObserver.AudioTypeEvent.MUSIC_INTRO_CUTSCENE);
 
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.BLACK);
@@ -387,6 +390,7 @@ public class CutSceneScreen extends MainGameScreen {
 
     @Override
     public void show() {
+        notify(AudioObserver.AudioCommand.MUSIC_PLAY_LOOP, AudioObserver.AudioTypeEvent.MUSIC_INTRO_CUTSCENE);
         ProfileManager.getInstance().removeAllObservers();
         if( _mapRenderer == null ){
             _mapRenderer = new OrthogonalTiledMapRenderer(_mapMgr.getCurrentTiledMap(), Map.UNIT_SCALE);
@@ -395,6 +399,7 @@ public class CutSceneScreen extends MainGameScreen {
 
     @Override
     public void hide() {
+        notify(AudioObserver.AudioCommand.MUSIC_STOP, AudioObserver.AudioTypeEvent.MUSIC_INTRO_CUTSCENE);
         ProfileManager.getInstance().removeAllObservers();
         Gdx.input.setInputProcessor(null);
     }
