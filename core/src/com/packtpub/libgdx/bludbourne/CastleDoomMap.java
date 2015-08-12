@@ -1,6 +1,7 @@
 package com.packtpub.libgdx.bludbourne;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.packtpub.libgdx.bludbourne.audio.AudioObserver;
 
 public class CastleDoomMap extends Map{
     private static String _mapPath = "maps/castle_of_doom.tmx";
@@ -21,12 +22,13 @@ public class CastleDoomMap extends Map{
 
     @Override
     public void unloadMusic() {
-
+        notify(AudioObserver.AudioCommand.MUSIC_STOP, AudioObserver.AudioTypeEvent.MUSIC_CASTLEDOOM);
     }
 
     @Override
     public void loadMusic() {
-
+        notify(AudioObserver.AudioCommand.MUSIC_LOAD, AudioObserver.AudioTypeEvent.MUSIC_CASTLEDOOM);
+        notify(AudioObserver.AudioCommand.MUSIC_PLAY_LOOP, AudioObserver.AudioTypeEvent.MUSIC_CASTLEDOOM);
     }
 
 }
