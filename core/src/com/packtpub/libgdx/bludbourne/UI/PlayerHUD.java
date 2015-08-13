@@ -184,6 +184,7 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
         notify(AudioObserver.AudioCommand.SOUND_LOAD, AudioObserver.AudioTypeEvent.SOUND_COIN_RUSTLE);
         notify(AudioObserver.AudioCommand.SOUND_LOAD, AudioObserver.AudioTypeEvent.SOUND_CREATURE_PAIN);
         notify(AudioObserver.AudioCommand.SOUND_LOAD, AudioObserver.AudioTypeEvent.SOUND_PLAYER_PAIN);
+        notify(AudioObserver.AudioCommand.SOUND_LOAD, AudioObserver.AudioTypeEvent.SOUND_PLAYER_WAND_ATTACK);
     }
 
     public Stage getStage() {
@@ -539,6 +540,7 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
                 }
                 break;
             case PLAYER_USED_MAGIC:
+                notify(AudioObserver.AudioCommand.SOUND_PLAY_ONCE, AudioObserver.AudioTypeEvent.SOUND_PLAYER_WAND_ATTACK);
                 int mpVal = ProfileManager.getInstance().getProperty("currentPlayerMP", Integer.class);
                 _statusUI.setMPValue(mpVal);
                 break;

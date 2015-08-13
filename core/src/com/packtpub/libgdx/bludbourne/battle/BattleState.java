@@ -16,8 +16,15 @@ public class BattleState extends BattleSubject implements InventoryObserver {
     private final int _chanceOfAttack = 25;
     private final int _chanceOfEscape = 40;
     private final int _criticalChance = 90;
-    private float _timer = 0;
-    private float _checkTimer = 0;
+    private Timer.Task _playerAttackCalculations;
+    private Timer.Task _opponentAttackCalculations;
+    private Timer.Task _checkPlayerMagicUse;
+
+    public BattleState(){
+        _playerAttackCalculations = getPlayerAttackCalculationTimer();
+        _opponentAttackCalculations = getOpponentAttackCalculationTimer();
+        _checkPlayerMagicUse = getPlayerMagicUseCheckTimer();
+    }
 
     public void setCurrentZoneLevel(int zoneLevel){
         _currentZoneLevel = zoneLevel;
@@ -53,19 +60,21 @@ public class BattleState extends BattleSubject implements InventoryObserver {
         if( _currentOpponent == null ){
             return;
         }
+
         //Check for magic if used in attack; If we don't have enough MP, then return
         int mpVal = ProfileManager.getInstance().getProperty("currentPlayerMP", Integer.class);
-        if( _currentPlayerWandAPPoints > mpVal ){
-            return;
-        }else{
-            mpVal -= _currentPlayerWandAPPoints;
-            ProfileManager.getInstance().setProperty("currentPlayerMP", mpVal);
-            notify(_currentOpponent, BattleObserver.BattleEvent.PLAYER_USED_MAGIC);
-        }
-
         notify(_currentOpponent, BattleObserver.BattleEvent.PLAYER_TURN_START);
 
-        Timer.schedule(playerAttackCalculations(), 1);
+        if( _currentPlayerWandAPPoints == 0 ){
+            Timer.schedule(_playerAttackCalculations, 1);
+        }else if(_currentPlayerWandAPPoints > mpVal ){
+            BattleState.this.notify(_currentOpponent, BattleObserver.BattleEvent.PLAYER_TURN_DONE);
+            return;
+        }else{
+            Timer.schedule(_checkPlayerMagicUse, .5f);
+            Timer.schedule(_playerAttackCalculations, 1);
+        }
+
     }
 
     public void opponentAttacks(){
@@ -73,10 +82,22 @@ public class BattleState extends BattleSubject implements InventoryObserver {
             return;
         }
 
-        Timer.schedule(opponentAttackCalculations(), 1);
+        Timer.schedule(_opponentAttackCalculations, 1);
     }
 
-    private Timer.Task playerAttackCalculations() {
+    private Timer.Task getPlayerMagicUseCheckTimer(){
+        return new Timer.Task() {
+            @Override
+            public void run() {
+                int mpVal = ProfileManager.getInstance().getProperty("currentPlayerMP", Integer.class);
+                mpVal -= _currentPlayerWandAPPoints;
+                ProfileManager.getInstance().setProperty("currentPlayerMP", mpVal);
+                BattleState.this.notify(_currentOpponent, BattleObserver.BattleEvent.PLAYER_USED_MAGIC);
+            }
+        };
+    }
+
+    private Timer.Task getPlayerAttackCalculationTimer() {
         return new Timer.Task() {
             @Override
             public void run() {
@@ -93,8 +114,9 @@ public class BattleState extends BattleSubject implements InventoryObserver {
                 System.out.println("Player attacks " + _currentOpponent.getEntityConfig().getEntityID() + " leaving it with HP: " + currentOpponentHP);
 
                 _currentOpponent.getEntityConfig().setPropertyValue(EntityConfig.EntityProperties.ENTITY_HIT_DAMAGE_TOTAL.toString(), String.valueOf(damage));
-                BattleState.this.notify(_currentOpponent, BattleObserver.BattleEvent.OPPONENT_HIT_DAMAGE);
-
+                if( damage > 0 ){
+                    BattleState.this.notify(_currentOpponent, BattleObserver.BattleEvent.OPPONENT_HIT_DAMAGE);
+                }
 
                 if (currentOpponentHP == 0) {
                     BattleState.this.notify(_currentOpponent, BattleObserver.BattleEvent.OPPONENT_DEFEATED);
@@ -105,7 +127,7 @@ public class BattleState extends BattleSubject implements InventoryObserver {
         };
     }
 
-    private Timer.Task opponentAttackCalculations() {
+    private Timer.Task getOpponentAttackCalculationTimer() {
         return new Timer.Task() {
             @Override
             public void run() {
@@ -121,7 +143,10 @@ public class BattleState extends BattleSubject implements InventoryObserver {
                 int hpVal = ProfileManager.getInstance().getProperty("currentPlayerHP", Integer.class);
                 hpVal = MathUtils.clamp( hpVal - damage, 0, hpVal);
                 ProfileManager.getInstance().setProperty("currentPlayerHP", hpVal);
-                BattleState.this.notify(_currentOpponent, BattleObserver.BattleEvent.PLAYER_HIT_DAMAGE);
+
+                if( damage > 0 ) {
+                    BattleState.this.notify(_currentOpponent, BattleObserver.BattleEvent.PLAYER_HIT_DAMAGE);
+                }
 
                 System.out.println("Player HIT for " + damage + " BY " + _currentOpponent.getEntityConfig().getEntityID() + " leaving player with HP: " + hpVal);
 

@@ -10,6 +10,7 @@ public interface AudioObserver {
         MUSIC_INTRO_CUTSCENE("audio/Takeover_5.mp3"),
         SOUND_CREATURE_PAIN("audio/27780_SFX_CreatureGruntInPain1.wav"),
         SOUND_PLAYER_PAIN("audio/27678_SFX_ComicalSoundsTiredGrunt1.wav"),
+        SOUND_PLAYER_WAND_ATTACK("audio/26230_SFX_ProductionElementReverseWhoosh19.wav"),
         SOUND_COIN_RUSTLE("audio/00954_SFX_MoneyCoinsDumpedInHand_final.wav");
 
         private String _audioFullFilePath;
