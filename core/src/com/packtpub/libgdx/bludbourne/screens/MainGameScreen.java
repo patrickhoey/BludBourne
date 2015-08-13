@@ -97,7 +97,10 @@ public class MainGameScreen extends GameScreen {
 
 	@Override
 	public void hide() {
-		setGameState(GameState.SAVING);
+		if( _gameState != GameState.GAME_OVER ){
+			setGameState(GameState.SAVING);
+		}
+
 		Gdx.input.setInputProcessor(null);
 	}
 

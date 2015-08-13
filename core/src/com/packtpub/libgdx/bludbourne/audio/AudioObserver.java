@@ -7,7 +7,9 @@ public interface AudioObserver {
         MUSIC_TOPWORLD("audio/n3535n5n335n35nj.ogg"),
         MUSIC_CASTLEDOOM("audio/Dark chamber.mp3"),
         MUSIC_BATTLE("audio/Random Battle.mp3"),
-        MUSIC_INTRO_CUTSCENE("audio/Takeover_5.mp3");
+        MUSIC_INTRO_CUTSCENE("audio/Takeover_5.mp3"),
+        SOUND_CREATURE_PAIN("audio/27780_SFX_CreatureGruntInPain1.wav"),
+        SOUND_COIN_RUSTLE("audio/00954_SFX_MoneyCoinsDumpedInHand_final.wav");
 
         private String _audioFullFilePath;
 

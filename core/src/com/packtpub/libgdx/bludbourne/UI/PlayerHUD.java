@@ -169,15 +169,20 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
         );
 
         _storeInventoryUI.getCloseButton().addListener(new ClickListener() {
-                                                         @Override
-                                                         public void clicked(InputEvent event, float x, float y) {
-                                                             _storeInventoryUI.savePlayerInventory();
-                                                             _storeInventoryUI.cleanupStoreInventory();
-                                                             _storeInventoryUI.setVisible(false);
-                                                             _mapMgr.clearCurrentSelectedMapEntity();
-                                                         }
-                                                     }
+                                                           @Override
+                                                           public void clicked(InputEvent event, float x, float y) {
+                                                               _storeInventoryUI.savePlayerInventory();
+                                                               _storeInventoryUI.cleanupStoreInventory();
+                                                               _storeInventoryUI.setVisible(false);
+                                                               _mapMgr.clearCurrentSelectedMapEntity();
+                                                           }
+                                                       }
         );
+
+        //Music/Sound loading
+        notify(AudioObserver.AudioCommand.MUSIC_LOAD, AudioObserver.AudioTypeEvent.MUSIC_BATTLE);
+        notify(AudioObserver.AudioCommand.SOUND_LOAD, AudioObserver.AudioTypeEvent.SOUND_COIN_RUSTLE);
+        notify(AudioObserver.AudioCommand.SOUND_LOAD, AudioObserver.AudioTypeEvent.SOUND_CREATURE_PAIN);
     }
 
     public Stage getStage() {
@@ -313,7 +318,6 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
                 if( _battleUI.isBattleReady() ){
                     MainGameScreen.setGameState(MainGameScreen.GameState.SAVING);
                     _mapMgr.disableCurrentmapMusic();
-                    notify(AudioObserver.AudioCommand.MUSIC_LOAD, AudioObserver.AudioTypeEvent.MUSIC_BATTLE);
                     notify(AudioObserver.AudioCommand.MUSIC_PLAY_LOOP, AudioObserver.AudioTypeEvent.MUSIC_BATTLE);
                     _battleUI.toBack();
                     _battleUI.setVisible(true);
@@ -430,6 +434,7 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
             case PLAYER_GP_TOTAL_UPDATED:
                 int val = Integer.valueOf(value);
                 _statusUI.setGoldValue(val);
+                notify(AudioObserver.AudioCommand.SOUND_PLAY_ONCE, AudioObserver.AudioTypeEvent.SOUND_COIN_RUSTLE);
                 break;
             case PLAYER_INVENTORY_UPDATED:
                 Array<InventoryItemLocation> items = _json.fromJson(Array.class, value);
@@ -502,6 +507,9 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
     @Override
     public void onNotify(Entity enemyEntity, BattleEvent event) {
         switch (event) {
+            case OPPONENT_HIT_DAMAGE:
+                notify(AudioObserver.AudioCommand.SOUND_PLAY_ONCE, AudioObserver.AudioTypeEvent.SOUND_CREATURE_PAIN);
+                break;
             case OPPONENT_DEFEATED:
                 MainGameScreen.setGameState(MainGameScreen.GameState.RUNNING);
                 int goldReward = Integer.parseInt(enemyEntity.getEntityConfig().getPropertyValue(EntityConfig.EntityProperties.ENTITY_GP_REWARD.toString()));
