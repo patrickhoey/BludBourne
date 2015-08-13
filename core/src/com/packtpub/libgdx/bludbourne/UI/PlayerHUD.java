@@ -183,6 +183,7 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
         notify(AudioObserver.AudioCommand.MUSIC_LOAD, AudioObserver.AudioTypeEvent.MUSIC_BATTLE);
         notify(AudioObserver.AudioCommand.SOUND_LOAD, AudioObserver.AudioTypeEvent.SOUND_COIN_RUSTLE);
         notify(AudioObserver.AudioCommand.SOUND_LOAD, AudioObserver.AudioTypeEvent.SOUND_CREATURE_PAIN);
+        notify(AudioObserver.AudioCommand.SOUND_LOAD, AudioObserver.AudioTypeEvent.SOUND_PLAYER_PAIN);
     }
 
     public Stage getStage() {
@@ -527,6 +528,7 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
                 _battleUI.setVisible(false);
                 break;
             case PLAYER_HIT_DAMAGE:
+                notify(AudioObserver.AudioCommand.SOUND_PLAY_ONCE, AudioObserver.AudioTypeEvent.SOUND_PLAYER_PAIN);
                 int hpVal = ProfileManager.getInstance().getProperty("currentPlayerHP", Integer.class);
                 _statusUI.setHPValue(hpVal);
 

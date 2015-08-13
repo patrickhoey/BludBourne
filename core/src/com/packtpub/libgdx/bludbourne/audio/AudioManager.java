@@ -68,35 +68,47 @@ public class AudioManager implements AudioObserver {
         }
     }
 
-    private void playMusic(boolean isLooping, String fullFilePath){
+    private Music playMusic(boolean isLooping, String fullFilePath){
         Music music = _queuedMusic.get(fullFilePath);
         if( music != null ){
             music.setLooping(isLooping);
             music.play();
         }else if(Utility.isAssetLoaded(fullFilePath)){
-            Music asset = Utility.getMusicAsset(fullFilePath);
-            asset.setLooping(isLooping);
-            asset.play();
-            _queuedMusic.put(fullFilePath, asset);
+            music = Utility.getMusicAsset(fullFilePath);
+            music.setLooping(isLooping);
+            music.play();
+            _queuedMusic.put(fullFilePath, music);
         }else{
             Gdx.app.debug(TAG, "Music not loaded");
-            return;
+            return null;
         }
+        return music;
     }
 
-    private void playSound(boolean isLooping, String fullFilePath){
+    private Sound playSound(boolean isLooping, String fullFilePath){
         Sound sound = _queuedSounds.get(fullFilePath);
         if( sound != null ){
             long soundId = sound.play();
             sound.setLooping(soundId, isLooping);
         }else if( Utility.isAssetLoaded(fullFilePath) ) {
-            Sound asset = Utility.getSoundAsset(fullFilePath);
-            long soundId = asset.play();
-            asset.setLooping(soundId, isLooping);
-            _queuedSounds.put(fullFilePath, asset);
+            sound = Utility.getSoundAsset(fullFilePath);
+            long soundId = sound.play();
+            sound.setLooping(soundId, isLooping);
+            _queuedSounds.put(fullFilePath, sound);
         }else{
             Gdx.app.debug(TAG, "Sound not loaded");
-            return;
+            return null;
+        }
+        return sound;
+    }
+
+    public void dispose(){
+        for(Music music: _queuedMusic.values()){
+            music.dispose();
+        }
+
+        for(Sound sound: _queuedSounds.values()){
+            sound.dispose();
         }
     }
 

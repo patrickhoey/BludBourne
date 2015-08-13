@@ -14,6 +14,8 @@ import com.packtpub.libgdx.bludbourne.Entity;
 import com.packtpub.libgdx.bludbourne.EntityFactory;
 import com.packtpub.libgdx.bludbourne.Map;
 import com.packtpub.libgdx.bludbourne.UI.PlayerHUD;
+import com.packtpub.libgdx.bludbourne.audio.AudioManager;
+import com.packtpub.libgdx.bludbourne.audio.AudioObserver;
 import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 import com.packtpub.libgdx.bludbourne.Component;
 
@@ -170,6 +172,8 @@ public class MainGameScreen extends GameScreen {
 		if( _mapRenderer != null ){
 			_mapRenderer.dispose();
 		}
+
+		AudioManager.getInstance().dispose();
 	}
 
 	public static void setGameState(GameState gameState){
