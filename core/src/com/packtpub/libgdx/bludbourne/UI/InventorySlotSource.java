@@ -1,5 +1,6 @@
 package com.packtpub.libgdx.bludbourne.UI;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
@@ -21,15 +22,25 @@ public class InventorySlotSource extends Source {
     public Payload dragStart(InputEvent event, float x, float y, int pointer) {
         Payload payload = new Payload();
 
-        _sourceSlot = (InventorySlot)getActor().getParent();
-        if( _sourceSlot == null ) return null;
-        _sourceSlot.decrementItemCount(true);
+        Actor actor = getActor();
+        if( actor == null ){
+            return null;
+        }
 
-        payload.setDragActor(getActor());
-        _dragAndDrop.setDragActorPosition(-x, -y + getActor().getHeight());
+        InventorySlot source = (InventorySlot)actor.getParent();
+        if( source == null ){
+            return null;
+        }else{
+            _sourceSlot = source;
+        }
 
-        return payload;
-    }
+    _sourceSlot.decrementItemCount(true);
+
+    payload.setDragActor(getActor());
+    _dragAndDrop.setDragActorPosition(-x, -y + getActor().getHeight());
+
+    return payload;
+}
 
     @Override
     public void dragStop (InputEvent event, float x, float y, int pointer, Payload payload, Target target) {

@@ -148,6 +148,7 @@ public class InventoryUI extends Window implements InventorySubject, InventorySl
                                                      if( item.isConsumable() ){
                                                          String itemInfo = item.getItemUseType() + Component.MESSAGE_TOKEN + item.getItemUseTypeValue();
                                                          InventoryUI.this.notify(itemInfo, InventoryObserver.InventoryEvent.ITEM_CONSUMED);
+                                                         slot.removeActor(item);
                                                          slot.remove(item);
                                                      }
                                                  }
