@@ -185,6 +185,8 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
         notify(AudioObserver.AudioCommand.SOUND_LOAD, AudioObserver.AudioTypeEvent.SOUND_CREATURE_PAIN);
         notify(AudioObserver.AudioCommand.SOUND_LOAD, AudioObserver.AudioTypeEvent.SOUND_PLAYER_PAIN);
         notify(AudioObserver.AudioCommand.SOUND_LOAD, AudioObserver.AudioTypeEvent.SOUND_PLAYER_WAND_ATTACK);
+        notify(AudioObserver.AudioCommand.SOUND_LOAD, AudioObserver.AudioTypeEvent.SOUND_EATING);
+        notify(AudioObserver.AudioCommand.SOUND_LOAD, AudioObserver.AudioTypeEvent.SOUND_DRINKING);
     }
 
     public Stage getStage() {
@@ -560,8 +562,10 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
                 int typeValue = Integer.parseInt(strings[1]);
 
                 if( InventoryItem.doesRestoreHP(type) ){
+                    notify(AudioObserver.AudioCommand.SOUND_PLAY_ONCE, AudioObserver.AudioTypeEvent.SOUND_EATING);
                     _statusUI.addHPValue(typeValue);
                 }else if( InventoryItem.doesRestoreMP(type) ){
+                    notify(AudioObserver.AudioCommand.SOUND_PLAY_ONCE, AudioObserver.AudioTypeEvent.SOUND_DRINKING);
                     _statusUI.addMPValue(typeValue);
                 }
                 break;

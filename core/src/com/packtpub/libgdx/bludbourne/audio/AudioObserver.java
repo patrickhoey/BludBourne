@@ -11,6 +11,8 @@ public interface AudioObserver {
         SOUND_CREATURE_PAIN("audio/27780_SFX_CreatureGruntInPain1.wav"),
         SOUND_PLAYER_PAIN("audio/27678_SFX_ComicalSoundsTiredGrunt1.wav"),
         SOUND_PLAYER_WAND_ATTACK("audio/26230_SFX_ProductionElementReverseWhoosh19.wav"),
+        SOUND_EATING("audio/17661_SFX_HumanEatingPotatoChips1.wav"),
+        SOUND_DRINKING("audio/27677_SFX_ComicalSoundsSwallowLiquid1.wav"),
         SOUND_COIN_RUSTLE("audio/00954_SFX_MoneyCoinsDumpedInHand_final.wav");
 
         private String _audioFullFilePath;
