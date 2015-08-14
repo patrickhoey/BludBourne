@@ -66,15 +66,18 @@ public class BattleState extends BattleSubject implements InventoryObserver {
         notify(_currentOpponent, BattleObserver.BattleEvent.PLAYER_TURN_START);
 
         if( _currentPlayerWandAPPoints == 0 ){
-            Timer.schedule(_playerAttackCalculations, 1);
+            if( !_playerAttackCalculations.isScheduled() ){
+                Timer.schedule(_playerAttackCalculations, 1);
+            }
         }else if(_currentPlayerWandAPPoints > mpVal ){
             BattleState.this.notify(_currentOpponent, BattleObserver.BattleEvent.PLAYER_TURN_DONE);
             return;
         }else{
-            Timer.schedule(_checkPlayerMagicUse, .5f);
-            Timer.schedule(_playerAttackCalculations, 1);
+            if( !_checkPlayerMagicUse.isScheduled() && !_playerAttackCalculations.isScheduled() ){
+                Timer.schedule(_checkPlayerMagicUse, .5f);
+                Timer.schedule(_playerAttackCalculations, 1);
+            }
         }
-
     }
 
     public void opponentAttacks(){
@@ -82,7 +85,9 @@ public class BattleState extends BattleSubject implements InventoryObserver {
             return;
         }
 
-        Timer.schedule(_opponentAttackCalculations, 1);
+        if( !_opponentAttackCalculations.isScheduled() ){
+            Timer.schedule(_opponentAttackCalculations, 1);
+        }
     }
 
     private Timer.Task getPlayerMagicUseCheckTimer(){

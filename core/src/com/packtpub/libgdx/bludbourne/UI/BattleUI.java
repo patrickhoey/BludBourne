@@ -45,7 +45,7 @@ public class BattleUI extends Window implements BattleObserver {
 
         Table table = new Table();
         _attackButton = new TextButton("Attack", Utility.STATUSUI_SKIN, "inventory");
-        _runButton = new TextButton("Run", Utility.STATUSUI_SKIN);
+        _runButton = new TextButton("Run", Utility.STATUSUI_SKIN, "inventory");
         table.add(_attackButton).pad(20, 20, 20, 20);
         table.row();
         table.add(_runButton).pad(20, 20, 20, 20);
@@ -98,6 +98,8 @@ public class BattleUI extends Window implements BattleObserver {
     public void onNotify(Entity entity, BattleEvent event) {
         switch(event){
             case PLAYER_TURN_START:
+                _runButton.setDisabled(true);
+                _runButton.setTouchable(Touchable.disabled);
                 _attackButton.setDisabled(true);
                 _attackButton.setTouchable(Touchable.disabled);
                 break;
@@ -120,6 +122,8 @@ public class BattleUI extends Window implements BattleObserver {
             case OPPONENT_TURN_DONE:
                  _attackButton.setDisabled(false);
                  _attackButton.setTouchable(Touchable.enabled);
+                _runButton.setDisabled(false);
+                _runButton.setTouchable(Touchable.enabled);
                 break;
             case PLAYER_TURN_DONE:
                 _battleState.opponentAttacks();
