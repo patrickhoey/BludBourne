@@ -236,6 +236,7 @@ public class StatusUI extends Window implements StatusSubject {
                 setMPValue(table.getMpMax());
 
                 setLevelValue(Integer.parseInt(table.getLevelID()));
+                notify(_levelVal, StatusObserver.StatusEvent.LEVELED_UP);
                 return;
             }
         }

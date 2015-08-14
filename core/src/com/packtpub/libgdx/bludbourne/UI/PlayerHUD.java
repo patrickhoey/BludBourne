@@ -408,9 +408,11 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
                 String questID = configReturnProperty.getCurrentQuestID();
 
                 if( _questUI.isQuestReadyForReturn(questID) ){
+                    notify(AudioObserver.AudioCommand.MUSIC_PLAY_ONCE, AudioObserver.AudioTypeEvent.MUSIC_LEVEL_UP_FANFARE);
                     QuestGraph quest = _questUI.getQuestByID(questID);
                     _statusUI.addXPValue(quest.getXpReward());
                     _statusUI.addGoldValue(quest.getGoldReward());
+                    notify(AudioObserver.AudioCommand.SOUND_PLAY_ONCE, AudioObserver.AudioTypeEvent.SOUND_COIN_RUSTLE);
                     _inventoryUI.removeQuestItemFromInventory(questID);
                     configReturnProperty.setConversationConfigPath(QuestUI.FINISHED_QUEST);
                     ProfileManager.getInstance().setProperty(configReturnProperty.getEntityID(), configReturnProperty);
@@ -475,7 +477,6 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
                 ProfileManager.getInstance().setProperty("currentPlayerHP", _statusUI.getHPValue());
                 break;
             case UPDATED_LEVEL:
-                notify(AudioObserver.AudioCommand.MUSIC_PLAY_ONCE, AudioObserver.AudioTypeEvent.MUSIC_LEVEL_UP_FANFARE);
                 ProfileManager.getInstance().setProperty("currentPlayerLevel", _statusUI.getLevelValue());
                 break;
             case UPDATED_MP:
@@ -483,6 +484,9 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
                 break;
             case UPDATED_XP:
                 ProfileManager.getInstance().setProperty("currentPlayerXP", _statusUI.getXPValue());
+                break;
+            case LEVELED_UP:
+                notify(AudioObserver.AudioCommand.MUSIC_PLAY_ONCE, AudioObserver.AudioTypeEvent.MUSIC_LEVEL_UP_FANFARE);
                 break;
             default:
                 break;

@@ -7,7 +7,8 @@ public interface StatusObserver {
         UPDATED_LEVEL,
         UPDATED_HP,
         UPDATED_MP,
-        UPDATED_XP
+        UPDATED_XP,
+        LEVELED_UP
     }
 
     void onNotify(final int value, StatusEvent event);
