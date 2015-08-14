@@ -1,0 +1,6 @@
+Title: "DawnLike - 16x16 Universal Rogue-like tileset v1.81"
+Author:  DawnBringer
+Website: http://opengameart.org/content/dawnlike-16x16-universal-rogue-like-tileset-v181
+Date: Thursday, January 30, 2014 - 00:37
+License: CC-BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+Filename:  DawnLike.zip

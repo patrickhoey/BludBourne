@@ -1,0 +1,76 @@
+Credits
+
+Game Design
+Patrick Hoey
+
+Programming
+Patrick Hoey
+
+Producer
+Patrick Hoey
+
+Sound
+Patrick Hoey
+
+Business Development
+Patrick Hoey
+
+Legal
+Patrick Hoey, Esq.
+
+Art Copyright Notice
+
+Title: "DawnLike - 16x16 Universal Rogue-like tileset v1.81"
+Author:  DawnBringer
+Website: http://opengameart.org/content/dawnlike-16x16-universal-rogue-like-tileset-v181
+Date: Thursday, January 30, 2014 - 00:37
+License: CC-BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+Filename:  DawnLike.zip
+
+Music Copyright Notice
+
+Title: "Random Battle"
+Author:  controllerhead
+Website: http://opengameart.org/content/random-battle
+Date: Sunday, April 26, 2015 - 16:42
+License: CC0 Public Domain (http://creativecommons.org/publicdomain/zero/1.0/)
+Filename: Random Battle.mp3
+
+Title: "A Theme"
+Author:  edwinnington
+Website: http://opengameart.org/content/a-theme
+Date: Tuesday, May 27, 2014 - 03:14
+License: CC-BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+Filename: 10112013.wav
+
+Title: "Magic Town"
+Author:  controllerhead
+Website: http://opengameart.org/content/magic-town
+Date: Saturday, April 25, 2015 - 12:51
+License: CC0 Public Domain (http://creativecommons.org/publicdomain/zero/1.0/)
+Filename: Magic Town_0.mp3
+
+Title: "Town in Ruin Loop"
+Author:  Brandon Morris
+Website: http://opengameart.org/content/town-in-ruins-loop
+Date: Tuesday, November 23, 2010 - 00:15
+License: CC-BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+Filename: n3535n5n335n35nj.ogg
+
+Title: "Takeover"
+Author:  HorrorPen
+Website: http://opengameart.org/content/takeover
+Date: Wednesday, January 15, 2014 - 20:17
+License: CC-BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+Filename: Takeover_5.mp3
+
+Title: "Dark Chamber"
+Author:  Marcelo Fernandez
+Website: http://opengameart.org/content/dark-chamber
+         http://www.marcelofernandezmusic.com/    
+Date: Friday, May 8, 2015 - 03:32
+License: CC-BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+Filename: Dark chamber.mp3
+
+I would like to thank the Bad Logic Team for developing the LibGDX framework as well as for the community in supporting it!
+

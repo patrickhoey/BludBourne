@@ -3,6 +3,7 @@ package com.packtpub.libgdx.bludbourne;
 import com.badlogic.gdx.Game;
 
 import com.badlogic.gdx.Screen;
+import com.packtpub.libgdx.bludbourne.screens.CreditScreen;
 import com.packtpub.libgdx.bludbourne.screens.CutSceneScreen;
 import com.packtpub.libgdx.bludbourne.screens.GameOverScreen;
 import com.packtpub.libgdx.bludbourne.screens.LoadGameScreen;
@@ -19,6 +20,7 @@ public class BludBourne extends Game {
 	private static NewGameScreen _newGameScreen;
 	private static GameOverScreen _gameOverScreen;
 	private static CutSceneScreen _cutSceneScreen;
+	private static CreditScreen _creditScreen;
 
 	public static enum ScreenType{
 		MainMenu,
@@ -26,7 +28,8 @@ public class BludBourne extends Game {
 		LoadGame,
 		NewGame,
 		GameOver,
-		WatchIntro
+		WatchIntro,
+		Credits
 	}
 
 	public Screen getScreenType(ScreenType screenType){
@@ -43,6 +46,8 @@ public class BludBourne extends Game {
 				return _gameOverScreen;
 			case WatchIntro:
 				return _cutSceneScreen;
+			case Credits:
+				return _creditScreen;
 			default:
 				return _mainMenuScreen;
 		}
@@ -57,6 +62,7 @@ public class BludBourne extends Game {
 		_newGameScreen = new NewGameScreen(this);
 		_gameOverScreen = new GameOverScreen(this);
 		_cutSceneScreen = new CutSceneScreen(this);
+		_creditScreen = new CreditScreen(this);
 		setScreen(_mainMenuScreen);
 	}
 
@@ -67,6 +73,7 @@ public class BludBourne extends Game {
 		_loadGameScreen.dispose();
 		_newGameScreen.dispose();
 		_gameOverScreen.dispose();
+		_creditScreen.dispose();
 	}
 
 }
