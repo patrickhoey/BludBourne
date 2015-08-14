@@ -207,7 +207,7 @@ public class StatusUI extends Window implements StatusSubject {
         for( LevelTable table: _levelTables ){
             if( Integer.parseInt(table.getLevelID()) == level ){
                 setXPValueMax(table.getXpMax());
-                setXPValue(_xpVal);
+                setXPValue(0);
 
                 setHPValueMax(table.getHpMax());
                 setHPValue(table.getHpMax());

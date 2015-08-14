@@ -60,6 +60,16 @@ public class MapManager implements ProfileObserver {
                 profileManager.setProperty("castleOfDoomMapStartPosition", MapFactory.getMap(MapFactory.MapType.CASTLE_OF_DOOM).getPlayerStart() );
                 profileManager.setProperty("townMapStartPosition", MapFactory.getMap(MapFactory.MapType.TOWN).getPlayerStart() );
                 break;
+            case CLEAR_CURRENT_PROFILE:
+                _currentMap = null;
+                profileManager.setProperty("currentMapType", MapFactory.MapType.TOWN.toString());
+
+                MapFactory.clearCache();
+
+                profileManager.setProperty("topWorldMapStartPosition", MapFactory.getMap(MapFactory.MapType.TOP_WORLD).getPlayerStart() );
+                profileManager.setProperty("castleOfDoomMapStartPosition", MapFactory.getMap(MapFactory.MapType.CASTLE_OF_DOOM).getPlayerStart() );
+                profileManager.setProperty("townMapStartPosition", MapFactory.getMap(MapFactory.MapType.TOWN).getPlayerStart() );
+                break;
             default:
                 break;
         }

@@ -202,6 +202,12 @@ public class InventoryUI extends Window implements InventorySubject, InventorySl
     public void resetEquipSlots(){
         _DPVal = 0;
         _APVal = 0;
+
+        _DPValLabel.setText(String.valueOf(_DPVal));
+        notify(String.valueOf(_DPVal), InventoryObserver.InventoryEvent.UPDATED_DP);
+
+        _APValLabel.setText(String.valueOf(_APVal));
+        notify(String.valueOf(_APVal), InventoryObserver.InventoryEvent.UPDATED_AP);
     }
 
     public static void clearInventoryItems(Table targetTable){

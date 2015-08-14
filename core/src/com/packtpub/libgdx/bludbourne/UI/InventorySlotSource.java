@@ -22,6 +22,7 @@ public class InventorySlotSource extends Source {
         Payload payload = new Payload();
 
         _sourceSlot = (InventorySlot)getActor().getParent();
+        if( _sourceSlot == null ) return null;
         _sourceSlot.decrementItemCount(true);
 
         payload.setDragActor(getActor());

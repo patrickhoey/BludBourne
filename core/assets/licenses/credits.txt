@@ -72,5 +72,12 @@ Date: Friday, May 8, 2015 - 03:32
 License: CC-BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
 Filename: Dark chamber.mp3
 
+Title: "Level Finish Fanfares"
+Author:  Johan Brodd 2014
+Website: http://opengameart.org/content/level-finish-fanfares
+Date: Monday, May 26, 2014 - 11:32
+License: CC-BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+Filename:  Open Surge score jingle.zip
+
 I would like to thank the Bad Logic Team for developing the LibGDX framework as well as for the community in supporting it!
 

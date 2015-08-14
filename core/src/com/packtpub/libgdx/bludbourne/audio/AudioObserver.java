@@ -8,6 +8,7 @@ public interface AudioObserver {
         MUSIC_CASTLEDOOM("audio/Dark chamber.mp3"),
         MUSIC_BATTLE("audio/Random Battle.mp3"),
         MUSIC_INTRO_CUTSCENE("audio/Takeover_5.mp3"),
+        MUSIC_LEVEL_UP_FANFARE("audio/4 Open Surge score jingle - B.ogg"),
         SOUND_CREATURE_PAIN("audio/27780_SFX_CreatureGruntInPain1.wav"),
         SOUND_PLAYER_PAIN("audio/27678_SFX_ComicalSoundsTiredGrunt1.wav"),
         SOUND_PLAYER_WAND_ATTACK("audio/26230_SFX_ProductionElementReverseWhoosh19.wav"),

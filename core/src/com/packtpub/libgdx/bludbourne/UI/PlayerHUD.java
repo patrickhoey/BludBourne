@@ -181,6 +181,7 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
 
         //Music/Sound loading
         notify(AudioObserver.AudioCommand.MUSIC_LOAD, AudioObserver.AudioTypeEvent.MUSIC_BATTLE);
+        notify(AudioObserver.AudioCommand.MUSIC_LOAD, AudioObserver.AudioTypeEvent.MUSIC_LEVEL_UP_FANFARE);
         notify(AudioObserver.AudioCommand.SOUND_LOAD, AudioObserver.AudioTypeEvent.SOUND_COIN_RUSTLE);
         notify(AudioObserver.AudioCommand.SOUND_LOAD, AudioObserver.AudioTypeEvent.SOUND_CREATURE_PAIN);
         notify(AudioObserver.AudioCommand.SOUND_LOAD, AudioObserver.AudioTypeEvent.SOUND_PLAYER_PAIN);
@@ -205,11 +206,15 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
     public void onNotify(ProfileManager profileManager, ProfileEvent event) {
         switch(event){
             case PROFILE_LOADED:
-                //if goldval is negative, this is our first save
-                int goldVal = profileManager.getProperty("currentPlayerGP", Integer.class);
-                boolean firstTime = goldVal<0?true:false;
+                boolean firstTime = profileManager.getIsNewProfile();
 
                 if( firstTime ){
+                    InventoryUI.clearInventoryItems(_inventoryUI.getInventorySlotTable());
+                    InventoryUI.clearInventoryItems(_inventoryUI.getEquipSlotTable());
+                    _inventoryUI.resetEquipSlots();
+
+                    _questUI.setQuests(new Array<QuestGraph>());
+
                     //add default items if first time
                     Array<ItemTypeID> items = _player.getEntityConfig().getInventory();
                     Array<InventoryItemLocation> itemLocations = new Array<InventoryItemLocation>();
@@ -218,39 +223,36 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
                     }
                     InventoryUI.populateInventory(_inventoryUI.getInventorySlotTable(), itemLocations, _inventoryUI.getDragAndDrop(), InventoryUI.PLAYER_INVENTORY, false);
                     profileManager.setProperty("playerInventory", InventoryUI.getInventory(_inventoryUI.getInventorySlotTable()));
-                }
 
-                Array<InventoryItemLocation> inventory = profileManager.getProperty("playerInventory", Array.class);
-                InventoryUI.populateInventory(_inventoryUI.getInventorySlotTable(), inventory, _inventoryUI.getDragAndDrop(), InventoryUI.PLAYER_INVENTORY, false);
-
-                Array<InventoryItemLocation> equipInventory = profileManager.getProperty("playerEquipInventory", Array.class);
-                if( equipInventory != null && equipInventory.size > 0 ){
-                    _inventoryUI.resetEquipSlots();
-                    InventoryUI.populateInventory(_inventoryUI.getEquipSlotTable(), equipInventory, _inventoryUI.getDragAndDrop(), InventoryUI.PLAYER_INVENTORY, false);
-                }
-
-                Array<QuestGraph> quests = profileManager.getProperty("playerQuests", Array.class);
-                _questUI.setQuests(quests);
-
-                int xpMaxVal = profileManager.getProperty("currentPlayerXPMax", Integer.class);
-                int xpVal = profileManager.getProperty("currentPlayerXP", Integer.class);
-
-                int hpMaxVal = profileManager.getProperty("currentPlayerHPMax", Integer.class);
-                int hpVal = profileManager.getProperty("currentPlayerHP", Integer.class);
-
-                int mpMaxVal = profileManager.getProperty("currentPlayerMPMax", Integer.class);
-                int mpVal = profileManager.getProperty("currentPlayerMP", Integer.class);
-
-                int levelVal = profileManager.getProperty("currentPlayerLevel", Integer.class);
-
-                //Check gold
-                if( firstTime ){
                     //start the player with some money
-                    goldVal = 20;
-                    levelVal = 1;
-
-                    _statusUI.setStatusForLevel(levelVal);
+                    _statusUI.setGoldValue(20);
+                    _statusUI.setStatusForLevel(1);
                 }else{
+                    int goldVal = profileManager.getProperty("currentPlayerGP", Integer.class);
+
+                    Array<InventoryItemLocation> inventory = profileManager.getProperty("playerInventory", Array.class);
+                    InventoryUI.populateInventory(_inventoryUI.getInventorySlotTable(), inventory, _inventoryUI.getDragAndDrop(), InventoryUI.PLAYER_INVENTORY, false);
+
+                    Array<InventoryItemLocation> equipInventory = profileManager.getProperty("playerEquipInventory", Array.class);
+                    if( equipInventory != null && equipInventory.size > 0 ){
+                        _inventoryUI.resetEquipSlots();
+                        InventoryUI.populateInventory(_inventoryUI.getEquipSlotTable(), equipInventory, _inventoryUI.getDragAndDrop(), InventoryUI.PLAYER_INVENTORY, false);
+                    }
+
+                    Array<QuestGraph> quests = profileManager.getProperty("playerQuests", Array.class);
+                    _questUI.setQuests(quests);
+
+                    int xpMaxVal = profileManager.getProperty("currentPlayerXPMax", Integer.class);
+                    int xpVal = profileManager.getProperty("currentPlayerXP", Integer.class);
+
+                    int hpMaxVal = profileManager.getProperty("currentPlayerHPMax", Integer.class);
+                    int hpVal = profileManager.getProperty("currentPlayerHP", Integer.class);
+
+                    int mpMaxVal = profileManager.getProperty("currentPlayerMPMax", Integer.class);
+                    int mpVal = profileManager.getProperty("currentPlayerMP", Integer.class);
+
+                    int levelVal = profileManager.getProperty("currentPlayerLevel", Integer.class);
+
                     //set the current max values first
                     _statusUI.setXPValueMax(xpMaxVal);
                     _statusUI.setHPValueMax(hpMaxVal);
@@ -259,13 +261,13 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
                     _statusUI.setXPValue(xpVal);
                     _statusUI.setHPValue(hpVal);
                     _statusUI.setMPValue(mpVal);
+
+                    //then add in current values
+                    _statusUI.setGoldValue(goldVal);
+                    _statusUI.setLevelValue(levelVal);
                 }
 
-                //then add in current values
-                _statusUI.setGoldValue(goldVal);
-                _statusUI.setLevelValue(levelVal);
-
-                break;
+            break;
             case SAVING_PROFILE:
                 profileManager.setProperty("playerQuests", _questUI.getQuests());
                 profileManager.setProperty("playerInventory", InventoryUI.getInventory(_inventoryUI.getInventorySlotTable()));
@@ -278,6 +280,19 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
                 profileManager.setProperty("currentPlayerHPMax", _statusUI.getHPValueMax() );
                 profileManager.setProperty("currentPlayerMP", _statusUI.getMPValue() );
                 profileManager.setProperty("currentPlayerMPMax", _statusUI.getMPValueMax() );
+                break;
+            case CLEAR_CURRENT_PROFILE:
+                profileManager.setProperty("playerQuests", new Array<QuestGraph>());
+                profileManager.setProperty("playerInventory", new Array<InventoryItemLocation>());
+                profileManager.setProperty("playerEquipInventory", new Array<InventoryItemLocation>());
+                profileManager.setProperty("currentPlayerGP", 0 );
+                profileManager.setProperty("currentPlayerLevel",0 );
+                profileManager.setProperty("currentPlayerXP", 0 );
+                profileManager.setProperty("currentPlayerXPMax", 0 );
+                profileManager.setProperty("currentPlayerHP", 0 );
+                profileManager.setProperty("currentPlayerHPMax", 0 );
+                profileManager.setProperty("currentPlayerMP", 0 );
+                profileManager.setProperty("currentPlayerMPMax", 0 );
                 break;
             default:
                 break;
@@ -460,6 +475,7 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
                 ProfileManager.getInstance().setProperty("currentPlayerHP", _statusUI.getHPValue());
                 break;
             case UPDATED_LEVEL:
+                notify(AudioObserver.AudioCommand.MUSIC_PLAY_ONCE, AudioObserver.AudioTypeEvent.MUSIC_LEVEL_UP_FANFARE);
                 ProfileManager.getInstance().setProperty("currentPlayerLevel", _statusUI.getLevelValue());
                 break;
             case UPDATED_MP:

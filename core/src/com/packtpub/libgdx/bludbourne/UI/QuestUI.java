@@ -163,6 +163,7 @@ public class QuestUI extends Window {
 
     private void clearDialog(){
         _listQuests.clearItems();
+        _listTasks.clearItems();
     }
 
     private void populateQuestTaskDialog(QuestGraph graph){
