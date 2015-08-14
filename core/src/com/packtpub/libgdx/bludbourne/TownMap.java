@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Json;
 import com.packtpub.libgdx.bludbourne.audio.AudioObserver;
+import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 
 public class TownMap extends Map{
     private static final String TAG = PlayerPhysicsComponent.class.getSimpleName();
@@ -125,5 +126,11 @@ public class TownMap extends Map{
             position = _specialNPCStartPositions.get(entity.getEntityConfig().getEntityID());
         }
         entity.sendMessage(Component.MESSAGE.INIT_START_POSITION, _json.toJson(position));
+
+        //Overwrite default if special config is found
+        EntityConfig entityConfig = ProfileManager.getInstance().getProperty(entity.getEntityConfig().getEntityID(), EntityConfig.class);
+        if( entityConfig != null ){
+            entity.setEntityConfig(entityConfig);
+        }
     }
 }
