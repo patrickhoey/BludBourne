@@ -14,7 +14,8 @@ public interface AudioObserver {
         SOUND_PLAYER_WAND_ATTACK("audio/26230_SFX_ProductionElementReverseWhoosh19.wav"),
         SOUND_EATING("audio/17661_SFX_HumanEatingPotatoChips1.wav"),
         SOUND_DRINKING("audio/27677_SFX_ComicalSoundsSwallowLiquid1.wav"),
-        SOUND_COIN_RUSTLE("audio/00954_SFX_MoneyCoinsDumpedInHand_final.wav");
+        SOUND_COIN_RUSTLE("audio/00954_SFX_MoneyCoinsDumpedInHand_final.wav"),
+        NONE("");
 
         private String _audioFullFilePath;
 
@@ -32,6 +33,7 @@ public interface AudioObserver {
         MUSIC_PLAY_ONCE,
         MUSIC_PLAY_LOOP,
         MUSIC_STOP,
+        MUSIC_STOP_ALL,
         SOUND_LOAD,
         SOUND_PLAY_ONCE,
         SOUND_PLAY_LOOP,

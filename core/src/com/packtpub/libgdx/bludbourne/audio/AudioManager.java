@@ -48,6 +48,11 @@ public class AudioManager implements AudioObserver {
                     music.stop();
                 }
                 break;
+            case MUSIC_STOP_ALL:
+                for( Music musicStop: _queuedMusic.values() ){
+                    musicStop.stop();
+                }
+                break;
             case SOUND_LOAD:
                 Utility.loadSoundAsset(event.getValue());
                 break;
