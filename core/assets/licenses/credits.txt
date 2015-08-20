@@ -21,8 +21,11 @@ Patrick Hoey, Esq.
 Art Copyright Notice
 
 Title: "DawnLike - 16x16 Universal Rogue-like tileset v1.81"
-Author:  DawnBringer
+Author:  DragonDePlatino (Andrew Rios;  DragonDePlatino@gmail.com) [Tileset creation]
+         DawnBringer (Richard Fhager; dawnbringer@hem.utfors.se)[Palette]
 Website: http://opengameart.org/content/dawnlike-16x16-universal-rogue-like-tileset-v181
+         http://dragondeplatino.daportfolio.com/
+         http://hem.fyristorg.com/dawnbringer/
 Date: Thursday, January 30, 2014 - 00:37
 License: CC-BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
 Filename:  DawnLike.zip
