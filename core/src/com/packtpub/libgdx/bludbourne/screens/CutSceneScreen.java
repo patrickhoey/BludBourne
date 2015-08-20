@@ -1,11 +1,7 @@
 package com.packtpub.libgdx.bludbourne.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -14,10 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.packtpub.libgdx.bludbourne.BludBourne;
@@ -30,6 +23,8 @@ import com.packtpub.libgdx.bludbourne.Utility;
 import com.packtpub.libgdx.bludbourne.audio.AudioObserver;
 import com.packtpub.libgdx.bludbourne.battle.MonsterFactory;
 import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
+import com.packtpub.libgdx.bludbourne.sfx.ScreenTransitionAction;
+import com.packtpub.libgdx.bludbourne.sfx.ScreenTransitionActor;
 
 public class CutSceneScreen extends MainGameScreen {
     private BludBourne _game;
@@ -41,9 +36,7 @@ public class CutSceneScreen extends MainGameScreen {
     private Dialog _messageBoxUI;
     private Label _label;
     private boolean _isCameraFixed = true;
-    private Image _transitionImage;
-    private Action _screenFadeOutAction;
-    private Action _screenFadeInAction;
+    private ScreenTransitionActor _transitionActor;
     private Action _introCutSceneAction;
     private Action _switchScreenAction;
     private Action _setupScene01;
@@ -82,11 +75,6 @@ public class CutSceneScreen extends MainGameScreen {
         _followingActor.setPosition(0, 0);
 
         notify(AudioObserver.AudioCommand.MUSIC_LOAD, AudioObserver.AudioTypeEvent.MUSIC_INTRO_CUTSCENE);
-
-        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-        pixmap.setColor(Color.BLACK);
-        pixmap.fill();
-        Drawable drawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
 
         _animBlackSmith = getAnimatedImage(EntityFactory.EntityName.TOWN_BLACKSMITH);
         _animInnKeeper = getAnimatedImage(EntityFactory.EntityName.TOWN_INNKEEPER);
@@ -188,35 +176,7 @@ public class CutSceneScreen extends MainGameScreen {
             }
         };
 
-        _transitionImage = new Image();
-        _transitionImage.setFillParent(true);
-        _transitionImage.setDrawable(drawable);
-
-        _screenFadeOutAction = new Action() {
-            @Override
-            public boolean act(float delta) {
-                _transitionImage.addAction(
-                        Actions.sequence(
-                                Actions.alpha(0),
-                                Actions.fadeIn(3)
-                        ));
-                return true;
-            }
-        };
-
-        _screenFadeInAction = new Action() {
-            @Override
-            public boolean act(float delta) {
-                _transitionImage.addAction(
-                        Actions.sequence(
-                                Actions.alpha(1),
-                                Actions.fadeOut(3)
-                        ));
-                return true;
-            }
-        };
-
-
+        _transitionActor = new ScreenTransitionActor();
 
          //layout
         _stage.addActor(_animMage);
@@ -224,8 +184,7 @@ public class CutSceneScreen extends MainGameScreen {
         _stage.addActor(_animInnKeeper);
         _stage.addActor(_animFire);
         _stage.addActor(_animDemon);
-        _stage.addActor(_transitionImage);
-        _transitionImage.toFront();
+        _stage.addActor(_transitionActor);
 
         _UIStage.addActor(_messageBoxUI);
     }
@@ -236,12 +195,11 @@ public class CutSceneScreen extends MainGameScreen {
         _setupScene03.reset();
         _setupScene04.reset();
         _setupScene05.reset();
-        _screenFadeInAction.reset();
         _switchScreenAction.reset();
 
         return Actions.sequence(
                 Actions.addAction(_setupScene01),
-                Actions.addAction(_screenFadeInAction),
+                Actions.addAction(new ScreenTransitionAction(ScreenTransitionAction.ScreenTransitionType.FADE_IN, 3), _transitionActor),
                 Actions.delay(3),
                 Actions.run(
                         new Runnable() {
@@ -267,10 +225,10 @@ public class CutSceneScreen extends MainGameScreen {
                             }
                         }),
                 Actions.delay(5),
-                Actions.addAction(_screenFadeOutAction),
+                Actions.addAction(new ScreenTransitionAction(ScreenTransitionAction.ScreenTransitionType.FADE_OUT, 3), _transitionActor),
                 Actions.delay(3),
                 Actions.addAction(_setupScene02),
-                Actions.addAction(_screenFadeInAction),
+                Actions.addAction(new ScreenTransitionAction(ScreenTransitionAction.ScreenTransitionType.FADE_IN, 3), _transitionActor),
                 Actions.delay(3),
                 Actions.run(
                         new Runnable() {
@@ -343,15 +301,15 @@ public class CutSceneScreen extends MainGameScreen {
                         }
                 ),
                 Actions.delay(3),
-                Actions.addAction(_screenFadeOutAction),
+                Actions.addAction(new ScreenTransitionAction(ScreenTransitionAction.ScreenTransitionType.FADE_OUT, 3), _transitionActor),
                 Actions.delay(3),
                 Actions.addAction(_setupScene04),
-                Actions.addAction(_screenFadeInAction),
+                Actions.addAction(new ScreenTransitionAction(ScreenTransitionAction.ScreenTransitionType.FADE_IN, 3), _transitionActor),
                 Actions.addAction(Actions.moveTo(54, 65, 13, Interpolation.linear), _animDemon),
                 Actions.delay(10),
-                Actions.addAction(_screenFadeOutAction),
+                Actions.addAction(new ScreenTransitionAction(ScreenTransitionAction.ScreenTransitionType.FADE_OUT, 3), _transitionActor),
                 Actions.delay(3),
-                Actions.addAction(_screenFadeInAction),
+                Actions.addAction(new ScreenTransitionAction(ScreenTransitionAction.ScreenTransitionType.FADE_IN, 3), _transitionActor),
                 Actions.addAction(_setupScene05),
                 Actions.addAction(Actions.moveTo(15, 76, 15, Interpolation.linear), _animDemon),
                 Actions.delay(15),
@@ -364,7 +322,7 @@ public class CutSceneScreen extends MainGameScreen {
                         }
                 ),
                 Actions.delay(5),
-                Actions.addAction(_screenFadeOutAction),
+                Actions.addAction(new ScreenTransitionAction(ScreenTransitionAction.ScreenTransitionType.FADE_OUT, 3), _transitionActor),
                 Actions.delay(5),
                 Actions.after(_switchScreenAction)
         );

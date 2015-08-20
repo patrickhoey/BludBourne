@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -30,6 +32,8 @@ import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 import com.packtpub.libgdx.bludbourne.profile.ProfileObserver;
 import com.packtpub.libgdx.bludbourne.quest.QuestGraph;
 import com.packtpub.libgdx.bludbourne.screens.MainGameScreen;
+import com.packtpub.libgdx.bludbourne.sfx.ScreenTransitionAction;
+import com.packtpub.libgdx.bludbourne.sfx.ScreenTransitionActor;
 
 public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,ComponentObserver,ConversationGraphObserver,StoreInventoryObserver, BattleObserver, InventoryObserver, StatusObserver {
     private static final String TAG = PlayerHUD.class.getSimpleName();
@@ -51,6 +55,7 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
     private MapManager _mapMgr;
 
     private Array<AudioObserver> _observers;
+    private ScreenTransitionActor _transitionActor;
 
     private static final String INVENTORY_FULL = "Your inventory is full!";
 
@@ -63,6 +68,7 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
         //_stage.setDebugAll(true);
 
         _observers = new Array<AudioObserver>();
+        _transitionActor = new ScreenTransitionActor();
 
         _json = new Json();
         _messageBoxUI = new Dialog("Message", Utility.STATUSUI_SKIN, "solidbackground"){
@@ -135,6 +141,9 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
             _stage.addActor(actor);
         }
 
+        _stage.addActor(_transitionActor);
+        _transitionActor.setVisible(false);
+
         //Observers
         _player.registerObserver(this);
         _statusUI.addObserver(this);
@@ -196,10 +205,15 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
 
     public void updateEntityObservers(){
         _mapMgr.unregisterCurrentMapEntityObservers();
-
         _questUI.initQuests(_mapMgr);
-
         _mapMgr.registerCurrentMapEntityObservers(this);
+    }
+
+    public void addTransitionToScreen(){
+        _transitionActor.setVisible(true);
+        _stage.addAction(
+                Actions.sequence(
+                        Actions.addAction(new ScreenTransitionAction(ScreenTransitionAction.ScreenTransitionType.FADE_IN, 1), _transitionActor)));
     }
 
     @Override
@@ -335,6 +349,7 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
                 break;
             case PLAYER_HAS_MOVED:
                 if( _battleUI.isBattleReady() ){
+                    addTransitionToScreen();
                     MainGameScreen.setGameState(MainGameScreen.GameState.SAVING);
                     _mapMgr.disableCurrentmapMusic();
                     notify(AudioObserver.AudioCommand.MUSIC_PLAY_LOOP, AudioObserver.AudioTypeEvent.MUSIC_BATTLE);
@@ -542,12 +557,14 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
                 _statusUI.addXPValue(xpReward);
                 notify(AudioObserver.AudioCommand.MUSIC_STOP, AudioObserver.AudioTypeEvent.MUSIC_BATTLE);
                 _mapMgr.enableCurrentmapMusic();
+                addTransitionToScreen();
                 _battleUI.setVisible(false);
                 break;
             case PLAYER_RUNNING:
                 MainGameScreen.setGameState(MainGameScreen.GameState.RUNNING);
                 notify(AudioObserver.AudioCommand.MUSIC_STOP, AudioObserver.AudioTypeEvent.MUSIC_BATTLE);
                 _mapMgr.enableCurrentmapMusic();
+                addTransitionToScreen();
                 _battleUI.setVisible(false);
                 break;
             case PLAYER_HIT_DAMAGE:
@@ -557,6 +574,7 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
 
                 if( hpVal <= 0 ){
                     notify(AudioObserver.AudioCommand.MUSIC_STOP, AudioObserver.AudioTypeEvent.MUSIC_BATTLE);
+                    addTransitionToScreen();
                     _battleUI.setVisible(false);
                     MainGameScreen.setGameState(MainGameScreen.GameState.GAME_OVER);
                 }

@@ -135,6 +135,8 @@ public class MainGameScreen extends GameScreen {
 			_playerHUD.updateEntityObservers();
 
 			_mapMgr.setMapChanged(false);
+
+			_playerHUD.addTransitionToScreen();
 		}
 
 		_mapRenderer.render();
