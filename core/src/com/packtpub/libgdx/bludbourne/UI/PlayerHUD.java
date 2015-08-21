@@ -1,11 +1,12 @@
 package com.packtpub.libgdx.bludbourne.UI;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -34,6 +35,7 @@ import com.packtpub.libgdx.bludbourne.quest.QuestGraph;
 import com.packtpub.libgdx.bludbourne.screens.MainGameScreen;
 import com.packtpub.libgdx.bludbourne.sfx.ScreenTransitionAction;
 import com.packtpub.libgdx.bludbourne.sfx.ScreenTransitionActor;
+import com.packtpub.libgdx.bludbourne.sfx.ShakeCamera;
 
 public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,ComponentObserver,ConversationGraphObserver,StoreInventoryObserver, BattleObserver, InventoryObserver, StatusObserver {
     private static final String TAG = PlayerHUD.class.getSimpleName();
@@ -57,6 +59,8 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
     private Array<AudioObserver> _observers;
     private ScreenTransitionActor _transitionActor;
 
+    private ShakeCamera _shakeCam;
+
     private static final String INVENTORY_FULL = "Your inventory is full!";
 
     public PlayerHUD(Camera camera, Entity player, MapManager mapMgr) {
@@ -69,6 +73,8 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
 
         _observers = new Array<AudioObserver>();
         _transitionActor = new ScreenTransitionActor();
+
+        _shakeCam = new ShakeCamera(_camera.viewportWidth, _camera.viewportHeight, 30.0f);
 
         _json = new Json();
         _messageBoxUI = new Dialog("Message", Utility.STATUSUI_SKIN, "solidbackground"){
@@ -90,11 +96,15 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
         _statusUI = new StatusUI();
         _statusUI.setVisible(true);
         _statusUI.setPosition(0, 0);
+        _statusUI.setKeepWithinStage(false);
+        _statusUI.setMovable(false);
+
 
         _inventoryUI = new InventoryUI();
+        _inventoryUI.setKeepWithinStage(false);
         _inventoryUI.setMovable(false);
         _inventoryUI.setVisible(false);
-        _inventoryUI.setPosition(_stage.getWidth() / 2, 0);
+        _inventoryUI.setPosition(_statusUI.getWidth(), 0);
 
         _conversationUI = new ConversationUI();
         _conversationUI.setMovable(true);
@@ -111,6 +121,7 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
         _questUI = new QuestUI();
         _questUI.setMovable(false);
         _questUI.setVisible(false);
+        _questUI.setKeepWithinStage(false);
         _questUI.setPosition(0, _stage.getHeight() / 2);
         _questUI.setWidth(_stage.getWidth());
         _questUI.setHeight(_stage.getHeight() / 2);
@@ -510,10 +521,16 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
 
     @Override
     public void show() {
+        _shakeCam.reset();
     }
 
     @Override
     public void render(float delta) {
+        if( _shakeCam.isCameraShaking() ){
+            Vector2 shakeCoords = _shakeCam.getShakeCameraCenter();
+            _camera.position.x = shakeCoords.x;
+            _camera.position.y = shakeCoords.y;
+        }
         _stage.act(delta);
         _stage.draw();
     }
@@ -535,7 +552,6 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
 
     @Override
     public void hide() {
-
     }
 
     @Override
@@ -571,8 +587,10 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
                 notify(AudioObserver.AudioCommand.SOUND_PLAY_ONCE, AudioObserver.AudioTypeEvent.SOUND_PLAYER_PAIN);
                 int hpVal = ProfileManager.getInstance().getProperty("currentPlayerHP", Integer.class);
                 _statusUI.setHPValue(hpVal);
+                _shakeCam.startShaking();
 
                 if( hpVal <= 0 ){
+                    _shakeCam.reset();
                     notify(AudioObserver.AudioCommand.MUSIC_STOP, AudioObserver.AudioTypeEvent.MUSIC_BATTLE);
                     addTransitionToScreen();
                     _battleUI.setVisible(false);
