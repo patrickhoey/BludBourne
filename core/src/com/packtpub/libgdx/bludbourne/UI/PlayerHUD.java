@@ -74,7 +74,7 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
         _observers = new Array<AudioObserver>();
         _transitionActor = new ScreenTransitionActor();
 
-        _shakeCam = new ShakeCamera(_camera.viewportWidth, _camera.viewportHeight, 30.0f);
+        _shakeCam = new ShakeCamera(0,0, 30.0f);
 
         _json = new Json();
         _messageBoxUI = new Dialog("Message", Utility.STATUSUI_SKIN, "solidbackground"){
@@ -127,7 +127,6 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
         _questUI.setHeight(_stage.getHeight() / 2);
 
         _battleUI = new BattleUI();
-        _battleUI.setFillParent(true);
         _battleUI.setVisible(false);
         _battleUI.setMovable(false);
         //removes all listeners including ones that handle focus
@@ -527,9 +526,9 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
     @Override
     public void render(float delta) {
         if( _shakeCam.isCameraShaking() ){
-            Vector2 shakeCoords = _shakeCam.getShakeCameraCenter();
-            _camera.position.x = shakeCoords.x;
-            _camera.position.y = shakeCoords.y;
+            Vector2 shakeCoords = _shakeCam.getNewShakePosition();
+            _camera.position.x = shakeCoords.x + _stage.getWidth()/2;
+            _camera.position.y = shakeCoords.y + _stage.getHeight()/2;
         }
         _stage.act(delta);
         _stage.draw();

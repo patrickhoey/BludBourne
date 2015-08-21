@@ -1,5 +1,7 @@
 package com.packtpub.libgdx.bludbourne.UI;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -13,8 +15,11 @@ import com.packtpub.libgdx.bludbourne.EntityConfig;
 import com.packtpub.libgdx.bludbourne.Utility;
 import com.packtpub.libgdx.bludbourne.battle.BattleObserver;
 import com.packtpub.libgdx.bludbourne.battle.BattleState;
+import com.packtpub.libgdx.bludbourne.sfx.ShakeCamera;
 
 public class BattleUI extends Window implements BattleObserver {
+    private static final String TAG = BattleUI.class.getSimpleName();
+
     private AnimatedImage _image;
 
     private final int _enemyWidth = 96;
@@ -27,6 +32,8 @@ public class BattleUI extends Window implements BattleObserver {
 
     private float _battleTimer = 0;
     private final float _checkTimer = 1;
+
+    private ShakeCamera _battleShakeCam = null;
 
     private float _origDamageValLabelY = 0;
 
@@ -51,11 +58,16 @@ public class BattleUI extends Window implements BattleObserver {
         table.add(_runButton).pad(20, 20, 20, 20);
 
         //layout
+        this.setFillParent(true);
         this.add(_damageValLabel).align(Align.left).padLeft(_enemyWidth / 2).row();
         this.add(_image).size(_enemyWidth, _enemyHeight).pad(10, 10, 10, _enemyWidth / 2);
         this.add(table);
 
         this.pack();
+
+        Vector2 vector = new Vector2(0,0);
+        _image.localToStageCoordinates(vector);
+        _battleShakeCam = new ShakeCamera(vector.x, vector.y, 30.0f);
 
         _origDamageValLabelY = _damageValLabel.getY()+_enemyHeight;
 
@@ -107,12 +119,18 @@ public class BattleUI extends Window implements BattleObserver {
                 _image.setEntity(entity);
                 _image.setCurrentAnimation(Entity.AnimationType.IMMOBILE);
                 _image.setSize(_enemyWidth, _enemyHeight);
+
+                Vector2 vector = new Vector2(0,0);
+                _image.localToStageCoordinates(vector);
+                //Gdx.app.log(TAG, "NEW Image X: " + vector.x + " NEW Image Y: " + vector.y);
+
                 this.setTitle("Level " + _battleState.getCurrentZoneLevel() + " " + entity.getEntityConfig().getEntityID());
                 break;
             case OPPONENT_HIT_DAMAGE:
                 int damage = Integer.parseInt(entity.getEntityConfig().getPropertyValue(EntityConfig.EntityProperties.ENTITY_HIT_DAMAGE_TOTAL.toString()));
                 _damageValLabel.setText(String.valueOf(damage));
                 _damageValLabel.setY(_origDamageValLabelY);
+                _battleShakeCam.startShaking();
                 _damageValLabel.setVisible(true);
                 break;
             case OPPONENT_DEFEATED:
@@ -138,6 +156,12 @@ public class BattleUI extends Window implements BattleObserver {
         _battleTimer = (_battleTimer + delta)%60;
         if( _damageValLabel.isVisible() && _damageValLabel.getY() < this.getHeight()){
             _damageValLabel.setY(_damageValLabel.getY()+5);
+        }
+
+        if( _battleShakeCam != null && _battleShakeCam.isCameraShaking() ){
+            Vector2 shakeCoords = _battleShakeCam.getNewShakePosition();
+            _image.stageToLocalCoordinates(shakeCoords);
+            _image.setPosition(shakeCoords.x, shakeCoords.y);
         }
 
         super.act(delta);

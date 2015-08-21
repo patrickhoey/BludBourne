@@ -1,5 +1,6 @@
 package com.packtpub.libgdx.bludbourne.battle;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.packtpub.libgdx.bludbourne.Entity;
@@ -8,6 +9,8 @@ import com.packtpub.libgdx.bludbourne.UI.InventoryObserver;
 import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 
 public class BattleState extends BattleSubject implements InventoryObserver {
+    private static final String TAG = BattleState.class.getSimpleName();
+
     private Entity _currentOpponent;
     private int _currentZoneLevel = 0;
     private int _currentPlayerAP;
@@ -38,7 +41,7 @@ public class BattleState extends BattleSubject implements InventoryObserver {
         if( _currentZoneLevel == 0 ) return false;
         int randomVal = MathUtils.random(1,100);
 
-        //System.out.println("CHANGE OF ATTACK: " + _chanceOfAttack + " randomval: " + randomVal);
+        //Gdx.app.log(TAG, "CHANGE OF ATTACK: " + _chanceOfAttack + " randomval: " + randomVal);
 
         if( _chanceOfAttack > randomVal  ){
             setCurrentOpponent();
@@ -49,7 +52,7 @@ public class BattleState extends BattleSubject implements InventoryObserver {
     }
 
     public void setCurrentOpponent(){
-        System.out.print("Entered BATTLE ZONE: " + _currentZoneLevel);
+        Gdx.app.log(TAG, "Entered BATTLE ZONE: " + _currentZoneLevel);
         Entity entity = MonsterFactory.getInstance().getRandomMonster(_currentZoneLevel);
         if( entity == null ) return;
         this._currentOpponent = entity;
@@ -111,12 +114,12 @@ public class BattleState extends BattleSubject implements InventoryObserver {
 
                 int damage = MathUtils.clamp(_currentPlayerAP - currentOpponentDP, 0, _currentPlayerAP);
 
-                System.out.println("ENEMY HAS " + currentOpponentHP + " hit with damage: " + damage);
+                Gdx.app.log(TAG, "ENEMY HAS " + currentOpponentHP + " hit with damage: " + damage);
 
                 currentOpponentHP = MathUtils.clamp(currentOpponentHP - damage, 0, currentOpponentHP);
                 _currentOpponent.getEntityConfig().setPropertyValue(EntityConfig.EntityProperties.ENTITY_HEALTH_POINTS.toString(), String.valueOf(currentOpponentHP));
 
-                System.out.println("Player attacks " + _currentOpponent.getEntityConfig().getEntityID() + " leaving it with HP: " + currentOpponentHP);
+                Gdx.app.log(TAG, "Player attacks " + _currentOpponent.getEntityConfig().getEntityID() + " leaving it with HP: " + currentOpponentHP);
 
                 _currentOpponent.getEntityConfig().setPropertyValue(EntityConfig.EntityProperties.ENTITY_HIT_DAMAGE_TOTAL.toString(), String.valueOf(damage));
                 if( damage > 0 ){
@@ -153,7 +156,7 @@ public class BattleState extends BattleSubject implements InventoryObserver {
                     BattleState.this.notify(_currentOpponent, BattleObserver.BattleEvent.PLAYER_HIT_DAMAGE);
                 }
 
-                System.out.println("Player HIT for " + damage + " BY " + _currentOpponent.getEntityConfig().getEntityID() + " leaving player with HP: " + hpVal);
+                Gdx.app.log(TAG, "Player HIT for " + damage + " BY " + _currentOpponent.getEntityConfig().getEntityID() + " leaving player with HP: " + hpVal);
 
                 BattleState.this.notify(_currentOpponent, BattleObserver.BattleEvent.OPPONENT_TURN_DONE);
             }
@@ -177,12 +180,12 @@ public class BattleState extends BattleSubject implements InventoryObserver {
             case UPDATED_AP:
                 int apVal = Integer.valueOf(value);
                 _currentPlayerAP = apVal;
-                //System.out.println("APVAL: " + _currentPlayerAP);
+                //Gdx.app.log(TAG, "APVAL: " + _currentPlayerAP);
                 break;
             case UPDATED_DP:
                 int dpVal = Integer.valueOf(value);
                 _currentPlayerDP = dpVal;
-                //System.out.println("DPVAL: " + _currentPlayerDP);
+                //Gdx.app.log(TAG, "DPVAL: " + _currentPlayerDP);
                 break;
             case ADD_WAND_AP:
                 int wandAP = Integer.valueOf(value);
