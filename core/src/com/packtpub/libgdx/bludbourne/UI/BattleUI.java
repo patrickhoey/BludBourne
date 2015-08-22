@@ -65,10 +65,6 @@ public class BattleUI extends Window implements BattleObserver {
 
         this.pack();
 
-        Vector2 vector = new Vector2(0,0);
-        _image.localToStageCoordinates(vector);
-        _battleShakeCam = new ShakeCamera(vector.x, vector.y, 30.0f);
-
         _origDamageValLabelY = _damageValLabel.getY()+_enemyHeight;
 
         _attackButton.addListener(
@@ -120,9 +116,10 @@ public class BattleUI extends Window implements BattleObserver {
                 _image.setCurrentAnimation(Entity.AnimationType.IMMOBILE);
                 _image.setSize(_enemyWidth, _enemyHeight);
 
-                Vector2 vector = new Vector2(0,0);
-                _image.localToStageCoordinates(vector);
-                //Gdx.app.log(TAG, "NEW Image X: " + vector.x + " NEW Image Y: " + vector.y);
+                Vector2 vector = new Vector2(_image.getX(),_image.getY());
+                if( _battleShakeCam == null ){
+                    _battleShakeCam = new ShakeCamera(vector.x, vector.y, 30.0f);
+                }
 
                 this.setTitle("Level " + _battleState.getCurrentZoneLevel() + " " + entity.getEntityConfig().getEntityID());
                 break;
@@ -160,7 +157,6 @@ public class BattleUI extends Window implements BattleObserver {
 
         if( _battleShakeCam != null && _battleShakeCam.isCameraShaking() ){
             Vector2 shakeCoords = _battleShakeCam.getNewShakePosition();
-            _image.stageToLocalCoordinates(shakeCoords);
             _image.setPosition(shakeCoords.x, shakeCoords.y);
         }
 

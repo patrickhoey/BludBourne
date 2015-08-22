@@ -21,7 +21,6 @@ public class ShakeCamera {
 		this._origShakeRadius = shakeRadius;
 		this._offset = new Vector2();
 		this._currentPosition = new Vector2();
-		seedRandomAngle();
 	}
 	
 	public boolean isCameraShaking(){
@@ -30,10 +29,6 @@ public class ShakeCamera {
 	
 	public void startShaking(){
 		_isShaking = true;
-	}
-
-	public Vector2 getOriginalPosition(){
-		return _origPosition.cpy();
 	}
 	
 	private void seedRandomAngle(){
@@ -67,7 +62,6 @@ public class ShakeCamera {
 		_shakeRadius = _origShakeRadius;
 		_isShaking = false;
 		seedRandomAngle();
-		computeCameraOffset();
 		_currentPosition.x = _origPosition.x;
 		_currentPosition.y = _origPosition.y;
 	}

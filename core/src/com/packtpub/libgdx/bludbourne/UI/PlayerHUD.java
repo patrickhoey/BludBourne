@@ -99,7 +99,6 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
         _statusUI.setKeepWithinStage(false);
         _statusUI.setMovable(false);
 
-
         _inventoryUI = new InventoryUI();
         _inventoryUI.setKeepWithinStage(false);
         _inventoryUI.setMovable(false);
@@ -127,10 +126,10 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
         _questUI.setHeight(_stage.getHeight() / 2);
 
         _battleUI = new BattleUI();
-        _battleUI.setVisible(false);
         _battleUI.setMovable(false);
         //removes all listeners including ones that handle focus
         _battleUI.clearListeners();
+        _battleUI.setVisible(false);
 
         _stage.addActor(_battleUI);
         _stage.addActor(_questUI);
@@ -139,6 +138,14 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
         _stage.addActor(_messageBoxUI);
         _stage.addActor(_statusUI);
         _stage.addActor(_inventoryUI);
+
+        _battleUI.validate();
+        _questUI.validate();
+        _storeInventoryUI.validate();
+        _conversationUI.validate();
+        _messageBoxUI.validate();
+        _statusUI.validate();
+        _inventoryUI.validate();
 
         //add tooltips to the stage
         Array<Actor> actors = _inventoryUI.getInventoryActors();
