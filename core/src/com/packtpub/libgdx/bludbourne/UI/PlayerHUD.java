@@ -230,7 +230,7 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
         _transitionActor.setVisible(true);
         _stage.addAction(
                 Actions.sequence(
-                        Actions.addAction(new ScreenTransitionAction(ScreenTransitionAction.ScreenTransitionType.FADE_IN, 1), _transitionActor)));
+                        Actions.addAction(ScreenTransitionAction.transition(ScreenTransitionAction.ScreenTransitionType.FADE_IN, 1), _transitionActor)));
     }
 
     @Override

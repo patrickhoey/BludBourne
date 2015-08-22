@@ -199,7 +199,7 @@ public class CutSceneScreen extends MainGameScreen {
 
         return Actions.sequence(
                 Actions.addAction(_setupScene01),
-                Actions.addAction(new ScreenTransitionAction(ScreenTransitionAction.ScreenTransitionType.FADE_IN, 3), _transitionActor),
+                Actions.addAction(ScreenTransitionAction.transition(ScreenTransitionAction.ScreenTransitionType.FADE_IN, 3), _transitionActor),
                 Actions.delay(3),
                 Actions.run(
                         new Runnable() {
@@ -225,10 +225,10 @@ public class CutSceneScreen extends MainGameScreen {
                             }
                         }),
                 Actions.delay(5),
-                Actions.addAction(new ScreenTransitionAction(ScreenTransitionAction.ScreenTransitionType.FADE_OUT, 3), _transitionActor),
+                Actions.addAction(ScreenTransitionAction.transition(ScreenTransitionAction.ScreenTransitionType.FADE_OUT, 3), _transitionActor),
                 Actions.delay(3),
                 Actions.addAction(_setupScene02),
-                Actions.addAction(new ScreenTransitionAction(ScreenTransitionAction.ScreenTransitionType.FADE_IN, 3), _transitionActor),
+                Actions.addAction(ScreenTransitionAction.transition(ScreenTransitionAction.ScreenTransitionType.FADE_IN, 3), _transitionActor),
                 Actions.delay(3),
                 Actions.run(
                         new Runnable() {
@@ -301,15 +301,15 @@ public class CutSceneScreen extends MainGameScreen {
                         }
                 ),
                 Actions.delay(3),
-                Actions.addAction(new ScreenTransitionAction(ScreenTransitionAction.ScreenTransitionType.FADE_OUT, 3), _transitionActor),
+                Actions.addAction(ScreenTransitionAction.transition(ScreenTransitionAction.ScreenTransitionType.FADE_OUT, 3), _transitionActor),
                 Actions.delay(3),
                 Actions.addAction(_setupScene04),
-                Actions.addAction(new ScreenTransitionAction(ScreenTransitionAction.ScreenTransitionType.FADE_IN, 3), _transitionActor),
+                Actions.addAction(ScreenTransitionAction.transition(ScreenTransitionAction.ScreenTransitionType.FADE_IN, 3), _transitionActor),
                 Actions.addAction(Actions.moveTo(54, 65, 13, Interpolation.linear), _animDemon),
                 Actions.delay(10),
-                Actions.addAction(new ScreenTransitionAction(ScreenTransitionAction.ScreenTransitionType.FADE_OUT, 3), _transitionActor),
+                Actions.addAction(ScreenTransitionAction.transition(ScreenTransitionAction.ScreenTransitionType.FADE_OUT, 3), _transitionActor),
                 Actions.delay(3),
-                Actions.addAction(new ScreenTransitionAction(ScreenTransitionAction.ScreenTransitionType.FADE_IN, 3), _transitionActor),
+                Actions.addAction(ScreenTransitionAction.transition(ScreenTransitionAction.ScreenTransitionType.FADE_IN, 3), _transitionActor),
                 Actions.addAction(_setupScene05),
                 Actions.addAction(Actions.moveTo(15, 76, 15, Interpolation.linear), _animDemon),
                 Actions.delay(15),
@@ -322,7 +322,7 @@ public class CutSceneScreen extends MainGameScreen {
                         }
                 ),
                 Actions.delay(5),
-                Actions.addAction(new ScreenTransitionAction(ScreenTransitionAction.ScreenTransitionType.FADE_OUT, 3), _transitionActor),
+                Actions.addAction(ScreenTransitionAction.transition(ScreenTransitionAction.ScreenTransitionType.FADE_OUT, 3), _transitionActor),
                 Actions.delay(5),
                 Actions.after(_switchScreenAction)
         );

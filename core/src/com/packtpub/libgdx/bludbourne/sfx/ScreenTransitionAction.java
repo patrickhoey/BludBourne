@@ -48,6 +48,13 @@ public class ScreenTransitionAction extends Action {
         return true;
     }
 
+    public static ScreenTransitionAction transition (ScreenTransitionType type, float duration) {
+        ScreenTransitionAction action = Actions.action(ScreenTransitionAction.class);
+        action.setTransitionType(type);
+        action.setTransitionDuration(duration);
+        return action;
+    }
+
     public ScreenTransitionType getTransitionType() {
         return _transitionType;
     }
