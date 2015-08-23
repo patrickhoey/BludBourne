@@ -1,6 +1,7 @@
 package com.packtpub.libgdx.bludbourne;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
@@ -30,6 +31,12 @@ public abstract class Map implements AudioSubject{
     protected final static String QUEST_DISCOVER_LAYER = "MAP_QUEST_DISCOVER_LAYER";
     protected final static String ENEMY_SPAWN_LAYER = "MAP_ENEMY_SPAWN_LAYER";
 
+    public final static String BACKGROUND_LAYER = "Background_Layer";
+    public final static String GROUND_LAYER = "Ground_Layer";
+    public final static String DECORATION_LAYER = "Decoration_Layer";
+    public final static String LIGHTMAP_LAYER = "MAP_LIGHTMAP_LAYER";
+
+
     //Starting locations
     protected final static String PLAYER_START = "PLAYER_START";
     protected final static String NPC_START = "NPC_START";
@@ -50,6 +57,7 @@ public abstract class Map implements AudioSubject{
     protected MapLayer _questItemSpawnLayer = null;
     protected MapLayer _questDiscoverLayer = null;
     protected MapLayer _enemySpawnLayer = null;
+    protected MapLayer _lightMapLayer = null;
 
     protected MapFactory.MapType _currentMapType;
     protected Array<Entity> _mapEntities;
@@ -111,11 +119,20 @@ public abstract class Map implements AudioSubject{
             Gdx.app.debug(TAG, "No enemy layer found!");
         }
 
+        _lightMapLayer = _currentMap.getLayers().get(LIGHTMAP_LAYER);
+        if( _lightMapLayer == null ){
+            Gdx.app.debug(TAG, "No lightmap layer found!");
+        }
+
         _npcStartPositions = getNPCStartPositions();
         _specialNPCStartPositions = getSpecialNPCStartPositions();
 
         //Observers
         this.addObserver(AudioManager.getInstance());
+    }
+
+    public MapLayer getLightMapLayer(){
+        return _lightMapLayer;
     }
 
     public Array<Vector2> getQuestItemSpawnPositions(String objectName, String objectTaskID) {

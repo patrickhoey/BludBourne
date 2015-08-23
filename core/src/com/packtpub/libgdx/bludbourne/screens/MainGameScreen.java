@@ -5,6 +5,10 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapImageLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Json;
 
@@ -122,8 +126,8 @@ public class MainGameScreen extends GameScreen {
 
 		_mapRenderer.setView(_camera);
 
-		//_mapRenderer.getBatch().enableBlending();
-		//_mapRenderer.getBatch().setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+		_mapRenderer.getBatch().enableBlending();
+		_mapRenderer.getBatch().setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
 		if( _mapMgr.hasMapChanged() ){
 			_mapRenderer.setMap(_mapMgr.getCurrentTiledMap());
@@ -139,11 +143,33 @@ public class MainGameScreen extends GameScreen {
 			_playerHUD.addTransitionToScreen();
 		}
 
-		_mapRenderer.render();
+		TiledMapImageLayer lightMap = (TiledMapImageLayer)_mapMgr.getCurrentLightMapLayer();
 
-		_mapMgr.updateCurrentMapEntities(_mapMgr, _mapRenderer.getBatch(), delta);
+		if( lightMap != null) {
+			TiledMapTileLayer backgroundMapLayer = (TiledMapTileLayer)_mapMgr.getCurrentTiledMap().getLayers().get(Map.BACKGROUND_LAYER);
+			TiledMapTileLayer groundMapLayer = (TiledMapTileLayer)_mapMgr.getCurrentTiledMap().getLayers().get(Map.GROUND_LAYER);
+			TiledMapTileLayer decorationMapLayer = (TiledMapTileLayer)_mapMgr.getCurrentTiledMap().getLayers().get(Map.DECORATION_LAYER);
 
-		_player.update(_mapMgr, _mapRenderer.getBatch(), delta);
+			_mapRenderer.getBatch().begin();
+			_mapRenderer.renderTileLayer(backgroundMapLayer);
+			_mapRenderer.renderTileLayer(groundMapLayer);
+			_mapRenderer.renderTileLayer(decorationMapLayer);
+			_mapRenderer.getBatch().end();
+
+			_mapMgr.updateCurrentMapEntities(_mapMgr, _mapRenderer.getBatch(), delta);
+			_player.update(_mapMgr, _mapRenderer.getBatch(), delta);
+
+			_mapRenderer.getBatch().begin();
+			_mapRenderer.getBatch().setBlendFunction(GL20.GL_DST_COLOR, GL20.GL_ONE_MINUS_SRC_ALPHA);
+			_mapRenderer.renderImageLayer(lightMap);
+			_mapRenderer.getBatch().setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+			_mapRenderer.getBatch().end();
+		}else{
+			_mapRenderer.render();
+			_mapMgr.updateCurrentMapEntities(_mapMgr, _mapRenderer.getBatch(), delta);
+			_player.update(_mapMgr, _mapRenderer.getBatch(), delta);
+		}
+
 		_playerHUD.render(delta);
 	}
 

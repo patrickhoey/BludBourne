@@ -2,6 +2,7 @@ package com.packtpub.libgdx.bludbourne;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -168,6 +169,10 @@ public class MapManager implements ProfileObserver {
             loadMap(MapFactory.MapType.TOWN);
         }
         return _currentMap.getCurrentTiledMap();
+    }
+
+    public MapLayer getCurrentLightMapLayer(){
+        return _currentMap.getLightMapLayer();
     }
 
     public void updateCurrentMapEntities(MapManager mapMgr, Batch batch, float delta){

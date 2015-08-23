@@ -71,7 +71,7 @@
 1352,1352,1352,1352,1352,1352,1352,1352,1352,1352,1352,1352,1331,1331,1331,1331,1331,1331,1331,1331,1331,1331,1331,1331,1331,1331,1331,1352,1352,1352,1352,1352,1352,1352,1352,1352,1352,1352,1352,1352
 </data>
  </layer>
- <objectgroup name="MAP_QUEST_ITEM_SPAWN_LAYER">
+ <objectgroup name="MAP_QUEST_ITEM_SPAWN_LAYER" visible="0">
   <object id="138" name="2" x="256" y="16" width="16" height="16">
    <properties>
     <property name="taskID" value="2"/>
@@ -171,7 +171,7 @@
 0,0,0,0,0,0,2321,2321,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup name="MAP_COLLISION_LAYER">
+ <objectgroup name="MAP_COLLISION_LAYER" visible="0">
   <object id="1" x="20" y="292" width="8" height="152"/>
   <object id="2" x="30" y="433" width="108" height="12"/>
   <object id="4" x="34" y="290" width="104" height="12"/>
@@ -261,7 +261,7 @@
   <object id="96" name="TOP_WORLD" x="640" y="-11" width="12" height="500"/>
   <object id="97" x="0" y="-17" width="640" height="12"/>
  </objectgroup>
- <objectgroup name="MAP_SPAWNS_LAYER">
+ <objectgroup name="MAP_SPAWNS_LAYER" visible="0">
   <object id="88" name="PLAYER_START" x="208" y="432" width="16" height="16"/>
   <object id="98" name="NPC_START" x="192" y="128" width="16" height="16"/>
   <object id="99" name="NPC_START" x="88" y="232"/>
@@ -303,10 +303,13 @@
   <object id="136" name="TOWN_FOLK14" x="48" y="144" width="16" height="16"/>
   <object id="137" name="TOWN_FOLK15" x="256" y="64" width="16" height="16"/>
  </objectgroup>
- <objectgroup name="MAP_PORTAL_LAYER">
+ <objectgroup name="MAP_PORTAL_LAYER" visible="0">
   <object id="89" name="TOP_WORLD" x="0" y="478" width="640" height="12"/>
   <object id="90" name="TOP_WORLD" x="0" y="-14" width="640" height="12"/>
   <object id="91" name="TOP_WORLD" x="640" y="-12" width="12" height="500"/>
   <object id="93" name="TOP_WORLD" x="-16" y="-12" width="12" height="500"/>
  </objectgroup>
+ <imagelayer name="MAP_LIGHTMAP_LAYER">
+  <image source="town_lightmap.png"/>
+ </imagelayer>
 </map>

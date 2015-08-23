@@ -205,7 +205,7 @@ public class PlayerPhysicsComponent extends PhysicsComponent {
         MapLayer mapPortalLayer =  mapMgr.getPortalLayer();
 
         if( mapPortalLayer == null ){
-            Gdx.app.debug(TAG, "Portal Layer doesn't exist!");
+            //Gdx.app.debug(TAG, "Portal Layer doesn't exist!");
             return false;
         }
 
