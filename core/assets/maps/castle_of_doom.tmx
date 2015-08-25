@@ -289,7 +289,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,101,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup name="MAP_COLLISION_LAYER">
+ <objectgroup name="MAP_COLLISION_LAYER" visible="0">
   <object id="1" x="274" y="1234" width="60" height="44"/>
   <object id="2" x="178" y="1234" width="60" height="44"/>
   <object id="3" x="178" y="1138" width="60" height="76"/>
@@ -425,15 +425,18 @@
   <object id="147" x="514" y="977" width="20" height="300"/>
   <object id="152" x="-56" y="1285" width="616" height="36"/>
  </objectgroup>
- <objectgroup name="MAP_SPAWNS_LAYER">
+ <objectgroup name="MAP_SPAWNS_LAYER" visible="0">
   <object id="149" name="PLAYER_START" x="248" y="1240" width="16" height="16"/>
  </objectgroup>
- <objectgroup name="MAP_PORTAL_LAYER" opacity="0.9">
+ <objectgroup name="MAP_PORTAL_LAYER" visible="0" opacity="0.9">
   <object id="150" name="TOP_WORLD" x="-12" y="1283" width="540" height="32"/>
  </objectgroup>
- <objectgroup name="MAP_ENEMY_SPAWN_LAYER">
+ <objectgroup name="MAP_ENEMY_SPAWN_LAYER" visible="0">
   <object id="153" name="7" x="-80" y="972" width="736" height="312"/>
   <object id="154" name="8" x="-88" y="112" width="760" height="856"/>
   <object id="155" name="10" x="24" y="16" width="192" height="72"/>
  </objectgroup>
+ <imagelayer name="MAP_LIGHTMAP_LAYER">
+  <image source="castle_of_doom_lightmap.png"/>
+ </imagelayer>
 </map>
