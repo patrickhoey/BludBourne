@@ -146,14 +146,22 @@ public class MainGameScreen extends GameScreen {
 		TiledMapImageLayer lightMap = (TiledMapImageLayer)_mapMgr.getCurrentLightMapLayer();
 
 		if( lightMap != null) {
-			TiledMapTileLayer backgroundMapLayer = (TiledMapTileLayer)_mapMgr.getCurrentTiledMap().getLayers().get(Map.BACKGROUND_LAYER);
-			TiledMapTileLayer groundMapLayer = (TiledMapTileLayer)_mapMgr.getCurrentTiledMap().getLayers().get(Map.GROUND_LAYER);
-			TiledMapTileLayer decorationMapLayer = (TiledMapTileLayer)_mapMgr.getCurrentTiledMap().getLayers().get(Map.DECORATION_LAYER);
-
 			_mapRenderer.getBatch().begin();
-			_mapRenderer.renderTileLayer(backgroundMapLayer);
-			_mapRenderer.renderTileLayer(groundMapLayer);
-			_mapRenderer.renderTileLayer(decorationMapLayer);
+			TiledMapTileLayer backgroundMapLayer = (TiledMapTileLayer)_mapMgr.getCurrentTiledMap().getLayers().get(Map.BACKGROUND_LAYER);
+			if( backgroundMapLayer != null ){
+				_mapRenderer.renderTileLayer(backgroundMapLayer);
+			}
+
+			TiledMapTileLayer groundMapLayer = (TiledMapTileLayer)_mapMgr.getCurrentTiledMap().getLayers().get(Map.GROUND_LAYER);
+			if( groundMapLayer != null ){
+				_mapRenderer.renderTileLayer(groundMapLayer);
+			}
+
+			TiledMapTileLayer decorationMapLayer = (TiledMapTileLayer)_mapMgr.getCurrentTiledMap().getLayers().get(Map.DECORATION_LAYER);
+			if( decorationMapLayer != null ){
+				_mapRenderer.renderTileLayer(decorationMapLayer);
+			}
+			
 			_mapRenderer.getBatch().end();
 
 			_mapMgr.updateCurrentMapEntities(_mapMgr, _mapRenderer.getBatch(), delta);
