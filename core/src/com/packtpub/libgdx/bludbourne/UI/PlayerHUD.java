@@ -33,6 +33,7 @@ import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 import com.packtpub.libgdx.bludbourne.profile.ProfileObserver;
 import com.packtpub.libgdx.bludbourne.quest.QuestGraph;
 import com.packtpub.libgdx.bludbourne.screens.MainGameScreen;
+import com.packtpub.libgdx.bludbourne.sfx.ClockActor;
 import com.packtpub.libgdx.bludbourne.sfx.ScreenTransitionAction;
 import com.packtpub.libgdx.bludbourne.sfx.ScreenTransitionActor;
 import com.packtpub.libgdx.bludbourne.sfx.ShakeCamera;
@@ -60,6 +61,7 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
     private ScreenTransitionActor _transitionActor;
 
     private ShakeCamera _shakeCam;
+    private ClockActor _clock;
 
     private static final String INVENTORY_FULL = "Your inventory is full!";
 
@@ -89,6 +91,11 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
             }
 
         };
+        _clock = new ClockActor("0", Utility.STATUSUI_SKIN);
+        _clock.setPosition(_stage.getWidth()-_clock.getWidth(),0);
+        _clock.setRateOfTime(60);
+        _clock.setVisible(true);
+
         _messageBoxUI.setVisible(false);
         _messageBoxUI.pack();
         _messageBoxUI.setPosition(_stage.getWidth() / 2 - _messageBoxUI.getWidth() / 2, _stage.getHeight() / 2 - _messageBoxUI.getHeight() / 2);
@@ -138,6 +145,7 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
         _stage.addActor(_messageBoxUI);
         _stage.addActor(_statusUI);
         _stage.addActor(_inventoryUI);
+        _stage.addActor(_clock);
 
         _battleUI.validate();
         _questUI.validate();
@@ -146,6 +154,7 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
         _messageBoxUI.validate();
         _statusUI.validate();
         _inventoryUI.validate();
+        _clock.validate();
 
         //add tooltips to the stage
         Array<Actor> actors = _inventoryUI.getInventoryActors();
