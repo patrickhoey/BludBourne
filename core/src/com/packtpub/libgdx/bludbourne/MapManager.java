@@ -2,10 +2,10 @@ package com.packtpub.libgdx.bludbourne;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
@@ -20,6 +20,12 @@ public class MapManager implements ProfileObserver {
     private Map _currentMap;
     private Entity _player;
     private Entity _currentSelectedEntity = null;
+    private MapLayer _currentLightMap = null;
+    private MapLayer _previousLightMap = null;
+    private ClockActor.TimeOfDay _timeOfDay = null;
+    private float _currentLightMapOpacity = 0;
+    private float _previousLightMapOpacity = 1;
+    private boolean _timeOfDayChanged = false;
 
     public MapManager(){
     }
@@ -94,6 +100,7 @@ public class MapManager implements ProfileObserver {
         _currentMap = map;
         _mapChanged = true;
         clearCurrentSelectedMapEntity();
+        _previousLightMap = null;
         Gdx.app.debug(TAG, "Player Start: (" + _currentMap.getPlayerStart().x + "," + _currentMap.getPlayerStart().y + ")");
     }
 
@@ -173,19 +180,59 @@ public class MapManager implements ProfileObserver {
         return _currentMap.getCurrentTiledMap();
     }
 
-    public MapLayer getCurrentLightMapLayer(ClockActor.TimeOfDay timeOfDay){
+    public MapLayer getPreviousLightMapLayer(){
+        return _previousLightMap;
+    }
+
+    public MapLayer getCurrentLightMapLayer(){
+        return _currentLightMap;
+    }
+
+    public void updateLightMaps(ClockActor.TimeOfDay timeOfDay){
+        if( _timeOfDay != timeOfDay ){
+            _currentLightMapOpacity = 0;
+            _previousLightMapOpacity = 1;
+            _timeOfDay = timeOfDay;
+            _timeOfDayChanged = true;
+            _previousLightMap = _currentLightMap;
+
+            Gdx.app.debug(TAG, "Time of Day CHANGED");
+        }
         switch(timeOfDay){
             case DAWN:
-                return _currentMap.getLightMapDawnLayer();
+                _currentLightMap = _currentMap.getLightMapDawnLayer();
+                break;
             case AFTERNOON:
-                return null;
+                _currentLightMap = _currentMap.getLightMapAfternoonLayer();
+                break;
             case DUSK:
-                return _currentMap.getLightMapDuskLayer();
+                _currentLightMap = _currentMap.getLightMapDuskLayer();
+                break;
             case NIGHT:
-                return _currentMap.getLightMapNightLayer();
+                _currentLightMap = _currentMap.getLightMapNightLayer();
+                break;
             default:
-                return null;
+                _currentLightMap = _currentMap.getLightMapAfternoonLayer();
+                break;
         }
+
+            if( _timeOfDayChanged ){
+                if( _previousLightMap != null && _previousLightMapOpacity != 0 ){
+                    _previousLightMap.setOpacity(_previousLightMapOpacity);
+                    _previousLightMapOpacity = MathUtils.clamp(_previousLightMapOpacity -= .05, 0, 1);
+
+                    if( _previousLightMapOpacity == 0 ){
+                        _previousLightMap = null;
+                    }
+                }
+
+                if( _currentLightMap != null && _currentLightMapOpacity != 1 ) {
+                    _currentLightMap.setOpacity(_currentLightMapOpacity);
+                    _currentLightMapOpacity = MathUtils.clamp(_currentLightMapOpacity += .01, 0, 1);
+                }
+            }else{
+                _timeOfDayChanged = false;
+            }
     }
 
     public void updateCurrentMapEntities(MapManager mapMgr, Batch batch, float delta){

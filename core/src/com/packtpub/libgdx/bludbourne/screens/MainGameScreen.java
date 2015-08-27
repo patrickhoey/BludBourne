@@ -143,7 +143,9 @@ public class MainGameScreen extends GameScreen {
 			_playerHUD.addTransitionToScreen();
 		}
 
-		TiledMapImageLayer lightMap = (TiledMapImageLayer)_mapMgr.getCurrentLightMapLayer(_playerHUD.getCurrentTimeOfDay());
+		_mapMgr.updateLightMaps(_playerHUD.getCurrentTimeOfDay());
+		TiledMapImageLayer lightMap = (TiledMapImageLayer)_mapMgr.getCurrentLightMapLayer();
+		TiledMapImageLayer previousLightMap = (TiledMapImageLayer)_mapMgr.getPreviousLightMapLayer();
 
 		if( lightMap != null) {
 			_mapRenderer.getBatch().begin();
@@ -161,7 +163,7 @@ public class MainGameScreen extends GameScreen {
 			if( decorationMapLayer != null ){
 				_mapRenderer.renderTileLayer(decorationMapLayer);
 			}
-			
+
 			_mapRenderer.getBatch().end();
 
 			_mapMgr.updateCurrentMapEntities(_mapMgr, _mapRenderer.getBatch(), delta);
@@ -169,6 +171,9 @@ public class MainGameScreen extends GameScreen {
 
 			_mapRenderer.getBatch().begin();
 			_mapRenderer.getBatch().setBlendFunction(GL20.GL_DST_COLOR, GL20.GL_ONE_MINUS_SRC_ALPHA);
+			if( previousLightMap != null ){
+				_mapRenderer.renderImageLayer(previousLightMap);
+			}
 			_mapRenderer.renderImageLayer(lightMap);
 			_mapRenderer.getBatch().setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 			_mapRenderer.getBatch().end();
