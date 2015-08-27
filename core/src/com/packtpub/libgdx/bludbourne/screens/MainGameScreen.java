@@ -143,7 +143,7 @@ public class MainGameScreen extends GameScreen {
 			_playerHUD.addTransitionToScreen();
 		}
 
-		TiledMapImageLayer lightMap = (TiledMapImageLayer)_mapMgr.getCurrentLightMapLayer();
+		TiledMapImageLayer lightMap = (TiledMapImageLayer)_mapMgr.getCurrentLightMapLayer(_playerHUD.getCurrentTimeOfDay());
 
 		if( lightMap != null) {
 			_mapRenderer.getBatch().begin();

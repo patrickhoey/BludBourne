@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
 import com.packtpub.libgdx.bludbourne.profile.ProfileObserver;
+import com.packtpub.libgdx.bludbourne.sfx.ClockActor;
 
 public class MapManager implements ProfileObserver {
     private static final String TAG = MapManager.class.getSimpleName();
@@ -124,6 +125,7 @@ public class MapManager implements ProfileObserver {
         }
     }
 
+
     public void disableCurrentmapMusic(){
         _currentMap.unloadMusic();
     }
@@ -171,8 +173,19 @@ public class MapManager implements ProfileObserver {
         return _currentMap.getCurrentTiledMap();
     }
 
-    public MapLayer getCurrentLightMapLayer(){
-        return _currentMap.getLightMapLayer();
+    public MapLayer getCurrentLightMapLayer(ClockActor.TimeOfDay timeOfDay){
+        switch(timeOfDay){
+            case DAWN:
+                return _currentMap.getLightMapDawnLayer();
+            case AFTERNOON:
+                return null;
+            case DUSK:
+                return _currentMap.getLightMapDuskLayer();
+            case NIGHT:
+                return _currentMap.getLightMapNightLayer();
+            default:
+                return null;
+        }
     }
 
     public void updateCurrentMapEntities(MapManager mapMgr, Batch batch, float delta){

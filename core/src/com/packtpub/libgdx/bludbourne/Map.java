@@ -34,8 +34,10 @@ public abstract class Map implements AudioSubject{
     public final static String BACKGROUND_LAYER = "Background_Layer";
     public final static String GROUND_LAYER = "Ground_Layer";
     public final static String DECORATION_LAYER = "Decoration_Layer";
-    public final static String LIGHTMAP_LAYER = "MAP_LIGHTMAP_LAYER";
 
+    public final static String LIGHTMAP_DAWN_LAYER = "MAP_LIGHTMAP_LAYER_DAWN";
+    public final static String LIGHTMAP_DUSK_LAYER = "MAP_LIGHTMAP_LAYER_DUSK";
+    public final static String LIGHTMAP_NIGHT_LAYER = "MAP_LIGHTMAP_LAYER_NIGHT";
 
     //Starting locations
     protected final static String PLAYER_START = "PLAYER_START";
@@ -57,7 +59,10 @@ public abstract class Map implements AudioSubject{
     protected MapLayer _questItemSpawnLayer = null;
     protected MapLayer _questDiscoverLayer = null;
     protected MapLayer _enemySpawnLayer = null;
-    protected MapLayer _lightMapLayer = null;
+
+    protected MapLayer _lightMapDawnLayer = null;
+    protected MapLayer _lightMapDuskLayer = null;
+    protected MapLayer _lightMapNightLayer = null;
 
     protected MapFactory.MapType _currentMapType;
     protected Array<Entity> _mapEntities;
@@ -119,8 +124,18 @@ public abstract class Map implements AudioSubject{
             Gdx.app.debug(TAG, "No enemy layer found!");
         }
 
-        _lightMapLayer = _currentMap.getLayers().get(LIGHTMAP_LAYER);
-        if( _lightMapLayer == null ){
+        _lightMapDawnLayer = _currentMap.getLayers().get(LIGHTMAP_DAWN_LAYER);
+        if( _lightMapDawnLayer == null ){
+            Gdx.app.debug(TAG, "No lightmap layer found!");
+        }
+
+        _lightMapDuskLayer = _currentMap.getLayers().get(LIGHTMAP_DUSK_LAYER);
+        if( _lightMapDuskLayer == null ){
+            Gdx.app.debug(TAG, "No lightmap layer found!");
+        }
+
+        _lightMapNightLayer = _currentMap.getLayers().get(LIGHTMAP_NIGHT_LAYER);
+        if( _lightMapNightLayer == null ){
             Gdx.app.debug(TAG, "No lightmap layer found!");
         }
 
@@ -131,8 +146,16 @@ public abstract class Map implements AudioSubject{
         this.addObserver(AudioManager.getInstance());
     }
 
-    public MapLayer getLightMapLayer(){
-        return _lightMapLayer;
+    public MapLayer getLightMapDawnLayer(){
+        return _lightMapDawnLayer;
+    }
+
+    public MapLayer getLightMapDuskLayer(){
+        return _lightMapDuskLayer;
+    }
+
+    public MapLayer getLightMapNightLayer(){
+        return _lightMapNightLayer;
     }
 
     public Array<Vector2> getQuestItemSpawnPositions(String objectName, String objectTaskID) {

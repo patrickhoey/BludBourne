@@ -1,6 +1,5 @@
 package com.packtpub.libgdx.bludbourne.UI;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
@@ -227,6 +226,10 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
 
     public Stage getStage() {
         return _stage;
+    }
+
+    public ClockActor.TimeOfDay getCurrentTimeOfDay(){
+        return _clock.getCurrentTimeOfDay();
     }
 
     public void updateEntityObservers(){

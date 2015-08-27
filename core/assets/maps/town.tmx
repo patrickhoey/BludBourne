@@ -324,7 +324,13 @@
   <object id="91" name="TOP_WORLD" x="640" y="-12" width="12" height="500"/>
   <object id="93" name="TOP_WORLD" x="-16" y="-12" width="12" height="500"/>
  </objectgroup>
- <imagelayer name="MAP_LIGHTMAP_LAYER" visible="0">
-  <image source="town_lightmap.png"/>
+ <imagelayer name="MAP_LIGHTMAP_LAYER_NIGHT" visible="0">
+  <image source="town_lightmap_night.png"/>
+ </imagelayer>
+ <imagelayer name="MAP_LIGHTMAP_LAYER_DUSK" visible="0">
+  <image source="town_lightmap_dusk.png"/>
+ </imagelayer>
+ <imagelayer name="MAP_LIGHTMAP_LAYER_DAWN" visible="0">
+  <image source="town_lightmap_dawn.png"/>
  </imagelayer>
 </map>
