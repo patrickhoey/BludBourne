@@ -459,7 +459,13 @@
   <object id="418" name="9" x="128" y="76" width="48" height="48"/>
   <object id="419" name="6" x="204" y="40" width="800" height="128"/>
  </objectgroup>
- <imagelayer name="MAP_LIGHTMAP_LAYER" visible="0">
-  <image source="topworld_lightmap.png"/>
+ <imagelayer name="MAP_LIGHTMAP_LAYER_DAWN" visible="0">
+  <image source="topworld_lightmap_dawn.png"/>
+ </imagelayer>
+ <imagelayer name="MAP_LIGHTMAP_LAYER_DUSK" visible="0" opacity="0.9">
+  <image source="topworld_lightmap_dusk.png"/>
+ </imagelayer>
+ <imagelayer name="MAP_LIGHTMAP_LAYER_NIGHT" visible="0">
+  <image source="topworld_lightmap_night.png"/>
  </imagelayer>
 </map>
