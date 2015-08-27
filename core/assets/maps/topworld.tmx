@@ -468,4 +468,7 @@
  <imagelayer name="MAP_LIGHTMAP_LAYER_NIGHT" visible="0">
   <image source="topworld_lightmap_night.png"/>
  </imagelayer>
+ <imagelayer name="MAP_LIGHTMAP_LAYER_AFTERNOON" visible="0">
+  <image source="topworld_lightmap_afternoon.png"/>
+ </imagelayer>
 </map>

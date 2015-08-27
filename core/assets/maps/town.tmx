@@ -333,4 +333,7 @@
  <imagelayer name="MAP_LIGHTMAP_LAYER_DAWN" visible="0">
   <image source="town_lightmap_dawn.png"/>
  </imagelayer>
+ <imagelayer name="MAP_LIGHTMAP_LAYER_AFTERNOON" visible="0">
+  <image source="town_lightmap_afternoon.png" trans="000000"/>
+ </imagelayer>
 </map>

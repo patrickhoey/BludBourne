@@ -445,4 +445,7 @@
  <imagelayer name="MAP_LIGHTMAP_LAYER_DAWN" visible="0" opacity="0.9">
   <image source="castle_of_doom_lightmap_dawn.png"/>
  </imagelayer>
+ <imagelayer name="MAP_LIGHTMAP_LAYER_AFTERNOON" visible="0">
+  <image source="castle_of_doom_lightmap_afternoon.png"/>
+ </imagelayer>
 </map>

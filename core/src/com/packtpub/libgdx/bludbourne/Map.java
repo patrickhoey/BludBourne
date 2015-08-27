@@ -36,6 +36,7 @@ public abstract class Map implements AudioSubject{
     public final static String DECORATION_LAYER = "Decoration_Layer";
 
     public final static String LIGHTMAP_DAWN_LAYER = "MAP_LIGHTMAP_LAYER_DAWN";
+    public final static String LIGHTMAP_AFTERNOON_LAYER = "MAP_LIGHTMAP_LAYER_AFTERNOON";
     public final static String LIGHTMAP_DUSK_LAYER = "MAP_LIGHTMAP_LAYER_DUSK";
     public final static String LIGHTMAP_NIGHT_LAYER = "MAP_LIGHTMAP_LAYER_NIGHT";
 
@@ -61,6 +62,7 @@ public abstract class Map implements AudioSubject{
     protected MapLayer _enemySpawnLayer = null;
 
     protected MapLayer _lightMapDawnLayer = null;
+    protected MapLayer _lightMapAfternoonLayer = null;
     protected MapLayer _lightMapDuskLayer = null;
     protected MapLayer _lightMapNightLayer = null;
 
@@ -126,17 +128,23 @@ public abstract class Map implements AudioSubject{
 
         _lightMapDawnLayer = _currentMap.getLayers().get(LIGHTMAP_DAWN_LAYER);
         if( _lightMapDawnLayer == null ){
-            Gdx.app.debug(TAG, "No lightmap layer found!");
+            Gdx.app.debug(TAG, "No dawn lightmap layer found!");
         }
+
+        _lightMapAfternoonLayer = _currentMap.getLayers().get(LIGHTMAP_AFTERNOON_LAYER);
+        if( _lightMapAfternoonLayer == null ){
+            Gdx.app.debug(TAG, "No afternoon lightmap layer found!");
+        }
+
 
         _lightMapDuskLayer = _currentMap.getLayers().get(LIGHTMAP_DUSK_LAYER);
         if( _lightMapDuskLayer == null ){
-            Gdx.app.debug(TAG, "No lightmap layer found!");
+            Gdx.app.debug(TAG, "No dusk lightmap layer found!");
         }
 
         _lightMapNightLayer = _currentMap.getLayers().get(LIGHTMAP_NIGHT_LAYER);
         if( _lightMapNightLayer == null ){
-            Gdx.app.debug(TAG, "No lightmap layer found!");
+            Gdx.app.debug(TAG, "No night lightmap layer found!");
         }
 
         _npcStartPositions = getNPCStartPositions();
@@ -148,6 +156,10 @@ public abstract class Map implements AudioSubject{
 
     public MapLayer getLightMapDawnLayer(){
         return _lightMapDawnLayer;
+    }
+
+    public MapLayer getLightMapAfternoonLayer(){
+        return _lightMapAfternoonLayer;
     }
 
     public MapLayer getLightMapDuskLayer(){
