@@ -270,6 +270,9 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
                     //start the player with some money
                     _statusUI.setGoldValue(20);
                     _statusUI.setStatusForLevel(1);
+
+                    _clock.setTotalTime(60 * 60 * 12); //start at noon
+                    profileManager.setProperty("currentTime", _clock.getTotalTime());
                 }else{
                     int goldVal = profileManager.getProperty("currentPlayerGP", Integer.class);
 
@@ -308,6 +311,9 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
                     //then add in current values
                     _statusUI.setGoldValue(goldVal);
                     _statusUI.setLevelValue(levelVal);
+
+                    float totalTime = profileManager.getProperty("currentTime", Float.class);
+                    _clock.setTotalTime(totalTime);
                 }
 
             break;
@@ -323,6 +329,7 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
                 profileManager.setProperty("currentPlayerHPMax", _statusUI.getHPValueMax() );
                 profileManager.setProperty("currentPlayerMP", _statusUI.getMPValue() );
                 profileManager.setProperty("currentPlayerMPMax", _statusUI.getMPValueMax() );
+                profileManager.setProperty("currentTime", _clock.getTotalTime());
                 break;
             case CLEAR_CURRENT_PROFILE:
                 profileManager.setProperty("playerQuests", new Array<QuestGraph>());
@@ -336,6 +343,7 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
                 profileManager.setProperty("currentPlayerHPMax", 0 );
                 profileManager.setProperty("currentPlayerMP", 0 );
                 profileManager.setProperty("currentPlayerMPMax", 0 );
+                profileManager.setProperty("currentTime", 0);
                 break;
             default:
                 break;

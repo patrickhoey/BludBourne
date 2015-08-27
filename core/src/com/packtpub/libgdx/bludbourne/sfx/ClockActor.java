@@ -27,6 +27,14 @@ public class ClockActor extends Label {
         this.pack();
     }
 
+    public float getTotalTime() {
+        return _totalTime;
+    }
+
+    public void setTotalTime(float totalTime) {
+        this._totalTime = totalTime;
+    }
+
     public float getRateOfTime() {
         return _rateOfTime;
     }
