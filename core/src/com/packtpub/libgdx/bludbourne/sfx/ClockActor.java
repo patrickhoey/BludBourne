@@ -1,10 +1,12 @@
 package com.packtpub.libgdx.bludbourne.sfx;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class ClockActor extends Label {
+
     public static enum TimeOfDay {
         DAWN,
         AFTERNOON,
@@ -21,7 +23,30 @@ public class ClockActor extends Label {
 
     public ClockActor(CharSequence text, Skin skin) {
         super(text, skin);
+        init();
+    }
 
+    public ClockActor(CharSequence text, Skin skin, String styleName) {
+        super(text, skin, styleName);
+        init();
+    }
+
+    public ClockActor(CharSequence text, Skin skin, String fontName, Color color) {
+        super(text, skin, fontName, color);
+        init();
+    }
+
+    public ClockActor(CharSequence text, Skin skin, String fontName, String colorName) {
+        super(text, skin, fontName, colorName);
+        init();
+    }
+
+    public ClockActor(CharSequence text, LabelStyle style) {
+        super(text, style);
+        init();
+    }
+
+    private void init(){
         String time = String.format(FORMAT, 0, 0, _isAfternoon?PM:AM);
         this.setText(time);
         this.pack();
@@ -76,7 +101,7 @@ public class ClockActor extends Label {
             hours = 12;
         }
 
-        String time = String.format(FORMAT, hours, minutes, _isAfternoon?PM:AM);
+        String time = String.format(FORMAT, hours, minutes, _isAfternoon ? PM : AM);
         this.setText(time);
     }
 
