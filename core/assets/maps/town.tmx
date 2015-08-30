@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="16" tileheight="16" nextobjectid="157">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="16" tileheight="16" nextobjectid="158">
  <tileset firstgid="1" name="Decor0" tilewidth="16" tileheight="16">
   <image source="../sprites/Objects/Decor0.png" width="128" height="352"/>
  </tileset>
@@ -323,6 +323,9 @@
   <object id="90" name="TOP_WORLD" x="0" y="-14" width="640" height="12"/>
   <object id="91" name="TOP_WORLD" x="640" y="-12" width="12" height="500"/>
   <object id="93" name="TOP_WORLD" x="-16" y="-12" width="12" height="500"/>
+ </objectgroup>
+ <objectgroup name="PARTICLE_EFFECT_SPAWN_LAYER">
+  <object id="157" name="CANDLE_FIRE" x="68" y="289" width="8" height="8"/>
  </objectgroup>
  <imagelayer name="MAP_LIGHTMAP_LAYER_NIGHT" visible="0">
   <image source="town_lightmap_night.png"/>

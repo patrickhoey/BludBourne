@@ -1,10 +1,13 @@
 package com.packtpub.libgdx.bludbourne;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.packtpub.libgdx.bludbourne.audio.AudioObserver;
 import com.packtpub.libgdx.bludbourne.profile.ProfileManager;
+import com.packtpub.libgdx.bludbourne.sfx.ParticleEffectFactory;
 
 public class TownMap extends Map{
     private static final String TAG = PlayerPhysicsComponent.class.getSimpleName();
@@ -96,6 +99,16 @@ public class TownMap extends Map{
         initSpecialEntityPosition(townfolk15);
         _mapEntities.add(townfolk15);
 
+        Array<Vector2> effectPositions = getParticleEffectSpawnPositions(ParticleEffectFactory.ParticleEffectType.CANDLE_FIRE);
+        for( Vector2 position: effectPositions ){
+            ParticleEffect effect = ParticleEffectFactory.getParticleEffect(ParticleEffectFactory.ParticleEffectType.CANDLE_FIRE);
+            if( effect != null ){
+                effect.scaleEffect(.01f);
+                effect.setPosition(position.x, position.y);
+                effect.start();
+                _mapParticleEffects.add(effect);
+            }
+        }
     }
 
     @Override
@@ -105,6 +118,11 @@ public class TownMap extends Map{
         }
         for( int i=0; i < _mapQuestEntities.size; i++){
             _mapQuestEntities.get(i).update(mapMgr, batch, delta);
+        }
+        for( int i=0; i < _mapParticleEffects.size; i++){
+            batch.begin();
+            _mapParticleEffects.get(i).draw(batch, delta);
+            batch.end();
         }
     }
 

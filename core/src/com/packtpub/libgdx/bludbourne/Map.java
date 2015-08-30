@@ -3,16 +3,19 @@ package com.packtpub.libgdx.bludbourne;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.packtpub.libgdx.bludbourne.audio.AudioManager;
 import com.packtpub.libgdx.bludbourne.audio.AudioObserver;
 import com.packtpub.libgdx.bludbourne.audio.AudioSubject;
+import com.packtpub.libgdx.bludbourne.sfx.ParticleEffectFactory;
 
 import java.util.Hashtable;
 
@@ -30,6 +33,7 @@ public abstract class Map implements AudioSubject{
     protected final static String QUEST_ITEM_SPAWN_LAYER = "MAP_QUEST_ITEM_SPAWN_LAYER";
     protected final static String QUEST_DISCOVER_LAYER = "MAP_QUEST_DISCOVER_LAYER";
     protected final static String ENEMY_SPAWN_LAYER = "MAP_ENEMY_SPAWN_LAYER";
+    protected final static String PARTICLE_EFFECT_SPAWN_LAYER = "PARTICLE_EFFECT_SPAWN_LAYER";
 
     public final static String BACKGROUND_LAYER = "Background_Layer";
     public final static String GROUND_LAYER = "Ground_Layer";
@@ -60,6 +64,7 @@ public abstract class Map implements AudioSubject{
     protected MapLayer _questItemSpawnLayer = null;
     protected MapLayer _questDiscoverLayer = null;
     protected MapLayer _enemySpawnLayer = null;
+    protected MapLayer _particleEffectSpawnLayer = null;
 
     protected MapLayer _lightMapDawnLayer = null;
     protected MapLayer _lightMapAfternoonLayer = null;
@@ -69,12 +74,14 @@ public abstract class Map implements AudioSubject{
     protected MapFactory.MapType _currentMapType;
     protected Array<Entity> _mapEntities;
     protected Array<Entity> _mapQuestEntities;
+    protected Array<ParticleEffect> _mapParticleEffects;
 
     Map( MapFactory.MapType mapType, String fullMapPath){
         _json = new Json();
         _mapEntities = new Array<Entity>(10);
         _observers = new Array<AudioObserver>();
         _mapQuestEntities = new Array<Entity>();
+        _mapParticleEffects = new Array<ParticleEffect>();
         _currentMapType = mapType;
         _playerStart = new Vector2(0,0);
         _playerStartPositionRect = new Vector2(0,0);
@@ -147,6 +154,11 @@ public abstract class Map implements AudioSubject{
             Gdx.app.debug(TAG, "No night lightmap layer found!");
         }
 
+        _particleEffectSpawnLayer = _currentMap.getLayers().get(PARTICLE_EFFECT_SPAWN_LAYER);
+        if( _particleEffectSpawnLayer == null ){
+            Gdx.app.debug(TAG, "No particle effect spawn layer!");
+        }
+
         _npcStartPositions = getNPCStartPositions();
         _specialNPCStartPositions = getSpecialNPCStartPositions();
 
@@ -168,6 +180,32 @@ public abstract class Map implements AudioSubject{
 
     public MapLayer getLightMapNightLayer(){
         return _lightMapNightLayer;
+    }
+
+    public Array<Vector2> getParticleEffectSpawnPositions(ParticleEffectFactory.ParticleEffectType particleEffectType) {
+        Array<MapObject> objects = new Array<MapObject>();
+        Array<Vector2> positions = new Array<Vector2>();
+
+        for( MapObject object: _particleEffectSpawnLayer.getObjects()){
+            String name = object.getName();
+
+            if(     name == null || name.isEmpty() ||
+                    !name.equalsIgnoreCase(particleEffectType.toString())){
+                continue;
+            }
+
+            Rectangle rect = ((RectangleMapObject)object).getRectangle();
+            //Get center of rectangle
+            float x = rect.getX() + (rect.getWidth()/2);
+            float y = rect.getY() + (rect.getHeight()/2);
+
+            //scale by the unit to convert from map coordinates
+            x *= UNIT_SCALE;
+            y *= UNIT_SCALE;
+
+            positions.add(new Vector2(x,y));
+        }
+        return positions;
     }
 
     public Array<Vector2> getQuestItemSpawnPositions(String objectName, String objectTaskID) {
@@ -203,6 +241,10 @@ public abstract class Map implements AudioSubject{
 
     public Array<Entity> getMapQuestEntities(){
         return _mapQuestEntities;
+    }
+
+    public Array<ParticleEffect> getMapParticleEffects(){
+        return _mapParticleEffects;
     }
 
     public void addMapQuestEntities(Array<Entity> entities){
