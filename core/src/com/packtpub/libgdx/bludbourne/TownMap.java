@@ -101,13 +101,7 @@ public class TownMap extends Map{
 
         Array<Vector2> effectPositions = getParticleEffectSpawnPositions(ParticleEffectFactory.ParticleEffectType.CANDLE_FIRE);
         for( Vector2 position: effectPositions ){
-            ParticleEffect effect = ParticleEffectFactory.getParticleEffect(ParticleEffectFactory.ParticleEffectType.CANDLE_FIRE);
-            if( effect != null ){
-                effect.scaleEffect(.04f);
-                effect.setPosition(position.x, position.y);
-                effect.start();
-                _mapParticleEffects.add(effect);
-            }
+            _mapParticleEffects.add(ParticleEffectFactory.getParticleEffect(ParticleEffectFactory.ParticleEffectType.CANDLE_FIRE, position));
         }
     }
 

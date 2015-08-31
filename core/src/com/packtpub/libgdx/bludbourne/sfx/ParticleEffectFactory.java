@@ -2,12 +2,27 @@ package com.packtpub.libgdx.bludbourne.sfx;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.math.Vector2;
 
 public class ParticleEffectFactory {
 
+    private static String SFX_ROOT_DIR = "sfx";
+
     public static enum ParticleEffectType{
-        CANDLE_FIRE, LAVA_SMOKE, WAND_ATTACK,
-        NONE
+        CANDLE_FIRE("sfx/candle.p"),
+        LAVA_SMOKE(""),
+        WAND_ATTACK(""),
+        NONE("");
+
+        private String _fullFilePath;
+
+        ParticleEffectType(String fullFilePath){
+            this._fullFilePath = fullFilePath;
+        }
+
+        public String getValue(){
+            return _fullFilePath;
+        }
     }
 
     private static ParticleEffectFactory _instance = null;
@@ -23,19 +38,23 @@ public class ParticleEffectFactory {
         return _instance;
     }
 
-    public static ParticleEffect getParticleEffect(ParticleEffectType particleEffectType){
+    public static ParticleEffect getParticleEffect(ParticleEffectType particleEffectType, Vector2 position){
         ParticleEffect effect = new ParticleEffect();
+        effect.load(Gdx.files.internal(particleEffectType.getValue()), Gdx.files.internal(SFX_ROOT_DIR));
+        effect.setPosition(position.x, position.y);
         switch(particleEffectType){
             case CANDLE_FIRE:
-                effect.load(Gdx.files.internal("sfx/candle.p"), Gdx.files.internal("sfx"));
-                return effect;
+                effect.scaleEffect(.04f);
+                break;
             case LAVA_SMOKE:
-                return null;
+                break;
             case WAND_ATTACK:
-                return null;
+                break;
             default:
-                return null;
+                break;
         }
+        effect.start();
+        return effect;
 
     }
 
