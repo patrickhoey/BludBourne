@@ -10,6 +10,7 @@ public class ParticleEffectFactory {
 
     public static enum ParticleEffectType{
         CANDLE_FIRE("sfx/candle.p"),
+        LANTERN_FIRE("sfx/candle.p"),
         LAVA_SMOKE(""),
         WAND_ATTACK(""),
         NONE("");
@@ -45,6 +46,9 @@ public class ParticleEffectFactory {
         switch(particleEffectType){
             case CANDLE_FIRE:
                 effect.scaleEffect(.04f);
+                break;
+            case LANTERN_FIRE:
+                effect.scaleEffect(.02f);
                 break;
             case LAVA_SMOKE:
                 break;

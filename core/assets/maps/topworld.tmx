@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="75" height="75" tilewidth="16" tileheight="16" nextobjectid="428">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="75" height="75" tilewidth="16" tileheight="16" nextobjectid="439">
  <tileset firstgid="1" name="Wall" tilewidth="16" tileheight="16">
   <image source="../sprites/Objects/Wall.png" width="320" height="816"/>
  </tileset>
@@ -471,4 +471,15 @@
  <imagelayer name="MAP_LIGHTMAP_LAYER_AFTERNOON" visible="0">
   <image source="topworld_lightmap_afternoon.png"/>
  </imagelayer>
+ <objectgroup name="PARTICLE_EFFECT_SPAWN_LAYER">
+  <object id="428" name="LANTERN_FIRE" x="246" y="839" width="4" height="4"/>
+  <object id="431" name="LANTERN_FIRE" x="246" y="839" width="4" height="4"/>
+  <object id="432" name="LANTERN_FIRE" x="598" y="871" width="4" height="4"/>
+  <object id="433" name="LANTERN_FIRE" x="822" y="775" width="4" height="4"/>
+  <object id="434" name="LANTERN_FIRE" x="886" y="551" width="4" height="4"/>
+  <object id="435" name="LANTERN_FIRE" x="742" y="455" width="4" height="4"/>
+  <object id="436" name="LANTERN_FIRE" x="502" y="423" width="4" height="4"/>
+  <object id="437" name="LANTERN_FIRE" x="310" y="439" width="4" height="4"/>
+  <object id="438" name="LANTERN_FIRE" x="198" y="423" width="4" height="4"/>
+ </objectgroup>
 </map>

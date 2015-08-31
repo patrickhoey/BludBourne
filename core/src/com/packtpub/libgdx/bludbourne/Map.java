@@ -263,7 +263,19 @@ public abstract class Map implements AudioSubject{
         this._playerStart = playerStart;
     }
 
-    public abstract void updateMapEntities(MapManager mapMgr, Batch batch, float delta);
+    protected void updateMapEntities(MapManager mapMgr, Batch batch, float delta){
+        for( int i=0; i < _mapEntities.size; i++){
+            _mapEntities.get(i).update(mapMgr, batch, delta);
+        }
+        for( int i=0; i < _mapQuestEntities.size; i++){
+            _mapQuestEntities.get(i).update(mapMgr, batch, delta);
+        }
+        for( int i=0; i < _mapParticleEffects.size; i++){
+            batch.begin();
+            _mapParticleEffects.get(i).draw(batch, delta);
+            batch.end();
+        }
+    }
 
     public MapLayer getCollisionLayer(){
         return _collisionLayer;

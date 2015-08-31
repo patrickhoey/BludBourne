@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="80" tilewidth="16" tileheight="16" nextobjectid="156">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="80" tilewidth="16" tileheight="16" nextobjectid="224">
  <tileset firstgid="1" name="Decor0" tilewidth="16" tileheight="16">
   <image source="../sprites/Objects/Decor0.png" width="128" height="352"/>
  </tileset>
@@ -439,7 +439,7 @@
  <imagelayer name="MAP_LIGHTMAP_LAYER_NIGHT" visible="0">
   <image source="castle_of_doom_lightmap_night.png"/>
  </imagelayer>
- <imagelayer name="MAP_LIGHTMAP_LAYER_DUSK" visible="0">
+ <imagelayer name="MAP_LIGHTMAP_LAYER_DUSK" x="12" y="20" visible="0">
   <image source="castle_of_doom_lightmap_dusk.png"/>
  </imagelayer>
  <imagelayer name="MAP_LIGHTMAP_LAYER_DAWN" visible="0" opacity="0.9">
@@ -448,4 +448,70 @@
  <imagelayer name="MAP_LIGHTMAP_LAYER_AFTERNOON" visible="0">
   <image source="castle_of_doom_lightmap_afternoon.png"/>
  </imagelayer>
+ <objectgroup name="PARTICLE_EFFECT_SPAWN_LAYER">
+  <object id="156" name="CANDLE_FIRE" x="19" y="804" width="4" height="4"/>
+  <object id="157" name="CANDLE_FIRE" x="25" y="804" width="4" height="4"/>
+  <object id="158" name="CANDLE_FIRE" x="58" y="804" width="4" height="4"/>
+  <object id="159" name="CANDLE_FIRE" x="52" y="804" width="4" height="4"/>
+  <object id="160" name="CANDLE_FIRE" x="122" y="804" width="4" height="4"/>
+  <object id="161" name="CANDLE_FIRE" x="116" y="804" width="4" height="4"/>
+  <object id="162" name="CANDLE_FIRE" x="218" y="804" width="4" height="4"/>
+  <object id="163" name="CANDLE_FIRE" x="212" y="804" width="4" height="4"/>
+  <object id="164" name="CANDLE_FIRE" x="153" y="804" width="4" height="4"/>
+  <object id="165" name="CANDLE_FIRE" x="147" y="804" width="4" height="4"/>
+  <object id="168" name="CANDLE_FIRE" x="297" y="804" width="4" height="4"/>
+  <object id="169" name="CANDLE_FIRE" x="291" y="804" width="4" height="4"/>
+  <object id="170" name="CANDLE_FIRE" x="330" y="804" width="4" height="4"/>
+  <object id="171" name="CANDLE_FIRE" x="324" y="804" width="4" height="4"/>
+  <object id="172" name="CANDLE_FIRE" x="394" y="804" width="4" height="4"/>
+  <object id="173" name="CANDLE_FIRE" x="388" y="804" width="4" height="4"/>
+  <object id="174" name="CANDLE_FIRE" x="425" y="804" width="4" height="4"/>
+  <object id="175" name="CANDLE_FIRE" x="419" y="804" width="4" height="4"/>
+  <object id="176" name="CANDLE_FIRE" x="457" y="804" width="4" height="4"/>
+  <object id="177" name="CANDLE_FIRE" x="451" y="804" width="4" height="4"/>
+  <object id="178" name="CANDLE_FIRE" x="489" y="804" width="4" height="4"/>
+  <object id="179" name="CANDLE_FIRE" x="483" y="804" width="4" height="4"/>
+  <object id="180" name="CANDLE_FIRE" x="169" y="708" width="4" height="4"/>
+  <object id="181" name="CANDLE_FIRE" x="163" y="708" width="4" height="4"/>
+  <object id="182" name="CANDLE_FIRE" x="249" y="708" width="4" height="4"/>
+  <object id="183" name="CANDLE_FIRE" x="243" y="708" width="4" height="4"/>
+  <object id="184" name="CANDLE_FIRE" x="393" y="724" width="4" height="4"/>
+  <object id="185" name="CANDLE_FIRE" x="387" y="724" width="4" height="4"/>
+  <object id="186" name="CANDLE_FIRE" x="73" y="564" width="4" height="4"/>
+  <object id="187" name="CANDLE_FIRE" x="67" y="564" width="4" height="4"/>
+  <object id="188" name="CANDLE_FIRE" x="281" y="564" width="4" height="4"/>
+  <object id="189" name="CANDLE_FIRE" x="275" y="564" width="4" height="4"/>
+  <object id="190" name="CANDLE_FIRE" x="457" y="420" width="4" height="4"/>
+  <object id="191" name="CANDLE_FIRE" x="451" y="420" width="4" height="4"/>
+  <object id="194" name="CANDLE_FIRE" x="345" y="420" width="4" height="4"/>
+  <object id="195" name="CANDLE_FIRE" x="339" y="420" width="4" height="4"/>
+  <object id="196" name="CANDLE_FIRE" x="89" y="292" width="4" height="4"/>
+  <object id="197" name="CANDLE_FIRE" x="83" y="292" width="4" height="4"/>
+  <object id="198" name="CANDLE_FIRE" x="233" y="292" width="4" height="4"/>
+  <object id="199" name="CANDLE_FIRE" x="227" y="292" width="4" height="4"/>
+  <object id="200" name="CANDLE_FIRE" x="297" y="292" width="4" height="4"/>
+  <object id="201" name="CANDLE_FIRE" x="291" y="292" width="4" height="4"/>
+  <object id="202" name="CANDLE_FIRE" x="57" y="116" width="4" height="4"/>
+  <object id="203" name="CANDLE_FIRE" x="51" y="116" width="4" height="4"/>
+  <object id="204" name="CANDLE_FIRE" x="169" y="164" width="4" height="4"/>
+  <object id="205" name="CANDLE_FIRE" x="163" y="164" width="4" height="4"/>
+  <object id="206" name="CANDLE_FIRE" x="265" y="164" width="4" height="4"/>
+  <object id="207" name="CANDLE_FIRE" x="259" y="164" width="4" height="4"/>
+  <object id="208" name="CANDLE_FIRE" x="345" y="164" width="4" height="4"/>
+  <object id="209" name="CANDLE_FIRE" x="339" y="164" width="4" height="4"/>
+  <object id="210" name="CANDLE_FIRE" x="409" y="100" width="4" height="4"/>
+  <object id="211" name="CANDLE_FIRE" x="403" y="100" width="4" height="4"/>
+  <object id="212" name="CANDLE_FIRE" x="425" y="100" width="4" height="4"/>
+  <object id="213" name="CANDLE_FIRE" x="419" y="100" width="4" height="4"/>
+  <object id="214" name="CANDLE_FIRE" x="137" y="4" width="4" height="4"/>
+  <object id="215" name="CANDLE_FIRE" x="131" y="4" width="4" height="4"/>
+  <object id="216" name="CANDLE_FIRE" x="249" y="4" width="4" height="4"/>
+  <object id="217" name="CANDLE_FIRE" x="243" y="4" width="4" height="4"/>
+  <object id="218" name="CANDLE_FIRE" x="329" y="4" width="4" height="4"/>
+  <object id="219" name="CANDLE_FIRE" x="323" y="4" width="4" height="4"/>
+  <object id="220" name="CANDLE_FIRE" x="473" y="4" width="4" height="4"/>
+  <object id="221" name="CANDLE_FIRE" x="467" y="4" width="4" height="4"/>
+  <object id="222" name="CANDLE_FIRE" x="183" y="4" width="4" height="4"/>
+  <object id="223" name="CANDLE_FIRE" x="375" y="276" width="4" height="4"/>
+ </objectgroup>
 </map>

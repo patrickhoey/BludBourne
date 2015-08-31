@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="16" tileheight="16" nextobjectid="176">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="16" tileheight="16" nextobjectid="188">
  <tileset firstgid="1" name="Decor0" tilewidth="16" tileheight="16">
   <image source="../sprites/Objects/Decor0.png" width="128" height="352"/>
  </tileset>
@@ -344,6 +344,18 @@
   <object id="173" name="CANDLE_FIRE" x="460" y="340" width="4" height="4"/>
   <object id="174" name="CANDLE_FIRE" x="448" y="340" width="4" height="4"/>
   <object id="175" name="CANDLE_FIRE" x="452" y="340" width="4" height="4"/>
+  <object id="176" name="LANTERN_FIRE" x="198" y="311" width="4" height="4"/>
+  <object id="177" name="LANTERN_FIRE" x="182" y="454" width="4" height="4"/>
+  <object id="178" name="LANTERN_FIRE" x="438" y="454" width="4" height="4"/>
+  <object id="179" name="LANTERN_FIRE" x="134" y="247" width="4" height="4"/>
+  <object id="180" name="LANTERN_FIRE" x="310" y="231" width="4" height="4"/>
+  <object id="181" name="LANTERN_FIRE" x="230" y="183" width="4" height="4"/>
+  <object id="182" name="LANTERN_FIRE" x="310" y="134" width="4" height="4"/>
+  <object id="183" name="LANTERN_FIRE" x="374" y="135" width="4" height="4"/>
+  <object id="184" name="LANTERN_FIRE" x="134" y="135" width="4" height="4"/>
+  <object id="185" name="LANTERN_FIRE" x="246" y="119" width="4" height="4"/>
+  <object id="186" name="LANTERN_FIRE" x="86" y="119" width="4" height="4"/>
+  <object id="187" name="LANTERN_FIRE" x="534" y="247" width="4" height="4"/>
  </objectgroup>
  <imagelayer name="MAP_LIGHTMAP_LAYER_NIGHT" visible="0">
   <image source="town_lightmap_night.png"/>

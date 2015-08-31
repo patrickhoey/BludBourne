@@ -99,24 +99,14 @@ public class TownMap extends Map{
         initSpecialEntityPosition(townfolk15);
         _mapEntities.add(townfolk15);
 
-        Array<Vector2> effectPositions = getParticleEffectSpawnPositions(ParticleEffectFactory.ParticleEffectType.CANDLE_FIRE);
-        for( Vector2 position: effectPositions ){
+        Array<Vector2> candleEffectPositions = getParticleEffectSpawnPositions(ParticleEffectFactory.ParticleEffectType.CANDLE_FIRE);
+        for( Vector2 position: candleEffectPositions ){
             _mapParticleEffects.add(ParticleEffectFactory.getParticleEffect(ParticleEffectFactory.ParticleEffectType.CANDLE_FIRE, position));
         }
-    }
 
-    @Override
-    public void updateMapEntities(MapManager mapMgr, Batch batch, float delta){
-        for( int i=0; i < _mapEntities.size; i++){
-            _mapEntities.get(i).update(mapMgr, batch, delta);
-        }
-        for( int i=0; i < _mapQuestEntities.size; i++){
-            _mapQuestEntities.get(i).update(mapMgr, batch, delta);
-        }
-        for( int i=0; i < _mapParticleEffects.size; i++){
-            batch.begin();
-            _mapParticleEffects.get(i).draw(batch, delta);
-            batch.end();
+        Array<Vector2> lanternEffectPositions = getParticleEffectSpawnPositions(ParticleEffectFactory.ParticleEffectType.LANTERN_FIRE);
+        for( Vector2 position: lanternEffectPositions ){
+            _mapParticleEffects.add(ParticleEffectFactory.getParticleEffect(ParticleEffectFactory.ParticleEffectType.LANTERN_FIRE, position));
         }
     }
 
