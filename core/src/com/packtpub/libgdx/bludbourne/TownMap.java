@@ -103,7 +103,7 @@ public class TownMap extends Map{
         for( Vector2 position: effectPositions ){
             ParticleEffect effect = ParticleEffectFactory.getParticleEffect(ParticleEffectFactory.ParticleEffectType.CANDLE_FIRE);
             if( effect != null ){
-                effect.scaleEffect(.01f);
+                effect.scaleEffect(.04f);
                 effect.setPosition(position.x, position.y);
                 effect.start();
                 _mapParticleEffects.add(effect);

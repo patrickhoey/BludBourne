@@ -101,6 +101,7 @@ public class MapManager implements ProfileObserver {
         _mapChanged = true;
         clearCurrentSelectedMapEntity();
         _previousLightMap = null;
+        _currentLightMap = null;
         Gdx.app.debug(TAG, "Player Start: (" + _currentMap.getPlayerStart().x + "," + _currentMap.getPlayerStart().y + ")");
     }
 
