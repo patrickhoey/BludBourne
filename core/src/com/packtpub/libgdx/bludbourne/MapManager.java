@@ -93,6 +93,14 @@ public class MapManager implements ProfileObserver {
 
         if( _currentMap != null ){
             _currentMap.unloadMusic();
+            if( _previousLightMap != null ){
+                _previousLightMap.setOpacity(0);
+                _previousLightMap = null;
+            }
+            if( _currentLightMap != null ){
+                _currentLightMap.setOpacity(1);
+                _currentLightMap = null;
+            }
         }
 
         map.loadMusic();
@@ -100,8 +108,6 @@ public class MapManager implements ProfileObserver {
         _currentMap = map;
         _mapChanged = true;
         clearCurrentSelectedMapEntity();
-        _previousLightMap = null;
-        _currentLightMap = null;
         Gdx.app.debug(TAG, "Player Start: (" + _currentMap.getPlayerStart().x + "," + _currentMap.getPlayerStart().y + ")");
     }
 
@@ -232,12 +238,6 @@ public class MapManager implements ProfileObserver {
                     _currentLightMapOpacity = MathUtils.clamp(_currentLightMapOpacity += .01, 0, 1);
                 }
             }else{
-                if( _previousLightMap != null ){
-                    _previousLightMap.setOpacity(0);
-                }
-                if( _currentLightMap != null ){
-                    _currentLightMap.setOpacity(1);
-                }
                 _timeOfDayChanged = false;
             }
     }
