@@ -120,6 +120,8 @@ public abstract class PhysicsComponent extends ComponentSubject implements Compo
     protected void calculateNextPosition(float deltaTime){
         if( _currentDirection == null ) return;
 
+        if( deltaTime > .7) return;
+
         float testX = _currentEntityPosition.x;
         float testY = _currentEntityPosition.y;
 
