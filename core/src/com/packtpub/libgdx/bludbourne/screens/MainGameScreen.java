@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Json;
 
 import com.packtpub.libgdx.bludbourne.BludBourne;
+import com.packtpub.libgdx.bludbourne.MapFactory;
 import com.packtpub.libgdx.bludbourne.MapManager;
 import com.packtpub.libgdx.bludbourne.Entity;
 import com.packtpub.libgdx.bludbourne.EntityFactory;
@@ -223,6 +224,7 @@ public class MainGameScreen extends GameScreen {
 		}
 
 		AudioManager.getInstance().dispose();
+		MapFactory.clearCache();
 	}
 
 	public static void setGameState(GameState gameState){

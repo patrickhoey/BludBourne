@@ -12,7 +12,7 @@ public class ParticleEffectFactory {
         CANDLE_FIRE("sfx/candle.p"),
         LANTERN_FIRE("sfx/candle.p"),
         LAVA_SMOKE("sfx/smoke.p"),
-        WAND_ATTACK(""),
+        WAND_ATTACK("sfx/magic_attack.p"),
         NONE("");
 
         private String _fullFilePath;
@@ -39,10 +39,10 @@ public class ParticleEffectFactory {
         return _instance;
     }
 
-    public static ParticleEffect getParticleEffect(ParticleEffectType particleEffectType, Vector2 position){
+    public static ParticleEffect getParticleEffect(ParticleEffectType particleEffectType, float positionX, float positionY){
         ParticleEffect effect = new ParticleEffect();
         effect.load(Gdx.files.internal(particleEffectType.getValue()), Gdx.files.internal(SFX_ROOT_DIR));
-        effect.setPosition(position.x, position.y);
+        effect.setPosition(positionX, positionY);
         switch(particleEffectType){
             case CANDLE_FIRE:
                 effect.scaleEffect(.04f);
@@ -54,13 +54,17 @@ public class ParticleEffectFactory {
                 effect.scaleEffect(.04f);
                 break;
             case WAND_ATTACK:
+                effect.scaleEffect(1.0f);
                 break;
             default:
                 break;
         }
         effect.start();
         return effect;
+    }
 
+    public static ParticleEffect getParticleEffect(ParticleEffectType particleEffectType, Vector2 position){
+        return getParticleEffect(particleEffectType, position.x, position.y);
     }
 
 }

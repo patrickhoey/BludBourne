@@ -280,6 +280,18 @@ public abstract class Map implements AudioSubject{
         }
     }
 
+    protected void dispose(){
+        for( int i=0; i < _mapEntities.size; i++){
+            _mapEntities.get(i).dispose();
+        }
+        for( int i=0; i < _mapQuestEntities.size; i++){
+            _mapQuestEntities.get(i).dispose();
+        }
+        for( int i=0; i < _mapParticleEffects.size; i++){
+            _mapParticleEffects.get(i).dispose();
+        }
+    }
+
     public MapLayer getCollisionLayer(){
         return _collisionLayer;
     }

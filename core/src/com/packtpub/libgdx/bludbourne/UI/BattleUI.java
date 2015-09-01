@@ -1,6 +1,7 @@
 package com.packtpub.libgdx.bludbourne.UI;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -10,11 +11,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
 import com.packtpub.libgdx.bludbourne.Entity;
 import com.packtpub.libgdx.bludbourne.EntityConfig;
 import com.packtpub.libgdx.bludbourne.Utility;
 import com.packtpub.libgdx.bludbourne.battle.BattleObserver;
 import com.packtpub.libgdx.bludbourne.battle.BattleState;
+import com.packtpub.libgdx.bludbourne.sfx.ParticleEffectFactory;
 import com.packtpub.libgdx.bludbourne.sfx.ShakeCamera;
 
 public class BattleUI extends Window implements BattleObserver {
@@ -34,8 +37,10 @@ public class BattleUI extends Window implements BattleObserver {
     private final float _checkTimer = 1;
 
     private ShakeCamera _battleShakeCam = null;
+    private Array<ParticleEffect> _effects;
 
     private float _origDamageValLabelY = 0;
+    private Vector2 _currentImagePosition;
 
     public BattleUI(){
         super("BATTLE", Utility.STATUSUI_SKIN, "solidbackground");
@@ -43,6 +48,9 @@ public class BattleUI extends Window implements BattleObserver {
         _battleTimer = 0;
         _battleState = new BattleState();
         _battleState.addObserver(this);
+
+        _effects = new Array<ParticleEffect>();
+        _currentImagePosition = new Vector2(0,0);
 
         _damageValLabel = new Label("0", Utility.STATUSUI_SKIN);
         _damageValLabel.setVisible(false);
@@ -116,9 +124,9 @@ public class BattleUI extends Window implements BattleObserver {
                 _image.setCurrentAnimation(Entity.AnimationType.IMMOBILE);
                 _image.setSize(_enemyWidth, _enemyHeight);
 
-                Vector2 vector = new Vector2(_image.getX(),_image.getY());
+                _currentImagePosition.set(_image.getX(),_image.getY());
                 if( _battleShakeCam == null ){
-                    _battleShakeCam = new ShakeCamera(vector.x, vector.y, 30.0f);
+                    _battleShakeCam = new ShakeCamera(_currentImagePosition.x, _currentImagePosition.y, 30.0f);
                 }
 
                 this.setTitle("Level " + _battleState.getCurrentZoneLevel() + " " + entity.getEntityConfig().getEntityID());
@@ -143,8 +151,25 @@ public class BattleUI extends Window implements BattleObserver {
             case PLAYER_TURN_DONE:
                 _battleState.opponentAttacks();
                 break;
+            case PLAYER_USED_MAGIC:
+                float x = _currentImagePosition.x + (_enemyWidth/2);
+                float y = _currentImagePosition.y + (_enemyHeight/2);
+                _effects.add(ParticleEffectFactory.getParticleEffect(ParticleEffectFactory.ParticleEffectType.WAND_ATTACK, x,y));
+                break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha){
+        super.draw(batch, parentAlpha);
+
+        //Draw the particles last
+        for( int i = 0; i < _effects.size; i++){
+            ParticleEffect effect = _effects.get(i);
+            if( effect == null ) continue;
+            effect.draw(batch);
         }
     }
 
@@ -158,6 +183,17 @@ public class BattleUI extends Window implements BattleObserver {
         if( _battleShakeCam != null && _battleShakeCam.isCameraShaking() ){
             Vector2 shakeCoords = _battleShakeCam.getNewShakePosition();
             _image.setPosition(shakeCoords.x, shakeCoords.y);
+        }
+
+        for( int i = 0; i < _effects.size; i++){
+            ParticleEffect effect = _effects.get(i);
+            if( effect == null ) continue;
+            if( effect.isComplete() ){
+                _effects.removeIndex(i);
+                effect.dispose();
+            }else{
+                effect.update(delta);
+            }
         }
 
         super.act(delta);
