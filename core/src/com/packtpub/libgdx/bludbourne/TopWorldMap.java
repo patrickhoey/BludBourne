@@ -16,6 +16,10 @@ public class TopWorldMap extends Map{
         for( Vector2 position: lanternEffectPositions ){
             _mapParticleEffects.add(ParticleEffectFactory.getParticleEffect(ParticleEffectFactory.ParticleEffectType.LANTERN_FIRE, position));
         }
+        Array<Vector2> lavaSmokeEffectPositions = getParticleEffectSpawnPositions(ParticleEffectFactory.ParticleEffectType.LAVA_SMOKE);
+        for( Vector2 position: lavaSmokeEffectPositions ){
+            _mapParticleEffects.add(ParticleEffectFactory.getParticleEffect(ParticleEffectFactory.ParticleEffectType.LAVA_SMOKE, position));
+        }
     }
 
     @Override

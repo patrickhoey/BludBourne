@@ -168,6 +168,7 @@ public class MainGameScreen extends GameScreen {
 
 			_mapMgr.updateCurrentMapEntities(_mapMgr, _mapRenderer.getBatch(), delta);
 			_player.update(_mapMgr, _mapRenderer.getBatch(), delta);
+			_mapMgr.updateCurrentMapEffects(_mapMgr, _mapRenderer.getBatch(), delta);
 
 			_mapRenderer.getBatch().begin();
 			_mapRenderer.getBatch().setBlendFunction(GL20.GL_DST_COLOR, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -187,6 +188,7 @@ public class MainGameScreen extends GameScreen {
 			_mapRenderer.render();
 			_mapMgr.updateCurrentMapEntities(_mapMgr, _mapRenderer.getBatch(), delta);
 			_player.update(_mapMgr, _mapRenderer.getBatch(), delta);
+			_mapMgr.updateCurrentMapEffects(_mapMgr, _mapRenderer.getBatch(), delta);
 		}
 
 		_playerHUD.render(delta);

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="80" tilewidth="16" tileheight="16" nextobjectid="224">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="80" tilewidth="16" tileheight="16" nextobjectid="277">
  <tileset firstgid="1" name="Decor0" tilewidth="16" tileheight="16">
   <image source="../sprites/Objects/Decor0.png" width="128" height="352"/>
  </tileset>
@@ -423,13 +423,13 @@
   <object id="145" x="-10" y="815" width="8" height="68"/>
   <object id="146" x="-24" y="980" width="20" height="300"/>
   <object id="147" x="514" y="977" width="20" height="300"/>
-  <object id="152" x="-56" y="1285" width="616" height="36"/>
+  <object id="152" x="-48" y="1288" width="616" height="36"/>
  </objectgroup>
  <objectgroup name="MAP_SPAWNS_LAYER" visible="0">
   <object id="149" name="PLAYER_START" x="248" y="1240" width="16" height="16"/>
  </objectgroup>
- <objectgroup name="MAP_PORTAL_LAYER" visible="0" opacity="0.9">
-  <object id="150" name="TOP_WORLD" x="-12" y="1283" width="540" height="32"/>
+ <objectgroup name="MAP_PORTAL_LAYER" visible="0">
+  <object id="150" name="TOP_WORLD" x="-8" y="1281" width="540" height="32"/>
  </objectgroup>
  <objectgroup name="MAP_ENEMY_SPAWN_LAYER" visible="0">
   <object id="153" name="7" x="-80" y="972" width="736" height="312"/>
@@ -439,7 +439,7 @@
  <imagelayer name="MAP_LIGHTMAP_LAYER_NIGHT" visible="0">
   <image source="castle_of_doom_lightmap_night.png"/>
  </imagelayer>
- <imagelayer name="MAP_LIGHTMAP_LAYER_DUSK" x="12" y="20" visible="0">
+ <imagelayer name="MAP_LIGHTMAP_LAYER_DUSK" visible="0">
   <image source="castle_of_doom_lightmap_dusk.png"/>
  </imagelayer>
  <imagelayer name="MAP_LIGHTMAP_LAYER_DAWN" visible="0" opacity="0.9">
@@ -513,5 +513,45 @@
   <object id="221" name="CANDLE_FIRE" x="467" y="4" width="4" height="4"/>
   <object id="222" name="CANDLE_FIRE" x="183" y="4" width="4" height="4"/>
   <object id="223" name="CANDLE_FIRE" x="375" y="276" width="4" height="4"/>
+  <object id="224" name="LAVA_SMOKE" x="284" y="1252" width="8" height="8"/>
+  <object id="226" name="LAVA_SMOKE" x="312" y="1244" width="8" height="8"/>
+  <object id="227" name="LAVA_SMOKE" x="308" y="1268" width="8" height="8"/>
+  <object id="234" name="LAVA_SMOKE" x="220" y="1244" width="8" height="8"/>
+  <object id="235" name="LAVA_SMOKE" x="216" y="1268" width="8" height="8"/>
+  <object id="236" name="LAVA_SMOKE" x="192" y="1252" width="8" height="8"/>
+  <object id="237" name="LAVA_SMOKE" x="216" y="1148" width="8" height="8"/>
+  <object id="238" name="LAVA_SMOKE" x="212" y="1196" width="8" height="8"/>
+  <object id="239" name="LAVA_SMOKE" x="188" y="1168" width="8" height="8"/>
+  <object id="243" name="LAVA_SMOKE" x="316" y="1148" width="8" height="8"/>
+  <object id="244" name="LAVA_SMOKE" x="288" y="1168" width="8" height="8"/>
+  <object id="245" name="LAVA_SMOKE" x="312" y="1196" width="8" height="8"/>
+  <object id="246" name="LAVA_SMOKE" x="220" y="1052" width="8" height="8"/>
+  <object id="247" name="LAVA_SMOKE" x="192" y="1072" width="8" height="8"/>
+  <object id="248" name="LAVA_SMOKE" x="216" y="1100" width="8" height="8"/>
+  <object id="249" name="LAVA_SMOKE" x="316" y="1052" width="8" height="8"/>
+  <object id="250" name="LAVA_SMOKE" x="288" y="1072" width="8" height="8"/>
+  <object id="251" name="LAVA_SMOKE" x="312" y="1100" width="8" height="8"/>
+  <object id="255" name="LAVA_SMOKE" x="220" y="984" width="8" height="8"/>
+  <object id="256" name="LAVA_SMOKE" x="216" y="1008" width="8" height="8"/>
+  <object id="257" name="LAVA_SMOKE" x="192" y="992" width="8" height="8"/>
+  <object id="258" name="LAVA_SMOKE" x="316" y="984" width="8" height="8"/>
+  <object id="259" name="LAVA_SMOKE" x="312" y="1008" width="8" height="8"/>
+  <object id="260" name="LAVA_SMOKE" x="288" y="992" width="8" height="8"/>
+  <object id="261" name="LAVA_SMOKE" x="468" y="1024" width="8" height="8"/>
+  <object id="262" name="LAVA_SMOKE" x="476" y="1088" width="8" height="8"/>
+  <object id="263" name="LAVA_SMOKE" x="460" y="1060" width="8" height="8"/>
+  <object id="264" name="LAVA_SMOKE" x="44" y="1092" width="8" height="8"/>
+  <object id="265" name="LAVA_SMOKE" x="36" y="1028" width="8" height="8"/>
+  <object id="266" name="LAVA_SMOKE" x="28" y="1064" width="8" height="8"/>
+  <object id="267" name="LAVA_SMOKE" x="464" y="1212" width="8" height="8"/>
+  <object id="268" name="LAVA_SMOKE" x="456" y="1184" width="8" height="8"/>
+  <object id="269" name="LAVA_SMOKE" x="48" y="1212" width="8" height="8"/>
+  <object id="270" name="LAVA_SMOKE" x="40" y="1184" width="8" height="8"/>
+  <object id="271" name="LAVA_SMOKE" x="32" y="960" width="8" height="8"/>
+  <object id="272" name="LAVA_SMOKE" x="8" y="944" width="8" height="8"/>
+  <object id="273" name="LAVA_SMOKE" x="36" y="936" width="8" height="8"/>
+  <object id="274" name="LAVA_SMOKE" x="488" y="964" width="8" height="8"/>
+  <object id="275" name="LAVA_SMOKE" x="464" y="948" width="8" height="8"/>
+  <object id="276" name="LAVA_SMOKE" x="492" y="940" width="8" height="8"/>
  </objectgroup>
 </map>

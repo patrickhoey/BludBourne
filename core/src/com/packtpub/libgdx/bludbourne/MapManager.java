@@ -246,6 +246,10 @@ public class MapManager implements ProfileObserver {
         _currentMap.updateMapEntities(mapMgr, batch, delta);
     }
 
+    public void updateCurrentMapEffects(MapManager mapMgr, Batch batch, float delta){
+        _currentMap.updateMapEffects(mapMgr, batch, delta);
+    }
+
     public final Array<Entity> getCurrentMapEntities(){
         return _currentMap.getMapEntities();
     }

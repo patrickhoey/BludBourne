@@ -270,6 +270,9 @@ public abstract class Map implements AudioSubject{
         for( int i=0; i < _mapQuestEntities.size; i++){
             _mapQuestEntities.get(i).update(mapMgr, batch, delta);
         }
+    }
+
+    protected void updateMapEffects(MapManager mapMgr, Batch batch, float delta){
         for( int i=0; i < _mapParticleEffects.size; i++){
             batch.begin();
             _mapParticleEffects.get(i).draw(batch, delta);
