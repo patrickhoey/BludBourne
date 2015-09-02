@@ -357,16 +357,16 @@
   <object id="186" name="LANTERN_FIRE" x="86" y="119" width="4" height="4"/>
   <object id="187" name="LANTERN_FIRE" x="534" y="247" width="4" height="4"/>
  </objectgroup>
- <imagelayer name="MAP_LIGHTMAP_LAYER_NIGHT" visible="0">
+ <imagelayer name="MAP_LIGHTMAP_LAYER_NIGHT" x="-8" y="-8">
   <image source="town_lightmap_night.png"/>
  </imagelayer>
- <imagelayer name="MAP_LIGHTMAP_LAYER_DUSK" visible="0">
+ <imagelayer name="MAP_LIGHTMAP_LAYER_DUSK" x="-8" y="-8" visible="0">
   <image source="town_lightmap_dusk.png"/>
  </imagelayer>
- <imagelayer name="MAP_LIGHTMAP_LAYER_DAWN" visible="0">
+ <imagelayer name="MAP_LIGHTMAP_LAYER_DAWN" x="-8" y="-8" visible="0">
   <image source="town_lightmap_dawn.png"/>
  </imagelayer>
- <imagelayer name="MAP_LIGHTMAP_LAYER_AFTERNOON" visible="0">
+ <imagelayer name="MAP_LIGHTMAP_LAYER_AFTERNOON" x="-8" y="-8" visible="0">
   <image source="town_lightmap_afternoon.png" trans="000000"/>
  </imagelayer>
 </map>
