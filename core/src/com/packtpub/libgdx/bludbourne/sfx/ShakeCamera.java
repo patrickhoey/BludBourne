@@ -55,7 +55,7 @@ public class ShakeCamera {
 		
 		_isShaking = true;
 		_shakeRadius *= .9f;
-		_randomAngle = (150 + MathUtils.random(1, 60)) % 360;
+		_randomAngle = MathUtils.random(1, 360);
 	}
 
 	public void reset(){
