@@ -2,40 +2,40 @@
 <!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="80" tilewidth="16" tileheight="16" nextobjectid="277">
  <tileset firstgid="1" name="Decor0" tilewidth="16" tileheight="16">
-  <image source="../sprites/Objects/Decor0.png" width="128" height="352"/>
+  <image source="../sprites/objects/Decor0.png" width="128" height="352"/>
  </tileset>
  <tileset firstgid="177" name="Wall" tilewidth="16" tileheight="16">
-  <image source="../sprites/Objects/Wall.png" width="320" height="816"/>
+  <image source="../sprites/objects/Wall.png" width="320" height="816"/>
  </tileset>
  <tileset firstgid="1197" name="Floor" tilewidth="16" tileheight="16">
-  <image source="../sprites/Objects/Floor.png" width="336" height="624"/>
+  <image source="../sprites/objects/Floor.png" width="336" height="624"/>
  </tileset>
  <tileset firstgid="2016" name="Pit0" tilewidth="16" tileheight="16">
-  <image source="../sprites/Objects/Pit0.png" width="128" height="512"/>
+  <image source="../sprites/objects/Pit0.png" width="128" height="512"/>
  </tileset>
  <tileset firstgid="2272" name="Door0" tilewidth="16" tileheight="16">
-  <image source="../sprites/Objects/Door0.png" width="128" height="80"/>
+  <image source="../sprites/objects/Door0.png" width="128" height="80"/>
  </tileset>
  <tileset firstgid="2312" name="Ground0" tilewidth="16" tileheight="16">
-  <image source="../sprites/Objects/Ground0.png" width="128" height="112"/>
+  <image source="../sprites/objects/Ground0.png" width="128" height="112"/>
  </tileset>
  <tileset firstgid="2368" name="Player0" tilewidth="16" tileheight="16">
-  <image source="../sprites/Characters/Player0.png" width="128" height="240"/>
+  <image source="../sprites/characters/Player0.png" width="128" height="240"/>
  </tileset>
  <tileset firstgid="2488" name="Tree0" tilewidth="16" tileheight="16">
-  <image source="../sprites/Objects/Tree0.png" width="128" height="528"/>
+  <image source="../sprites/objects/Tree0.png" width="128" height="528"/>
  </tileset>
  <tileset firstgid="2752" name="Humanoid0" tilewidth="16" tileheight="16">
-  <image source="../sprites/Characters/Humanoid0.png" width="128" height="432"/>
+  <image source="../sprites/characters/Humanoid0.png" width="128" height="432"/>
  </tileset>
  <tileset firstgid="2968" name="Cat0" tilewidth="16" tileheight="16">
-  <image source="../sprites/Characters/Cat0.png" width="128" height="80"/>
+  <image source="../sprites/characters/Cat0.png" width="128" height="80"/>
  </tileset>
  <tileset firstgid="3008" name="Quadraped0" tilewidth="16" tileheight="16">
-  <image source="../sprites/Characters/Quadraped0.png" width="128" height="192"/>
+  <image source="../sprites/characters/Quadraped0.png" width="128" height="192"/>
  </tileset>
  <tileset firstgid="3104" name="Container0" tilewidth="16" tileheight="16">
-  <image source="../sprites/Items/Chest0.png" width="128" height="48"/>
+  <image source="../sprites/items/Chest0.png" width="128" height="48"/>
  </tileset>
  <layer name="Background_Layer" width="32" height="80">
   <data encoding="csv">
