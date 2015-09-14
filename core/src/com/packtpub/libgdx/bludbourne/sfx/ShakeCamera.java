@@ -41,38 +41,38 @@ public class ShakeCamera {
 		float sine = MathUtils.sinDeg(_randomAngle);
 		float cosine = MathUtils.cosDeg(_randomAngle);
 
-		//Gdx.app.log(TAG, "Sine of " + _randomAngle + " is: " + sine);
-		//Gdx.app.log(TAG, "Cosine of " + _randomAngle + " is: " + cosine);
+		//Gdx.app.debug(TAG, "Sine of " + _randomAngle + " is: " + sine);
+		//Gdx.app.debug(TAG, "Cosine of " + _randomAngle + " is: " + cosine);
 
 		_offset.x =  cosine * _shakeRadius;
 		_offset.y =  sine * _shakeRadius;
 
-		//Gdx.app.log(TAG, "Offset is x:" + _offset.x + " , y: " + _offset.y );
+		//Gdx.app.debug(TAG, "Offset is x:" + _offset.x + " , y: " + _offset.y );
 	}
 	
 	private void computeCurrentPosition(){
 		_currentPosition.x = _origPosition.x + _offset.x;
 		_currentPosition.y = _origPosition.y + _offset.y;
 
-		//Gdx.app.log(TAG, "Current position is x:" + _currentPosition.x + " , y: " + _currentPosition.y );
+		//Gdx.app.debug(TAG, "Current position is x:" + _currentPosition.x + " , y: " + _currentPosition.y );
 	}
 	
 	private void diminishShake(){
-		//Gdx.app.log(TAG, "Current shakeRadius is: " + _shakeRadius + " randomAngle is: " + _randomAngle);
+		//Gdx.app.debug(TAG, "Current shakeRadius is: " + _shakeRadius + " randomAngle is: " + _randomAngle);
 
 		if( _shakeRadius < 2.0 ){
-			//Gdx.app.log(TAG, "Done shaking");
+			//Gdx.app.debug(TAG, "Done shaking");
 			reset();
 			return;
 		}
 		
 		_isShaking = true;
 		_shakeRadius *= .9f;
-		//Gdx.app.log(TAG, "New shakeRadius is: " + _shakeRadius);
+		//Gdx.app.debug(TAG, "New shakeRadius is: " + _shakeRadius);
 
 
 		_randomAngle = MathUtils.random(1, 360);
-		//Gdx.app.log(TAG, "New random angle: " + _randomAngle);
+		//Gdx.app.debug(TAG, "New random angle: " + _randomAngle);
 	}
 
 	public void reset(){

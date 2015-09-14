@@ -52,7 +52,7 @@ public class ConversationGraph extends ConversationGraphSubject {
                 isReachable(currentConversationID, id) ){
             currentConversationID = id;
         }else{
-            System.out.println("New conversation node [" + id +"] is not reachable from current node [" + currentConversationID + "]");
+            //System.out.println("New conversation node [" + id +"] is not reachable from current node [" + currentConversationID + "]");
         }
     }
 
@@ -80,7 +80,7 @@ public class ConversationGraph extends ConversationGraphSubject {
 
     public Conversation getConversationByID(String id){
         if( !isValid(id) ){
-            System.out.println("Id " + id + " is not valid!");
+            //System.out.println("Id " + id + " is not valid!");
             return null;
         }
         return conversations.get(id);

@@ -37,7 +37,6 @@ public class PlayerInputComponent extends InputComponent {
 	public void update(Entity entity, float delta){
 		//Keyboard input
 		if(keys.get(Keys.PAUSE)) {
-			System.out.println("INPUT PAUSED");
 			MainGameScreen.setGameState(MainGameScreen.GameState.PAUSED);
 			pauseReleased();
 		}else if( keys.get(Keys.LEFT)){

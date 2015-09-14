@@ -123,7 +123,7 @@ public class QuestGraph {
 
     public QuestTask getQuestTaskByID(String id){
         if( !isValid(id) ){
-            System.out.println("Id " + id + " is not valid!");
+            //System.out.println("Id " + id + " is not valid!");
             return null;
         }
         return questTasks.get(id);
@@ -135,7 +135,7 @@ public class QuestGraph {
 
         //Will not add if creates cycles
         if( doesCycleExist(questTaskDependency) ){
-            System.out.println("Cycle exists! Not adding");
+            //System.out.println("Cycle exists! Not adding");
             return;
         }
 
@@ -147,7 +147,7 @@ public class QuestGraph {
         for( String id: keys ){
             if( doesQuestTaskHaveDependencies(id) &&
                     questTaskDep.getDestinationId().equalsIgnoreCase(id)){
-                    System.out.println("ID: " + id + " destID: " + questTaskDep.getDestinationId());
+                    //System.out.println("ID: " + id + " destID: " + questTaskDep.getDestinationId());
                     return true;
                 }
             }

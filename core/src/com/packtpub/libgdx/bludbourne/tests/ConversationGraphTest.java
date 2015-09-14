@@ -65,22 +65,22 @@ public class ConversationGraphTest {
         _graph.addChoice(startChoice01);
         _graph.addChoice(startChoice02);
 
-        System.out.println(_graph.toString());
-        System.out.println(_graph.displayCurrentConversation());
+        //System.out.println(_graph.toString());
+        //System.out.println(_graph.displayCurrentConversation());
         //System.out.println(_graph.toJson());
 
         while( !_input.equalsIgnoreCase(quit) ){
             Conversation conversation = getNextChoice();
             if( conversation == null ) continue;
             _graph.setCurrentConversation(conversation.getId());
-            System.out.println(_graph.displayCurrentConversation());
+            //System.out.println(_graph.displayCurrentConversation());
         }
     }
 
     public static Conversation getNextChoice(){
         ArrayList<ConversationChoice> choices = _graph.getCurrentChoices();
         for(ConversationChoice choice: choices){
-            System.out.println(choice.getDestinationId() + " " + choice.getChoicePhrase());
+            //System.out.println(choice.getDestinationId() + " " + choice.getChoicePhrase());
         }
         _input = System.console().readLine();
 

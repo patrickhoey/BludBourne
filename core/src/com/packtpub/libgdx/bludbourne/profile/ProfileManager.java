@@ -125,7 +125,7 @@ public class ProfileManager extends ProfileSubject {
         boolean doesProfileFileExist = Gdx.files.local(fullProfileFileName).exists();
 
         if( !doesProfileFileExist ){
-            System.out.println("File doesn't exist!");
+            //System.out.println("File doesn't exist!");
             return;
         }
 
