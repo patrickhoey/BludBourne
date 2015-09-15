@@ -3,6 +3,7 @@ package com.packtpub.libgdx.bludbourne.profile;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Base64Coder;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.ObjectMap;
 
@@ -10,6 +11,8 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 public class ProfileManager extends ProfileSubject {
+    private static final String TAG = ProfileManager.class.getSimpleName();
+
     private Json _json;
     private static ProfileManager _profileManager;
     private Hashtable<String,FileHandle> _profiles = null;
@@ -90,7 +93,8 @@ public class ProfileManager extends ProfileSubject {
 
         if( Gdx.files.isLocalStorageAvailable() ) {
             file = Gdx.files.local(fullFilename);
-            file.writeString(fileData, !overwrite);
+            String encodedString = Base64Coder.encodeString(fileData);
+            file.writeString(encodedString, !overwrite);
         }
 
         _profiles.put(profileName, file);
@@ -129,7 +133,12 @@ public class ProfileManager extends ProfileSubject {
             return;
         }
 
-        _profileProperties = _json.fromJson(ObjectMap.class, _profiles.get(_profileName));
+        FileHandle encodedFile = _profiles.get(_profileName);
+        String s = encodedFile.readString();
+
+        String decodedFile = Base64Coder.decodeString(s);
+
+        _profileProperties = _json.fromJson(ObjectMap.class, decodedFile);
         notify(this, ProfileObserver.ProfileEvent.PROFILE_LOADED);
         _isNewProfile = false;
     }
