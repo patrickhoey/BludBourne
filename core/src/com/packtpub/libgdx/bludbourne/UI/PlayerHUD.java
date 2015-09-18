@@ -355,12 +355,21 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
         switch(event) {
             case LOAD_CONVERSATION:
                 EntityConfig config = _json.fromJson(EntityConfig.class, value);
+
+                //Check to see if there is a version loading into properties
+                if( config.getItemTypeID().equalsIgnoreCase(InventoryItem.ItemTypeID.NONE.toString()) ) {
+                    EntityConfig configReturnProperty = ProfileManager.getInstance().getProperty(config.getEntityID(), EntityConfig.class);
+                    if( configReturnProperty != null ){
+                        config = configReturnProperty;
+                    }
+                }
+
                 _conversationUI.loadConversation(config);
                 _conversationUI.getCurrentConversationGraph().addObserver(this);
                 break;
             case SHOW_CONVERSATION:
                 EntityConfig configShow = _json.fromJson(EntityConfig.class, value);
-                //System.out.println("Show conversation for: " + configShow.getEntityID() + " current conversation ID: " + _conversationUI.getCurrentEntityID());
+
                 if( configShow.getEntityID().equalsIgnoreCase(_conversationUI.getCurrentEntityID())) {
                     _conversationUI.setVisible(true);
                 }
