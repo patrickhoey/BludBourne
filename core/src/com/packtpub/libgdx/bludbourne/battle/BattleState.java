@@ -29,6 +29,17 @@ public class BattleState extends BattleSubject implements InventoryObserver {
         _checkPlayerMagicUse = getPlayerMagicUseCheckTimer();
     }
 
+    public void resetDefaults(){
+        Gdx.app.debug(TAG, "Resetting defaults...");
+        _currentZoneLevel = 0;
+        _currentPlayerAP = 0;
+        _currentPlayerDP = 0;
+        _currentPlayerWandAPPoints = 0;
+        _playerAttackCalculations.cancel();
+        _opponentAttackCalculations.cancel();
+        _checkPlayerMagicUse.cancel();
+    }
+
     public void setCurrentZoneLevel(int zoneLevel){
         _currentZoneLevel = zoneLevel;
     }
@@ -190,10 +201,12 @@ public class BattleState extends BattleSubject implements InventoryObserver {
             case ADD_WAND_AP:
                 int wandAP = Integer.valueOf(value);
                 _currentPlayerWandAPPoints += wandAP;
+                Gdx.app.debug(TAG, "WandAP: " + _currentPlayerWandAPPoints);
                 break;
             case REMOVE_WAND_AP:
                 int removeWandAP = Integer.valueOf(value);
                 _currentPlayerWandAPPoints -= removeWandAP;
+                Gdx.app.debug(TAG, "WandAP: " + _currentPlayerWandAPPoints);
                 break;
             default:
                 break;

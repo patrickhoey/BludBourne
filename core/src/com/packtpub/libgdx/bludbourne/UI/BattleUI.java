@@ -161,6 +161,11 @@ public class BattleUI extends Window implements BattleObserver {
         }
     }
 
+    public void resetDefaults(){
+        _battleTimer = 0;
+        _battleState.resetDefaults();
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha){
         super.draw(batch, parentAlpha);

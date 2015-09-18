@@ -568,12 +568,11 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
 
     @Override
     public void pause() {
-
+        _battleUI.resetDefaults();
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override

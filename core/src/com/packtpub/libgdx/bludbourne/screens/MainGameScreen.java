@@ -97,6 +97,7 @@ public class MainGameScreen extends GameScreen {
 		setGameState(GameState.LOADING);
 		Gdx.input.setInputProcessor(_multiplexer);
 
+
 		if( _mapRenderer == null ){
 			_mapRenderer = new OrthogonalTiledMapRenderer(_mapMgr.getCurrentTiledMap(), Map.UNIT_SCALE);
 		}
@@ -205,11 +206,13 @@ public class MainGameScreen extends GameScreen {
 	@Override
 	public void pause() {
 		setGameState(GameState.SAVING);
+		_playerHUD.pause();
 	}
 
 	@Override
 	public void resume() {
 		setGameState(GameState.LOADING);
+		_playerHUD.resume();
 	}
 
 	@Override
