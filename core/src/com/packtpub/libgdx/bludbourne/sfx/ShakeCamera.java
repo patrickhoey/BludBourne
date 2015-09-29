@@ -1,6 +1,5 @@
 package com.packtpub.libgdx.bludbourne.sfx;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
@@ -23,6 +22,10 @@ public class ShakeCamera {
 		this._offset = new Vector2();
 		this._currentPosition = new Vector2();
 		reset();
+	}
+
+	public void setOrigPosition(float x, float y){
+		this._origPosition.set(x,y);
 	}
 	
 	public boolean isCameraShaking(){

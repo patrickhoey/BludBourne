@@ -573,6 +573,8 @@ public class PlayerHUD implements Screen, AudioSubject, ProfileObserver,Componen
     @Override
     public void resize(int width, int height) {
         _stage.getViewport().update(width, height, true);
+        _battleUI.validate();
+        _battleUI.resize();
     }
 
     @Override

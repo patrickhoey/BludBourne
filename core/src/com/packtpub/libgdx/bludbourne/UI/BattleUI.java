@@ -1,5 +1,6 @@
 package com.packtpub.libgdx.bludbourne.UI;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.math.Vector2;
@@ -123,11 +124,14 @@ public class BattleUI extends Window implements BattleObserver {
                 _image.setEntity(entity);
                 _image.setCurrentAnimation(Entity.AnimationType.IMMOBILE);
                 _image.setSize(_enemyWidth, _enemyHeight);
+                _image.setPosition(this.getCell(_image).getActorX(), this.getCell(_image).getActorY());
 
-                _currentImagePosition.set(_image.getX(),_image.getY());
+                _currentImagePosition.set(_image.getX(), _image.getY());
                 if( _battleShakeCam == null ){
                     _battleShakeCam = new ShakeCamera(_currentImagePosition.x, _currentImagePosition.y, 30.0f);
                 }
+
+                //Gdx.app.debug(TAG, "Image position: " + _image.getX() + "," + _image.getY() );
 
                 this.setTitle("Level " + _battleState.getCurrentZoneLevel() + " " + entity.getEntityConfig().getEntityID());
                 break;
@@ -158,6 +162,18 @@ public class BattleUI extends Window implements BattleObserver {
                 break;
             default:
                 break;
+        }
+    }
+
+    public void resize() {
+        _image.setPosition(this.getCell(_image).getActorX(), this.getCell(_image).getActorY());
+        _currentImagePosition.set(_image.getX(), _image.getY());
+
+        Gdx.app.debug(TAG, "RESIZE Image position: " + _image.getX() + "," + _image.getY());
+
+        if( _battleShakeCam != null ){
+            _battleShakeCam.setOrigPosition(_currentImagePosition.x, _currentImagePosition.y);
+            _battleShakeCam.reset();
         }
     }
 
