@@ -19,7 +19,7 @@ public abstract class GraphicsComponent extends ComponentSubject implements Comp
     protected Entity.Direction _currentDirection;
     protected Json _json;
     protected Vector2 _currentPosition;
-    protected Hashtable<Entity.AnimationType, Animation> _animations;
+    protected Hashtable<Entity.AnimationType, Animation<TextureRegion>> _animations;
     protected ShapeRenderer _shapeRenderer;
 
     protected GraphicsComponent(){
@@ -27,7 +27,7 @@ public abstract class GraphicsComponent extends ComponentSubject implements Comp
         _currentState = Entity.State.WALKING;
         _currentDirection = Entity.Direction.DOWN;
         _json = new Json();
-        _animations = new Hashtable<Entity.AnimationType, Animation>();
+        _animations = new Hashtable<>();
         _shapeRenderer = new ShapeRenderer();
     }
 
@@ -40,60 +40,60 @@ public abstract class GraphicsComponent extends ComponentSubject implements Comp
         switch (_currentDirection) {
             case DOWN:
                 if (_currentState == Entity.State.WALKING) {
-                    Animation animation = _animations.get(Entity.AnimationType.WALK_DOWN);
+                    Animation<TextureRegion> animation = _animations.get(Entity.AnimationType.WALK_DOWN);
                     if( animation == null ) return;
                     _currentFrame = animation.getKeyFrame(_frameTime);
                 } else if(_currentState == Entity.State.IDLE) {
-                    Animation animation = _animations.get(Entity.AnimationType.WALK_DOWN);
+					Animation<TextureRegion> animation = _animations.get(Entity.AnimationType.WALK_DOWN);
                     if( animation == null ) return;
                     _currentFrame = animation.getKeyFrames()[0];
                 } else if(_currentState == Entity.State.IMMOBILE) {
-                    Animation animation = _animations.get(Entity.AnimationType.IMMOBILE);
+					Animation<TextureRegion> animation = _animations.get(Entity.AnimationType.IMMOBILE);
                     if( animation == null ) return;
                     _currentFrame = animation.getKeyFrame(_frameTime);
                 }
                 break;
             case LEFT:
                 if (_currentState == Entity.State.WALKING) {
-                    Animation animation = _animations.get(Entity.AnimationType.WALK_LEFT);
+					Animation<TextureRegion> animation = _animations.get(Entity.AnimationType.WALK_LEFT);
                     if( animation == null ) return;
                     _currentFrame = animation.getKeyFrame(_frameTime);
                 } else if(_currentState == Entity.State.IDLE) {
-                    Animation animation = _animations.get(Entity.AnimationType.WALK_LEFT);
+					Animation<TextureRegion> animation = _animations.get(Entity.AnimationType.WALK_LEFT);
                     if( animation == null ) return;
                     _currentFrame = animation.getKeyFrames()[0];
                 } else if(_currentState == Entity.State.IMMOBILE) {
-                    Animation animation = _animations.get(Entity.AnimationType.IMMOBILE);
+					Animation<TextureRegion> animation = _animations.get(Entity.AnimationType.IMMOBILE);
                     if( animation == null ) return;
                     _currentFrame = animation.getKeyFrame(_frameTime);
                 }
                 break;
             case UP:
                 if (_currentState == Entity.State.WALKING) {
-                    Animation animation = _animations.get(Entity.AnimationType.WALK_UP);
+					Animation<TextureRegion> animation = _animations.get(Entity.AnimationType.WALK_UP);
                     if( animation == null ) return;
                     _currentFrame = animation.getKeyFrame(_frameTime);
                 } else if(_currentState == Entity.State.IDLE) {
-                    Animation animation = _animations.get(Entity.AnimationType.WALK_UP);
+					Animation<TextureRegion> animation = _animations.get(Entity.AnimationType.WALK_UP);
                     if( animation == null ) return;
                     _currentFrame = animation.getKeyFrames()[0];
                 } else if(_currentState == Entity.State.IMMOBILE) {
-                    Animation animation = _animations.get(Entity.AnimationType.IMMOBILE);
+					Animation<TextureRegion> animation = _animations.get(Entity.AnimationType.IMMOBILE);
                     if( animation == null ) return;
                     _currentFrame = animation.getKeyFrame(_frameTime);
                 }
                 break;
             case RIGHT:
                 if (_currentState == Entity.State.WALKING) {
-                    Animation animation = _animations.get(Entity.AnimationType.WALK_RIGHT);
+					Animation<TextureRegion> animation = _animations.get(Entity.AnimationType.WALK_RIGHT);
                     if( animation == null ) return;
                     _currentFrame = animation.getKeyFrame(_frameTime);
                 } else if(_currentState == Entity.State.IDLE) {
-                    Animation animation = _animations.get(Entity.AnimationType.WALK_RIGHT);
+					Animation<TextureRegion> animation = _animations.get(Entity.AnimationType.WALK_RIGHT);
                     if( animation == null ) return;
                     _currentFrame = animation.getKeyFrames()[0];
                 } else if(_currentState == Entity.State.IMMOBILE) {
-                    Animation animation = _animations.get(Entity.AnimationType.IMMOBILE);
+					Animation<TextureRegion> animation = _animations.get(Entity.AnimationType.IMMOBILE);
                     if( animation == null ) return;
                     _currentFrame = animation.getKeyFrame(_frameTime);
                 }
@@ -114,7 +114,7 @@ public abstract class GraphicsComponent extends ComponentSubject implements Comp
         TextureRegion[][] texture1Frames = TextureRegion.split(texture1, Entity.FRAME_WIDTH, Entity.FRAME_HEIGHT);
         TextureRegion[][] texture2Frames = TextureRegion.split(texture2, Entity.FRAME_WIDTH, Entity.FRAME_HEIGHT);
 
-        Array<TextureRegion> animationKeyFrames = new Array<TextureRegion>(2);
+        Array<TextureRegion> animationKeyFrames = new Array<>(2);
 
         GridPoint2 point = points.first();
 
@@ -130,7 +130,7 @@ public abstract class GraphicsComponent extends ComponentSubject implements Comp
 
         TextureRegion[][] textureFrames = TextureRegion.split(texture, Entity.FRAME_WIDTH, Entity.FRAME_HEIGHT);
 
-        Array<TextureRegion> animationKeyFrames = new Array<TextureRegion>(points.size);
+        Array<TextureRegion> animationKeyFrames = new Array<>(points.size);
 
         for( GridPoint2 point : points){
             animationKeyFrames.add(textureFrames[point.x][point.y]);
@@ -139,7 +139,7 @@ public abstract class GraphicsComponent extends ComponentSubject implements Comp
         return new Animation(frameDuration, animationKeyFrames, Animation.PlayMode.LOOP);
     }
 
-    public Animation getAnimation(Entity.AnimationType type){
+    public Animation<TextureRegion> getAnimation(Entity.AnimationType type){
         return _animations.get(type);
     }
 }

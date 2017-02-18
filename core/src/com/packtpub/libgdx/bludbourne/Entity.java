@@ -3,6 +3,7 @@ package com.packtpub.libgdx.bludbourne;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -171,7 +172,7 @@ public class Entity {
 		this._entityConfig = entityConfig;
 	}
 
-	public Animation getAnimation(Entity.AnimationType type){
+	public Animation<TextureRegion> getAnimation(Entity.AnimationType type){
 		return _graphicsComponent.getAnimation(type);
 	}
 

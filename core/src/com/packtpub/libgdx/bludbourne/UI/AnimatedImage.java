@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
@@ -27,7 +27,7 @@ public class AnimatedImage extends Image {
     }
 
     public void setCurrentAnimation(Entity.AnimationType animationType){
-        Animation animation = _entity.getAnimation(animationType);
+        Animation<TextureRegion> animation = _entity.getAnimation(animationType);
         if( animation == null ){
             Gdx.app.debug(TAG, "Animation type " + animationType.toString() + " does not exist!");
             return;

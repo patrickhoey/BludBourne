@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.GridPoint2;
@@ -61,7 +62,7 @@ public class NPCGraphicsComponent extends GraphicsComponent {
                     Array<GridPoint2> points = animationConfig.getGridPoints();
                     Entity.AnimationType animationType = animationConfig.getAnimationType();
                     float frameDuration = animationConfig.getFrameDuration();
-                    Animation animation = null;
+                    Animation<TextureRegion> animation = null;
 
                     if( textureNames.size == 1) {
                         animation = loadAnimation(textureNames.get(0), points, frameDuration);
