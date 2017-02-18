@@ -114,14 +114,12 @@ public abstract class GraphicsComponent extends ComponentSubject implements Comp
         TextureRegion[][] texture1Frames = TextureRegion.split(texture1, Entity.FRAME_WIDTH, Entity.FRAME_HEIGHT);
         TextureRegion[][] texture2Frames = TextureRegion.split(texture2, Entity.FRAME_WIDTH, Entity.FRAME_HEIGHT);
 
-        Array<TextureRegion> animationKeyFrames = new Array<>(2);
-
         GridPoint2 point = points.first();
 
-        animationKeyFrames.add(texture1Frames[point.x][point.y]);
-        animationKeyFrames.add(texture2Frames[point.x][point.y]);
+		Animation animation = new Animation(frameDuration, texture1Frames[point.x][point.y],texture2Frames[point.x][point.y]);
+		animation.setPlayMode(Animation.PlayMode.LOOP);
 
-        return new Animation(frameDuration, animationKeyFrames, Animation.PlayMode.LOOP);
+        return animation;
     }
 
     protected Animation loadAnimation(String textureName, Array<GridPoint2> points, float frameDuration){
@@ -130,13 +128,16 @@ public abstract class GraphicsComponent extends ComponentSubject implements Comp
 
         TextureRegion[][] textureFrames = TextureRegion.split(texture, Entity.FRAME_WIDTH, Entity.FRAME_HEIGHT);
 
-        Array<TextureRegion> animationKeyFrames = new Array<>(points.size);
+        TextureRegion[] animationKeyFrames = new TextureRegion[points.size];
 
-        for( GridPoint2 point : points){
-            animationKeyFrames.add(textureFrames[point.x][point.y]);
+        for(int i=0; i < points.size; i++){
+			animationKeyFrames[i] = textureFrames[points.get(i).x][points.get(i).y];
         }
 
-        return new Animation(frameDuration, animationKeyFrames, Animation.PlayMode.LOOP);
+        Animation animation = new Animation(frameDuration, (Object[])animationKeyFrames);
+		animation.setPlayMode(Animation.PlayMode.LOOP);
+
+        return animation;
     }
 
     public Animation<TextureRegion> getAnimation(Entity.AnimationType type){
