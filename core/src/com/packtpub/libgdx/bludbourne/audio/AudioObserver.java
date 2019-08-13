@@ -2,19 +2,19 @@ package com.packtpub.libgdx.bludbourne.audio;
 
 public interface AudioObserver {
     public static enum AudioTypeEvent{
-        MUSIC_TITLE("audio/10112013.ogg"),
-        MUSIC_TOWN("audio/Magic Town_0.mp3"),
-        MUSIC_TOPWORLD("audio/n3535n5n335n35nj.ogg"),
-        MUSIC_CASTLEDOOM("audio/Dark chamber.mp3"),
-        MUSIC_BATTLE("audio/Random Battle.mp3"),
-        MUSIC_INTRO_CUTSCENE("audio/Takeover_5.mp3"),
-        MUSIC_LEVEL_UP_FANFARE("audio/4 Open Surge score jingle - B.ogg"),
-        SOUND_CREATURE_PAIN("audio/27780_SFX_CreatureGruntInPain1.wav"),
-        SOUND_PLAYER_PAIN("audio/27678_SFX_ComicalSoundsTiredGrunt1.wav"),
-        SOUND_PLAYER_WAND_ATTACK("audio/26230_SFX_ProductionElementReverseWhoosh19.wav"),
-        SOUND_EATING("audio/17661_SFX_HumanEatingPotatoChips1.wav"),
-        SOUND_DRINKING("audio/27677_SFX_ComicalSoundsSwallowLiquid1.wav"),
-        SOUND_COIN_RUSTLE("audio/00954_SFX_MoneyCoinsDumpedInHand_final.wav"),
+        MUSIC_TITLE("core/assets/audio/10112013.ogg"),
+        MUSIC_TOWN("core/assets/audio/Magic Town_0.mp3"),
+        MUSIC_TOPWORLD("core/assets/audio/n3535n5n335n35nj.ogg"),
+        MUSIC_CASTLEDOOM("core/assets/audio/Dark chamber.mp3"),
+        MUSIC_BATTLE("core/assets/audio/Random Battle.mp3"),
+        MUSIC_INTRO_CUTSCENE("core/assets/audio/Takeover_5.mp3"),
+        MUSIC_LEVEL_UP_FANFARE("core/assets/audio/4 Open Surge score jingle - B.ogg"),
+        SOUND_CREATURE_PAIN("core/assets/audio/27780_SFX_CreatureGruntInPain1.wav"),
+        SOUND_PLAYER_PAIN("core/assets/audio/27678_SFX_ComicalSoundsTiredGrunt1.wav"),
+        SOUND_PLAYER_WAND_ATTACK("core/assets/audio/26230_SFX_ProductionElementReverseWhoosh19.wav"),
+        SOUND_EATING("core/assets/audio/17661_SFX_HumanEatingPotatoChips1.wav"),
+        SOUND_DRINKING("core/assets/audio/27677_SFX_ComicalSoundsSwallowLiquid1.wav"),
+        SOUND_COIN_RUSTLE("core/assets/audio/00954_SFX_MoneyCoinsDumpedInHand_final.wav"),
         NONE("");
 
         private String _audioFullFilePath;

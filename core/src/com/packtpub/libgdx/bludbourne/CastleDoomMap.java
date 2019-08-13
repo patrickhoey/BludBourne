@@ -7,7 +7,7 @@ import com.packtpub.libgdx.bludbourne.audio.AudioObserver;
 import com.packtpub.libgdx.bludbourne.sfx.ParticleEffectFactory;
 
 public class CastleDoomMap extends Map{
-    private static String _mapPath = "maps/castle_of_doom.tmx";
+    private static String _mapPath = "core/assets/maps/castle_of_doom.tmx";
 
     CastleDoomMap(){
         super(MapFactory.MapType.CASTLE_OF_DOOM, _mapPath);

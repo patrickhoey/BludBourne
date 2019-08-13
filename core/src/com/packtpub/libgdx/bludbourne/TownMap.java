@@ -12,7 +12,7 @@ import com.packtpub.libgdx.bludbourne.sfx.ParticleEffectFactory;
 public class TownMap extends Map{
     private static final String TAG = PlayerPhysicsComponent.class.getSimpleName();
 
-    private static String _mapPath = "maps/town.tmx";
+    private static String _mapPath = "core/assets/maps/town.tmx";
     private Json _json;
 
     TownMap(){

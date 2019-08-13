@@ -1,8 +1,8 @@
 {
 entityID : TOWN_MAGE
 state : IMMOBILE
-direction : DOWN
-conversationConfigPath : "conversations/conversation003.json"
+direction : DOWN,
+conversationConfigPath : "core/assets/conversations/conversation003.json",
 questConfigPath : ""
 currentQuestID : ""
 itemTypeID: NONE
@@ -73,8 +73,8 @@ animationConfig: [
 	    frameDuration: 1.0
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Player0.png
-				sprites/characters/Player1.png
+				core/assets/sprites/characters/Player0.png
+				core/assets/sprites/characters/Player1.png
 		]
 		gridPoints: [
 			{
@@ -92,8 +92,8 @@ animationConfig: [
 	    frameDuration: 1.0
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Player0.png
-				sprites/characters/Player1.png
+				core/assets/sprites/characters/Player0.png
+				core/assets/sprites/characters/Player1.png
 		]
 		gridPoints: [
 			{

@@ -30,13 +30,13 @@ public class EntityFactory {
         FIRE
     }
 
-    public static String PLAYER_CONFIG = "scripts/player.json";
-    public static String TOWN_GUARD_WALKING_CONFIG = "scripts/town_guard_walking.json";
-    public static String TOWN_BLACKSMITH_CONFIG = "scripts/town_blacksmith.json";
-    public static String TOWN_MAGE_CONFIG = "scripts/town_mage.json";
-    public static String TOWN_INNKEEPER_CONFIG = "scripts/town_innkeeper.json";
-    public static String TOWN_FOLK_CONFIGS = "scripts/town_folk.json";
-    public static String ENVIRONMENTAL_ENTITY_CONFIGS = "scripts/environmental_entities.json";
+    public static String PLAYER_CONFIG = "core/assets/scripts/player.json";
+    public static String TOWN_GUARD_WALKING_CONFIG = "core/assets/scripts/town_guard_walking.json";
+    public static String TOWN_BLACKSMITH_CONFIG = "core/assets/scripts/town_blacksmith.json";
+    public static String TOWN_MAGE_CONFIG = "core/assets/scripts/town_mage.json";
+    public static String TOWN_INNKEEPER_CONFIG = "core/assets/scripts/town_innkeeper.json";
+    public static String TOWN_FOLK_CONFIGS = "core/assets/scripts/town_folk.json";
+    public static String ENVIRONMENTAL_ENTITY_CONFIGS = "core/assets/scripts/environmental_entities.json";
 
     private EntityFactory(){
         _entities = new Hashtable<String, EntityConfig>();

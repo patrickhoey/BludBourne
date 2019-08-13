@@ -34,8 +34,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+			core/assets/sprites/characters/Demon0.png,
+			core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -53,8 +53,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+			core/assets/sprites/characters/Demon0.png,
+			core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -106,8 +106,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+			core/assets/sprites/characters/Demon0.png,
+			core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -125,8 +125,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+			core/assets/sprites/characters/Demon0.png,
+			core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -178,8 +178,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+			core/assets/sprites/characters/Demon0.png,
+			core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -197,8 +197,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+			core/assets/sprites/characters/Demon0.png,
+			core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -250,8 +250,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+			core/assets/sprites/characters/Demon0.png,
+			core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -269,8 +269,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+			core/assets/sprites/characters/Demon0.png,
+			core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -322,8 +322,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+			core/assets/sprites/characters/Demon0.png,
+			core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -341,8 +341,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+			core/assets/sprites/characters/Demon0.png,
+			core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -394,8 +394,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+			core/assets/sprites/characters/Demon0.png,
+			core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -413,8 +413,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+			core/assets/sprites/characters/Demon0.png,
+			core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -466,8 +466,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+			core/assets/sprites/characters/Demon0.png,
+			core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -485,8 +485,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -538,8 +538,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -557,8 +557,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -610,8 +610,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -629,8 +629,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -682,8 +682,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -701,8 +701,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -754,8 +754,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -773,8 +773,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -826,8 +826,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -845,8 +845,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -898,8 +898,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -917,8 +917,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -970,8 +970,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -989,8 +989,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1042,8 +1042,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1061,8 +1061,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1114,8 +1114,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1133,8 +1133,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1186,8 +1186,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1205,8 +1205,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1258,8 +1258,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1277,8 +1277,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1330,8 +1330,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1349,8 +1349,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1401,8 +1401,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1420,8 +1420,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1472,8 +1472,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1491,8 +1491,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1544,8 +1544,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1563,8 +1563,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1616,8 +1616,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1635,8 +1635,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1688,8 +1688,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1707,8 +1707,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1760,8 +1760,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1779,8 +1779,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1832,8 +1832,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1851,8 +1851,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1904,8 +1904,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1923,8 +1923,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1976,8 +1976,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -1995,8 +1995,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -2048,8 +2048,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -2067,8 +2067,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -2120,8 +2120,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -2139,8 +2139,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -2192,8 +2192,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -2211,8 +2211,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -2264,8 +2264,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -2283,8 +2283,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -2336,8 +2336,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -2355,8 +2355,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -2408,8 +2408,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -2427,8 +2427,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -2480,8 +2480,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -2499,8 +2499,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -2552,8 +2552,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -2571,8 +2571,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -2624,8 +2624,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -2643,8 +2643,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Demon0.png
-				sprites/characters/Demon1.png
+				core/assets/sprites/characters/Demon0.png
+				core/assets/sprites/characters/Demon1.png
 		]
 		gridPoints: [
 			{
@@ -2696,8 +2696,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Elemental0.png
-				sprites/characters/Elemental1.png
+				core/assets/sprites/characters/Elemental0.png
+				core/assets/sprites/characters/Elemental1.png
 		]
 		gridPoints: [
 			{
@@ -2715,8 +2715,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Elemental0.png
-				sprites/characters/Elemental1.png
+				core/assets/sprites/characters/Elemental0.png
+				core/assets/sprites/characters/Elemental1.png
 		]
 		gridPoints: [
 			{
@@ -2768,8 +2768,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Elemental0.png
-				sprites/characters/Elemental1.png
+				core/assets/sprites/characters/Elemental0.png
+				core/assets/sprites/characters/Elemental1.png
 		]
 		gridPoints: [
 			{
@@ -2787,8 +2787,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Elemental0.png
-				sprites/characters/Elemental1.png
+				core/assets/sprites/characters/Elemental0.png
+				core/assets/sprites/characters/Elemental1.png
 		]
 		gridPoints: [
 			{
@@ -2840,8 +2840,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Elemental0.png
-				sprites/characters/Elemental1.png
+				core/assets/sprites/characters/Elemental0.png
+				core/assets/sprites/characters/Elemental1.png
 		]
 		gridPoints: [
 			{
@@ -2859,8 +2859,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Elemental0.png
-				sprites/characters/Elemental1.png
+				core/assets/sprites/characters/Elemental0.png
+				core/assets/sprites/characters/Elemental1.png
 		]
 		gridPoints: [
 			{
@@ -2912,8 +2912,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Reptile0.png
-				sprites/characters/Reptile1.png
+				core/assets/sprites/characters/Reptile0.png
+				core/assets/sprites/characters/Reptile1.png
 		]
 		gridPoints: [
 			{
@@ -2931,8 +2931,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Reptile0.png
-				sprites/characters/Reptile1.png
+				core/assets/sprites/characters/Reptile0.png
+				core/assets/sprites/characters/Reptile1.png
 		]
 		gridPoints: [
 			{
@@ -2984,8 +2984,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IDLE
 		texturePaths: [
-				sprites/characters/Elemental0.png
-				sprites/characters/Elemental1.png
+				core/assets/sprites/characters/Elemental0.png
+				core/assets/sprites/characters/Elemental1.png
 		]
 		gridPoints: [
 			{
@@ -3003,8 +3003,8 @@ animationConfig: [
 	    frameDuration: .5
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/characters/Elemental0.png
-				sprites/characters/Elemental1.png
+				core/assets/sprites/characters/Elemental0.png
+				core/assets/sprites/characters/Elemental1.png
 		]
 		gridPoints: [
 			{

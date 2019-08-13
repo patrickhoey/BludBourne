@@ -7,7 +7,7 @@ import com.packtpub.libgdx.bludbourne.audio.AudioObserver;
 import com.packtpub.libgdx.bludbourne.sfx.ParticleEffectFactory;
 
 public class TopWorldMap extends Map{
-    private static String _mapPath = "maps/topworld.tmx";
+    private static String _mapPath = "core/assets/maps/topworld.tmx";
 
     TopWorldMap(){
         super(MapFactory.MapType.TOP_WORLD, _mapPath);

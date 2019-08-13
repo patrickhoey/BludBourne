@@ -14,7 +14,7 @@ import com.packtpub.libgdx.bludbourne.BludBourne;
 import com.packtpub.libgdx.bludbourne.Utility;
 
 public class CreditScreen extends GameScreen {
-    private static String CREDITS_PATH = "licenses/credits.txt";
+    private static String CREDITS_PATH = "core/assets/licenses/credits.txt";
     private Stage _stage;
     private ScrollPane _scrollPane;
     private BludBourne _game;

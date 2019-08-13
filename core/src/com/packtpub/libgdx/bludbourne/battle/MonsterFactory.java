@@ -26,10 +26,10 @@ public class MonsterFactory {
     private Hashtable<String, Array<MonsterEntityType>> _monsterZones;
 
     private MonsterFactory(){
-        Array<EntityConfig> configs = Entity.getEntityConfigs("scripts/monsters.json");
+        Array<EntityConfig> configs = Entity.getEntityConfigs("core/assets/scripts/monsters.json");
         _entities =  Entity.initEntities(configs);
 
-        _monsterZones = MonsterZone.getMonsterZones("scripts/monster_zones.json");
+        _monsterZones = MonsterZone.getMonsterZones("core/assets/scripts/monster_zones.json");
     }
 
     public static MonsterFactory getInstance() {

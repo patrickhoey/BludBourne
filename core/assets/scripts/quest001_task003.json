@@ -1,8 +1,8 @@
 {
 entityID : QUEST001_TASK003
 state : IMMOBILE
-direction : DOWN
-conversationConfigPath : "conversations/conversation005.json"
+direction : DOWN,
+conversationConfigPath : "core/assets/conversations/conversation005.json",
 questConfigPath : ""
 currentQuestID : ""
 itemTypeID: FUR001
@@ -13,7 +13,7 @@ animationConfig: [
 	    frameDuration: 1.0
 		animationType: IMMOBILE
 		texturePaths: [
-				sprites/items/Flesh.png
+			core/assets/sprites/items/Flesh.png
 		]
 		gridPoints: [
 			{

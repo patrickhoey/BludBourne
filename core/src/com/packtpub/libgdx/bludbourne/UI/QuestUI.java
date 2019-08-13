@@ -21,8 +21,8 @@ import java.util.ArrayList;
 public class QuestUI extends Window {
     private static final String TAG = QuestUI.class.getSimpleName();
 
-    public static final String RETURN_QUEST = "conversations/return_quest.json";
-    public static final String FINISHED_QUEST = "conversations/quest_finished.json";
+    public static final String RETURN_QUEST = "core/assets/conversations/return_quest.json";
+    public static final String FINISHED_QUEST = "core/assets/conversations/quest_finished.json";
 
     private List _listQuests;
     private List _listTasks;

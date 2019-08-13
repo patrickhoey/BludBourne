@@ -12,8 +12,8 @@ questTasks: {
 				value: "false"
 			}
 			TARGET_TYPE: {
-				class: java.lang.String
-				value: "scripts/quest002_task002.json"
+				class: java.lang.String,
+				value: "core/assets/scripts/quest002_task002.json"
 			}
 			TARGET_NUM: {
 				class: java.lang.String

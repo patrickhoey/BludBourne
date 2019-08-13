@@ -20,10 +20,10 @@ public final class Utility {
 	private static final String TAG = Utility.class.getSimpleName();
 	private static InternalFileHandleResolver _filePathResolver =  new InternalFileHandleResolver();
 
-	private final static String STATUSUI_TEXTURE_ATLAS_PATH = "skins/statusui.atlas";
-	private final static String STATUSUI_SKIN_PATH = "skins/statusui.json";
-	private final static String ITEMS_TEXTURE_ATLAS_PATH = "skins/items.atlas";
-	private final static String ITEMS_SKIN_PATH = "skins/items.json";
+	private final static String STATUSUI_TEXTURE_ATLAS_PATH = "core/assets/skins/statusui.atlas";
+	private final static String STATUSUI_SKIN_PATH = "core/assets/skins/statusui.json";
+	private final static String ITEMS_TEXTURE_ATLAS_PATH = "core/assets/skins/items.atlas";
+	private final static String ITEMS_SKIN_PATH = "core/assets/skins/items.json";
 
 	public static TextureAtlas STATUSUI_TEXTUREATLAS = new TextureAtlas(STATUSUI_TEXTURE_ATLAS_PATH);
 	public static TextureAtlas ITEMS_TEXTUREATLAS = new TextureAtlas(ITEMS_TEXTURE_ATLAS_PATH);

@@ -21,7 +21,7 @@ public class StatusUI extends Window implements StatusSubject {
     private Array<StatusObserver> _observers;
 
     private Array<LevelTable> _levelTables;
-    private static final String LEVEL_TABLE_CONFIG = "scripts/level_tables.json";
+    private static final String LEVEL_TABLE_CONFIG = "core/assets/scripts/level_tables.json";
 
     //Attributes
     private int _levelVal = -1;

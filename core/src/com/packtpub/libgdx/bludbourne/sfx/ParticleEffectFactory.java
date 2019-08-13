@@ -9,10 +9,10 @@ public class ParticleEffectFactory {
     private static String SFX_ROOT_DIR = "sfx";
 
     public static enum ParticleEffectType{
-        CANDLE_FIRE("sfx/candle.p"),
-        LANTERN_FIRE("sfx/candle.p"),
-        LAVA_SMOKE("sfx/smoke.p"),
-        WAND_ATTACK("sfx/magic_attack.p"),
+        CANDLE_FIRE("core/assets/sfx/candle.p"),
+        LANTERN_FIRE("core/assets/sfx/candle.p"),
+        LAVA_SMOKE("core/assets/sfx/smoke.p"),
+        WAND_ATTACK("core/assets/sfx/magic_attack.p"),
         NONE("");
 
         private String _fullFilePath;
